@@ -1,0 +1,47 @@
+.btn {
+  position: relative;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn.primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn.secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn.danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
