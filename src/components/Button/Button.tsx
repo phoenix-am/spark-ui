@@ -1,49 +1,70 @@
-import React, { useRef } from 'react';
-import './Button.css';
+import React, { MouseEvent, PropsWithChildren, useRef } from 'react';
+import './Button.scss';
+import { ButtonProps } from './types';
+import classNames from 'classnames';
 
-export interface ButtonProps {
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-  variant?: 'primary' | 'secondary' | 'danger';
-}
-
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled, variant = 'primary' }) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
+const useRippleEffect = () => {
+  const addRipple = (event: MouseEvent<HTMLButtonElement>, buttonRef: React.RefObject<HTMLButtonElement>) => {
     const button = buttonRef.current;
-    if (button) {
-      const ripple = document.createElement('span');
-      const rect = button.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = event.clientX - rect.left - size / 2;
-      const y = event.clientY - rect.top - size / 2;
 
-      ripple.style.width = ripple.style.height = `${size}px`;
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-      ripple.className = 'ripple';
+    if (!button) return;
 
-      button.appendChild(ripple);
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
 
-      ripple.addEventListener('animationend', () => {
-        ripple.remove();
-      });
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+    circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+    circle.classList.add("ripple");
+
+    const ripple = button.getElementsByClassName("ripple")[0];
+    if (ripple) {
+      ripple.remove();
     }
+
+    button.appendChild(circle);
   };
 
+  return { addRipple };
+};
+
+const Button: React.FC<PropsWithChildren<ButtonProps>> = (props: ButtonProps) => {
+  const {
+    variant = 'text', 
+    color = 'default', 
+    size = 'medium', 
+    children, 
+    onClick, 
+    startIcon,
+    endIcon,
+  } = props;
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { addRipple } = useRippleEffect();
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    addRipple(event, buttonRef);
+    onClick?.(event);
+  };
+
+  const buttonClass = classNames(
+    'btn',
+    `btn--${variant}`,
+    `btn--${color}`,
+    `btn--${size}`
+  );
+
   return (
-    <button 
+    <button
+      {...props}
       ref={buttonRef}
-      className={`btn ${variant}`} 
-      onClick={(e) => {
-        createRipple(e);
-        onClick();
-      }} 
-      disabled={disabled}
+      className={buttonClass}
+      onClick={handleClick}
     >
-      {label}
+      {startIcon && <span className="btn-icon start-icon">{startIcon}</span>}
+      {children}
+      {endIcon && <span className="btn-icon end-icon">{endIcon}</span>}
     </button>
   );
 };
