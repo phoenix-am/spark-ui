@@ -1,6 +1,6 @@
-# Spark UI Component library
+# Spark UI
 
-A reusable React component library built with React, TypeScript and Storybook. This library is designed to provide customizable and accessible UI components with material-inspired animations.
+**Spark UI** is a highly customizable, enterprise-grade React component library designed to adhere to best practices in terms of architecture, theming, accessibility, and performance. This library is inspired by Material UI but is fully custom-built without relying on the Material UI framework itself.
 
 ## Table of Contents
 
@@ -14,101 +14,260 @@ A reusable React component library built with React, TypeScript and Storybook. T
 
 ## Getting Started
 
-### Prerequisites
+To get started with the Spark UI component library:
 
-Before you begin, ensure you have the following installed on your system:
+1. **Clone the repository:**
 
-- Node.js (=20.x)
-- npm (>=8.x)
-- Git
+   ```bash
+   git clone https://github.com/your-repo/spark-ui.git
+   cd spark-ui
+   ```
 
-### Installation
+2. **Install dependencies:**
 
-Clone the repository:
+   ```bash
+   yarn install
+   ```
 
-```bash
-git clone https://github.com/phoenix-am/spark-ui.git
-cd spark-ui
+3. **Build the packages:**
+
+   ```bash
+   yarn build
+   ```
+
+4. **Run Storybook for component development:**
+
+   ```bash
+   yarn storybook
+   ```
+
+## Folder Structure
+
+The `spark-ui` monorepo is organized as follows:
+
+```
+spark-ui/
+│
+├── packages/
+│   ├── core/              # Core components package
+│   ├── styles/            # Theme and style management
+│   ├── utils/             # Utility functions
+│   └── icons/             # Icon components
+│
+├── docs/                  # Documentation and guides
+├── storybook/             # Storybook configuration
+├── .github/               # GitHub actions and workflows
+└── README.md              # This readme file
 ```
 
-Install dependencies:
+## Creating Components
 
-```bash
-npm install
-```
+When creating a new component:
 
-### Usage
+1. **Create a new folder for the component in `packages/core/src/components/`.**
 
-To use the components in your project, you can import them directly after building the library:
+2. **Create the component file:**
+
+   - **Button.tsx:**
+
+     ```tsx
+     import React from 'react';
+     import { applySlots } from '@spark-ui/utils/slots';
+     import { ButtonProps } from './Button.types';
+
+     export const Button: React.FC<ButtonProps> = ({ startIcon, endIcon, children, ...props }) => {
+       const buttonElement = (
+         <button {...props}>
+           {children}
+         </button>
+       );
+
+       return applySlots({ slots: { startIcon, endIcon }, component: buttonElement });
+     };
+     ```
+
+3. **Create the types file:**
+
+   - **Button.types.ts:**
+
+     ```typescript
+     import * as React from 'react';
+     import { OverrideProps } from '@spark-ui/utils';
+
+     export interface ButtonProps {
+       startIcon?: React.ReactNode;
+       endIcon?: React.ReactNode;
+       children: React.ReactNode;
+       component?: React.ElementType;
+     }
+     ```
+
+4. **Create a styles file (if needed):**
+
+   - **Button.styles.ts:**
+
+     ```typescript
+     import { css } from '@emotion/react';
+
+     export const buttonStyles = css`
+       padding: 8px 16px;
+       border-radius: 4px;
+       background-color: #007bff;
+       color: white;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+
+       .icon {
+         margin: 0 4px;
+       }
+     `;
+     ```
+
+5. **Add the component to the package's `index.ts` for export:**
+
+   - **index.ts:**
+
+     ```typescript
+     export * from './Button';
+     ```
+
+## Theming
+
+Spark UI allows you to fully customize the theme to fit your brand's needs. The theme is managed in the `@spark-ui/styles` package.
+
+### Example Theme:
 
 ```typescript
-import { Button, Input, Modal } from 'spark-ui';
+import { Theme as EmotionTheme } from '@emotion/react';
 
-const MyApp = () => (
-  <div>
-    <Button label="Click Me" onClick={() => alert('Clicked!')} />
-    <Input type="text" placeholder="Type something..." />
-    <Modal title="Sample Modal" isOpen={true}>
-      <p>This is a modal content</p>
-    </Modal>
-  </div>
-);
+export interface Theme {
+  colors: {
+    primary: string;
+    // ...other color properties
+  };
+  // ...other theme properties
+}
+
+export const theme: Theme = {
+  colors: {
+    primary: '#007bff',
+    // ...other color values
+  },
+  // ...other theme values
+};
+
+export type EmotionThemeType = EmotionTheme & Theme;
 ```
 
-## Branching Strategy
+### Usage in Components:
 
-To maintain a clean and organized Git history, follow the below branching strategy:
+In your component, you can access the theme using the `useTheme` hook (if implemented) or via styled components using Emotion.
 
-- **`main`**: The main branch should always contain the latest stable version of the project. Merges into this branch should be done through pull requests and only after passing all tests.
+```typescript
+import styled from '@emotion/styled';
 
-- **`develop`**: The development branch where features are merged before being promoted to `main`. The `develop` branch should always be stable.
-
-- **Feature Branches**: Create a new branch for each feature or bug fix:
-  - Name: `feature/feature-name` or `bugfix/bug-description`
-  - Example: `feature/add-button-component` or `bugfix/fix-modal-styling`
-  - Always branch off from `develop`.
-
-- **Release Branches**: Create a release branch when you're preparing for a new release:
-  - Name: `release/vX.X.X`
-  - Example: `release/v1.0.0`
-  - Merge into both `main` and `develop` after the release.
-
-- **Hotfix Branches**: For critical fixes in the production code:
-  - Name: `hotfix/description`
-  - Example: `hotfix/fix-critical-bug`
-  - Merge into both `main` and `develop`.
-
-## Commit Message Guidelines
-
-Use the following format for commit messages:
-
-```
-<type>(<scope>): <subject>
+export const StyledButton = styled.button`
+  background-color: ${(props) => props.theme.colors.primary};
+  // ...other styles
+`;
 ```
 
-### **Types**
+## Slots and Polymorphic Components
 
-- **`feat`**: A new feature
-- **`fix`**: A bug fix
-- **`docs`**: Documentation changes
-- **`style`**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)
-- **`refactor`**: A code change that neither fixes a bug nor adds a feature
-- **`perf`**: A code change that improves performance
-- **`test`**: Adding missing tests or correcting existing tests
-- **`chore`**: Changes to the build process or auxiliary tools and libraries such as documentation generation
+Spark UI supports polymorphic components and slots, inspired by Material UI's approach. This allows you to extend components and manage content placement with great flexibility.
 
-### **Examples**
+### Polymorphic Component Example:
 
-```bash
-feat(button): add ripple effect to button component
-fix(modal): resolve issue with modal closing animation
-docs(readme): update installation instructions
-style(button): format button styles
+```tsx
+import React from 'react';
+import { OverrideProps } from '@spark-ui/utils';
+
+export type ButtonProps<C extends React.ElementType> = OverrideProps<ButtonTypeMap, C>;
+
+interface ButtonTypeMap {
+  props: {
+    children: React.ReactNode;
+    startIcon?: React.ReactNode;
+    endIcon?: React.ReactNode;
+  };
+  defaultComponent: 'button';
+}
+
+export const Button = <C extends React.ElementType = 'button'>({
+  component: Component = 'button',
+  startIcon,
+  endIcon,
+  children,
+  ...props
+}: ButtonProps<C>) => {
+  return (
+    <Component {...props}>
+      {startIcon}
+      {children}
+      {endIcon}
+    </Component>
+  );
+};
 ```
+
+### Slot Management:
+
+Slots are managed using the `applySlots` utility function, which ensures the correct placement of slot content within components.
+
+```tsx
+import React from 'react';
+import { applySlots } from '@spark-ui/utils/slots';
+
+export const Button: React.FC<ButtonProps> = ({ startIcon, endIcon, children }) => {
+  const buttonElement = <button>{children}</button>;
+
+  return applySlots({ slots: { startIcon, endIcon }, component: buttonElement });
+};
+```
+
+## Usage
+
+To use a component from the Spark UI library in your application:
+
+1. **Install the library:**
+
+   ```bash
+   yarn add @spark-ui/core @spark-ui/styles @emotion/react
+   ```
+
+2. **Import and use a component:**
+
+   ```tsx
+   import React from 'react';
+   import { Button } from '@spark-ui/core';
+
+   function App() {
+     return (
+       <Button startIcon={<SomeIcon />} endIcon={<AnotherIcon />}>
+         Click Me
+       </Button>
+     );
+   }
+
+   export default App;
+   ```
 
 ## Contributing
 
-We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on the code of conduct and the process for submitting pull requests.
+We welcome contributions from the community! To contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Write your code and include tests where applicable.
+4. Run tests and ensure everything works correctly.
+5. Submit a pull request with a detailed description of your changes.
+
+### Development Guidelines
+
+- **Coding Standards**: Follow the existing code style and conventions.
+- **Documentation**: Ensure that any new components or utilities are well-documented.
+- **Testing**: Write unit tests for new features or changes.
 
 ## License
 

@@ -1,9 +1,15 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-
-import { Button } from '../components';
+import {Button} from '.';
+import { ThemeProvider } from '@spark-ui/styles';
+import { ButtonPropsBase } from './Button.types';
 
 const meta: Meta<typeof Button> = {
-  component: Button,
+  component: (props: ButtonPropsBase) => {
+    return <ThemeProvider>
+      <Button {...props} />
+    </ThemeProvider>
+  },
   title: "Spark UI/Button",
 };
 
@@ -24,6 +30,7 @@ const TextTemplate: TextStory = {
   args: {
     ...BaseTemplate.args,
     variant: 'text',
+
   }
 }
 
