@@ -1,0 +1,22 @@
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { {{pascalCase componentName}} } from '.';
+import { ThemeProvider } from '@spark-ui/system';
+import { {{pascalCase componentName}}PropsBase } from './{{pascalCase componentName}}.types';
+
+const meta: Meta<typeof {{pascalCase componentName}}> = {
+  component: (props: {{pascalCase componentName}}PropsBase) => {
+    return <ThemeProvider>
+      <{{pascalCase componentName}} {...props} />
+    </ThemeProvider>
+  },
+  title: "Spark UI/{{pascalCase componentName}}",
+};
+
+export default meta;
+
+type BaseStory = StoryObj<typeof {{pascalCase componentName}}>;
+
+export const BaseTemplate: BaseStory = {
+  args: {}
+}

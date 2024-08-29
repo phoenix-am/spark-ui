@@ -1,50 +1,62 @@
 {
-  "name": "spark-ui",
-  "private": false,
-  "version": "0.0.1",
-  "type": "module",
-  "scripts": {
-    "dev": "storybook dev -p 6006",
-    "build": "tsc -b && vite build",
-    "lint": "eslint ."
+  "name": "spark",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phoenix-am/spark-ui.git"
   },
-  "dependencies": {
-    "classnames": "^2.5.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phoenix-am/spark-ui/issues"
+  },
+  "homepage": "https://github.com/phoenix-am/spark-ui#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
+    "clean": "lerna clean",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "generate:component": "plop component --plopfile ./generators/plopfile.js"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
     "@chromatic-com/storybook": "^1.6.1",
-    "@eslint/js": "^9.8.0",
-    "@storybook/addon-essentials": "^8.2.8",
-    "@storybook/addon-interactions": "^8.2.8",
-    "@storybook/addon-links": "^8.2.8",
-    "@storybook/addon-onboarding": "^8.2.8",
-    "@storybook/blocks": "^8.2.8",
-    "@storybook/react": "^8.2.8",
-    "@storybook/react-vite": "^8.2.8",
-    "@storybook/test": "^8.2.8",
-    "@testing-library/jest-dom": "^6.4.8",
-    "@testing-library/react": "^16.0.0",
-    "@types/jest": "^29.5.12",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^9.8.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.9",
+    "@emotion/babel-plugin": "^11.12.0",
+    "@emotion/babel-preset-css-prop": "^11.12.0",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@storybook/addon-essentials": "^8.2.9",
+    "@storybook/addon-interactions": "^8.2.9",
+    "@storybook/addon-links": "^8.2.9",
+    "@storybook/addon-onboarding": "^8.2.9",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.5",
+    "@storybook/blocks": "^8.2.9",
+    "@storybook/react": "^8.2.9",
+    "@storybook/react-webpack5": "^8.2.9",
+    "@storybook/test": "^8.2.9",
+    "babel": "latest",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.1.2",
+    "eslint": "^8.0.0",
     "eslint-plugin-storybook": "^0.8.0",
-    "globals": "^15.9.0",
-    "sass-embedded": "^1.77.8",
-    "storybook": "^8.2.8",
-    "ts-jest": "^29.2.4",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.0",
-    "vite": "^5.4.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
+    "jest": "^29.0.0",
+    "lerna": "^8.1.8",
+    "plop": "^4.0.1",
+    "prettier": "^2.0.0",
+    "sass": "^1.77.8",
+    "sass-loader": "^16.0.0",
+    "storybook": "^8.2.9",
+    "style-loader": "^4.0.0",
+    "typescript": "^5.0.0"
   }
 }
