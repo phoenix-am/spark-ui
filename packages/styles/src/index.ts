@@ -1,2 +1,2 @@
-export * from './theme';
-export * from './ThemeContext';
+export type { Theme, BaseTheme } from './theme';
+export { defaultTheme } from './theme';

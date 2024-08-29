@@ -1,5 +1,5 @@
 import React, { ElementType, useRef } from 'react';
-import { useTheme } from '@spark-ui/styles';
+import { useTheme } from '@spark-ui/system';
 import { ButtonStyles } from './Button.styles';
 import { PolymorphicButtonProps } from './Button.types';
 import { applySlots } from '@spark-ui/utils';
@@ -18,8 +18,8 @@ const Button = <C extends ElementType = 'button'>({
   children,
   ...rest
 }: PolymorphicButtonProps<C>) => {
-  const theme = useTheme();
-  const styles = ButtonStyles({ variant, color, size, theme });
+  const themes = useTheme();
+  const styles = ButtonStyles({ variant, color, size, theme: themes.theme });
 
   const rippleRef = useRef<{ createRipple: (event: React.MouseEvent<HTMLButtonElement>) => void }>(null);
 

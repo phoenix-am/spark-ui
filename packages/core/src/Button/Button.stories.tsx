@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import {Button} from '.';
-import { ThemeProvider } from '@spark-ui/styles';
+import { ThemeProvider } from '@spark-ui/system';
 import { ButtonPropsBase } from './Button.types';
 
 const meta: Meta<typeof Button> = {
@@ -111,6 +111,7 @@ export const ContainedPrimary: ContainedStory = {
   args: {
     ...ContainedTemplate.args,
     color: 'primary',
+    size: "large"
   }
 }
 
