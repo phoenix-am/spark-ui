@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const TH = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#F0F0F0" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12" /><path fill="#0052B4" d="M23.254 7.826H.746A12 12 0 0 0 0 12c0 1.468.264 2.874.746 4.174h22.508c.482-1.3.746-2.706.746-4.174s-.264-2.874-.746-4.174" /><path fill="#D80027" d="M12 0a11.97 11.97 0 0 0-9.096 4.173h18.194A11.97 11.97 0 0 0 12 0M21.097 19.826H2.903A11.97 11.97 0 0 0 12 24c3.637 0 6.896-1.618 9.096-4.174" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default TH;

@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const LGMaestro = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 58 40" {...props}><rect width={57} height={39} x={0.5} y={0.5} fill="#fff" rx={5.5} /><rect width={57} height={39} x={0.5} y={0.5} stroke="#F2F4F7" rx={5.5} /><path fill="#ED0006" d="M32.096 19.51c0 6.172-4.946 11.176-11.048 11.176S10 25.682 10 19.51 14.946 8.333 21.048 8.333s11.048 5.004 11.048 11.177" /><path fill="#0099DF" d="M46.429 19.51c0 6.172-4.946 11.176-11.048 11.176S24.333 25.682 24.333 19.51 29.279 8.333 35.381 8.333s11.048 5.004 11.048 11.177" /><path fill="#6C6BBD" fillRule="evenodd" d="M28.215 28.016a11.2 11.2 0 0 0 3.881-8.506c0-3.407-1.506-6.457-3.881-8.507a11.2 11.2 0 0 0-3.882 8.507c0 3.406 1.506 6.456 3.882 8.506" clipRule="evenodd" /></svg>;
+export default LGMaestro;

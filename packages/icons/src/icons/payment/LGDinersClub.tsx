@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const LGDinersClub = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 58 40" {...props}><rect width={57} height={39} x={0.5} y={0.5} fill="#fff" rx={5.5} /><rect width={57} height={39} x={0.5} y={0.5} stroke="#F2F4F7" rx={5.5} /><path fill="#0079BE" fillRule="evenodd" d="M26.397 32.167h4.327c6.754 0 12.136-5.359 12.347-11.978v-.105c-.105-6.724-5.593-12.188-12.347-12.083H25.87c-6.438.21-11.503 5.674-11.292 12.188 0 6.514 5.276 11.873 11.82 11.978m-9.709-12.083c0-5.463 4.538-9.981 10.026-9.981s10.025 4.518 10.025 9.981c0 5.464-4.537 9.981-10.025 9.981s-10.026-4.518-10.026-9.981m11.609 6.724V13.465c3.693.946 6.015 4.623 5.065 8.3-.633 2.522-2.532 4.413-5.065 5.043m-8.126-8.405c-.95 3.677 1.266 7.46 4.96 8.405V13.465a6.93 6.93 0 0 0-4.96 4.938" clipRule="evenodd" /></svg>;
+export default LGDinersClub;

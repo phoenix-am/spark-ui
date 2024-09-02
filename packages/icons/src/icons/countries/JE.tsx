@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const JE = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#F0F0F0" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12" /><path fill="#D80027" d="m21.52 19.307-7.306-7.306 7.307-7.307a12.1 12.1 0 0 0-2.214-2.214l-7.306 7.307L4.694 2.48a12 12 0 0 0-2.213 2.214L9.787 12 2.48 19.308a12.1 12.1 0 0 0 2.214 2.214l7.307-7.307 7.306 7.307a12.1 12.1 0 0 0 2.214-2.214" /><path fill="#FFDA44" d="M9.913 3.653 12 4.175l2.087-.522V1.879l-.835.417L12 1.044l-1.252 1.252-.835-.417z" /><path fill="#D80027" d="M9.913 3.653v1.304C9.913 6.555 12 7.044 12 7.044s2.087-.49 2.087-2.087V3.653z" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default JE;

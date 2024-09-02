@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const XTwitterDefaultOne = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><path fill="#fff" d="M7.55 21.75c9.055 0 14.008-7.503 14.008-14.008 0-.211-.004-.427-.014-.638A10 10 0 0 0 24 4.555c-.898.4-1.85.66-2.826.774a4.95 4.95 0 0 0 2.165-2.723A9.9 9.9 0 0 1 20.213 3.8a4.93 4.93 0 0 0-8.394 4.49A13.99 13.99 0 0 1 1.673 3.15a4.93 4.93 0 0 0 1.523 6.57 4.9 4.9 0 0 1-2.23-.614v.06a4.92 4.92 0 0 0 3.95 4.829 4.9 4.9 0 0 1-2.221.084 4.93 4.93 0 0 0 4.597 3.422A9.88 9.88 0 0 1 0 19.538a13.97 13.97 0 0 0 7.55 2.212" /></svg>;
+export default XTwitterDefaultOne;

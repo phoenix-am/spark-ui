@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const LGLightcoin = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 58 40" {...props}><rect width={57} height={39} x={0.5} y={0.5} fill="#fff" rx={5.5} /><rect width={57} height={39} x={0.5} y={0.5} stroke="#F2F4F7" rx={5.5} /><path fill="#A5A8A9" fillRule="evenodd" d="M41.667 20c0 7.364-5.97 13.333-13.334 13.333S15 27.363 15 20 20.97 6.667 28.333 6.667 41.667 12.637 41.667 20m-16.953.99 1.88-7.05h4.073l-1.41 5.483 1.88-.783-.47 1.723-1.88.627-.94 3.447h6.737l-.626 2.506H23.147l1.097-4.23-1.567.627.47-1.723z" clipRule="evenodd" /></svg>;
+export default LGLightcoin;

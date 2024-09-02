@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const MDSuccessLightCircle = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 40 40" {...props}><rect width={40} height={40} fill="#D1FADF" rx={20} /><g clipPath="url(#prefix__a)"><path stroke="#039855" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.667} d="M28.333 19.233V20a8.333 8.333 0 1 1-4.941-7.617m4.941.95L20 21.675l-2.5-2.5" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M10 10h20v20H10z" /></clipPath></defs></svg>;
+export default MDSuccessLightCircle;

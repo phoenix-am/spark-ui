@@ -15,26 +15,15 @@ export function applySlots<T extends React.ElementType>({
 }: ApplySlotsProps<T>): React.ReactElement {
   const { children, className, css: componentCss, ...restProps } = component.props;
 
-  // Generate slot elements based on slot names
-  const slotElements = Object.keys(slots).map((slotName) => {
-    const slotContent = slots[slotName];
-    if (!slotContent) return null;
-
-    return (
-      <span key={slotName} className={`slot-${slotName}`}>
-        {slotContent}
-      </span>
-    );
-  });
-
   return React.cloneElement(component, {
     ...restProps,
-    className,
     css: componentCss,
     children: (
       <>
-        {slotElements}
+        {slots.startIcon && <span className="slot-startIcon">{slots.startIcon}</span>}
+        {slots.avatar && <span className="slot-avatar">{slots.avatar}</span>}
         {children}
+        {slots.endIcon && <span className="slot-endIcon">{slots.endIcon}</span>}
       </>
     ),
   });

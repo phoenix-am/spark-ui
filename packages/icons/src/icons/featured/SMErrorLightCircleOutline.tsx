@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SMErrorLightCircleOutline = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 36 36" {...props}><rect width={32} height={32} x={2} y={2} fill="#FEE4E2" rx={16} /><rect width={32} height={32} x={2} y={2} stroke="#FEF3F2" strokeWidth={4} rx={16} /><g clipPath="url(#prefix__a)"><path stroke="#D92D20" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.333} d="M18 15.333V18m0 2.667h.007M24.667 18a6.667 6.667 0 1 1-13.334 0 6.667 6.667 0 0 1 13.334 0" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M10 10h16v16H10z" /></clipPath></defs></svg>;
+export default SMErrorLightCircleOutline;

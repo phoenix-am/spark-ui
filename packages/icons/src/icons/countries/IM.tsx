@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const IM = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#D80027" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12" /><path fill="#F0F0F0" d="m16.444 8.044-.848 3.027-2.545-.47-1.638-3.377-4.426 1.57-.349-.983-1.158-.143.873 2.459 3.045-.779.866 2.439-2.106 3.107 3.573 3.047-.677.794.455 1.074 1.693-1.985-2.197-2.248 1.68-1.969 3.743.27.852-4.618 1.027.19.702-.931z" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default IM;

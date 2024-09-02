@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SMMaestro = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 34 24" {...props}><rect width={33} height={23} x={0.5} y={0.5} fill="#fff" rx={3.5} /><rect width={33} height={23} x={0.5} y={0.5} stroke="#F2F4F7" rx={3.5} /><path fill="#ED0006" d="M19.258 11.706c0 3.703-2.968 6.706-6.63 6.706-3.66 0-6.628-3.003-6.628-6.706S8.968 5 12.629 5s6.629 3.002 6.629 6.706" /><path fill="#0099DF" d="M27.857 11.706c0 3.703-2.968 6.706-6.629 6.706S14.6 15.409 14.6 11.706 17.567 5 21.228 5s6.63 3.002 6.63 6.706" /><path fill="#6C6BBD" fillRule="evenodd" d="M16.929 6.602a6.72 6.72 0 0 1 2.329 5.104 6.72 6.72 0 0 1-2.33 5.104 6.72 6.72 0 0 1-2.328-5.104c0-2.044.903-3.874 2.329-5.104" clipRule="evenodd" /></svg>;
+export default SMMaestro;
