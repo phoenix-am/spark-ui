@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import {Button} from '.';
 import { ThemeProvider } from '@spark-ui/system';
 import { ButtonPropsBase } from './Button.types';
+import {GitBranch} from '@spark-ui/icons';
 
 const meta: Meta<typeof Button> = {
   component: (props: ButtonPropsBase) => {
@@ -30,43 +31,36 @@ const TextTemplate: TextStory = {
   args: {
     ...BaseTemplate.args,
     variant: 'text',
-
   }
 }
 
-const ContainedTemplate: TextStory = {
+const ContainedTemplate: ContainedStory = {
   args: {
     ...BaseTemplate.args,
     variant: 'contained',
   }
 }
 
-const OutlinedTemplate: TextStory = {
+const OutlinedTemplate: OutlinedStory = {
   args: {
     ...BaseTemplate.args,
     variant: 'outlined',
+    startIcon: <GitBranch />
   }
 }
 
 //#region Colors with variant `text`
-export const TextDefault: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    color: 'default',
-  }
-}
-
 export const TextPrimary: TextStory = {
   args: {
     ...TextTemplate.args,
-    color: 'primary',
+    color: 'brand',
   }
 }
 
-export const TextSecondary: TextStory = {
+export const TextBrand: TextStory = {
   args: {
     ...TextTemplate.args,
-    color: 'secondary',
+    color: 'brand',
   }
 }
 
@@ -74,13 +68,6 @@ export const TextError: TextStory = {
   args: {
     ...TextTemplate.args,
     color: 'error',
-  }
-}
-
-export const TextInfo: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    color: 'info',
   }
 }
 
@@ -100,18 +87,11 @@ export const TextWarning: TextStory = {
 //#endregion
 
 //#region Colors with variant `contained`
-export const ContainedDefault: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    color: 'default',
-  }
-}
 
 export const ContainedPrimary: ContainedStory = {
   args: {
     ...ContainedTemplate.args,
-    color: 'primary',
-    size: "large"
+    color: 'brand',
   }
 }
 
@@ -126,13 +106,6 @@ export const ContainedError: ContainedStory = {
   args: {
     ...ContainedTemplate.args,
     color: 'error',
-  }
-}
-
-export const ContainedInfo: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    color: 'info',
   }
 }
 
@@ -152,17 +125,11 @@ export const ContainedWarning: ContainedStory = {
 //#endregion
 
 //#region Colors with variant `outlined`
-export const OutlinedDefault: OutlinedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    color: 'default',
-  }
-}
 
 export const OutlinedPrimary: OutlinedStory = {
   args: {
     ...OutlinedTemplate.args,
-    color: 'primary',
+    color: 'brand',
   }
 }
 
@@ -180,13 +147,6 @@ export const OutlinedError: OutlinedStory = {
   }
 }
 
-export const OutlinedInfo: OutlinedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    color: 'info',
-  }
-}
-
 export const OutlinedSuccess: OutlinedStory = {
   args: {
     ...OutlinedTemplate.args,
@@ -198,6 +158,25 @@ export const OutlinedWarning: OutlinedStory = {
   args: {
     ...OutlinedTemplate.args,
     color: 'warning',
+  }
+}
+//#endregion
+
+//#region Colors with variant `text` and disabled
+export const TextDisabledPrimary: TextStory = {
+  args: {
+    ...TextTemplate.args,
+    disabled: true,
+    color: 'brand'
+  }
+}
+//#endregion
+
+//#region Colors with variant `contained` and disabled
+export const ContainedDisabledPrimary: ContainedStory = {
+  args: {
+    ...ContainedTemplate.args,
+    disabled: true,
   }
 }
 //#endregion

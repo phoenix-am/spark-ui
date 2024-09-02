@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const BQOne = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#F0F0F0" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12" /><path fill="#D80027" d="M12 .001c-.011-.008-12.003 11.997-12 12 0-6.627 5.373-12 12-12M12 0c.011-.008 12.003 11.997 12 12 0-6.627-5.373-12-12-12" /><path fill="#0052B4" d="M12 24c-.011.008-12.003-11.997-12-12 0 6.627 5.373 12 12 12M12 23.999c.011.008 12.003-11.997 12-12 0 6.627-5.373 12-12 12" /><path fill="#FFDA44" d="m12 6.26 1.295 3.986h4.19l-3.39 2.464 1.295 3.986L12 14.232l-3.39 2.464 1.294-3.986-3.39-2.464h4.19z" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default BQOne;

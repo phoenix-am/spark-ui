@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const PA = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#F0F0F0" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12" /><path fill="#0052B4" d="M0 12c0 6.627 5.373 12 12 12V12z" /><path fill="#D80027" d="M12 0c6.627 0 12 5.373 12 12H12z" /><path fill="#0052B4" d="m7.144 4.175.777 2.391h2.515L8.4 8.044l.777 2.392-2.034-1.478-2.034 1.478.777-2.392-2.034-1.478h2.514z" /><path fill="#D80027" d="m16.857 13.565.777 2.391h2.515l-2.035 1.478.777 2.392-2.034-1.478-2.034 1.478.777-2.392-2.035-1.478h2.515z" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default PA;

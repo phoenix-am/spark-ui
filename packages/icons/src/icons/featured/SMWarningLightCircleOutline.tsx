@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SMWarningLightCircleOutline = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 36 36" {...props}><rect width={32} height={32} x={2} y={2} fill="#FEF0C7" rx={16} /><rect width={32} height={32} x={2} y={2} stroke="#FFFAEB" strokeWidth={4} rx={16} /><path stroke="#DC6803" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.333} d="M18 15.333V18m0 2.667h.006m-1.146-8.76-5.647 9.426a1.334 1.334 0 0 0 1.14 2h11.293a1.334 1.334 0 0 0 1.14-2l-5.646-9.426a1.334 1.334 0 0 0-2.28 0" /></svg>;
+export default SMWarningLightCircleOutline;

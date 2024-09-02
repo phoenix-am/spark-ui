@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const GT = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#F0F0F0" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12" /><path fill="#338AF3" d="M24 12a12 12 0 0 0-6.783-10.81v21.62A12 12 0 0 0 23.999 12M0 12a12 12 0 0 0 6.783 10.81V1.19A12 12 0 0 0 0 12" /><path fill="#ACABB1" d="M15.135 14.028 13.106 12l1.931-1.931-.087-1.02-.553-.553-2.398 2.398-2.398-2.398-.553.553-.087 1.02 1.931 1.931-2.029 2.03 1.107 1.106L12 13.106l2.028 2.03z" /><path fill="#6DA544" d="m14.952 9.049-1.107 1.107a2.609 2.609 0 1 1-3.69 0L9.05 9.049a4.174 4.174 0 1 0 5.903 0" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default GT;

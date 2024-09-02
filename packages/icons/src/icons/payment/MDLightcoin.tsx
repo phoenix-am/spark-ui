@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const MDLightcoin = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 46 32" {...props}><rect width={45} height={31} x={0.5} y={0.5} fill="#fff" rx={3.5} /><rect width={45} height={31} x={0.5} y={0.5} stroke="#F2F4F7" rx={3.5} /><path fill="#A5A8A9" fillRule="evenodd" d="M33.333 16c0 5.891-4.775 10.667-10.666 10.667S12 21.89 12 16 16.776 5.333 22.667 5.333c5.89 0 10.666 4.776 10.666 10.667m-13.562.792 1.504-5.64h3.259l-1.128 4.387 1.504-.627-.376 1.379-1.504.501-.752 2.757h5.39l-.502 2.006h-8.649l.878-3.384-1.253.5.375-1.378z" clipRule="evenodd" /></svg>;
+export default MDLightcoin;

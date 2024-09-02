@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const TwoXLGray = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 40 40" {...props}><rect width={40} height={40} fill="#F2F4F7" rx={20} /><path fill="#667085" fillRule="evenodd" d="M28.494 12.317 16.561 23.833l-3.167-3.383c-.583-.55-1.5-.583-2.167-.117-.65.484-.833 1.334-.433 2.017l3.75 6.1c.367.567 1 .917 1.717.917.683 0 1.333-.35 1.7-.917.6-.783 12.05-14.433 12.05-14.433 1.5-1.534-.317-2.884-1.517-1.717z" clipRule="evenodd" /></svg>;
+export default TwoXLGray;

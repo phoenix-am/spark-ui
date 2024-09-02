@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const MDDinersClub = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 46 32" {...props}><rect width={45} height={31} x={0.5} y={0.5} fill="#fff" rx={3.5} /><rect width={45} height={31} x={0.5} y={0.5} stroke="#F2F4F7" rx={3.5} /><path fill="#0079BE" fillRule="evenodd" d="M21.118 25.733h3.461c5.404 0 9.71-4.286 9.878-9.582v-.084c-.084-5.38-4.474-9.75-9.878-9.666h-3.883c-5.15.168-9.203 4.539-9.034 9.75 0 5.212 4.222 9.498 9.456 9.582m-7.767-9.666c0-4.37 3.63-7.985 8.02-7.985s8.02 3.614 8.02 7.985c0 4.37-3.63 7.985-8.02 7.985s-8.02-3.614-8.02-7.985m9.287 5.38V10.772c2.954.756 4.812 3.698 4.052 6.64-.507 2.017-2.026 3.53-4.052 4.035m-6.501-6.725c-.76 2.942 1.013 5.968 3.968 6.725V10.772a5.54 5.54 0 0 0-3.968 3.95" clipRule="evenodd" /></svg>;
+export default MDDinersClub;

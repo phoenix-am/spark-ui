@@ -18,8 +18,8 @@ const Button = <C extends ElementType = 'button'>({
   children,
   ...rest
 }: PolymorphicButtonProps<C>) => {
-  const themes = useTheme();
-  const styles = ButtonStyles({ variant, color, size, theme: themes.theme });
+  const { theme } = useTheme();
+  const styles = ButtonStyles({ variant, color, size, theme });
 
   const rippleRef = useRef<{ createRipple: (event: React.MouseEvent<HTMLButtonElement>) => void }>(null);
 
@@ -33,7 +33,6 @@ const Button = <C extends ElementType = 'button'>({
     }
   };
 
-  // Dynamically handle slots
   const slots = {
     startIcon,
     endIcon,

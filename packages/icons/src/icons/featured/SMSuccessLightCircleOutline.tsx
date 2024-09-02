@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SMSuccessLightCircleOutline = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 36 36" {...props}><rect width={32} height={32} x={2} y={2} fill="#D1FADF" rx={16} /><rect width={32} height={32} x={2} y={2} stroke="#ECFDF3" strokeWidth={4} rx={16} /><g clipPath="url(#prefix__a)"><path stroke="#039855" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.333} d="M24.667 17.387V18a6.666 6.666 0 1 1-3.954-6.093m3.954.76L18 19.34l-2-2" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M10 10h16v16H10z" /></clipPath></defs></svg>;
+export default SMSuccessLightCircleOutline;

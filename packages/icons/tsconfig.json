@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@spark-ui/icons/base": ["./src/icons/base/*"],
+      "@spark-ui/icons/featured": ["./src/icons/featured/*"],
+      "@spark-ui/icons/check": ["./src/icons/check/*"],
+      "@spark-ui/icons/social": ["./src/icons/social/*"],
+      "@spark-ui/icons/payment": ["./src/icons/payment/*"],
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

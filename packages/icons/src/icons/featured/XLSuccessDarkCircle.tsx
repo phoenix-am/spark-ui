@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const XLSuccessDarkCircle = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 66 66" {...props}><rect width={56} height={56} x={5} y={5} fill="#12B76A" rx={28} /><rect width={56} height={56} x={5} y={5} stroke="#039855" strokeWidth={10} rx={28} /><path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.333} d="M44.667 31.927V33a11.666 11.666 0 1 1-6.919-10.663m6.919 1.33L33 35.345l-3.5-3.5" /></svg>;
+export default XLSuccessDarkCircle;

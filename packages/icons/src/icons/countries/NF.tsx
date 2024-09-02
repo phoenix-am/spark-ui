@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const NF = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#F0F0F0" d="M17.217 1.19A11.95 11.95 0 0 0 11.999 0c-1.87 0-3.64.428-5.217 1.19L5.738 12l1.044 10.809a11.95 11.95 0 0 0 5.217 1.19c1.87 0 3.64-.427 5.217-1.19l1.044-10.81z" /><path fill="#6DA544" d="M6.783 1.191A12 12 0 0 0 0 12.001a12 12 0 0 0 6.783 10.808zM17.217 1.191V22.81A12 12 0 0 0 23.999 12a12 12 0 0 0-6.782-10.809M15.131 15.652l-3.13-9.913-3.13 9.913h2.347v2.608h1.565v-2.608z" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default NF;

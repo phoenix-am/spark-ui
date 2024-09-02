@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const MicOff = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path stroke="#101828" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m1 1 22 22M15 9.34V4a3 3 0 0 0-5.94-.6M17 16.95A7 7 0 0 1 5 12v-2m14 0v2q0 .62-.11 1.23M12 19v4m-4 0h8M9 9v3a3 3 0 0 0 5.12 2.12z" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default MicOff;

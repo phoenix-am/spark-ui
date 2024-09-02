@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const CDOne = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#FFDA44" d="m6.505 22.67 8.816-7.35 7.35-8.816a12.05 12.05 0 0 0-5.169-5.172L8.68 8.679 1.333 17.5a12.05 12.05 0 0 0 5.172 5.169" /><path fill="#D80027" d="M20.485 20.485c3.786-3.786 4.513-9.472 2.182-13.988l-16.17 16.17c4.516 2.33 10.202 1.604 13.988-2.182" /><path fill="#6DA544" d="M3.514 3.514C-.272 7.3-.998 12.986 1.332 17.502l16.17-16.17C12.986-.998 7.3-.272 3.514 3.514" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default CDOne;

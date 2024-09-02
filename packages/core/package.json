@@ -14,6 +14,7 @@
     "@spark-ui/styles": "*",
     "@spark-ui/utils": "*",
     "@spark-ui/system": "*",
+    "@spark-ui/icons": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

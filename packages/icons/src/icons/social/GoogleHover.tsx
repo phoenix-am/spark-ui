@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const GoogleHover = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" {...props}><g clipPath="url(#prefix__a)"><path fill="#E4E7EC" fillRule="evenodd" d="M16.843 6.548a6.52 6.52 0 0 0-4.604-1.8c-3.13 0-5.79 2.113-6.737 4.957a7.2 7.2 0 0 0 0 4.594h.004c.953 2.84 3.607 4.952 6.738 4.952 1.616 0 3.003-.413 4.078-1.143v-.003a5.55 5.55 0 0 0 2.399-3.647h-6.482v-4.62h11.319c.141.802.207 1.622.207 2.438 0 3.65-1.304 6.735-3.574 8.825l.003.002C18.205 22.937 15.476 24 12.239 24a12 12 0 0 1-10.723-6.61 12.01 12.01 0 0 1 0-10.776A12 12 0 0 1 12.239 0a11.53 11.53 0 0 1 8.03 3.122z" clipRule="evenodd" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath></defs></svg>;
+export default GoogleHover;

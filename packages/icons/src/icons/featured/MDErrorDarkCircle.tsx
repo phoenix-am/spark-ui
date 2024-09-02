@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const MDErrorDarkCircle = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 46 46" {...props}><rect width={40} height={40} x={3} y={3} fill="#F04438" rx={20} /><rect width={40} height={40} x={3} y={3} stroke="#D92D20" strokeWidth={6} rx={20} /><g clipPath="url(#prefix__a)"><path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.667} d="M23 19.667V23m0 3.333h.008M31.333 23a8.333 8.333 0 1 1-16.666 0 8.333 8.333 0 0 1 16.666 0" /></g><defs><clipPath id="prefix__a"><path fill="#fff" d="M13 13h20v20H13z" /></clipPath></defs></svg>;
+export default MDErrorDarkCircle;
