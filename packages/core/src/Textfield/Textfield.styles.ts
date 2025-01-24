@@ -20,34 +20,34 @@ export const TextfieldStyles = ({ theme, hasError, disabled, focused, size }: Te
     inputContainer: css`
       display: flex;
       align-items: center;
-      background-color: ${theme.colors.gray[25]};
-      border: 1px solid ${theme.colors.gray[300]};
+      background-color: ${theme.colors.primary.gray['25']};
+      border: 1px solid ${theme.colors.primary.gray['300']};
       border-radius: ${theme.borderRadius[size]};
       padding: ${theme.spacing[size]};
       transition: border-color 0.3s ease;
       position: relative;
 
       &:hover {
-        border-color: ${theme.colors.primary};
+        border-color: ${theme.colors.primary.gray['400']};
       }
 
       ${disabled &&
       css`
-        background-color: ${theme.colors.gray[50]};
-        border-color: ${theme.colors.gray[300]};
-        color: ${theme.colors.gray[400]};
+        background-color: ${theme.colors.primary.gray['50']};
+        border-color: ${theme.colors.primary.gray['300']};
+        color: ${theme.colors.primary.gray['400']};
         cursor: not-allowed;
       `}
 
       ${hasError &&
       css`
-        border-color: ${theme.colors.error};
+        border-color: ${theme.colors.primary.error['400']};
       `}
 
       ${focused &&
       css`
-        border-color: ${theme.colors.primary};
-        box-shadow: 0 0 0 2px ${theme.colors.primaryLight};
+        border-color: ${theme.colors.primary.brand['300']};
+        outline: 3px solid ${theme.colors.primary.brand['200']};
       `}
     `,
     inputStyles: css`
@@ -57,46 +57,70 @@ export const TextfieldStyles = ({ theme, hasError, disabled, focused, size }: Te
       background: transparent;
       font-size: ${theme.spacing[size]};
       font-family: ${theme.typography.fontFamily};
-      color: ${theme.colors.text.primary};
+      color: ${theme.colors.primary.gray['900']};
       padding: 0;
 
       &::placeholder {
-        color: ${theme.colors.text.secondary};
+        color: ${theme.colors.primary.gray['500']};
       }
 
       ${disabled &&
       css`
-        color: ${theme.colors.text.disabled};
+        color: ${theme.colors.primary.gray['500']};
       `}
     `,
     labelStyles: css`
       display: block;
       margin-bottom: 4px;
-      color: ${hasError ? theme.colors.error : theme.colors.text.secondary};
+      color: ${hasError ? theme.colors.primary.error['500'] : theme.colors.primary.gray['700']};
       font-size: ${theme.typography.fontSize};
       font-family: ${theme.typography.fontFamily};
     `,
     helperTextStyles: css`
       margin-top: 4px;
-      color: ${hasError ? theme.colors.error : theme.colors.text.secondary};
+      color: ${hasError ? theme.colors.primary.error['500'] : theme.colors.primary.gray['600']};
       font-size: ${theme.typography.fontSize.small};
+      font-family: ${theme.typography.fontFamily};
     `,
     prependStyles: css`
       margin-right: ${theme.spacing[size]};
-      color: ${theme.colors.text.secondary};
+      color: ${theme.colors.primary.gray['700']};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        > path {
+          stroke: ${theme.colors.primary.gray['700']};
+        }
+      }
 
       ${disabled &&
       css`
-        color: ${theme.colors.text.disabled};
+        color: ${theme.colors.primary.gray['500']};
       `}
     `,
     appendStyles: css`
       margin-left: ${theme.spacing[size]};
-      color: ${theme.colors.text.secondary};
+      color: ${theme.colors.primary.gray['700']};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        > path {
+          stroke: ${!hasError ? theme.colors.primary.gray['400'] : theme.colors.primary.error['400']};
+        }
+      }
 
       ${disabled &&
       css`
-        color: ${theme.colors.text.disabled};
+        color: ${theme.colors.primary.gray['500']};
+      `}
+
+      ${hasError &&
+      css`
+        color: ${theme.colors.primary.error['400']};
       `}
     `,
   };

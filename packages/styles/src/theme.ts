@@ -1,5 +1,5 @@
 import { Theme as EmotionTheme } from '@emotion/react';
-import {Theme} from './types/theme';
+import { Theme } from './types/theme';
 
 export const defaultTheme: Theme = {
   colors: {
@@ -176,18 +176,6 @@ export const defaultTheme: Theme = {
         '900': '#7E2410',
       },
     },
-    background: '#FCFCFD',
-    text: {
-      primary: '#101828',
-      secondary: '#475467',
-      disabled: '#98A2B3',
-    },
-    border: '#D0D5DD',
-    info: {
-      primary: '#7F56D9',
-      light: '#F9F5FF',
-      dark: '#53389E',
-    },
   },
   typography: {
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
@@ -217,18 +205,17 @@ export const defaultTheme: Theme = {
     '3xlarge': '16rem', // 256px
   },
   padding: {
-    small: '0.5rem 1rem',
-    medium: '1rem 1.5rem',
-    large: '1.5rem 2rem',
+    small: '0.25rem 1rem',
+    medium: '0.45rem 1rem',
+    large: '0.625rem 1rem',
     '2xlarge': '2rem 2.5rem',
     '3xlarge': '2.5rem 3rem',
   },
   borderRadius: {
-    small: '4px',
-    medium: '6px',
-    large: '8px',
-    '2xlarge': '10px',
-    '3xlarge': '12px',
+    small: '0.5rem',
+    medium: '0.75rem',
+    large: '1rem',
+    xlarge: '1.75rem'
   },
   zIndex: {
     modal: 1300,
@@ -236,15 +223,14 @@ export const defaultTheme: Theme = {
     tooltip: 1100,
   },
   shadows: {
-    xs: '0px 1px 2px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.05000000074505806)',
-    sm: '0px 1px 3px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.10000000149011612)',
-    md: '0px 4px 8px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.10000000149011612)',
-    lg: '0px 12px 16px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.07999999821186066)',
-    xl: '0px 20px 24px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.07999999821186066)',
-    "2xl": '0px 24px 48px rgba(0.06258822977542877,0.09263458847999573,0.15701963007450104,0.18000000715255737)',
-    "3xl": '0px 32px 64px rgba(0.06258822977542877,0.09263458847999573,0.15701963007450104,0.14000000059604645)',
+    extraSmall: '0px 1px 2px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.05000000074505806)',
+    small: '0px 1px 3px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.10000000149011612)',
+    medium: '0px 4px 8px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.10000000149011612)',
+    large: '0px 12px 16px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.07999999821186066)',
+    xlarge: '0px 20px 24px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.07999999821186066)',
+    "2xlarge": '0px 24px 48px rgba(0.06258822977542877,0.09263458847999573,0.15701963007450104,0.18000000715255737)',
+    "3xlarge": '0px 32px 64px rgba(0.06258822977542877,0.09263458847999573,0.15701963007450104,0.14000000059604645)',
   }
 };
 
-// Define Emotion's Theme type for compatibility
 export type BaseTheme = EmotionTheme & Theme;

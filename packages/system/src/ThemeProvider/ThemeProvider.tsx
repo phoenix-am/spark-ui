@@ -13,16 +13,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 }) => {
   const [theme, setTheme] = useState<BaseTheme>(initialTheme);
 
-  // Optional: Implement theme toggling logic
-  const toggleTheme = () => {
-    setTheme((prevTheme) =>
-      prevTheme === defaultTheme
-        ? { ...defaultTheme, colors: { ...defaultTheme.colors, primary: '#000000' } } // Example toggling logic
-        : defaultTheme
-    );
-  };
-
-  const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
+  const value = useMemo(() => ({ theme }), [theme]);
 
   return (
     <ThemeContext.Provider value={value}>

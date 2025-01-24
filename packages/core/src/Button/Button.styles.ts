@@ -35,6 +35,7 @@ export const ButtonStyles = ({ variant, color, size, theme }: ButtonStylesProps)
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     text-transform: uppercase;
     font-weight: 600;
+    line-height: 1.75;
 
     .slot-startIcon {
       margin-right: ${theme.spacing[size]};
@@ -49,13 +50,13 @@ export const ButtonStyles = ({ variant, color, size, theme }: ButtonStylesProps)
     }
 
     &:disabled {
-      background-color: ${theme.colors.primary.gray['200']};
-      color: ${theme.colors.primary.gray['400']};
+      background-color: ${theme.colors.primary[color]['200']};
+      color: ${theme.colors.primary[color]['400']};
       cursor: not-allowed;
     }
 
     &:focus {
-      outline: 4px solid ${theme.colors.primary.brand['100']}; // Adjust outline color for focus
+      outline: 2px solid ${theme.colors.primary[color]['200']};
       outline-offset: 2px;
     }
 
@@ -64,16 +65,16 @@ export const ButtonStyles = ({ variant, color, size, theme }: ButtonStylesProps)
       color: #fff;
 
       &:hover {
-        background-color: ${theme.colors.primary.brand['700']}; // Darker shade for hover effect
+        background-color: ${theme.colors.primary[color]['700']};
       }
       
       &:active {
-        background-color: ${theme.colors.primary.brand['700']}; // Darker shade for active effect
+        background-color: ${theme.colors.primary[color]['700']};
       }
 
       &:disabled {
-        background-color: ${theme.colors.primary.gray['300']};
-        color: ${theme.colors.primary.gray['500']};
+        background-color: ${theme.colors.primary[color]['300']};
+        color: ${theme.colors.primary[color]['400']};
         cursor: not-allowed;
       }
     `}
@@ -84,12 +85,13 @@ export const ButtonStyles = ({ variant, color, size, theme }: ButtonStylesProps)
       color: ${buttonColor};
 
       &:hover {
-        background-color: ${theme.colors.primary.brand['100']};
+        background-color: ${theme.colors.primary[color]['100']};
       }
       
       &:disabled {
-        border-color: ${theme.colors.primary.gray['300']};
-        color: ${theme.colors.primary.gray['500']};
+        background-color: transparent;
+        border-color: ${theme.colors.primary[color]['200']};
+        color: ${theme.colors.primary[color]['300']};
         cursor: not-allowed;
       }
     `}
@@ -99,7 +101,7 @@ export const ButtonStyles = ({ variant, color, size, theme }: ButtonStylesProps)
       color: ${buttonColor};
 
       &:hover {
-        background-color: ${theme.colors.primary.brand['100']};
+        background-color: ${theme.colors.primary[color]['100']};
       }
 
       &:disabled {
@@ -110,26 +112,13 @@ export const ButtonStyles = ({ variant, color, size, theme }: ButtonStylesProps)
     `}
 
     ${variant !== 'text' && size === 'large' && css`
-      box-shadow: ${theme.shadows.lg};
+      box-shadow: ${theme.shadows.large};
     `}
     ${variant !== 'text' && size === 'medium' && css`
-      box-shadow: ${theme.shadows.md};
+      box-shadow: ${theme.shadows.medium};
     `}
     ${variant !== 'text' && size === 'small' && css`
-      box-shadow: ${theme.shadows.sm};
+      box-shadow: ${theme.shadows.small};
     `}
   `;
-};
-
-// Helper function to adjust color brightness
-const adjustColor = (color: string, amount: number) => {
-  let r = parseInt(color.slice(1, 3), 16);
-  let g = parseInt(color.slice(3, 5), 16);
-  let b = parseInt(color.slice(5, 7), 16);
-
-  r = Math.min(255, Math.max(0, Math.floor(r + (amount * 255))));
-  g = Math.min(255, Math.max(0, Math.floor(g + (amount * 255))));
-  b = Math.min(255, Math.max(0, Math.floor(b + (amount * 255))));
-
-  return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
 };

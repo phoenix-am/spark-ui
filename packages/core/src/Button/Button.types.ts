@@ -21,6 +21,7 @@ export interface ButtonPropsBase {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   fullWidth?: boolean;
+  ripple?: boolean;
 }
 
 // Type map for Button with default component and props

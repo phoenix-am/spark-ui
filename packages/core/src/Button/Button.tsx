@@ -8,7 +8,7 @@ import { Ripple } from './TouchRipple';
 const Button = <C extends ElementType = 'button'>({
   as: Component = 'button',
   variant = 'contained',
-  color = 'primary',
+  color = 'brand',
   size = 'medium',
   onClick,
   disabled = false,
@@ -16,6 +16,7 @@ const Button = <C extends ElementType = 'button'>({
   startIcon,
   endIcon,
   children,
+  ripple,
   ...rest
 }: PolymorphicButtonProps<C>) => {
   const { theme } = useTheme();
@@ -24,7 +25,7 @@ const Button = <C extends ElementType = 'button'>({
   const rippleRef = useRef<{ createRipple: (event: React.MouseEvent<HTMLButtonElement>) => void }>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (rippleRef.current) {
+    if (rippleRef.current && ripple) {
       rippleRef.current.createRipple(event);
     }
 

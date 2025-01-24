@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import {Button} from '.';
 import { ThemeProvider } from '@spark-ui/system';
 import { ButtonPropsBase } from './Button.types';
-import {GitBranch} from '@spark-ui/icons';
+import { Mail } from '@spark-ui/icons';
 
 const meta: Meta<typeof Button> = {
   component: (props: ButtonPropsBase) => {
@@ -23,7 +23,6 @@ type OutlinedStory = StoryObj<typeof Button>;
 const BaseTemplate: BaseStory = {
   args: {
     children: 'Click here',
-    size: 'medium',
   }
 }
 
@@ -45,18 +44,10 @@ const OutlinedTemplate: OutlinedStory = {
   args: {
     ...BaseTemplate.args,
     variant: 'outlined',
-    startIcon: <GitBranch />
   }
 }
 
 //#region Colors with variant `text`
-export const TextPrimary: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    color: 'brand',
-  }
-}
-
 export const TextBrand: TextStory = {
   args: {
     ...TextTemplate.args,
@@ -88,17 +79,10 @@ export const TextWarning: TextStory = {
 
 //#region Colors with variant `contained`
 
-export const ContainedPrimary: ContainedStory = {
+export const ContainedBrand: ContainedStory = {
   args: {
     ...ContainedTemplate.args,
     color: 'brand',
-  }
-}
-
-export const ContainedSecondary: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    color: 'secondary',
   }
 }
 
@@ -126,17 +110,10 @@ export const ContainedWarning: ContainedStory = {
 
 //#region Colors with variant `outlined`
 
-export const OutlinedPrimary: OutlinedStory = {
+export const OutlinedBrand: OutlinedStory = {
   args: {
     ...OutlinedTemplate.args,
     color: 'brand',
-  }
-}
-
-export const OutlinedSecondary: OutlinedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    color: 'secondary',
   }
 }
 
@@ -177,6 +154,33 @@ export const ContainedDisabledPrimary: ContainedStory = {
   args: {
     ...ContainedTemplate.args,
     disabled: true,
+  }
+}
+//#endregion
+
+//#region Colors with variant `outlined` and disabled
+export const OutlinedDisabledPrimary: ContainedStory = {
+  args: {
+    ...OutlinedTemplate.args,
+    disabled: true,
+  }
+}
+//#endregion
+
+//#region Colors with variant `outlined` and disabled
+export const ContainedIconPrimary: ContainedStory = {
+  args: {
+    ...ContainedTemplate.args,
+    startIcon: <Mail />
+  }
+}
+//#endregion
+
+//#region Without ripple
+export const Contained: ContainedStory = {
+  args: {
+    ...ContainedTemplate.args,
+    ripple: false
   }
 }
 //#endregion

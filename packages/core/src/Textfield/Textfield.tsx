@@ -1,10 +1,9 @@
-import React, { forwardRef, RefObject, useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import { TextfieldPropsBase } from './Textfield.types';
 import { useTheme } from '@spark-ui/system';
 import { TextfieldStyles } from './Textfield.styles';
 import { useTextField } from './useTextfield';
 import { InputBase } from '../InputBase';
-import { css } from '@emotion/react';
 import { useForkRef } from './useForkRef';
 
 const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) => {
@@ -21,6 +20,9 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     onBlur,
     inputSize = 'medium',
     helperText,
+    containerStyle,
+    isCurrency,
+    type,
     ...rest
   } = props;
 
@@ -32,7 +34,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     onBlur: handleBlur,
     focused,
     disabled: isDisabled,
-    error: hasError
+    error: hasError,
   } = useTextField({
     value,
     onChange,
@@ -40,6 +42,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     onBlur,
     disabled,
     error,
+    type
   });
 
   const styles = TextfieldStyles({
@@ -52,31 +55,6 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handleRef = useForkRef(ref, inputRef);
-
-  const labelElem = (
-    <>
-      {label && <label css={css`
-        display: block;
-        margin-bottom: 4px;
-        color: ${error ? '#F04438' : '#475467'};
-      `}>{label}</label>}
-    </>
-  )
-
-  const helperTextElem = (
-    <>
-      {helperText && (
-        <p 
-          css={css`
-            margin-top: 4px;
-            color: ${error ? '#F04438' : '#475467'};
-          `}
-        >
-          {helperText}
-        </p>
-      )}
-    </>
-  )
 
   const handleTextfieldFocus = () => {
     if (inputRef.current) {
@@ -97,7 +75,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
           {label}
         </label>
       )}
-      <div css={styles.inputContainer}>
+      <div css={styles.inputContainer} style={{...containerStyle}}>
         {prepend && <div css={styles.prependStyles}>{prepend}</div>}
         <InputBase
           ref={handleRef}
@@ -105,8 +83,6 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
           placeholder={placeholder}
           disabled={isDisabled}
           value={fieldValue}
-          startAdornment={prepend}
-          endAdornment={append}
           variant='outlined'
           onChange={handleChange}
           onFocus={handleFocus}

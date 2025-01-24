@@ -7,6 +7,31 @@ export interface UseTextFieldProps {
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   error?: boolean;
+  type?:
+  | "button"
+  | "checkbox"
+  | "color"
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "file"
+  | "hidden"
+  | "image"
+  | "month"
+  | "password"
+  | "radio"
+  | "range"
+  | "reset"
+  | "search"
+  | "submit"
+  | "text"
+  | "time"
+  | "url"
+  | "week"
+  | 'card'
+  | 'currency'
+  | 'phone'
+  | (string & {});
 }
 
 export interface UseTextFieldResult {
@@ -35,4 +60,31 @@ export interface TextfieldPropsBase extends InputHTMLAttributes<HTMLInputElement
   append?: React.ReactNode;
   cardDetection?: (value: string) => string | undefined;
   formatPhoneNumber?: (value: string) => string;
+  containerStyle?: React.CSSProperties;
+  isCurrency?: boolean;
+  type?:
+  | "button"
+  | "checkbox"
+  | "color"
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "file"
+  | "hidden"
+  | "image"
+  | "month"
+  | "password"
+  | "radio"
+  | "range"
+  | "reset"
+  | "search"
+  | "submit"
+  | "text"
+  | "time"
+  | "url"
+  | "week"
+  | 'card'
+  | 'currency'
+  | 'phone'
+  | (string & {});
 }

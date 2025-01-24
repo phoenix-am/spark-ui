@@ -172,19 +172,9 @@ export interface ThemeColors {
       '900': string;
     };
   }
-  background: string;
-  text: {
-    primary: string;
-    secondary: string;
-    disabled: string;
-  };
-  border: string;
-  info: {
-    primary: string;
-    light: string;
-    dark: string;
-  };
 }
+
+export type Sizes = 'small' | 'medium' | 'large' | 'xlarge' | '2xlarge' | '3xlarge';
 
 export interface Theme {
   colors: {
@@ -205,10 +195,6 @@ export interface Theme {
       rose: ThemeColors['secondary']['rose'];
       orange: ThemeColors['secondary']['orange'];
     };
-    background: ThemeColors['background'];
-    text: ThemeColors['text'];
-    border: ThemeColors['border'];
-    info: ThemeColors['info'];
   };
   typography: {
     fontFamily: string;
@@ -241,8 +227,7 @@ export interface Theme {
     small: string;
     medium: string;
     large: string;
-    '2xlarge': string;
-    '3xlarge': string;
+    xlarge: string;
   };
   padding: {
     small: string;
@@ -257,12 +242,12 @@ export interface Theme {
     tooltip: number;
   };
   shadows: {
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-    '2xl': string;
-    '3xl': string;
-  }
+    extraSmall: string;
+    small: string;
+    medium: string;
+    large: string;
+    xlarge: string;
+    '2xlarge': string;
+    '3xlarge': string;
+  };
 }

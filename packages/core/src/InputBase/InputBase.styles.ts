@@ -19,42 +19,42 @@ export const InputBaseStyles = ({ theme, variant, error, disabled, hasAppend, ha
     padding-left: ${hasPrepend ? spacing(4) : '12px'};
     padding-right: ${hasAppend ? spacing(4) : '12px'};
     border-radius: 4px;
-    color: ${theme.colors.text.primary};
-    background-color: ${variant === 'filled' ? theme.colors.gray[50] : theme.colors.background};
-    border: ${variant === 'standard' ? 'none' : `1px solid ${theme.colors.border}`};
-    border-bottom: ${variant === 'standard' ? `2px solid ${theme.colors.border}` : ''};
+    color: ${theme.colors.primary.gray['900']};
+    background-color: ${variant === 'filled' ? theme.colors.primary.gray['50'] : theme.colors.primary.gray['300']};
+    border: ${variant === 'standard' ? 'none' : `1px solid ${theme.colors.primary.gray['300']}`};
+    border-bottom: ${variant === 'standard' ? `2px solid ${theme.colors.primary.gray['300']}` : ''};
     width: 100%;
     box-sizing: border-box;
     display: block
 
     &:focus {
-      border-color: ${theme.colors.primary};
-      box-shadow: 0 0 0 3px ${theme.colors.primaryLight};
+      border-color: ${theme.colors.primary.brand['300']};
+      box-shadow: 0 0 0 3px ${theme.colors.primary.brand['100']};
     }
 
     &:disabled {
-      background-color: ${theme.colors.gray[100]};
-      color: ${theme.colors.text.disabled};
+      background-color: ${theme.colors.primary.gray['100']};
+      color: ${theme.colors.primary.gray['500']};
       cursor: not-allowed;
     }
 
     ${error &&
     css`
-      border-color: ${theme.colors.error};
-      box-shadow: 0 0 0 3px ${theme.colors.errorLight};
+      border-color: ${theme.colors.primary.error['400']};
+      box-shadow: 0 0 0 3px ${theme.colors.primary.error['100']};
     `}
   `;
 
   const variantStyles = {
     filled: css`
-      background-color: ${theme.colors.gray[50]};
+      background-color: ${theme.colors.primary.gray['50']};
       border: none;
     `,
     outlined: css`
-      border: 2px solid ${theme.colors.border};
+      border: 2px solid ${theme.colors.primary.gray['300']};
     `,
     standard: css`
-      border-bottom: 2px solid ${theme.colors.border};
+      border-bottom: 2px solid ${theme.colors.primary.gray['300']};
       border-radius: 0;
     `,
   };
@@ -64,8 +64,8 @@ export const InputBaseStyles = ({ theme, variant, error, disabled, hasAppend, ha
     ${variant && variantStyles[variant]};
     ${disabled &&
     css`
-      background-color: ${theme.colors.gray[200]};
-      border-color: ${theme.colors.gray[300]};
+      background-color: ${theme.colors.primary.gray['200']};
+      border-color: ${theme.colors.primary.gray['300']};
     `}
   `;
 };
