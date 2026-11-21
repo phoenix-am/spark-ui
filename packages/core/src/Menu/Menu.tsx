@@ -9,6 +9,13 @@ import { Button } from '../Button';
 import { cx } from '../internal/cx';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
+/** A section's items. Some React Aria collections lack getChildren(); every node has childNodes. */
+function sectionChildren<T>(collection: object, section: Node<T>): Iterable<Node<T>> {
+  const c = collection as { getChildren?: (key: Node<T>["key"]) => Iterable<Node<T>> };
+  return typeof c.getChildren === "function" ? c.getChildren(section.key) : section.childNodes;
+}
+
+
 export interface MenuItem {
   /** Passed to `onAction`. Unique within the whole menu, submenus included. */
   key: string;
@@ -251,7 +258,7 @@ function MenuSectionView({ section, first, ...shared }: ItemViewShared & { secti
           </span>
         )}
         <ul {...groupProps} className="sp-list-section__group">
-          {Array.from(shared.state.collection.getChildren!(section.key)).map((node) => (
+          {Array.from(sectionChildren(shared.state.collection, section)).map((node) => (
             <MenuItemView key={node.key} node={node} {...shared} />
           ))}
         </ul>

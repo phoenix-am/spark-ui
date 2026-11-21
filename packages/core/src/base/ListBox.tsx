@@ -5,6 +5,13 @@ import { Item, Section, ListState } from 'react-stately';
 import type { Node } from '@react-types/shared';
 import { cx } from '../internal/cx';
 
+/** A section's items. Some React Aria collections lack getChildren(); every node has childNodes. */
+function sectionChildren<T>(collection: object, section: Node<T>): Iterable<Node<T>> {
+  const c = collection as { getChildren?: (key: Node<T>["key"]) => Iterable<Node<T>> };
+  return typeof c.getChildren === "function" ? c.getChildren(section.key) : section.childNodes;
+}
+
+
 /* ------------------------------------------------------------ items */
 
 export interface ListOption<V extends string | number = string | number> {
@@ -143,7 +150,7 @@ function ListBoxSection<T>({ section, state, optionClassName, optionStyle }: { s
         </span>
       )}
       <ul {...groupProps} className="sp-list-section__group">
-        {Array.from(state.collection.getChildren!(section.key)).map((item) => (
+        {Array.from(sectionChildren(state.collection, section)).map((item) => (
           <ListBoxOption key={item.key} item={item} state={state} className={optionClassName} style={optionStyle} />
         ))}
       </ul>
