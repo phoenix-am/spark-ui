@@ -158,7 +158,12 @@
       "import": "./dist/tooltip/index.mjs",
       "require": "./dist/tooltip/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./headless": {
+      "types": "./dist/headless/index.d.ts",
+      "import": "./dist/headless/index.mjs",
+      "require": "./dist/headless/index.js"
+    }
   },
   "files": [
     "dist"
@@ -240,6 +245,9 @@
       ],
       "provider": [
         "./dist/provider/index.d.ts"
+      ],
+      "headless": [
+        "./dist/headless/index.d.ts"
       ]
     }
   }

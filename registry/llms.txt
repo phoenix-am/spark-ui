@@ -1,0 +1,43 @@
+# Spark UI (@sparkwire)
+
+> React component library with a "Live Wire" look: components carry current (sparks on press, flowing current on hover, a lever switch with a bulb). Accessible behaviour from React Aria, zero-runtime CSS with --spark-* variables, light/dark/system modes, works in React Server Components. Use it as an npm package (@sparkwire/core) or copy the source (npx sparkwire add <name>).
+
+Key facts for writing code:
+- Import the stylesheet once: import '@sparkwire/core/styles.css'. Set the mode with data-spark-theme="dark" | "light" | "system" on <html> or any wrapper.
+- App-wide defaults and slot classes: <SparkProvider components={{ Button: { defaultProps: { variant: 'outlined' } } }} locale="hi-IN">.
+- Every component takes className, and most take classNames for inner parts. State is exposed as data-* attributes (data-state, data-open, data-invalid, data-disabled) for CSS or Tailwind.
+- Forms: inputs take name and work with FormData and React Hook Form. Dropdown/Combobox/Slider/DatePicker submit through hidden inputs.
+- Dates are plain JS Date objects; DatePicker submits ISO YYYY-MM-DD. Locales and calendar systems (indian, islamic-umalqura, buddhist...) are supported.
+- Pick a value: Dropdown (alias Select). Search then pick: Combobox. Run actions: Menu.
+- Custom markup with Spark behaviour: useSwitch, useCheckbox, useSlider, useDatePicker, useSpark from '@sparkwire/core/headless'. Building blocks: ButtonBase, InputBase, Popover, ListBox, Overlay from '@sparkwire/core/base'.
+- The npm scope is @sparkwire (not @spark-ui, which is a different library).
+
+## Components
+- [Button](https://phoenix-am.github.io/spark-ui/?path=/docs/actions-button--docs): Throws sparks from the press point; current runs along outlined buttons on hover. Exports: Button.
+- [Spark](https://phoenix-am.github.io/spark-ui/?path=/docs/effects-spark--docs): A burst of sparks from a point; used by Button and Calendar. Exports: Spark.
+- [Switch](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-switch--docs): A lever switch that lights a bulb. Exports: Switch.
+- [Checkbox](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-checkbox--docs): A checkbox that closes a circuit. Exports: Checkbox.
+- [RadioGroup](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-radiogroup--docs): One live wire at a time. Exports: RadioGroup.
+- [Slider](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-slider--docs): A dimmer, with two-knob ranges. Exports: Slider.
+- [Textfield](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs): A field that charges as you type. Exports: Textfield.
+- [Field](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs): Label, help text and error wiring for any control. Exports: Field.
+- [Dropdown](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs): Pick one value from a list. Exports: Dropdown.
+- [Combobox](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs): Type to search, then pick. Exports: Combobox.
+- [DatePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs): DatePicker and Calendar with typed entry, locales and calendar systems. Exports: DatePicker, Calendar.
+- [Menu](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs): Actions behind a button, with submenus. Exports: Menu.
+- [Tabs](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs): Tabs on one wire; the active tab is lit. Exports: Tabs, TabList, Tab, TabPanel.
+- [Accordion](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs): Sections that power on as they open. Exports: Accordion, AccordionItem.
+- [Modal](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs): A dialog that powers on, with focus trapping. Exports: Modal.
+- [Tooltip](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs): A hint that flickers on. Exports: Tooltip.
+- [Toast](https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs): Notifications. Exports: ToastProvider, ToastShowOptions.
+- [Card](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs): Card, CardHeader, CardFooter and Skeleton. Exports: Card, CardHeader, Skeleton.
+- [Avatar](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-avatar--docs): Avatar and AvatarGroup. Exports: Avatar, AvatarGroup.
+- [Indicators](https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-badge--docs): Badge, Progress and Spinner. Exports: Badge, Progress, Spinner.
+- [SparkProvider](https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-customization--docs): App-wide default props, slot classes and locale. Exports: SparkProvider.
+- [Base components](https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-base-components--docs): ButtonBase, InputBase, Popover, ListBox and Overlay: the building blocks under the other components. Exports: ButtonBase, InputBase, Popover, ListItemContent, ListBox, Overlay.
+
+## Docs
+- [Full reference with every prop](https://phoenix-am.github.io/spark-ui/llms-full.txt)
+- [Machine-readable docs](https://phoenix-am.github.io/spark-ui/registry/docs.json)
+- [Component registry (shadcn format)](https://phoenix-am.github.io/spark-ui/registry/registry.json)
+- MCP server: npx -y @sparkwire/mcp

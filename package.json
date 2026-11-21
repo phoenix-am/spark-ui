@@ -28,7 +28,7 @@
     "generate:icons": "node ./packages/icons/scripts/convert-svg-to-react.js",
     "build:icons": "cd ./packages/icons && npm run build",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "registry": "node scripts/build-registry.mjs"
+    "registry": "node scripts/build-registry.mjs && node scripts/build-docs.mjs"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.24.7",

@@ -1,0 +1,808 @@
+# Spark UI (@sparkwire)
+
+> React component library with a "Live Wire" look: components carry current (sparks on press, flowing current on hover, a lever switch with a bulb). Accessible behaviour from React Aria, zero-runtime CSS with --spark-* variables, light/dark/system modes, works in React Server Components. Use it as an npm package (@sparkwire/core) or copy the source (npx sparkwire add <name>).
+
+Key facts for writing code:
+- Import the stylesheet once: import '@sparkwire/core/styles.css'. Set the mode with data-spark-theme="dark" | "light" | "system" on <html> or any wrapper.
+- App-wide defaults and slot classes: <SparkProvider components={{ Button: { defaultProps: { variant: 'outlined' } } }} locale="hi-IN">.
+- Every component takes className, and most take classNames for inner parts. State is exposed as data-* attributes (data-state, data-open, data-invalid, data-disabled) for CSS or Tailwind.
+- Forms: inputs take name and work with FormData and React Hook Form. Dropdown/Combobox/Slider/DatePicker submit through hidden inputs.
+- Dates are plain JS Date objects; DatePicker submits ISO YYYY-MM-DD. Locales and calendar systems (indian, islamic-umalqura, buddhist...) are supported.
+- Pick a value: Dropdown (alias Select). Search then pick: Combobox. Run actions: Menu.
+- Custom markup with Spark behaviour: useSwitch, useCheckbox, useSlider, useDatePicker, useSpark from '@sparkwire/core/headless'. Building blocks: ButtonBase, InputBase, Popover, ListBox, Overlay from '@sparkwire/core/base'.
+- The npm scope is @sparkwire (not @spark-ui, which is a different library).
+
+## Button (`button`)
+Throws sparks from the press point; current runs along outlined buttons on hover.
+
+```tsx
+import { Button } from '@sparkwire/core';
+```
+Install: `npx sparkwire add button` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/actions-button--docs
+
+### Button
+Button: throws sparks from the press point. Outlined and text buttons show
+current flowing along a wire on hover; a disabled button is a dead circuit.
+Built on ButtonBase; forwards `ref` to the rendered element.
+
+- `as?`: `ElementType` Render as another element or component, e.g. `"a"` or a router Link.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "icon", string>>` Extra classes for each part: root, icon.
+- `disabled?`: `boolean` Dead circuit: no clicks, no sparks, dashed outline.
+- `endIcon?`: `ReactNode` Icon after the label. Coloured with the text.
+- `fullWidth?`: `boolean` Stretch to the container's width.
+- `spark?`: `boolean` Throw sparks from the press point on click. Default `true`.
+- `startIcon?`: `ReactNode` Icon before the label. Coloured with the text.
+- `ripple?`: `boolean` **Deprecated.** Use `spark`. Kept so existing code keeps working.
+
+## Spark (`spark`)
+A burst of sparks from a point; used by Button and Calendar.
+
+```tsx
+import { Spark } from '@sparkwire/core';
+```
+Install: `npx sparkwire add spark` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/effects-spark--docs
+
+### Spark
+Spark: the signature Live Wire effect. Place it inside a `position: relative`
+element and call `burst()` from its click handler. Renders nothing for users
+who prefer reduced motion.
+
+- `colors?`: `string[]` Particle colours. Defaults to the theme's `--spark-energy-spark-1…3`.
+- `count?`: `number` (default `10`) Particles per burst. Default 10.
+- `duration?`: `number` (default `700`) Burst duration in milliseconds. Default 700.
+- `spread?`: `number` (default `70`) How far particles travel, in px. Default 70.
+
+## Switch (`switch`)
+A lever switch that lights a bulb.
+
+```tsx
+import { Switch } from '@sparkwire/core';
+```
+Install: `npx sparkwire add switch` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-switch--docs
+
+### Switch
+Switch: a lever that closes a circuit. When on, current lights the wire and
+the bulb; when off, the lever lifts and the circuit goes dark.
+
+Style hooks: `.sp-switch`, `[data-state="on"|"off"]`, and the parts
+`.sp-switch__node`, `__wire`, `__lever`, `__bulb`, `__label`.
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `checked?`: `boolean` Controlled state.
+- `classNames?`: `Partial<Record<"label" | "root" | "control" | "node" | "wire" | "lever" | "bulb", string>>` Extra classes for each part: root, control, node, wire, lever, bulb, label.
+- `color?`: `Tone` Colour of the current when on. Default `brand`.
+- `defaultChecked?`: `boolean` Initial state when uncontrolled.
+- `label?`: `ReactNode` Visible label. Use `aria-label` instead when there is none.
+- `name?`: `string` Form field name. When set, a hidden input submits `value` while the switch is on.
+- `onChange?`: `((checked: boolean, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void)` Called with the new state when the user flips the switch.
+- `showBulb?`: `boolean` Show the bulb that lights when the circuit is closed. Default `true`.
+- `size?`: `"small" | "medium" | "large"` Default `medium`.
+- `value?`: `string` Value submitted with `name` while on. Default `"on"`.
+- `wrapperClassName?`: `string` Class for the outer wrapper (the button gets `className`).
+
+## Checkbox (`checkbox`)
+A checkbox that closes a circuit.
+
+```tsx
+import { Checkbox } from '@sparkwire/core';
+```
+Install: `npx sparkwire add checkbox` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-checkbox--docs
+
+### Checkbox
+Checkbox: a terminal. Checking it powers the terminal: it fills with current
+and the tick is drawn in. Built on a native checkbox, so forms and keyboards work.
+
+Style hooks: `.sp-checkbox`, `__box`, `__label`, `__helper`; the native input
+drives `:checked`, `:indeterminate` and `:disabled`.
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `classNames?`: `Partial<Record<"label" | "root" | "box" | "helper", string>>` Extra classes for each part: root, box, label, helper.
+- `color?`: `Tone` Colour when checked. Default `brand`.
+- `error?`: `boolean` Marks the checkbox invalid and colours it with the error tone.
+- `helperText?`: `ReactNode` Help or error text under the label.
+- `indeterminate?`: `boolean` Shows a dash: some, but not all, of a group is selected.
+- `label?`: `ReactNode` Text next to the box.
+- `size?`: `"small" | "medium" | "large"` Default `medium`.
+
+## RadioGroup (`radio-group`)
+One live wire at a time.
+
+```tsx
+import { RadioGroup } from '@sparkwire/core';
+```
+Install: `npx sparkwire add radio-group` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-radiogroup--docs
+
+### RadioGroup
+RadioGroup: a selector switch. Every option is a contact; only the chosen one
+carries current, so its core lights up. Native radios underneath, so arrow
+keys and forms work as expected.
+
+Style hooks: `.sp-radio-group`, `__option[data-checked]`, `__dot`, `__text`.
+
+- `label`: `ReactNode` The group's legend. Required for accessibility.
+- `options`: `RadioOption[]`
+- `className?`: `string`
+- `color?`: `Tone` Colour of the chosen contact. Default `brand`.
+- `defaultValue?`: `string` Initial value when uncontrolled.
+- `error?`: `boolean` Marks the group invalid.
+- `helperText?`: `ReactNode` Help or error text under the group.
+- `name?`: `string` Form field name. Generated when omitted.
+- `onChange?`: `((value: string) => void)`
+- `value?`: `string` Controlled value.
+- `variant?`: `"list" | "cards"` `list` stacks options; `cards` lays them out as selectable cards.
+
+## Slider (`slider`)
+A dimmer, with two-knob ranges.
+
+```tsx
+import { Slider } from '@sparkwire/core';
+```
+Install: `npx sparkwire add slider` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-slider--docs
+
+### Slider
+Slider: a dimmer. The wire is lit up to the knob, and the glow gets stronger
+the higher you turn it. Pass a `[start, end]` value for a range: current
+flows between two knobs. Behaviour comes from React Aria: arrows, Page
+Up/Down, Home/End, dragging, clicking the track, right-to-left, and
+localized numbers. Each knob holds a native range input, so forms and
+React Hook Form's `register` work.
+
+Style hooks: `.sp-slider[data-range][data-disabled]`, `__header`, `__value`,
+`__track`, `__fill`, `__thumb[data-dragging][data-focus-visible]`.
+Variables: `--sp-start`, `--sp-end` and `--sp-pct` (0–100).
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `classNames?`: `Partial<Record<"value" | "label" | "root" | "header" | "track" | "fill" | "thumb", string>>` Extra classes for each part: root, header, label, value, track, fill, thumb.
+- `color?`: `Tone` Default `brand`.
+- `defaultValue?`: `SliderValue` Initial value when uncontrolled. A `[start, end]` pair makes it a range. Defaults to `min`.
+- `formatOptions?`: `NumberFormatOptions` Intl number options when `formatValue` isn't set, e.g. `{ style: 'currency', currency: 'INR' }`.
+- `formatValue?`: `((value: number) => string)` Format each value for the label and for screen readers.
+- `label?`: `ReactNode` Visible label, shown with the current value.
+- `max?`: `number` Default 100.
+- `min?`: `number` Default 0.
+- `name?`: `string | [string, string]` Form field name. For a range, one name (sent twice) or `[startName, endName]`.
+- `onChange?`: `((value: T) => void)` Called on every move with the new value (a number, or `[start, end]`).
+- `onChangeEnd?`: `((value: T) => void)` Called once when the user lets go, e.g. to save or fetch.
+- `ref?`: `Ref<HTMLInputElement>`
+- `step?`: `number` Default 1.
+- `thumbLabels?`: `[string, string]` Screen-reader names for the two knobs of a range. Default `['Minimum', 'Maximum']`.
+- `value?`: `SliderValue` Controlled value: a number, or `[start, end]` for a range with two knobs.
+
+## Textfield (`textfield`)
+A field that charges as you type.
+
+```tsx
+import { Textfield } from '@sparkwire/core';
+```
+Install: `npx sparkwire add textfield` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs
+
+### Textfield
+Textfield: in Live Wire, a field can "charge up" as its value becomes valid.
+Pass `charge` (0..1, or a function of the value) to show the meter.
+
+Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
+`[data-charged]`, `[data-disabled]`; parts `__label`, `__control`, `__input`,
+`__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).
+
+- `append?`: `ReactNode`
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `cardDetection?`: `((value: string) => string)`
+- `charge?`: `number | ((value: string) => number)` Live Wire charge meter. A number from 0 to 1, or a function that maps the current value to 0..1 (e.g. password strength). At 1 the field is fully charged and current runs along the meter.
+- `chargeLabel?`: `((percent: number) => ReactNode)` Text announced next to the meter. Receives the charge as 0..100.
+- `classNames?`: `Partial<Record<"label" | "root" | "control" | "input" | "adornment" | "meter" | "helper", string>>` Extra classes for each part: root, label, control, input, adornment, meter, helper.
+- `containerStyle?`: `CSSProperties`
+- `defaultValue?`: `string` Initial value when uncontrolled (no `value`). Works with React Hook Form's `register`.
+- `disabled?`: `boolean`
+- `error?`: `boolean`
+- `formatPhoneNumber?`: `((value: string) => string)`
+- `helperText?`: `string`
+- `inputSize?`: `"small" | "medium" | "large"`
+- `isCurrency?`: `boolean`
+- `label?`: `string` Visible label, linked to the input.
+- `onBlur?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)`
+- `onChange?`: `((event: ChangeEvent<HTMLInputElement>) => void)`
+- `onFocus?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)`
+- `placeholder?`: `string`
+- `prepend?`: `ReactNode`
+- `type?`: `"hidden" | "color" | "button" | "checkbox" | "date" | "datetime-local" | "email" | "file" | "image" | "month" | "password" | "radio" | "range" | "reset" | "search" | "submit" | ... 8 more ...`
+- `value?`: `string`
+- `variant?`: `"outlined" | "filled" | "standard"`
+
+## Field (`field`)
+Label, help text and error wiring for any control.
+
+```tsx
+import { Field } from '@sparkwire/core';
+```
+Install: `npx sparkwire add field` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs
+
+### Field
+Field: label, help text and error for any control, wired for screen readers.
+Use it to give your own inputs (a textarea, a third-party editor) the same
+labelling and error handling as Spark UI's built-in fields.
+
+Style hooks: `.sp-field[data-invalid][data-disabled]`, `__label`,
+`__required`, `__description`, `__error`.
+
+- `children`: `ReactElement<any, string | JSXElementConstructor<any>> | ((props: FieldControlProps) => ReactNode)` One element (ids and aria props are added to it), or a function that receives the props to spread: `{(p) => <textarea {...p} />}`.
+- `label`: `ReactNode` Visible label, linked to the control.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "label" | "description" | "error", string>>` Extra classes for each part: root, label, description, error.
+- `description?`: `ReactNode` Help text under the control.
+- `disabled?`: `boolean`
+- `error?`: `ReactNode` Error message. Replaces the description and marks the control invalid.
+- `id?`: `string` Control id. Generated when omitted.
+- `required?`: `boolean` Adds a required marker and `required` on the control.
+
+## Dropdown (`dropdown`)
+Pick one value from a list.
+
+```tsx
+import { Dropdown } from '@sparkwire/core';
+```
+Install: `npx sparkwire add dropdown` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs
+
+### Dropdown
+Dropdown: pick one value from a list. The chosen option's node lights up.
+Built on the Popover and ListBox base components with React Aria:
+typeahead on the closed and open list, arrow keys, Home/End, Escape,
+groups with headings, screen-reader announcements, and a hidden native
+select so plain forms and autofill work. `Select` is the same component.
+
+Style hooks: `.sp-dropdown[data-open][data-invalid][data-disabled]`,
+`__label`, `__trigger`, `__value[data-placeholder]`, `__chevron`,
+`__helper`; the list uses `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
+
+- `options`: `(DropdownOption<V> | DropdownOptionGroup<V>)[]` Options, or groups of options with a heading: `{ label: 'Asia', options: [...] }`.
+- `aria-label?`: `string` Accessible name when there is no visible label.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "label" | "trigger" | "value" | "popover" | "option" | "helper", string>>` Extra classes for each part: root, label, trigger, value, popover, option, helper.
+- `defaultValue?`: `string | number` Initial value when uncontrolled.
+- `disabled?`: `boolean`
+- `emptyState?`: `ReactNode` Shown when there are no options. Default "No options".
+- `error?`: `ReactNode` An error message, or `true` to mark the field invalid and show `helperText` as the error.
+- `helperText?`: `ReactNode` Help text under the field (shown in the error colour when `error` is `true`).
+- `label?`: `string` Visible label. Use `aria-label` instead if there is no visible label.
+- `name?`: `string` Form field name; a hidden native select submits the value.
+- `onBlur?`: `((event: FocusEvent<Element, Element>) => void)`
+- `onChange?`: `((value: V) => void)` Called with the chosen option's value; its type follows the options (numbers stay numbers).
+- `onFocus?`: `((event: FocusEvent<Element, Element>) => void)`
+- `onOpenChange?`: `((open: boolean) => void)` Called when the list opens or closes.
+- `placeholder?`: `string` Shown when nothing is selected. Default "Select an option".
+- `required?`: `boolean`
+- `size?`: `"small" | "medium" | "large"` Height 36, 46 or 54px. Default `medium`.
+- `startIcon?`: `ReactNode` Icon at the start of the field.
+- `value?`: `string | number | null` Controlled value (`null` for none).
+- `appendIcon?`: `ReactNode` **Deprecated.** Put an `icon` on each option instead.
+- `containerStyle?`: `CSSProperties` **Deprecated.** Use `classNames.root` or `className`.
+- `forTeams?`: `boolean` **Deprecated.** Put `icon: <User />` on each option.
+- `inputStyle?`: `CSSProperties` **Deprecated.** Use `classNames.trigger`.
+- `itemStyle?`: `CSSProperties` **Deprecated.** Use `classNames.option`.
+- `listContainerStyle?`: `CSSProperties` **Deprecated.** Use `classNames.popover`.
+- `prependIcon?`: `ReactNode` **Deprecated.** Use `startIcon`.
+- `showBorder?`: `boolean` **Deprecated.** Use `classNames` or CSS on `.sp-dropdown__trigger`.
+
+## Combobox (`combobox`)
+Type to search, then pick.
+
+```tsx
+import { Combobox } from '@sparkwire/core';
+```
+Install: `npx sparkwire add combobox` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs
+
+### Combobox
+Combobox: type to search a list, then pick. The field charges as you type
+and the matching option lights up. Built on the InputBase, Popover and
+ListBox base components with React Aria: filtering that ignores case and
+accents, arrow keys, Enter to pick, Escape to close or clear, groups,
+free entry, server-side search, and screen-reader announcements of
+result counts.
+
+Style hooks: `.sp-combobox[data-open][data-invalid][data-disabled][data-loading]`,
+`__label`, `__helper`, `__spinner`; the field is `.sp-input-base`, the
+list `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
+
+- `options`: `(ComboboxOption<V> | ComboboxOptionGroup<V>)[]` Options, or groups of options with a heading.
+- `allowsCustomValue?`: `boolean` Keep typed text that matches no option (free entry, e.g. tags or a new city).
+- `aria-label?`: `string` Accessible name when there is no visible label.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"input" | "root" | "label" | "field" | "popover" | "option" | "helper", string>>` Extra classes for each part: root, label, field, input, popover, option, helper.
+- `clearable?`: `boolean` Show a clear button when there is text. Default `true`.
+- `defaultInputValue?`: `string` Initial text in the input when uncontrolled.
+- `defaultValue?`: `string | number` Initial selected value when uncontrolled.
+- `disabled?`: `boolean`
+- `emptyState?`: `ReactNode` Shown when nothing matches. Default "No results".
+- `error?`: `ReactNode` An error message, or `true` to mark the field invalid and show `helperText` as the error.
+- `filter?`: `false | "contains" | "startsWith"` How options are matched to the typed text: `contains` (default), `startsWith`, or `false` when you filter yourself (e.g. server search). Matching ignores case and accents.
+- `helperText?`: `ReactNode` Help text under the field (shown in the error colour when `error` is `true`).
+- `inputValue?`: `string` Controlled text in the input.
+- `label?`: `string` Visible label. Use `aria-label` instead if there is no visible label.
+- `loading?`: `boolean` Show a loading indicator, e.g. while fetching options.
+- `loadingText?`: `ReactNode` Text shown in the list while `loading`. Default "Loading…".
+- `menuTrigger?`: `"input" | "focus" | "manual"` When the list opens: on typing (`input`, default), on focus, or only with the button or arrow keys (`manual`).
+- `name?`: `string` Form field name. Submits the selected value (or the typed text with `allowsCustomValue`).
+- `onChange?`: `((value: V | null) => void)` Called with the chosen option's value, or `null` when cleared.
+- `onInputChange?`: `((text: string) => void)` Called as the user types; use it to fetch options from a server (with `filter={false}`).
+- `placeholder?`: `string` Placeholder text in the input.
+- `required?`: `boolean`
+- `size?`: `"small" | "medium" | "large"` Height 36, 46 or 54px. Default `medium`.
+- `startIcon?`: `ReactNode` Icon at the start of the field, e.g. a search icon.
+- `value?`: `string | number | null` Controlled selected value (`null` for none).
+
+## DatePicker (`date-picker`)
+DatePicker and Calendar with typed entry, locales and calendar systems.
+
+```tsx
+import { DatePicker, Calendar } from '@sparkwire/core';
+```
+Install: `npx sparkwire add date-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs
+
+### DatePicker
+DatePicker: type a date or pick it from a calendar. The field lights up
+while the calendar is open, and the picked day is a lit node with a spark.
+Behaviour comes from React Aria: segment-by-segment typing in the
+locale's order (DD/MM/YYYY in India, MM/DD/YYYY in the US), arrow keys to
+adjust a segment, right-to-left layouts, other calendar systems, and a
+dialog popover that restores focus.
+
+Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
+`__label`, `__control`, `.sp-date-field`, `__segment[data-placeholder]`,
+`__trigger`, `__clear`, `__helper`, `__popover`.
+
+- `aria-label?`: `string` Accessible name when there is no visible label.
+- `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "popover" | "helper", string>>` Extra classes for each part: root, label, control, field, trigger, popover, helper.
+- `clearable?`: `boolean` Show a clear button when a date is set. Default `true`.
+- `defaultValue?`: `Date | null` Initial value when uncontrolled.
+- `disabled?`: `boolean`
+- `error?`: `boolean` Marks the field invalid.
+- `firstDayOfWeek?`: `"sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat"` First day of the week. Defaults to the locale's convention.
+- `helperText?`: `ReactNode` Help text under the field (or the error message when `error` is set).
+- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked (e.g. weekends, holidays).
+- `label?`: `ReactNode` Visible label above the field.
+- `locale?`: `string` BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's.
+- `max?`: `Date` Latest selectable day.
+- `min?`: `Date` Earliest selectable day.
+- `name?`: `string` Name for a hidden input carrying the ISO date (YYYY-MM-DD), for plain forms.
+- `onChange?`: `((date: Date | null) => void)` Called with the picked or typed date, or `null` when cleared.
+- `required?`: `boolean`
+- `size?`: `"small" | "medium" | "large"` Default `medium`.
+- `todayLabel?`: `string` Label for the "Today" shortcut, for other languages.
+- `value?`: `Date | null` Controlled value; `null` for no date.
+- `format?`: `DateTimeFormatOptions` **Deprecated.** The field now shows editable segments in the locale's order.
+- `placeholder?`: `string` **Deprecated.** The field now shows editable segments in the locale's order.
+- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
+
+### Calendar
+Calendar: a month grid. The selected day is a lit node, today is a ring,
+and picking a day throws a spark. Behaviour comes from React Aria: arrows,
+Page Up/Down (Shift for years), Home/End, right-to-left mirroring,
+localized names and digits, other calendar systems, and announcements
+when the month changes.
+
+Style hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,
+`__day` with `[data-selected]`, `[data-today]`, `[data-outside]`,
+`[data-unavailable]`, `[data-disabled]`, `[data-focus-visible]`.
+
+- `aria-label?`: `string` Accessible name for the calendar.
+- `autoFocus?`: `boolean` Move keyboard focus into the grid when the calendar mounts.
+- `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
+- `className?`: `string`
+- `defaultValue?`: `Date | null` Initial selected day when uncontrolled.
+- `firstDayOfWeek?`: `"sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat"` First day of the week. Defaults to the locale's convention.
+- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked (e.g. weekends, holidays).
+- `locale?`: `string` BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's.
+- `max?`: `Date` Latest selectable day.
+- `min?`: `Date` Earliest selectable day.
+- `onChange?`: `((date: Date) => void)` Called with the picked day.
+- `onEscape?`: `(() => void)` Called on Escape, so a custom popover can close.
+- `todayLabel?`: `string` Label for the "Today" shortcut, for other languages.
+- `value?`: `Date | null` The selected day.
+- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
+
+## Menu (`menu`)
+Actions behind a button, with submenus.
+
+```tsx
+import { Menu } from '@sparkwire/core';
+```
+Install: `npx sparkwire add menu` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs
+
+### Menu
+Menu: a list of actions behind a button (Edit, Duplicate, Delete). Not for
+picking a value: use Dropdown for that. Built on the Popover base and the
+shared list-item look, with React Aria's menu behaviour: arrow keys,
+typeahead, Enter/Space to run, Escape to close, submenus that open with
+the right arrow (left in right-to-left), sections, links, checkable items,
+and focus returning to the trigger.
+
+Style hooks: `.sp-menu`, `.sp-list-item[data-focused][data-danger][data-disabled][data-open]`,
+`__end` (shortcut), `__chevron`, `__check`; trigger `.sp-menu-trigger`.
+
+- `items`: `MenuEntry[]` Items, sections (`{ title, items }`) and submenus (`items` on an item).
+- `aria-label?`: `string` Accessible name for the menu. Defaults to the trigger's text.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"trigger" | "popover" | "menu" | "item", string>>` Extra classes for each part: trigger, popover, menu, item.
+- `closeOnSelect?`: `boolean` Close after an item is chosen. Default `true` (`false` by default with `multiple`).
+- `defaultSelectedKeys?`: `Iterable<string>` Initial checked keys when uncontrolled.
+- `disabled?`: `boolean`
+- `label?`: `ReactNode` Text of the default trigger button. Ignored when `trigger` is set.
+- `onAction?`: `((key: string) => void)` Called with the chosen item's key.
+- `onOpenChange?`: `((open: boolean) => void)`
+- `onSelectionChange?`: `((keys: Set<string>) => void)` Called with the checked keys.
+- `placement?`: `"bottom start" | "bottom end" | "top start" | "top end"` Where the menu opens. Default `bottom start`.
+- `selectedKeys?`: `Iterable<string>` Controlled checked keys.
+- `selectionMode?`: `"none" | "single" | "multiple"` Make items checkable: `single` (like radio) or `multiple` (like checkboxes). Default `none`.
+- `trigger?`: `ReactElement<any, string | JSXElementConstructor<any>>` Your own trigger, e.g. `<Button variant="text">` or an icon button. It must accept a ref.
+
+## Tabs (`tabs`)
+Tabs on one wire; the active tab is lit.
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel } from '@sparkwire/core';
+```
+Install: `npx sparkwire add tabs` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs
+
+### Tabs
+Tabs: every tab sits on one wire. The active tab is the lit segment, and the
+current slides along the wire when you switch. Behaviour comes from React
+Aria: arrow keys (mirrored in right-to-left languages), Home/End, vertical
+orientation, and automatic or manual activation.
+
+Works when rendered from a React Server Component: tabs register
+themselves instead of being read out of `children`.
+
+Style hooks: `.sp-tabs[data-orientation]`, `.sp-tab-list`,
+`.sp-tab[aria-selected][data-focus-visible]`, `.sp-tab-list__current`, `.sp-tab-panel`.
+
+- `children`: `ReactNode` A TabList and its TabPanels.
+- `activation?`: `"automatic" | "manual"` `automatic` (default): arrow keys select as they move. `manual`: arrow keys move focus; Enter or Space selects (use for slow panels).
+- `className?`: `string`
+- `color?`: `Tone` Colour of the lit segment. Default `brand`.
+- `defaultValue?`: `string` Initially active tab when uncontrolled. Defaults to the first enabled tab.
+- `onChange?`: `((value: string) => void)` Called with the newly selected tab's value.
+- `orientation?`: `"horizontal" | "vertical"` Lay tabs out in a row (default) or a column. Arrow keys follow.
+- `value?`: `string` Controlled active tab.
+
+### TabList
+
+
+- `children`: `ReactNode` <Tab> elements.
+- `aria-label?`: `string` Describe the set of tabs for screen readers.
+- `className?`: `string`
+
+### Tab
+One tab. Use inside <TabList>.
+
+- `value`: `string` Matches a TabPanel's `value`.
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `disabled?`: `boolean` (default `false`)
+- `icon?`: `ReactNode` Icon shown before the label.
+
+### TabPanel
+
+
+- `value`: `string` Matches a Tab's `value`.
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+
+## Accordion (`accordion`)
+Sections that power on as they open.
+
+```tsx
+import { Accordion, AccordionItem } from '@sparkwire/core';
+```
+Install: `npx sparkwire add accordion` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs
+
+### Accordion
+Accordion: a stack of circuits. Opening a section closes its circuit: the
+wire beside it lights up and current runs down it.
+
+Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
+`__trigger`, `__chevron`, `__panel`.
+
+- `className?`: `string`
+- `defaultOpen?`: `string[]` Sections open at first, by `value`.
+- `multiple?`: `boolean` Allow several sections open at once. Default `false`.
+
+### AccordionItem
+
+
+- `title`: `ReactNode` Text of the header button.
+- `value`: `string` Unique key for this section.
+- `disabled?`: `boolean`
+
+## Modal (`modal`)
+A dialog that powers on, with focus trapping.
+
+```tsx
+import { Modal } from '@sparkwire/core';
+```
+Install: `npx sparkwire add modal` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs
+
+### Modal
+Modal: a power cut. The page dims with a flicker and the dialog is the only
+thing left lit. Behaviour comes from React Aria: focus is contained and
+restored, the page behind is hidden from screen readers and can't scroll,
+and Escape or an outside click closes it. Built on the Overlay base.
+
+Style hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,
+`__header`, `__title`, `__description`, `__close`, `__body`, `__actions`.
+
+- `onClose`: `() => void` Called on Escape, the close button, or a click outside the dialog.
+- `open`: `boolean` Whether the dialog is shown.
+- `title`: `ReactNode` Dialog heading; also its accessible name.
+- `actions?`: `ReactNode` Buttons, usually. Rendered right-aligned in the footer.
+- `className?`: `string` Class for the dialog panel.
+- `classNames?`: `Partial<Record<"root" | "backdrop" | "panel" | "header" | "title" | "description" | "close" | "body" | "actions", string>>` Extra classes for each part: root, backdrop, panel, header, title, description, close, body, actions.
+- `closeOnBackdrop?`: `boolean` Close when the user clicks outside the dialog. Default `true`.
+- `description?`: `ReactNode` Supporting text under the title; read as the dialog's description.
+- `size?`: `"small" | "medium" | "large"` Max width: small 400px, medium 520px, large 720px.
+
+## Tooltip (`tooltip`)
+A hint that flickers on.
+
+```tsx
+import { Tooltip } from '@sparkwire/core';
+```
+Install: `npx sparkwire add tooltip` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs
+
+### Tooltip
+Tooltip: a short charged label that arcs out from its trigger on hover or
+keyboard focus. Behaviour comes from React Aria: hover delay with warm-up
+across nearby tooltips, instant on keyboard focus, Escape dismisses.
+
+Style hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.
+
+- `children`: `ReactElement<any, string | JSXElementConstructor<any>>` A single focusable element, e.g. a Button.
+- `title`: `ReactNode` Tooltip text. Keep it short; it is read as the trigger's description.
+- `className?`: `string` Class for the tooltip bubble.
+- `delay?`: `number` Delay before showing on hover, in ms. Default 250. Keyboard focus shows it at once.
+- `placement?`: `"top" | "bottom" | "left" | "right"` Side of the trigger to show on. Default `top`.
+
+## Toast (`toast`)
+Notifications.
+
+```tsx
+import { ToastProvider, useToast } from '@sparkwire/core';
+```
+Install: `npx sparkwire add toast` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs
+
+### ToastProvider
+Wrap your app once. Toasts stack bottom-right (max 5); the bottom bar
+discharges as the timer runs and pauses on hover or focus.
+
+Style hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,
+`__description`, `__action`, `__close`, `__timer`.
+
+No props.
+
+### ToastShowOptions
+Options for `toast.show()`. Wrap your app in `<ToastProvider>`, then
+`const toast = useToast(); toast.show({ title: 'Saved', tone: 'success' })`.
+
+- `title`: `ReactNode` Bold first line.
+- `action?`: `{ label: string; onClick: () => void; }` One action button, e.g. Undo. The toast closes after it runs.
+- `description?`: `ReactNode` Optional second line.
+- `duration?`: `number` Auto-dismiss after this many ms. `0` keeps it until closed. Default 4000.
+- `tone?`: `Tone` Default `brand`. `error` toasts are announced immediately (role="alert").
+
+## Card (`card`)
+Card, CardHeader, CardFooter and Skeleton.
+
+```tsx
+import { Card, CardHeader, Skeleton } from '@sparkwire/core';
+```
+Install: `npx sparkwire add card` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs
+
+### Card
+Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover.
+Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `as?`: `"div" | "article" | "section" | "li"` Render as another element, e.g. `article` or `section`.
+- `interactive?`: `boolean` Hover lift and glow, for clickable cards. Put the link or button inside.
+- `live?`: `boolean` A live card has current running along its top edge.
+- `padding?`: `"none" | "small" | "medium" | "large"` Inner spacing. Default `medium`.
+
+### CardHeader
+
+
+- `title`: `ReactNode`
+- `action?`: `ReactNode` Shown on the right, e.g. a Badge or menu button.
+- `media?`: `ReactNode` Shown on the left, e.g. an Avatar or icon.
+- `subtitle?`: `ReactNode`
+
+### Skeleton
+Skeleton: a placeholder that shimmers like a line charging up.
+
+- `height?`: `string | number` Number (px) or any CSS length.
+- `lines?`: `number` (default `1`) For `text`: number of lines. The last line is shorter.
+- `shape?`: `"text" | "rect" | "circle"` (default `rect`) `circle` for avatars, `text` for lines of copy.
+- `width?`: `string | number` Number (px) or any CSS length. Defaults to 100%.
+
+## Avatar (`avatar`)
+Avatar and AvatarGroup.
+
+```tsx
+import { Avatar, AvatarGroup } from '@sparkwire/core';
+```
+Install: `npx sparkwire add avatar` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-avatar--docs
+
+### Avatar
+Avatar: a photo or initials, with an optional status LED. An online user's
+LED pulses with current.
+Style hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.
+
+- `name`: `string` Full name: used for initials and the accessible label.
+- `size?`: `"small" | "medium" | "large" | "xlarge"` Default `medium` (40px).
+- `src?`: `string` Photo URL. Falls back to initials if missing or broken.
+- `status?`: `AvatarStatus` Status LED. `online` pulses.
+
+### AvatarGroup
+AvatarGroup: overlapping avatars wired together, with a "+N" overflow.
+
+- `people`: `AvatarProps[]`
+- `max?`: `number` (default `4`) Show at most this many; the rest become a "+N" chip. Default 4.
+- `size?`: `"small" | "medium" | "large" | "xlarge"` (default `medium`)
+
+## Indicators (`indicators`)
+Badge, Progress and Spinner.
+
+```tsx
+import { Badge, Progress, Spinner } from '@sparkwire/core';
+```
+Install: `npx sparkwire add indicators` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-badge--docs
+
+### Badge
+Badge: a status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`.
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `classNames?`: `Partial<Record<"root" | "led", string>>` Extra classes for each part: root, led.
+- `led?`: `boolean` Show the status LED. Default `true`.
+- `pulse?`: `boolean` Pulse the LED: something is live or in progress.
+- `tone?`: `Tone | "neutral"` Default `brand`.
+- `variant?`: `"soft" | "solid"` `soft` tinted background (default) or `solid` fill.
+
+### Progress
+Progress: a charge bar. At 100% the bar is fully charged and current flows.
+Style hooks: `.sp-progress[data-state="charging"|"charged"|"indeterminate"]`, `__track`, `__fill`.
+
+- `label?`: `ReactNode` Text above the bar; also its accessible name when a string.
+- `showValue?`: `boolean` Show the percentage next to the label. Default `true` when determinate.
+- `size?`: `"small" | "medium" | "large"` Bar thickness: 4, 8 or 12px. Default `medium`.
+- `tone?`: `Tone` Default `brand`.
+- `value?`: `number` 0–100. Leave undefined for an indeterminate bar.
+
+### Spinner
+Spinner: an arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`.
+
+- `label?`: `string` Accessible label. Default "Loading".
+- `size?`: `"small" | "medium" | "large"` 16, 24 or 36px. Default `medium`.
+- `tone?`: `Tone` Default `brand`.
+
+## SparkProvider (`provider`)
+App-wide default props, slot classes and locale.
+
+```tsx
+import { SparkProvider } from '@sparkwire/core';
+```
+Install: `npx sparkwire add provider` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-customization--docs
+
+### SparkProvider
+SparkProvider: set app-wide defaults and slot class names once, the way
+MUI's `theme.components` works. Nested providers merge with their parent.
+Styling still comes from `styles.css`; this provider only changes props.
+
+- `components?`: `SparkComponentsConfig` Defaults for every instance of a component, e.g. `{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`. Props set on an instance always win.
+- `locale?`: `string` BCP 47 locale for dates, number formats and keyboard direction, e.g. `hi-IN`, `ar-EG`, `en-US`. Right-to-left locales mirror arrow keys. Defaults to the parent provider's, then the browser's.
+
+## Base components (`base`)
+ButtonBase, InputBase, Popover, ListBox and Overlay: the building blocks under the other components.
+
+```tsx
+import { ButtonBase, InputBase, Popover, ListItemContent, ListBox, Overlay } from '@sparkwire/core/base';
+```
+Install: `npx sparkwire add base` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-base-components--docs
+
+### ButtonBase
+ButtonBase: the pressable foundation under Button, IconButton and menu
+triggers. Handles disabled state for any element, `type="button"` by
+default, and the spark burst. No visual style of its own beyond
+`.sp-button-base`; build your own buttons on it.
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `as?`: `ElementType` Render as another element or component, e.g. `"a"` or a router Link.
+- `disabled?`: `boolean` (default `false`) Dead circuit: no clicks, no sparks. Uses `disabled` on buttons, `aria-disabled` otherwise.
+- `href?`: `string` Link target when rendered as an anchor.
+- `spark?`: `boolean` (default `true`) Throw sparks from the press point on click. Default `true`.
+- `sparkColors?`: `string[]` Spark colours. Default: the theme's spark colours.
+
+### InputBase
+InputBase: the field shell under Textfield and Combobox. One bordered box
+holds the input and its adornments, lights up on focus, dashes when
+disabled, and focuses the input when you click anywhere in it. Build your
+own fields on it; label and help text are up to you (see Field).
+
+Style hooks: `.sp-input-base[data-variant][data-size][data-invalid][data-disabled]`,
+`__input`, `__adornment`. Focus uses `:focus-within`.
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `classNames?`: `Partial<Record<"input" | "root" | "adornment", string>>` Extra classes for each part: root, input, adornment.
+- `disabled?`: `boolean` (default `false`)
+- `endAdornment?`: `ReactNode` Shown after the input, e.g. a clear button or a chevron.
+- `error?`: `boolean` (default `false`) Marks the field invalid.
+- `rootProps?`: `(HTMLAttributes<HTMLDivElement> & { [key: `data-${string}`]: unknown; })` Props for the outer shell (data attributes, handlers, style).
+- `rootRef?`: `Ref<HTMLDivElement>` Ref for the outer shell, e.g. to anchor a popover.
+- `size?`: `"small" | "medium" | "large"` (default `medium`) Height 36, 46 or 54px. Default `medium`.
+- `startAdornment?`: `ReactNode` Shown before the input, e.g. an icon or a currency sign.
+- `variant?`: `"outlined" | "filled" | "standard"` (default `outlined`) `outlined` (default), `filled` or `standard` (underline only).
+
+### Popover
+Popover: a floating panel attached to a trigger, under Dropdown, Combobox,
+Menu and DatePicker. Positions itself and flips to stay on screen, renders
+in a portal that keeps the current theme, closes on outside click and
+Escape, and has hidden dismiss buttons for screen readers.
+
+Style hooks: `.sp-popover[data-placement]`.
+
+- `state`: `OverlayTriggerState` Open state, from `useOverlayTriggerState` or a component state (select, combobox, menu).
+- `triggerRef`: `RefObject<Element | null>` The element the popover is attached to. Its theme is copied to the popover.
+- `className?`: `string`
+- `disableFocusManagement?`: `boolean` Leave focus handling to the content (used by submenus).
+- `matchTriggerWidth?`: `boolean` Make the popover at least as wide as the trigger.
+- `style?`: `CSSProperties`
+
+### ListItemContent
+The inside of a list row: icon, label, description and an end slot. Shared by options and menu items.
+
+- `label`: `ReactNode`
+- `description?`: `ReactNode`
+- `end?`: `ReactNode` Shown at the end, e.g. a keyboard shortcut.
+- `icon?`: `ReactNode`
+
+### ListBox
+ListBox: a list of options to choose from, under Dropdown and Combobox.
+Each option is a node on a wire: the selected one lights up. Supports
+groups with headings, icons, descriptions, disabled options and
+screen-reader announcements.
+
+Style hooks: `.sp-listbox`, `.sp-list-section`, `__heading`,
+`.sp-list-item[data-focused][data-selected][data-disabled]`, `__icon`,
+`__label`, `__description`, `__check`, `.sp-listbox__empty`.
+
+- `state`: `ListState<T>` List state from `useListState`, `useSelectState` or `useComboBoxState`.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
+- `className?`: `string`
+- `emptyState?`: `ReactNode` Shown when there are no options.
+- `listBoxRef?`: `Ref<HTMLUListElement>`
+- `optionClassName?`: `string` Extra class for every option row.
+- `optionStyle?`: `CSSProperties` Inline style for every option row.
+
+### Overlay
+Overlay: the full-screen layer under Modal (and future Drawer and
+Sheet). Renders in a portal that keeps the current theme, dims the page,
+traps and restores focus, hides the page from screen readers, blocks
+scrolling, and closes on Escape or an outside click.
+
+Style hooks: `.sp-overlay`, `.sp-overlay__backdrop`.
+
+- `children`: `(panel: { panelProps: HTMLAttributes<HTMLElement>; panelRef: RefObject<HTMLDivElement>; }) => ReactNode` Render the panel. Spread `panelProps` on it and attach `panelRef`. Use a component here if you need hooks (e.g. `useDialog`).
+- `onClose`: `() => void` Called on Escape or (when `dismissable`) a click outside the panel.
+- `open`: `boolean` Whether the overlay is shown.
+- `backdropClassName?`: `string` Class for the dimmed backdrop.
+- `className?`: `string` Class for the full-screen root.
+- `dismissable?`: `boolean` Close on a click outside the panel. Default `true`.
+- `keyboardDismissDisabled?`: `boolean` Ignore Escape. Default `false`.

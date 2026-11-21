@@ -682,6 +682,30 @@
       ]
     },
     {
+      "name": "headless",
+      "type": "registry:ui",
+      "title": "Headless hooks",
+      "description": "useSwitch, useCheckbox, useSlider, useDatePicker and useSpark: behaviour without markup.",
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/date-picker",
+        "@sparkwire/spark",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/headless/index.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/headless/index.tsx"
+        }
+      ]
+    },
+    {
       "name": "provider",
       "type": "registry:ui",
       "title": "SparkProvider",

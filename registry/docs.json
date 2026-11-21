@@ -1,0 +1,2564 @@
+{
+  "version": "0.1.0",
+  "site": "https://phoenix-am.github.io/spark-ui",
+  "components": [
+    {
+      "name": "button",
+      "title": "Button",
+      "summary": "Throws sparks from the press point; current runs along outlined buttons on hover.",
+      "components": [
+        {
+          "name": "Button",
+          "description": "Button: throws sparks from the press point. Outlined and text buttons show\ncurrent flowing along a wire on hover; a disabled button is a dead circuit.\nBuilt on ButtonBase; forwards `ref` to the rendered element.",
+          "props": [
+            {
+              "name": "as",
+              "type": "ElementType",
+              "required": false,
+              "description": "Render as another element or component, e.g. `\"a\"` or a router Link."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"icon\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, icon."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Dead circuit: no clicks, no sparks, dashed outline."
+            },
+            {
+              "name": "endIcon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Icon after the label. Coloured with the text."
+            },
+            {
+              "name": "fullWidth",
+              "type": "boolean",
+              "required": false,
+              "description": "Stretch to the container's width."
+            },
+            {
+              "name": "spark",
+              "type": "boolean",
+              "required": false,
+              "description": "Throw sparks from the press point on click. Default `true`."
+            },
+            {
+              "name": "startIcon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Icon before the label. Coloured with the text."
+            },
+            {
+              "name": "ripple",
+              "type": "boolean",
+              "required": false,
+              "description": "@deprecated Use `spark`. Kept so existing code keeps working.",
+              "deprecated": true
+            }
+          ]
+        }
+      ],
+      "import": "import { Button } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add button",
+        "shadcn": "npx shadcn add @sparkwire/button",
+        "copiedImport": "import { Button } from '@/components/spark-ui/Button';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/actions-button--docs"
+    },
+    {
+      "name": "spark",
+      "title": "Spark",
+      "summary": "A burst of sparks from a point; used by Button and Calendar.",
+      "components": [
+        {
+          "name": "Spark",
+          "description": "Spark: the signature Live Wire effect. Place it inside a `position: relative`\nelement and call `burst()` from its click handler. Renders nothing for users\nwho prefer reduced motion.",
+          "props": [
+            {
+              "name": "colors",
+              "type": "string[]",
+              "required": false,
+              "description": "Particle colours. Defaults to the theme's `--spark-energy-spark-1…3`."
+            },
+            {
+              "name": "count",
+              "type": "number",
+              "required": false,
+              "default": "10",
+              "description": "Particles per burst. Default 10."
+            },
+            {
+              "name": "duration",
+              "type": "number",
+              "required": false,
+              "default": "700",
+              "description": "Burst duration in milliseconds. Default 700."
+            },
+            {
+              "name": "spread",
+              "type": "number",
+              "required": false,
+              "default": "70",
+              "description": "How far particles travel, in px. Default 70."
+            }
+          ]
+        }
+      ],
+      "import": "import { Spark } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add spark",
+        "shadcn": "npx shadcn add @sparkwire/spark",
+        "copiedImport": "import { Spark } from '@/components/spark-ui/Spark';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/effects-spark--docs"
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "summary": "A lever switch that lights a bulb.",
+      "components": [
+        {
+          "name": "Switch",
+          "description": "Switch: a lever that closes a circuit. When on, current lights the wire and\nthe bulb; when off, the lever lifts and the circuit goes dark.\n\nStyle hooks: `.sp-switch`, `[data-state=\"on\"|\"off\"]`, and the parts\n`.sp-switch__node`, `__wire`, `__lever`, `__bulb`, `__label`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "checked",
+              "type": "boolean",
+              "required": false,
+              "description": "Controlled state."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"label\" | \"root\" | \"control\" | \"node\" | \"wire\" | \"lever\" | \"bulb\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, control, node, wire, lever, bulb, label."
+            },
+            {
+              "name": "color",
+              "type": "Tone",
+              "required": false,
+              "description": "Colour of the current when on. Default `brand`."
+            },
+            {
+              "name": "defaultChecked",
+              "type": "boolean",
+              "required": false,
+              "description": "Initial state when uncontrolled."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Visible label. Use `aria-label` instead when there is none."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Form field name. When set, a hidden input submits `value` while the switch is on."
+            },
+            {
+              "name": "onChange",
+              "type": "((checked: boolean, event: MouseEvent<HTMLButtonElement, MouseEvent>) => void)",
+              "required": false,
+              "description": "Called with the new state when the user flips the switch."
+            },
+            {
+              "name": "showBulb",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the bulb that lights when the circuit is closed. Default `true`."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Default `medium`."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Value submitted with `name` while on. Default `\"on\"`."
+            },
+            {
+              "name": "wrapperClassName",
+              "type": "string",
+              "required": false,
+              "description": "Class for the outer wrapper (the button gets `className`)."
+            }
+          ]
+        }
+      ],
+      "import": "import { Switch } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add switch",
+        "shadcn": "npx shadcn add @sparkwire/switch",
+        "copiedImport": "import { Switch } from '@/components/spark-ui/Switch';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-switch--docs"
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "summary": "A checkbox that closes a circuit.",
+      "components": [
+        {
+          "name": "Checkbox",
+          "description": "Checkbox: a terminal. Checking it powers the terminal: it fills with current\nand the tick is drawn in. Built on a native checkbox, so forms and keyboards work.\n\nStyle hooks: `.sp-checkbox`, `__box`, `__label`, `__helper`; the native input\ndrives `:checked`, `:indeterminate` and `:disabled`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"label\" | \"root\" | \"box\" | \"helper\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, box, label, helper."
+            },
+            {
+              "name": "color",
+              "type": "Tone",
+              "required": false,
+              "description": "Colour when checked. Default `brand`."
+            },
+            {
+              "name": "error",
+              "type": "boolean",
+              "required": false,
+              "description": "Marks the checkbox invalid and colours it with the error tone."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help or error text under the label."
+            },
+            {
+              "name": "indeterminate",
+              "type": "boolean",
+              "required": false,
+              "description": "Shows a dash: some, but not all, of a group is selected."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Text next to the box."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Default `medium`."
+            }
+          ]
+        }
+      ],
+      "import": "import { Checkbox } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add checkbox",
+        "shadcn": "npx shadcn add @sparkwire/checkbox",
+        "copiedImport": "import { Checkbox } from '@/components/spark-ui/Checkbox';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-checkbox--docs"
+    },
+    {
+      "name": "radio-group",
+      "title": "RadioGroup",
+      "summary": "One live wire at a time.",
+      "components": [
+        {
+          "name": "RadioGroup",
+          "description": "RadioGroup: a selector switch. Every option is a contact; only the chosen one\ncarries current, so its core lights up. Native radios underneath, so arrow\nkeys and forms work as expected.\n\nStyle hooks: `.sp-radio-group`, `__option[data-checked]`, `__dot`, `__text`.",
+          "props": [
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": true,
+              "description": "The group's legend. Required for accessibility."
+            },
+            {
+              "name": "options",
+              "type": "RadioOption[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "color",
+              "type": "Tone",
+              "required": false,
+              "description": "Colour of the chosen contact. Default `brand`."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": "Initial value when uncontrolled."
+            },
+            {
+              "name": "error",
+              "type": "boolean",
+              "required": false,
+              "description": "Marks the group invalid."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help or error text under the group."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Form field name. Generated when omitted."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: string) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Controlled value."
+            },
+            {
+              "name": "variant",
+              "type": "\"list\" | \"cards\"",
+              "required": false,
+              "description": "`list` stacks options; `cards` lays them out as selectable cards."
+            }
+          ]
+        }
+      ],
+      "import": "import { RadioGroup } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add radio-group",
+        "shadcn": "npx shadcn add @sparkwire/radio-group",
+        "copiedImport": "import { RadioGroup } from '@/components/spark-ui/RadioGroup';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-radiogroup--docs"
+    },
+    {
+      "name": "slider",
+      "title": "Slider",
+      "summary": "A dimmer, with two-knob ranges.",
+      "components": [
+        {
+          "name": "Slider",
+          "description": "Slider: a dimmer. The wire is lit up to the knob, and the glow gets stronger\nthe higher you turn it. Pass a `[start, end]` value for a range: current\nflows between two knobs. Behaviour comes from React Aria: arrows, Page\nUp/Down, Home/End, dragging, clicking the track, right-to-left, and\nlocalized numbers. Each knob holds a native range input, so forms and\nReact Hook Form's `register` work.\n\nStyle hooks: `.sp-slider[data-range][data-disabled]`, `__header`, `__value`,\n`__track`, `__fill`, `__thumb[data-dragging][data-focus-visible]`.\nVariables: `--sp-start`, `--sp-end` and `--sp-pct` (0–100).",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"value\" | \"label\" | \"root\" | \"header\" | \"track\" | \"fill\" | \"thumb\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, header, label, value, track, fill, thumb."
+            },
+            {
+              "name": "color",
+              "type": "Tone",
+              "required": false,
+              "description": "Default `brand`."
+            },
+            {
+              "name": "defaultValue",
+              "type": "SliderValue",
+              "required": false,
+              "description": "Initial value when uncontrolled. A `[start, end]` pair makes it a range. Defaults to `min`."
+            },
+            {
+              "name": "formatOptions",
+              "type": "NumberFormatOptions",
+              "required": false,
+              "description": "Intl number options when `formatValue` isn't set, e.g. `{ style: 'currency', currency: 'INR' }`."
+            },
+            {
+              "name": "formatValue",
+              "type": "((value: number) => string)",
+              "required": false,
+              "description": "Format each value for the label and for screen readers."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Visible label, shown with the current value."
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "required": false,
+              "description": "Default 100."
+            },
+            {
+              "name": "min",
+              "type": "number",
+              "required": false,
+              "description": "Default 0."
+            },
+            {
+              "name": "name",
+              "type": "string | [string, string]",
+              "required": false,
+              "description": "Form field name. For a range, one name (sent twice) or `[startName, endName]`."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: T) => void)",
+              "required": false,
+              "description": "Called on every move with the new value (a number, or `[start, end]`)."
+            },
+            {
+              "name": "onChangeEnd",
+              "type": "((value: T) => void)",
+              "required": false,
+              "description": "Called once when the user lets go, e.g. to save or fetch."
+            },
+            {
+              "name": "ref",
+              "type": "Ref<HTMLInputElement>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "step",
+              "type": "number",
+              "required": false,
+              "description": "Default 1."
+            },
+            {
+              "name": "thumbLabels",
+              "type": "[string, string]",
+              "required": false,
+              "description": "Screen-reader names for the two knobs of a range. Default `['Minimum', 'Maximum']`."
+            },
+            {
+              "name": "value",
+              "type": "SliderValue",
+              "required": false,
+              "description": "Controlled value: a number, or `[start, end]` for a range with two knobs."
+            }
+          ]
+        }
+      ],
+      "import": "import { Slider } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add slider",
+        "shadcn": "npx shadcn add @sparkwire/slider",
+        "copiedImport": "import { Slider } from '@/components/spark-ui/Slider';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-slider--docs"
+    },
+    {
+      "name": "textfield",
+      "title": "Textfield",
+      "summary": "A field that charges as you type.",
+      "components": [
+        {
+          "name": "Textfield",
+          "description": "Textfield: in Live Wire, a field can \"charge up\" as its value becomes valid.\nPass `charge` (0..1, or a function of the value) to show the meter.\n\nStyle hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,\n`[data-charged]`, `[data-disabled]`; parts `__label`, `__control`, `__input`,\n`__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).",
+          "props": [
+            {
+              "name": "append",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "cardDetection",
+              "type": "((value: string) => string)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "charge",
+              "type": "number | ((value: string) => number)",
+              "required": false,
+              "description": "Live Wire charge meter. A number from 0 to 1, or a function that maps the\ncurrent value to 0..1 (e.g. password strength). At 1 the field is fully\ncharged and current runs along the meter."
+            },
+            {
+              "name": "chargeLabel",
+              "type": "((percent: number) => ReactNode)",
+              "required": false,
+              "description": "Text announced next to the meter. Receives the charge as 0..100."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"label\" | \"root\" | \"control\" | \"input\" | \"adornment\" | \"meter\" | \"helper\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, label, control, input, adornment, meter, helper."
+            },
+            {
+              "name": "containerStyle",
+              "type": "CSSProperties",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": "Initial value when uncontrolled (no `value`). Works with React Hook Form's `register`."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "error",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "formatPhoneNumber",
+              "type": "((value: string) => string)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "helperText",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "inputSize",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "isCurrency",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Visible label, linked to the input."
+            },
+            {
+              "name": "onBlur",
+              "type": "((event: FocusEvent<HTMLInputElement, Element>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onChange",
+              "type": "((event: ChangeEvent<HTMLInputElement>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onFocus",
+              "type": "((event: FocusEvent<HTMLInputElement, Element>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "prepend",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "type",
+              "type": "\"hidden\" | \"color\" | \"button\" | \"checkbox\" | \"date\" | \"datetime-local\" | \"email\" | \"file\" | \"image\" | \"month\" | \"password\" | \"radio\" | \"range\" | \"reset\" | \"search\" | \"submit\" | ... 8 more ...",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "variant",
+              "type": "\"outlined\" | \"filled\" | \"standard\"",
+              "required": false,
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "import": "import { Textfield } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add textfield",
+        "shadcn": "npx shadcn add @sparkwire/textfield",
+        "copiedImport": "import { Textfield } from '@/components/spark-ui/Textfield';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs"
+    },
+    {
+      "name": "field",
+      "title": "Field",
+      "summary": "Label, help text and error wiring for any control.",
+      "components": [
+        {
+          "name": "Field",
+          "description": "Field: label, help text and error for any control, wired for screen readers.\nUse it to give your own inputs (a textarea, a third-party editor) the same\nlabelling and error handling as Spark UI's built-in fields.\n\nStyle hooks: `.sp-field[data-invalid][data-disabled]`, `__label`,\n`__required`, `__description`, `__error`.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactElement<any, string | JSXElementConstructor<any>> | ((props: FieldControlProps) => ReactNode)",
+              "required": true,
+              "description": "One element (ids and aria props are added to it), or a function that\nreceives the props to spread: `{(p) => <textarea {...p} />}`."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Visible label, linked to the control."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"label\" | \"description\" | \"error\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, label, description, error."
+            },
+            {
+              "name": "description",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help text under the control."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "error",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Error message. Replaces the description and marks the control invalid."
+            },
+            {
+              "name": "id",
+              "type": "string",
+              "required": false,
+              "description": "Control id. Generated when omitted."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": "Adds a required marker and `required` on the control."
+            }
+          ]
+        }
+      ],
+      "import": "import { Field } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add field",
+        "shadcn": "npx shadcn add @sparkwire/field",
+        "copiedImport": "import { Field } from '@/components/spark-ui/Field';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs"
+    },
+    {
+      "name": "dropdown",
+      "title": "Dropdown",
+      "summary": "Pick one value from a list.",
+      "components": [
+        {
+          "name": "Dropdown",
+          "description": "Dropdown: pick one value from a list. The chosen option's node lights up.\nBuilt on the Popover and ListBox base components with React Aria:\ntypeahead on the closed and open list, arrow keys, Home/End, Escape,\ngroups with headings, screen-reader announcements, and a hidden native\nselect so plain forms and autofill work. `Select` is the same component.\n\nStyle hooks: `.sp-dropdown[data-open][data-invalid][data-disabled]`,\n`__label`, `__trigger`, `__value[data-placeholder]`, `__chevron`,\n`__helper`; the list uses `.sp-popover`, `.sp-listbox` and `.sp-list-item`.",
+          "props": [
+            {
+              "name": "options",
+              "type": "(DropdownOption<V> | DropdownOptionGroup<V>)[]",
+              "required": true,
+              "description": "Options, or groups of options with a heading: `{ label: 'Asia', options: [...] }`."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name when there is no visible label."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"label\" | \"trigger\" | \"value\" | \"popover\" | \"option\" | \"helper\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, label, trigger, value, popover, option, helper."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string | number",
+              "required": false,
+              "description": "Initial value when uncontrolled."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "emptyState",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown when there are no options. Default \"No options\"."
+            },
+            {
+              "name": "error",
+              "type": "ReactNode",
+              "required": false,
+              "description": "An error message, or `true` to mark the field invalid and show `helperText` as the error."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help text under the field (shown in the error colour when `error` is `true`)."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Visible label. Use `aria-label` instead if there is no visible label."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Form field name; a hidden native select submits the value."
+            },
+            {
+              "name": "onBlur",
+              "type": "((event: FocusEvent<Element, Element>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onChange",
+              "type": "((value: V) => void)",
+              "required": false,
+              "description": "Called with the chosen option's value; its type follows the options (numbers stay numbers)."
+            },
+            {
+              "name": "onFocus",
+              "type": "((event: FocusEvent<Element, Element>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onOpenChange",
+              "type": "((open: boolean) => void)",
+              "required": false,
+              "description": "Called when the list opens or closes."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "Shown when nothing is selected. Default \"Select an option\"."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Height 36, 46 or 54px. Default `medium`."
+            },
+            {
+              "name": "startIcon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Icon at the start of the field."
+            },
+            {
+              "name": "value",
+              "type": "string | number | null",
+              "required": false,
+              "description": "Controlled value (`null` for none)."
+            },
+            {
+              "name": "appendIcon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "@deprecated Put an `icon` on each option instead.",
+              "deprecated": true
+            },
+            {
+              "name": "containerStyle",
+              "type": "CSSProperties",
+              "required": false,
+              "description": "@deprecated Use `classNames.root` or `className`.",
+              "deprecated": true
+            },
+            {
+              "name": "forTeams",
+              "type": "boolean",
+              "required": false,
+              "description": "@deprecated Put `icon: <User />` on each option.",
+              "deprecated": true
+            },
+            {
+              "name": "inputStyle",
+              "type": "CSSProperties",
+              "required": false,
+              "description": "@deprecated Use `classNames.trigger`.",
+              "deprecated": true
+            },
+            {
+              "name": "itemStyle",
+              "type": "CSSProperties",
+              "required": false,
+              "description": "@deprecated Use `classNames.option`.",
+              "deprecated": true
+            },
+            {
+              "name": "listContainerStyle",
+              "type": "CSSProperties",
+              "required": false,
+              "description": "@deprecated Use `classNames.popover`.",
+              "deprecated": true
+            },
+            {
+              "name": "prependIcon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "@deprecated Use `startIcon`.",
+              "deprecated": true
+            },
+            {
+              "name": "showBorder",
+              "type": "boolean",
+              "required": false,
+              "description": "@deprecated Use `classNames` or CSS on `.sp-dropdown__trigger`.",
+              "deprecated": true
+            }
+          ]
+        }
+      ],
+      "import": "import { Dropdown } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add dropdown",
+        "shadcn": "npx shadcn add @sparkwire/dropdown",
+        "copiedImport": "import { Dropdown } from '@/components/spark-ui/Dropdown';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs"
+    },
+    {
+      "name": "combobox",
+      "title": "Combobox",
+      "summary": "Type to search, then pick.",
+      "components": [
+        {
+          "name": "Combobox",
+          "description": "Combobox: type to search a list, then pick. The field charges as you type\nand the matching option lights up. Built on the InputBase, Popover and\nListBox base components with React Aria: filtering that ignores case and\naccents, arrow keys, Enter to pick, Escape to close or clear, groups,\nfree entry, server-side search, and screen-reader announcements of\nresult counts.\n\nStyle hooks: `.sp-combobox[data-open][data-invalid][data-disabled][data-loading]`,\n`__label`, `__helper`, `__spinner`; the field is `.sp-input-base`, the\nlist `.sp-popover`, `.sp-listbox` and `.sp-list-item`.",
+          "props": [
+            {
+              "name": "options",
+              "type": "(ComboboxOption<V> | ComboboxOptionGroup<V>)[]",
+              "required": true,
+              "description": "Options, or groups of options with a heading."
+            },
+            {
+              "name": "allowsCustomValue",
+              "type": "boolean",
+              "required": false,
+              "description": "Keep typed text that matches no option (free entry, e.g. tags or a new city)."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name when there is no visible label."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"input\" | \"root\" | \"label\" | \"field\" | \"popover\" | \"option\" | \"helper\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, label, field, input, popover, option, helper."
+            },
+            {
+              "name": "clearable",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a clear button when there is text. Default `true`."
+            },
+            {
+              "name": "defaultInputValue",
+              "type": "string",
+              "required": false,
+              "description": "Initial text in the input when uncontrolled."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string | number",
+              "required": false,
+              "description": "Initial selected value when uncontrolled."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "emptyState",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown when nothing matches. Default \"No results\"."
+            },
+            {
+              "name": "error",
+              "type": "ReactNode",
+              "required": false,
+              "description": "An error message, or `true` to mark the field invalid and show `helperText` as the error."
+            },
+            {
+              "name": "filter",
+              "type": "false | \"contains\" | \"startsWith\"",
+              "required": false,
+              "description": "How options are matched to the typed text: `contains` (default),\n`startsWith`, or `false` when you filter yourself (e.g. server search).\nMatching ignores case and accents."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help text under the field (shown in the error colour when `error` is `true`)."
+            },
+            {
+              "name": "inputValue",
+              "type": "string",
+              "required": false,
+              "description": "Controlled text in the input."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Visible label. Use `aria-label` instead if there is no visible label."
+            },
+            {
+              "name": "loading",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a loading indicator, e.g. while fetching options."
+            },
+            {
+              "name": "loadingText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Text shown in the list while `loading`. Default \"Loading…\"."
+            },
+            {
+              "name": "menuTrigger",
+              "type": "\"input\" | \"focus\" | \"manual\"",
+              "required": false,
+              "description": "When the list opens: on typing (`input`, default), on focus, or only with the button or arrow keys (`manual`)."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Form field name. Submits the selected value (or the typed text with `allowsCustomValue`)."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: V | null) => void)",
+              "required": false,
+              "description": "Called with the chosen option's value, or `null` when cleared."
+            },
+            {
+              "name": "onInputChange",
+              "type": "((text: string) => void)",
+              "required": false,
+              "description": "Called as the user types; use it to fetch options from a server (with `filter={false}`)."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "Placeholder text in the input."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Height 36, 46 or 54px. Default `medium`."
+            },
+            {
+              "name": "startIcon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Icon at the start of the field, e.g. a search icon."
+            },
+            {
+              "name": "value",
+              "type": "string | number | null",
+              "required": false,
+              "description": "Controlled selected value (`null` for none)."
+            }
+          ]
+        }
+      ],
+      "import": "import { Combobox } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add combobox",
+        "shadcn": "npx shadcn add @sparkwire/combobox",
+        "copiedImport": "import { Combobox } from '@/components/spark-ui/Combobox';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs"
+    },
+    {
+      "name": "date-picker",
+      "title": "DatePicker",
+      "summary": "DatePicker and Calendar with typed entry, locales and calendar systems.",
+      "components": [
+        {
+          "name": "DatePicker",
+          "description": "DatePicker: type a date or pick it from a calendar. The field lights up\nwhile the calendar is open, and the picked day is a lit node with a spark.\nBehaviour comes from React Aria: segment-by-segment typing in the\nlocale's order (DD/MM/YYYY in India, MM/DD/YYYY in the US), arrow keys to\nadjust a segment, right-to-left layouts, other calendar systems, and a\ndialog popover that restores focus.\n\nStyle hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,\n`__label`, `__control`, `.sp-date-field`, `__segment[data-placeholder]`,\n`__trigger`, `__clear`, `__helper`, `__popover`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name when there is no visible label."
+            },
+            {
+              "name": "calendar",
+              "type": "CalendarSystem",
+              "required": false,
+              "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"label\" | \"control\" | \"field\" | \"trigger\" | \"popover\" | \"helper\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, label, control, field, trigger, popover, helper."
+            },
+            {
+              "name": "clearable",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a clear button when a date is set. Default `true`."
+            },
+            {
+              "name": "defaultValue",
+              "type": "Date | null",
+              "required": false,
+              "description": "Initial value when uncontrolled."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "error",
+              "type": "boolean",
+              "required": false,
+              "description": "Marks the field invalid."
+            },
+            {
+              "name": "firstDayOfWeek",
+              "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "required": false,
+              "description": "First day of the week. Defaults to the locale's convention."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help text under the field (or the error message when `error` is set)."
+            },
+            {
+              "name": "isDateDisabled",
+              "type": "((date: Date) => boolean)",
+              "required": false,
+              "description": "Return `true` for days that can't be picked (e.g. weekends, holidays)."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Visible label above the field."
+            },
+            {
+              "name": "locale",
+              "type": "string",
+              "required": false,
+              "description": "BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's."
+            },
+            {
+              "name": "max",
+              "type": "Date",
+              "required": false,
+              "description": "Latest selectable day."
+            },
+            {
+              "name": "min",
+              "type": "Date",
+              "required": false,
+              "description": "Earliest selectable day."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Name for a hidden input carrying the ISO date (YYYY-MM-DD), for plain forms."
+            },
+            {
+              "name": "onChange",
+              "type": "((date: Date | null) => void)",
+              "required": false,
+              "description": "Called with the picked or typed date, or `null` when cleared."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Default `medium`."
+            },
+            {
+              "name": "todayLabel",
+              "type": "string",
+              "required": false,
+              "description": "Label for the \"Today\" shortcut, for other languages."
+            },
+            {
+              "name": "value",
+              "type": "Date | null",
+              "required": false,
+              "description": "Controlled value; `null` for no date."
+            },
+            {
+              "name": "format",
+              "type": "DateTimeFormatOptions",
+              "required": false,
+              "description": "@deprecated The field now shows editable segments in the locale's order.",
+              "deprecated": true
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": "@deprecated The field now shows editable segments in the locale's order.",
+              "deprecated": true
+            },
+            {
+              "name": "weekStartsOn",
+              "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "required": false,
+              "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
+              "deprecated": true
+            }
+          ]
+        },
+        {
+          "name": "Calendar",
+          "description": "Calendar: a month grid. The selected day is a lit node, today is a ring,\nand picking a day throws a spark. Behaviour comes from React Aria: arrows,\nPage Up/Down (Shift for years), Home/End, right-to-left mirroring,\nlocalized names and digits, other calendar systems, and announcements\nwhen the month changes.\n\nStyle hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,\n`__day` with `[data-selected]`, `[data-today]`, `[data-outside]`,\n`[data-unavailable]`, `[data-disabled]`, `[data-focus-visible]`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name for the calendar."
+            },
+            {
+              "name": "autoFocus",
+              "type": "boolean",
+              "required": false,
+              "description": "Move keyboard focus into the grid when the calendar mounts."
+            },
+            {
+              "name": "calendar",
+              "type": "CalendarSystem",
+              "required": false,
+              "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultValue",
+              "type": "Date | null",
+              "required": false,
+              "description": "Initial selected day when uncontrolled."
+            },
+            {
+              "name": "firstDayOfWeek",
+              "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "required": false,
+              "description": "First day of the week. Defaults to the locale's convention."
+            },
+            {
+              "name": "isDateDisabled",
+              "type": "((date: Date) => boolean)",
+              "required": false,
+              "description": "Return `true` for days that can't be picked (e.g. weekends, holidays)."
+            },
+            {
+              "name": "locale",
+              "type": "string",
+              "required": false,
+              "description": "BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's."
+            },
+            {
+              "name": "max",
+              "type": "Date",
+              "required": false,
+              "description": "Latest selectable day."
+            },
+            {
+              "name": "min",
+              "type": "Date",
+              "required": false,
+              "description": "Earliest selectable day."
+            },
+            {
+              "name": "onChange",
+              "type": "((date: Date) => void)",
+              "required": false,
+              "description": "Called with the picked day."
+            },
+            {
+              "name": "onEscape",
+              "type": "(() => void)",
+              "required": false,
+              "description": "Called on Escape, so a custom popover can close."
+            },
+            {
+              "name": "todayLabel",
+              "type": "string",
+              "required": false,
+              "description": "Label for the \"Today\" shortcut, for other languages."
+            },
+            {
+              "name": "value",
+              "type": "Date | null",
+              "required": false,
+              "description": "The selected day."
+            },
+            {
+              "name": "weekStartsOn",
+              "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "required": false,
+              "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
+              "deprecated": true
+            }
+          ]
+        }
+      ],
+      "import": "import { DatePicker, Calendar } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add date-picker",
+        "shadcn": "npx shadcn add @sparkwire/date-picker",
+        "copiedImport": "import { DatePicker, Calendar } from '@/components/spark-ui/DatePicker';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs"
+    },
+    {
+      "name": "menu",
+      "title": "Menu",
+      "summary": "Actions behind a button, with submenus.",
+      "components": [
+        {
+          "name": "Menu",
+          "description": "Menu: a list of actions behind a button (Edit, Duplicate, Delete). Not for\npicking a value: use Dropdown for that. Built on the Popover base and the\nshared list-item look, with React Aria's menu behaviour: arrow keys,\ntypeahead, Enter/Space to run, Escape to close, submenus that open with\nthe right arrow (left in right-to-left), sections, links, checkable items,\nand focus returning to the trigger.\n\nStyle hooks: `.sp-menu`, `.sp-list-item[data-focused][data-danger][data-disabled][data-open]`,\n`__end` (shortcut), `__chevron`, `__check`; trigger `.sp-menu-trigger`.",
+          "props": [
+            {
+              "name": "items",
+              "type": "MenuEntry[]",
+              "required": true,
+              "description": "Items, sections (`{ title, items }`) and submenus (`items` on an item)."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name for the menu. Defaults to the trigger's text."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"trigger\" | \"popover\" | \"menu\" | \"item\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: trigger, popover, menu, item."
+            },
+            {
+              "name": "closeOnSelect",
+              "type": "boolean",
+              "required": false,
+              "description": "Close after an item is chosen. Default `true` (`false` by default with `multiple`)."
+            },
+            {
+              "name": "defaultSelectedKeys",
+              "type": "Iterable<string>",
+              "required": false,
+              "description": "Initial checked keys when uncontrolled."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Text of the default trigger button. Ignored when `trigger` is set."
+            },
+            {
+              "name": "onAction",
+              "type": "((key: string) => void)",
+              "required": false,
+              "description": "Called with the chosen item's key."
+            },
+            {
+              "name": "onOpenChange",
+              "type": "((open: boolean) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onSelectionChange",
+              "type": "((keys: Set<string>) => void)",
+              "required": false,
+              "description": "Called with the checked keys."
+            },
+            {
+              "name": "placement",
+              "type": "\"bottom start\" | \"bottom end\" | \"top start\" | \"top end\"",
+              "required": false,
+              "description": "Where the menu opens. Default `bottom start`."
+            },
+            {
+              "name": "selectedKeys",
+              "type": "Iterable<string>",
+              "required": false,
+              "description": "Controlled checked keys."
+            },
+            {
+              "name": "selectionMode",
+              "type": "\"none\" | \"single\" | \"multiple\"",
+              "required": false,
+              "description": "Make items checkable: `single` (like radio) or `multiple` (like checkboxes). Default `none`."
+            },
+            {
+              "name": "trigger",
+              "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+              "required": false,
+              "description": "Your own trigger, e.g. `<Button variant=\"text\">` or an icon button. It must accept a ref."
+            }
+          ]
+        }
+      ],
+      "import": "import { Menu } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add menu",
+        "shadcn": "npx shadcn add @sparkwire/menu",
+        "copiedImport": "import { Menu } from '@/components/spark-ui/Menu';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs"
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "summary": "Tabs on one wire; the active tab is lit.",
+      "components": [
+        {
+          "name": "Tabs",
+          "description": "Tabs: every tab sits on one wire. The active tab is the lit segment, and the\ncurrent slides along the wire when you switch. Behaviour comes from React\nAria: arrow keys (mirrored in right-to-left languages), Home/End, vertical\norientation, and automatic or manual activation.\n\nWorks when rendered from a React Server Component: tabs register\nthemselves instead of being read out of `children`.\n\nStyle hooks: `.sp-tabs[data-orientation]`, `.sp-tab-list`,\n`.sp-tab[aria-selected][data-focus-visible]`, `.sp-tab-list__current`, `.sp-tab-panel`.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": "A TabList and its TabPanels."
+            },
+            {
+              "name": "activation",
+              "type": "\"automatic\" | \"manual\"",
+              "required": false,
+              "description": "`automatic` (default): arrow keys select as they move.\n`manual`: arrow keys move focus; Enter or Space selects (use for slow panels)."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "color",
+              "type": "Tone",
+              "required": false,
+              "description": "Colour of the lit segment. Default `brand`."
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": "Initially active tab when uncontrolled. Defaults to the first enabled tab."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: string) => void)",
+              "required": false,
+              "description": "Called with the newly selected tab's value."
+            },
+            {
+              "name": "orientation",
+              "type": "\"horizontal\" | \"vertical\"",
+              "required": false,
+              "description": "Lay tabs out in a row (default) or a column. Arrow keys follow."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Controlled active tab."
+            }
+          ]
+        },
+        {
+          "name": "TabList",
+          "description": "",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": "<Tab> elements."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Describe the set of tabs for screen readers."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "Tab",
+          "description": "One tab. Use inside <TabList>.",
+          "props": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "Matches a TabPanel's `value`."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "default": "false",
+              "description": ""
+            },
+            {
+              "name": "icon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Icon shown before the label."
+            }
+          ]
+        },
+        {
+          "name": "TabPanel",
+          "description": "",
+          "props": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "Matches a Tab's `value`."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            }
+          ]
+        }
+      ],
+      "import": "import { Tabs, TabList, Tab, TabPanel } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add tabs",
+        "shadcn": "npx shadcn add @sparkwire/tabs",
+        "copiedImport": "import { Tabs, TabList, Tab, TabPanel } from '@/components/spark-ui/Tabs';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs"
+    },
+    {
+      "name": "accordion",
+      "title": "Accordion",
+      "summary": "Sections that power on as they open.",
+      "components": [
+        {
+          "name": "Accordion",
+          "description": "Accordion: a stack of circuits. Opening a section closes its circuit: the\nwire beside it lights up and current runs down it.\n\nStyle hooks: `.sp-accordion`, `__item[data-state=\"open\"|\"closed\"]`, `__wire`,\n`__trigger`, `__chevron`, `__panel`.",
+          "props": [
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultOpen",
+              "type": "string[]",
+              "required": false,
+              "description": "Sections open at first, by `value`."
+            },
+            {
+              "name": "multiple",
+              "type": "boolean",
+              "required": false,
+              "description": "Allow several sections open at once. Default `false`."
+            }
+          ]
+        },
+        {
+          "name": "AccordionItem",
+          "description": "",
+          "props": [
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Text of the header button."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "Unique key for this section."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "import": "import { Accordion, AccordionItem } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add accordion",
+        "shadcn": "npx shadcn add @sparkwire/accordion",
+        "copiedImport": "import { Accordion, AccordionItem } from '@/components/spark-ui/Accordion';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs"
+    },
+    {
+      "name": "modal",
+      "title": "Modal",
+      "summary": "A dialog that powers on, with focus trapping.",
+      "components": [
+        {
+          "name": "Modal",
+          "description": "Modal: a power cut. The page dims with a flicker and the dialog is the only\nthing left lit. Behaviour comes from React Aria: focus is contained and\nrestored, the page behind is hidden from screen readers and can't scroll,\nand Escape or an outside click closes it. Built on the Overlay base.\n\nStyle hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,\n`__header`, `__title`, `__description`, `__close`, `__body`, `__actions`.",
+          "props": [
+            {
+              "name": "onClose",
+              "type": "() => void",
+              "required": true,
+              "description": "Called on Escape, the close button, or a click outside the dialog."
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": true,
+              "description": "Whether the dialog is shown."
+            },
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Dialog heading; also its accessible name."
+            },
+            {
+              "name": "actions",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Buttons, usually. Rendered right-aligned in the footer."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Class for the dialog panel."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"backdrop\" | \"panel\" | \"header\" | \"title\" | \"description\" | \"close\" | \"body\" | \"actions\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, backdrop, panel, header, title, description, close, body, actions."
+            },
+            {
+              "name": "closeOnBackdrop",
+              "type": "boolean",
+              "required": false,
+              "description": "Close when the user clicks outside the dialog. Default `true`."
+            },
+            {
+              "name": "description",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Supporting text under the title; read as the dialog's description."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Max width: small 400px, medium 520px, large 720px."
+            }
+          ]
+        }
+      ],
+      "import": "import { Modal } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add modal",
+        "shadcn": "npx shadcn add @sparkwire/modal",
+        "copiedImport": "import { Modal } from '@/components/spark-ui/Modal';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs"
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "summary": "A hint that flickers on.",
+      "components": [
+        {
+          "name": "Tooltip",
+          "description": "Tooltip: a short charged label that arcs out from its trigger on hover or\nkeyboard focus. Behaviour comes from React Aria: hover delay with warm-up\nacross nearby tooltips, instant on keyboard focus, Escape dismisses.\n\nStyle hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactElement<any, string | JSXElementConstructor<any>>",
+              "required": true,
+              "description": "A single focusable element, e.g. a Button."
+            },
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Tooltip text. Keep it short; it is read as the trigger's description."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Class for the tooltip bubble."
+            },
+            {
+              "name": "delay",
+              "type": "number",
+              "required": false,
+              "description": "Delay before showing on hover, in ms. Default 250. Keyboard focus shows it at once."
+            },
+            {
+              "name": "placement",
+              "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+              "required": false,
+              "description": "Side of the trigger to show on. Default `top`."
+            }
+          ]
+        }
+      ],
+      "import": "import { Tooltip } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add tooltip",
+        "shadcn": "npx shadcn add @sparkwire/tooltip",
+        "copiedImport": "import { Tooltip } from '@/components/spark-ui/Tooltip';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs"
+    },
+    {
+      "name": "toast",
+      "title": "Toast",
+      "summary": "Notifications.",
+      "components": [
+        {
+          "name": "ToastProvider",
+          "description": "Wrap your app once. Toasts stack bottom-right (max 5); the bottom bar\ndischarges as the timer runs and pauses on hover or focus.\n\nStyle hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,\n`__description`, `__action`, `__close`, `__timer`.",
+          "props": []
+        },
+        {
+          "name": "ToastShowOptions",
+          "description": "Options for `toast.show()`. Wrap your app in `<ToastProvider>`, then\n`const toast = useToast(); toast.show({ title: 'Saved', tone: 'success' })`.",
+          "props": [
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": true,
+              "description": "Bold first line."
+            },
+            {
+              "name": "action",
+              "type": "{ label: string; onClick: () => void; }",
+              "required": false,
+              "description": "One action button, e.g. Undo. The toast closes after it runs."
+            },
+            {
+              "name": "description",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Optional second line."
+            },
+            {
+              "name": "duration",
+              "type": "number",
+              "required": false,
+              "description": "Auto-dismiss after this many ms. `0` keeps it until closed. Default 4000."
+            },
+            {
+              "name": "tone",
+              "type": "Tone",
+              "required": false,
+              "description": "Default `brand`. `error` toasts are announced immediately (role=\"alert\")."
+            }
+          ]
+        }
+      ],
+      "import": "import { ToastProvider, useToast } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add toast",
+        "shadcn": "npx shadcn add @sparkwire/toast",
+        "copiedImport": "import { ToastProvider, useToast } from '@/components/spark-ui/Toast';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs"
+    },
+    {
+      "name": "card",
+      "title": "Card",
+      "summary": "Card, CardHeader, CardFooter and Skeleton.",
+      "components": [
+        {
+          "name": "Card",
+          "description": "Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover.\nStyle hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "as",
+              "type": "\"div\" | \"article\" | \"section\" | \"li\"",
+              "required": false,
+              "description": "Render as another element, e.g. `article` or `section`."
+            },
+            {
+              "name": "interactive",
+              "type": "boolean",
+              "required": false,
+              "description": "Hover lift and glow, for clickable cards. Put the link or button inside."
+            },
+            {
+              "name": "live",
+              "type": "boolean",
+              "required": false,
+              "description": "A live card has current running along its top edge."
+            },
+            {
+              "name": "padding",
+              "type": "\"none\" | \"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Inner spacing. Default `medium`."
+            }
+          ]
+        },
+        {
+          "name": "CardHeader",
+          "description": "",
+          "props": [
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "action",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown on the right, e.g. a Badge or menu button."
+            },
+            {
+              "name": "media",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown on the left, e.g. an Avatar or icon."
+            },
+            {
+              "name": "subtitle",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "Skeleton",
+          "description": "Skeleton: a placeholder that shimmers like a line charging up.",
+          "props": [
+            {
+              "name": "height",
+              "type": "string | number",
+              "required": false,
+              "description": "Number (px) or any CSS length."
+            },
+            {
+              "name": "lines",
+              "type": "number",
+              "required": false,
+              "default": "1",
+              "description": "For `text`: number of lines. The last line is shorter."
+            },
+            {
+              "name": "shape",
+              "type": "\"text\" | \"rect\" | \"circle\"",
+              "required": false,
+              "default": "rect",
+              "description": "`circle` for avatars, `text` for lines of copy."
+            },
+            {
+              "name": "width",
+              "type": "string | number",
+              "required": false,
+              "description": "Number (px) or any CSS length. Defaults to 100%."
+            }
+          ]
+        }
+      ],
+      "import": "import { Card, CardHeader, Skeleton } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add card",
+        "shadcn": "npx shadcn add @sparkwire/card",
+        "copiedImport": "import { Card, CardHeader, Skeleton } from '@/components/spark-ui/Card';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs"
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "summary": "Avatar and AvatarGroup.",
+      "components": [
+        {
+          "name": "Avatar",
+          "description": "Avatar: a photo or initials, with an optional status LED. An online user's\nLED pulses with current.\nStyle hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.",
+          "props": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "description": "Full name: used for initials and the accessible label."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+              "required": false,
+              "description": "Default `medium` (40px)."
+            },
+            {
+              "name": "src",
+              "type": "string",
+              "required": false,
+              "description": "Photo URL. Falls back to initials if missing or broken."
+            },
+            {
+              "name": "status",
+              "type": "AvatarStatus",
+              "required": false,
+              "description": "Status LED. `online` pulses."
+            }
+          ]
+        },
+        {
+          "name": "AvatarGroup",
+          "description": "AvatarGroup: overlapping avatars wired together, with a \"+N\" overflow.",
+          "props": [
+            {
+              "name": "people",
+              "type": "AvatarProps[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "required": false,
+              "default": "4",
+              "description": "Show at most this many; the rest become a \"+N\" chip. Default 4."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+              "required": false,
+              "default": "medium",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "import": "import { Avatar, AvatarGroup } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add avatar",
+        "shadcn": "npx shadcn add @sparkwire/avatar",
+        "copiedImport": "import { Avatar, AvatarGroup } from '@/components/spark-ui/Avatar';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-avatar--docs"
+    },
+    {
+      "name": "indicators",
+      "title": "Indicators",
+      "summary": "Badge, Progress and Spinner.",
+      "components": [
+        {
+          "name": "Badge",
+          "description": "Badge: a status label with an LED. Pulsing means \"live\". Style hooks: `.sp-badge`, `__led`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"led\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, led."
+            },
+            {
+              "name": "led",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the status LED. Default `true`."
+            },
+            {
+              "name": "pulse",
+              "type": "boolean",
+              "required": false,
+              "description": "Pulse the LED: something is live or in progress."
+            },
+            {
+              "name": "tone",
+              "type": "Tone | \"neutral\"",
+              "required": false,
+              "description": "Default `brand`."
+            },
+            {
+              "name": "variant",
+              "type": "\"soft\" | \"solid\"",
+              "required": false,
+              "description": "`soft` tinted background (default) or `solid` fill."
+            }
+          ]
+        },
+        {
+          "name": "Progress",
+          "description": "Progress: a charge bar. At 100% the bar is fully charged and current flows.\nStyle hooks: `.sp-progress[data-state=\"charging\"|\"charged\"|\"indeterminate\"]`, `__track`, `__fill`.",
+          "props": [
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Text above the bar; also its accessible name when a string."
+            },
+            {
+              "name": "showValue",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the percentage next to the label. Default `true` when determinate."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Bar thickness: 4, 8 or 12px. Default `medium`."
+            },
+            {
+              "name": "tone",
+              "type": "Tone",
+              "required": false,
+              "description": "Default `brand`."
+            },
+            {
+              "name": "value",
+              "type": "number",
+              "required": false,
+              "description": "0–100. Leave undefined for an indeterminate bar."
+            }
+          ]
+        },
+        {
+          "name": "Spinner",
+          "description": "Spinner: an arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`.",
+          "props": [
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible label. Default \"Loading\"."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "16, 24 or 36px. Default `medium`."
+            },
+            {
+              "name": "tone",
+              "type": "Tone",
+              "required": false,
+              "description": "Default `brand`."
+            }
+          ]
+        }
+      ],
+      "import": "import { Badge, Progress, Spinner } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add indicators",
+        "shadcn": "npx shadcn add @sparkwire/indicators",
+        "copiedImport": "import { Badge, Progress, Spinner } from '@/components/spark-ui/Indicators';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-badge--docs"
+    },
+    {
+      "name": "provider",
+      "title": "SparkProvider",
+      "summary": "App-wide default props, slot classes and locale.",
+      "components": [
+        {
+          "name": "SparkProvider",
+          "description": "SparkProvider: set app-wide defaults and slot class names once, the way\nMUI's `theme.components` works. Nested providers merge with their parent.\nStyling still comes from `styles.css`; this provider only changes props.",
+          "props": [
+            {
+              "name": "components",
+              "type": "SparkComponentsConfig",
+              "required": false,
+              "description": "Defaults for every instance of a component, e.g.\n`{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`.\nProps set on an instance always win."
+            },
+            {
+              "name": "locale",
+              "type": "string",
+              "required": false,
+              "description": "BCP 47 locale for dates, number formats and keyboard direction, e.g.\n`hi-IN`, `ar-EG`, `en-US`. Right-to-left locales mirror arrow keys.\nDefaults to the parent provider's, then the browser's."
+            }
+          ]
+        }
+      ],
+      "import": "import { SparkProvider } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add provider",
+        "shadcn": "npx shadcn add @sparkwire/provider",
+        "copiedImport": "import { SparkProvider } from '@/components/spark-ui/Provider';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-customization--docs"
+    },
+    {
+      "name": "base",
+      "title": "Base components",
+      "summary": "ButtonBase, InputBase, Popover, ListBox and Overlay: the building blocks under the other components.",
+      "components": [
+        {
+          "name": "ButtonBase",
+          "description": "ButtonBase: the pressable foundation under Button, IconButton and menu\ntriggers. Handles disabled state for any element, `type=\"button\"` by\ndefault, and the spark burst. No visual style of its own beyond\n`.sp-button-base`; build your own buttons on it.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "as",
+              "type": "ElementType",
+              "required": false,
+              "description": "Render as another element or component, e.g. `\"a\"` or a router Link."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "default": "false",
+              "description": "Dead circuit: no clicks, no sparks. Uses `disabled` on buttons, `aria-disabled` otherwise."
+            },
+            {
+              "name": "href",
+              "type": "string",
+              "required": false,
+              "description": "Link target when rendered as an anchor."
+            },
+            {
+              "name": "spark",
+              "type": "boolean",
+              "required": false,
+              "default": "true",
+              "description": "Throw sparks from the press point on click. Default `true`."
+            },
+            {
+              "name": "sparkColors",
+              "type": "string[]",
+              "required": false,
+              "description": "Spark colours. Default: the theme's spark colours."
+            }
+          ]
+        },
+        {
+          "name": "InputBase",
+          "description": "InputBase: the field shell under Textfield and Combobox. One bordered box\nholds the input and its adornments, lights up on focus, dashes when\ndisabled, and focuses the input when you click anywhere in it. Build your\nown fields on it; label and help text are up to you (see Field).\n\nStyle hooks: `.sp-input-base[data-variant][data-size][data-invalid][data-disabled]`,\n`__input`, `__adornment`. Focus uses `:focus-within`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"input\" | \"root\" | \"adornment\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, input, adornment."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "default": "false",
+              "description": ""
+            },
+            {
+              "name": "endAdornment",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown after the input, e.g. a clear button or a chevron."
+            },
+            {
+              "name": "error",
+              "type": "boolean",
+              "required": false,
+              "default": "false",
+              "description": "Marks the field invalid."
+            },
+            {
+              "name": "rootProps",
+              "type": "(HTMLAttributes<HTMLDivElement> & { [key: `data-${string}`]: unknown; })",
+              "required": false,
+              "description": "Props for the outer shell (data attributes, handlers, style)."
+            },
+            {
+              "name": "rootRef",
+              "type": "Ref<HTMLDivElement>",
+              "required": false,
+              "description": "Ref for the outer shell, e.g. to anchor a popover."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "default": "medium",
+              "description": "Height 36, 46 or 54px. Default `medium`."
+            },
+            {
+              "name": "startAdornment",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown before the input, e.g. an icon or a currency sign."
+            },
+            {
+              "name": "variant",
+              "type": "\"outlined\" | \"filled\" | \"standard\"",
+              "required": false,
+              "default": "outlined",
+              "description": "`outlined` (default), `filled` or `standard` (underline only)."
+            }
+          ]
+        },
+        {
+          "name": "Popover",
+          "description": "Popover: a floating panel attached to a trigger, under Dropdown, Combobox,\nMenu and DatePicker. Positions itself and flips to stay on screen, renders\nin a portal that keeps the current theme, closes on outside click and\nEscape, and has hidden dismiss buttons for screen readers.\n\nStyle hooks: `.sp-popover[data-placement]`.",
+          "props": [
+            {
+              "name": "state",
+              "type": "OverlayTriggerState",
+              "required": true,
+              "description": "Open state, from `useOverlayTriggerState` or a component state (select, combobox, menu)."
+            },
+            {
+              "name": "triggerRef",
+              "type": "RefObject<Element | null>",
+              "required": true,
+              "description": "The element the popover is attached to. Its theme is copied to the popover."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disableFocusManagement",
+              "type": "boolean",
+              "required": false,
+              "description": "Leave focus handling to the content (used by submenus)."
+            },
+            {
+              "name": "matchTriggerWidth",
+              "type": "boolean",
+              "required": false,
+              "description": "Make the popover at least as wide as the trigger."
+            },
+            {
+              "name": "style",
+              "type": "CSSProperties",
+              "required": false,
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "ListItemContent",
+          "description": "The inside of a list row: icon, label, description and an end slot. Shared by options and menu items.",
+          "props": [
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "description",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "end",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown at the end, e.g. a keyboard shortcut."
+            },
+            {
+              "name": "icon",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "ListBox",
+          "description": "ListBox: a list of options to choose from, under Dropdown and Combobox.\nEach option is a node on a wire: the selected one lights up. Supports\ngroups with headings, icons, descriptions, disabled options and\nscreen-reader announcements.\n\nStyle hooks: `.sp-listbox`, `.sp-list-section`, `__heading`,\n`.sp-list-item[data-focused][data-selected][data-disabled]`, `__icon`,\n`__label`, `__description`, `__check`, `.sp-listbox__empty`.",
+          "props": [
+            {
+              "name": "state",
+              "type": "ListState<T>",
+              "required": true,
+              "description": "List state from `useListState`, `useSelectState` or `useComboBoxState`."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "emptyState",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown when there are no options."
+            },
+            {
+              "name": "listBoxRef",
+              "type": "Ref<HTMLUListElement>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "optionClassName",
+              "type": "string",
+              "required": false,
+              "description": "Extra class for every option row."
+            },
+            {
+              "name": "optionStyle",
+              "type": "CSSProperties",
+              "required": false,
+              "description": "Inline style for every option row."
+            }
+          ]
+        },
+        {
+          "name": "Overlay",
+          "description": "Overlay: the full-screen layer under Modal (and future Drawer and\nSheet). Renders in a portal that keeps the current theme, dims the page,\ntraps and restores focus, hides the page from screen readers, blocks\nscrolling, and closes on Escape or an outside click.\n\nStyle hooks: `.sp-overlay`, `.sp-overlay__backdrop`.",
+          "props": [
+            {
+              "name": "children",
+              "type": "(panel: { panelProps: HTMLAttributes<HTMLElement>; panelRef: RefObject<HTMLDivElement>; }) => ReactNode",
+              "required": true,
+              "description": "Render the panel. Spread `panelProps` on it and attach `panelRef`.\nUse a component here if you need hooks (e.g. `useDialog`)."
+            },
+            {
+              "name": "onClose",
+              "type": "() => void",
+              "required": true,
+              "description": "Called on Escape or (when `dismissable`) a click outside the panel."
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": true,
+              "description": "Whether the overlay is shown."
+            },
+            {
+              "name": "backdropClassName",
+              "type": "string",
+              "required": false,
+              "description": "Class for the dimmed backdrop."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": "Class for the full-screen root."
+            },
+            {
+              "name": "dismissable",
+              "type": "boolean",
+              "required": false,
+              "description": "Close on a click outside the panel. Default `true`."
+            },
+            {
+              "name": "keyboardDismissDisabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Ignore Escape. Default `false`."
+            }
+          ]
+        }
+      ],
+      "import": "import { ButtonBase, InputBase, Popover, ListItemContent, ListBox, Overlay } from '@sparkwire/core/base';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add base",
+        "shadcn": "npx shadcn add @sparkwire/base",
+        "copiedImport": "import { ButtonBase, InputBase, Popover, ListItemContent, ListBox, Overlay } from '@/components/spark-ui/base';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-base-components--docs"
+    }
+  ]
+}

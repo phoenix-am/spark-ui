@@ -474,3 +474,46 @@ describe('Menu', () => {
     expect(screen.getByRole('menu')).toBeInTheDocument();
   });
 });
+
+describe('headless hooks', () => {
+  const { useSwitch, useSlider, useDatePicker } = jest.requireActual('../headless');
+
+  it('useSwitch: role, keyboard toggle and data-state', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    function Demo() {
+      const ref = React.useRef<HTMLInputElement>(null);
+      const { inputProps, dataProps } = useSwitch({ 'aria-label': 'Wifi', onChange }, ref);
+      return <label {...dataProps} data-testid="root"><input {...inputProps} ref={ref} /></label>;
+    }
+    render(<Demo />);
+    act(() => screen.getByRole('switch').focus());
+    await user.keyboard(' ');
+    expect(onChange).toHaveBeenLastCalledWith(true);
+    expect(screen.getByTestId('root')).toHaveAttribute('data-state', 'on');
+  });
+
+  it('useSlider: range values and CSS variables', () => {
+    let result: { value: number[]; cssVars: Record<string, number> } | undefined;
+    function Demo() {
+      const trackRef = React.useRef<HTMLDivElement>(null);
+      result = useSlider({ 'aria-label': 'Price', defaultValue: [20, 60] }, trackRef);
+      return <div ref={trackRef} />;
+    }
+    render(<Demo />);
+    expect(result!.value).toEqual([20, 60]);
+    expect(result!.cssVars).toEqual({ '--sp-start': 20, '--sp-end': 60, '--sp-pct': 60 });
+  });
+
+  it('useDatePicker: Date in, Date and ISO out', () => {
+    let result: { value: Date | null; isoValue: string } | undefined;
+    function Demo() {
+      const ref = React.useRef<HTMLDivElement>(null);
+      result = useDatePicker({ 'aria-label': 'Start', defaultValue: new Date(2026, 11, 25) }, ref);
+      return <div ref={ref} />;
+    }
+    render(<Demo />);
+    expect(result!.isoValue).toBe('2026-12-25');
+    expect(result!.value!.getDate()).toBe(25);
+  });
+});
