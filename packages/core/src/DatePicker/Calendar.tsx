@@ -1,22 +1,18 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { I18nProvider, useButton, useCalendar, useCalendarCell, useCalendarGrid, useLocale } from 'react-aria';
+import { useCalendarState, CalendarState } from 'react-stately';
+import { CalendarDate, DateValue, createCalendar, getLocalTimeZone, isToday, today } from '@internationalized/date';
+import type { AriaCalendarProps, AriaButtonProps } from 'react-aria';
 import { Spark, SparkHandle } from '../Spark';
 import { cx } from '../internal/cx';
-import {
-  addDays,
-  addMonths,
-  isAfter,
-  isBefore,
-  isSameDay,
-  monthGrid,
-  startOfDay,
-  startOfMonth,
-  weekdayNames,
-} from './dateUtils';
 import { useDefaults } from '../internal/defaults';
+import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, withCalendar } from './dateAdapters';
 
 export interface CalendarProps {
   /** The selected day. */
   value?: Date | null;
+  /** Initial selected day when uncontrolled. */
+  defaultValue?: Date | null;
   /** Called with the picked day. */
   onChange?: (date: Date) => void;
   /** Earliest selectable day. */
@@ -25,177 +21,108 @@ export interface CalendarProps {
   max?: Date;
   /** Return `true` for days that can't be picked (e.g. weekends, holidays). */
   isDateDisabled?: (date: Date) => boolean;
-  /** First day of the week: 0 = Sunday, 1 = Monday. Default 1. */
+  /** First day of the week. Defaults to the locale's convention. */
+  firstDayOfWeek?: FirstDayOfWeek;
+  /** @deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday. */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  /** BCP 47 locale for month and weekday names. Defaults to the browser's. */
+  /** BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's. */
   locale?: string;
+  /** Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates. */
+  calendar?: CalendarSystem;
   /** Move keyboard focus into the grid when the calendar mounts. */
   autoFocus?: boolean;
   /** Label for the "Today" shortcut, for other languages. */
   todayLabel?: string;
-  /** Called on Escape, so a popover can close. */
+  /** Called on Escape, so a custom popover can close. */
   onEscape?: () => void;
+  /** Accessible name for the calendar. */
+  'aria-label'?: string;
   className?: string;
 }
 
 /**
  * Calendar: a month grid. The selected day is a lit node, today is a ring,
- * and picking a day throws a spark. Arrows move by day/week, PageUp/PageDown
- * by month (Shift: year), Home/End to the week's start/end, Enter selects.
+ * and picking a day throws a spark. Behaviour comes from React Aria: arrows,
+ * Page Up/Down (Shift for years), Home/End, right-to-left mirroring,
+ * localized names and digits, other calendar systems, and announcements
+ * when the month changes.
  *
  * Style hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,
- * `__day` with `[data-selected]`, `[data-today]`, `[data-outside]`, `:disabled`.
+ * `__day` with `[data-selected]`, `[data-today]`, `[data-outside]`,
+ * `[data-unavailable]`, `[data-disabled]`, `[data-focus-visible]`.
  */
 export function Calendar(inProps: CalendarProps) {
-  const {
-  value,
-  onChange,
-  min,
-  max,
-  isDateDisabled,
-  weekStartsOn = 1,
-  locale,
-  autoFocus = false,
-  todayLabel = 'Today',
-  onEscape,
-  className,
-} = useDefaults('Calendar', inProps);
-  const today = startOfDay(new Date());
-  const [focused, setFocused] = useState<Date>(startOfDay(value ?? clampToRange(today, min, max)));
-  const [month, setMonth] = useState<Date>(startOfMonth(focused));
-  const gridRef = useRef<HTMLTableElement>(null);
-  const sparkRef = useRef<SparkHandle>(null);
-  const shouldFocus = useRef(autoFocus);
-
-  const weeks = useMemo(() => monthGrid(month, weekStartsOn), [month, weekStartsOn]);
-  const dayNames = useMemo(() => weekdayNames(locale, weekStartsOn, 'short'), [locale, weekStartsOn]);
-  const longDay = useMemo(
-    () => new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
-    [locale],
+  const { value, defaultValue, onChange, min, max, isDateDisabled, firstDayOfWeek, weekStartsOn, locale, calendar, ...rest } = useDefaults(
+    'Calendar',
+    inProps,
   );
-  const monthLabel = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(month);
+  const { locale: inherited } = useLocale();
+  return (
+    <I18nProvider locale={withCalendar(locale ?? inherited, calendar)}>
+      <CalendarCore
+        value={value === undefined ? undefined : toDateValue(value)}
+        defaultValue={toDateValue(defaultValue)}
+        onChange={(v) => v && onChange?.(fromDateValue(v)!)}
+        minValue={toDateValue(min) ?? undefined}
+        maxValue={toDateValue(max) ?? undefined}
+        isDateUnavailable={isDateDisabled ? (d) => isDateDisabled(fromDateValue(d)!) : undefined}
+        firstDayOfWeek={firstDayOfWeek ?? toFirstDay(weekStartsOn)}
+        {...rest}
+      />
+    </I18nProvider>
+  );
+}
 
-  const disabled = (d: Date) =>
-    (min ? isBefore(d, min) : false) || (max ? isAfter(d, max) : false) || (isDateDisabled?.(d) ?? false);
+export interface CalendarCoreProps extends AriaCalendarProps<DateValue> {
+  firstDayOfWeek?: FirstDayOfWeek;
+  todayLabel?: string;
+  onEscape?: () => void;
+  className?: string;
+}
 
-  // The one day that takes Tab focus: the focused day if it's in view, else the 1st.
-  const inView = focused.getMonth() === month.getMonth() && focused.getFullYear() === month.getFullYear();
-  const tabTarget = inView ? focused : month;
+/** React Aria-level calendar, also used inside DatePicker's popover. */
+export function CalendarCore({ todayLabel = 'Today', onEscape, className, firstDayOfWeek, ...props }: CalendarCoreProps) {
+  const { locale, direction } = useLocale();
+  const sparkRef = useRef<SparkHandle>(null);
+  const lastPointer = useRef<{ clientX: number; clientY: number } | null>(null);
 
-  const prevDisabled = !!min && !isAfter(startOfMonth(month), startOfMonth(min));
-  const nextDisabled = !!max && !isBefore(startOfMonth(month), startOfMonth(max));
-
-  // Keep the focused day's button focused after keyboard moves.
-  useEffect(() => {
-    if (!shouldFocus.current) return;
-    gridRef.current?.querySelector<HTMLButtonElement>('button[tabindex="0"]')?.focus();
-  }, [focused, month]);
-
-  const moveTo = (d: Date) => {
-    const next = clampToRange(d, min, max);
-    shouldFocus.current = true;
-    setFocused(next);
-    if (next.getMonth() !== month.getMonth() || next.getFullYear() !== month.getFullYear()) {
-      setMonth(startOfMonth(next));
-    }
+  const onChange = (v: DateValue) => {
+    const p = lastPointer.current;
+    sparkRef.current?.burst(p ? (p as unknown as React.MouseEvent<HTMLElement>) : undefined);
+    lastPointer.current = null;
+    props.onChange?.(v as never);
   };
 
-  const select = (d: Date, event?: React.MouseEvent<HTMLElement>) => {
-    if (disabled(d)) return;
-    sparkRef.current?.burst(event);
-    setFocused(d);
-    onChange?.(d);
-  };
-
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    const dow = (focused.getDay() - weekStartsOn + 7) % 7;
-    const map: Record<string, () => Date> = {
-      ArrowLeft: () => addDays(focused, -1),
-      ArrowRight: () => addDays(focused, 1),
-      ArrowUp: () => addDays(focused, -7),
-      ArrowDown: () => addDays(focused, 7),
-      Home: () => addDays(focused, -dow),
-      End: () => addDays(focused, 6 - dow),
-      PageUp: () => addMonths(focused, e.shiftKey ? -12 : -1),
-      PageDown: () => addMonths(focused, e.shiftKey ? 12 : 1),
-    };
-    if (map[e.key]) {
-      e.preventDefault();
-      moveTo(map[e.key]());
-    } else if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      select(focused);
-    } else if (e.key === 'Escape' && onEscape) {
-      e.preventDefault();
-      onEscape();
-    }
-  };
+  const state = useCalendarState({ ...props, onChange, firstDayOfWeek, locale, createCalendar });
+  const { calendarProps, prevButtonProps, nextButtonProps, title } = useCalendar({ ...props, onChange }, state);
+  const todayDate = today(getLocalTimeZone());
+  const todayBlocked = state.isCellUnavailable(todayDate) || state.isInvalid(todayDate);
 
   return (
-    <div className={cx('sp-calendar', className)}>
+    <div
+      {...calendarProps}
+      dir={direction}
+      className={cx('sp-calendar', className)}
+      onPointerDown={(e) => (lastPointer.current = { clientX: e.clientX, clientY: e.clientY })}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape' && onEscape) onEscape();
+      }}
+    >
       <div className="sp-calendar__header">
-        <button type="button" className="sp-calendar__nav" aria-label="Previous month" disabled={prevDisabled} onClick={() => setMonth(addMonths(month, -1))}>
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
-        <h2 aria-live="polite" className="sp-calendar__title">
-          {monthLabel}
-        </h2>
-        <button type="button" className="sp-calendar__nav" aria-label="Next month" disabled={nextDisabled} onClick={() => setMonth(addMonths(month, 1))}>
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
+        <NavButton {...prevButtonProps} direction={direction} kind="prev" />
+        <h2 className="sp-calendar__title">{title}</h2>
+        <NavButton {...nextButtonProps} direction={direction} kind="next" />
       </div>
-
-      <table ref={gridRef} role="grid" aria-label={monthLabel} onKeyDown={onKeyDown} className="sp-calendar__grid">
-        <thead>
-          <tr>
-            {dayNames.map((n) => (
-              <th key={n} scope="col" abbr={n} className="sp-calendar__weekday">
-                {n}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {weeks.map((week) => (
-            <tr key={week[0].toISOString()}>
-              {week.map((d) => {
-                const outside = d.getMonth() !== month.getMonth();
-                const selected = isSameDay(d, value);
-                const isToday = isSameDay(d, today);
-                const tabbable = isSameDay(d, tabTarget) && !outside;
-                return (
-                  <td key={d.toISOString()} role="gridcell" aria-selected={selected || undefined} className="sp-calendar__cell">
-                    <button
-                      type="button"
-                      tabIndex={tabbable ? 0 : -1}
-                      disabled={disabled(d)}
-                      aria-label={longDay.format(d)}
-                      aria-current={isToday ? 'date' : undefined}
-                      data-selected={selected || undefined}
-                      data-today={isToday || undefined}
-                      data-outside={outside || undefined}
-                      onClick={(e) => select(d, e)}
-                      onFocus={() => setFocused(d)}
-                      className="sp-calendar__day"
-                    >
-                      {d.getDate()}
-                    </button>
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
+      <CalendarGrid state={state} firstDayOfWeek={firstDayOfWeek} />
       <div className="sp-calendar__footer">
         <button
           type="button"
           className="sp-calendar__today"
-          disabled={disabled(today)}
+          disabled={todayBlocked || state.isDisabled}
           onClick={(e) => {
-            setMonth(startOfMonth(today));
-            select(today, e);
+            lastPointer.current = { clientX: e.clientX, clientY: e.clientY };
+            state.setFocusedDate(todayDate);
+            state.selectDate(todayDate);
           }}
         >
           {todayLabel}
@@ -206,10 +133,70 @@ export function Calendar(inProps: CalendarProps) {
   );
 }
 
-function clampToRange(d: Date, min?: Date, max?: Date) {
-  if (min && isBefore(d, min)) return startOfDay(min);
-  if (max && isAfter(d, max)) return startOfDay(max);
-  return startOfDay(d);
+function NavButton({ kind, direction, ...props }: AriaButtonProps & { kind: 'prev' | 'next'; direction: 'ltr' | 'rtl' }) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const { buttonProps } = useButton(props, ref);
+  // Arrows point the way time moves, so they swap in right-to-left languages.
+  const pointsLeft = (kind === 'prev') === (direction === 'ltr');
+  return (
+    <button {...buttonProps} ref={ref} className="sp-calendar__nav">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+        <path d={pointsLeft ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5'} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </button>
+  );
+}
+
+function CalendarGrid({ state, firstDayOfWeek }: { state: CalendarState; firstDayOfWeek?: FirstDayOfWeek }) {
+  const { gridProps, headerProps, weekDays, weeksInMonth } = useCalendarGrid({ firstDayOfWeek, weekdayStyle: 'short' }, state);
+  return (
+    <table {...gridProps} className="sp-calendar__grid">
+      <thead {...headerProps}>
+        <tr>
+          {weekDays.map((day, i) => (
+            <th key={i} className="sp-calendar__weekday">
+              {day}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {Array.from({ length: weeksInMonth }, (_, week) => (
+          <tr key={week}>
+            {state.getDatesInWeek(week).map((date, i) =>
+              date ? <CalendarCell key={i} state={state} date={date} /> : <td key={i} className="sp-calendar__cell" />,
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+function CalendarCell({ state, date }: { state: CalendarState; date: CalendarDate }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { cellProps, buttonProps, isSelected, isOutsideVisibleRange, isDisabled, isUnavailable, isFocused, formattedDate } = useCalendarCell(
+    { date },
+    state,
+    ref,
+  );
+  return (
+    <td {...cellProps} className="sp-calendar__cell">
+      <div
+        {...buttonProps}
+        ref={ref}
+        className="sp-calendar__day"
+        data-selected={isSelected || undefined}
+        data-today={isToday(date, getLocalTimeZone()) || undefined}
+        data-outside={isOutsideVisibleRange || undefined}
+        data-disabled={isDisabled || undefined}
+        data-unavailable={isUnavailable || undefined}
+        data-focused={isFocused || undefined}
+      >
+        {formattedDate}
+      </div>
+    </td>
+  );
 }
 
 export default Calendar;

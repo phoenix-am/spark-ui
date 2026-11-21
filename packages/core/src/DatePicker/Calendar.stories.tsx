@@ -6,9 +6,11 @@ import { Calendar } from '.';
 const meta: Meta<typeof Calendar> = {
   title: 'Inputs/Calendar',
   component: Calendar,
-  args: { weekStartsOn: 1 },
+  args: { firstDayOfWeek: 'mon' },
   argTypes: {
-    weekStartsOn: { control: 'inline-radio', options: [0, 1, 6] },
+    firstDayOfWeek: { control: 'inline-radio', options: ['sun', 'mon', 'sat'] },
+    weekStartsOn: { table: { disable: true } },
+    calendar: { control: 'select', options: [undefined, 'indian', 'islamic-umalqura', 'buddhist', 'persian'] },
     locale: { control: 'select', options: [undefined, 'en-IN', 'en-US', 'hi-IN', 'gu-IN', 'fr-FR', 'ja-JP'] },
     value: { control: false },
     min: { control: false },
@@ -29,5 +31,7 @@ export default meta;
 type Story = StoryObj<typeof Calendar>;
 
 export const Playground: Story = {};
-export const SundayStart: Story = { args: { weekStartsOn: 0, locale: 'en-US' } };
+export const SundayStart: Story = { args: { firstDayOfWeek: 'sun', locale: 'en-IN' } };
+/** Hijri (Umm al-Qura) calendar in Arabic, right to left. */
+export const Hijri: Story = { args: { locale: 'ar-SA', calendar: 'islamic-umalqura', todayLabel: 'اليوم' } };
 export const Gujarati: Story = { args: { locale: 'gu-IN', todayLabel: 'આજે' } };

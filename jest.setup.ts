@@ -7,7 +7,7 @@ expect.extend(toHaveNoViolations);
 setProjectAnnotations(preview);
 
 // jsdom gaps used by some components.
-if (!window.matchMedia) {
+if (typeof window !== "undefined" && !window.matchMedia) {
   window.matchMedia = (query: string) =>
     ({ matches: false, media: query, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {}, onchange: null, dispatchEvent: () => false }) as unknown as MediaQueryList;
 }

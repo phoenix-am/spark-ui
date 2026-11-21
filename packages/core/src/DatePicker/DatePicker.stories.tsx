@@ -8,24 +8,29 @@ const today = new Date();
 const inDays = (n: number) => new Date(today.getFullYear(), today.getMonth(), today.getDate() + n);
 
 /**
- * A field that opens a calendar. The picked day is a lit node and throws a
- * spark. Keyboard: Enter or ArrowDown opens; arrows move by day and week;
- * PageUp/PageDown change month (Shift for year); Escape closes.
+ * Type a date or pick it from the calendar. The field shows one editable
+ * segment per part, in the locale's order (DD/MM/YYYY in India). Type
+ * digits, or use Up/Down to change a segment. The calendar button opens the
+ * grid: arrows move by day and week, PageUp/PageDown change month (Shift for
+ * year), Escape closes and returns focus. Built on React Aria.
  */
 const meta: Meta<typeof DatePicker> = {
   title: 'Inputs/DatePicker',
   component: DatePicker,
-  args: { label: 'Start date', placeholder: 'Pick a date', onChange: fn(), weekStartsOn: 1 },
+  args: { label: 'Start date', onChange: fn(), locale: 'en-IN' },
   argTypes: {
     size: { control: 'inline-radio', options: ['small', 'medium', 'large'] },
-    weekStartsOn: { control: 'inline-radio', options: [0, 1, 6] },
-    locale: { control: 'select', options: [undefined, 'en-IN', 'en-US', 'hi-IN', 'gu-IN', 'fr-FR', 'ja-JP'] },
+    firstDayOfWeek: { control: 'inline-radio', options: [undefined, 'sun', 'mon', 'sat'] },
+    calendar: { control: 'select', options: [undefined, 'indian', 'islamic-umalqura', 'buddhist', 'persian', 'japanese'] },
+    locale: { control: 'select', options: [undefined, 'en-IN', 'en-US', 'hi-IN', 'gu-IN', 'ar-EG', 'fr-FR', 'ja-JP'] },
     value: { control: false },
     defaultValue: { control: false },
     min: { control: false },
     max: { control: false },
     isDateDisabled: { control: false },
-    format: { control: false },
+    format: { table: { disable: true } },
+    placeholder: { table: { disable: true } },
+    weekStartsOn: { table: { disable: true } },
   },
   decorators: [(Story) => <div style={{ maxWidth: 340, minHeight: 470 }}><Story /></div>],
 };
@@ -46,12 +51,19 @@ export const NoWeekends: Story = {
   args: { label: 'Meeting day', isDateDisabled: (d: Date) => d.getDay() === 0 || d.getDay() === 6, helperText: 'Weekdays only.' },
 };
 
-export const LongFormat: Story = {
-  args: { defaultValue: today, format: { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' } },
+/** The same field in US order: month first. */
+export const UsOrder: Story = { args: { locale: 'en-US', defaultValue: today } };
+
+/** Show the Indian national (Saka) calendar. `onChange` still returns a normal JS Date, and the form value stays ISO Gregorian. */
+export const IndianCalendar: Story = {
+  args: { label: 'शक संवत् तिथि', locale: 'hi-IN', calendar: 'indian', todayLabel: 'आज', defaultValue: today, name: 'saka' },
 };
 
+/** Arabic: the layout mirrors, digits are Arabic-Indic, and the arrow keys follow the reading direction. */
+export const RightToLeft: Story = { args: { label: 'تاريخ البدء', locale: 'ar-EG', todayLabel: 'اليوم', defaultValue: today } };
+
 /** Month and weekday names follow the locale. */
-export const Hindi: Story = { args: { label: 'तारीख चुनें', placeholder: 'तारीख', locale: 'hi-IN', todayLabel: 'आज', defaultValue: today } };
+export const Hindi: Story = { args: { label: 'तारीख चुनें', locale: 'hi-IN', todayLabel: 'आज', defaultValue: today } };
 
 export const Error: Story = { args: { error: true, helperText: 'Pick a start date to continue.' } };
 

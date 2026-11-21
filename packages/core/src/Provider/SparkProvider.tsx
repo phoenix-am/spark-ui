@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from 'react';
+import { I18nProvider } from 'react-aria';
 import { DefaultsContext, DefaultsMap, ComponentConfig } from '../internal/defaults';
 import type { ButtonTypeMap } from '../Button/Button.types';
 import type { SwitchProps } from '../Switch';
@@ -47,6 +48,12 @@ export interface SparkProviderProps {
    * Props set on an instance always win.
    */
   components?: SparkComponentsConfig;
+  /**
+   * BCP 47 locale for dates, number formats and keyboard direction, e.g.
+   * `hi-IN`, `ar-EG`, `en-US`. Right-to-left locales mirror arrow keys.
+   * Defaults to the parent provider's, then the browser's.
+   */
+  locale?: string;
   children: React.ReactNode;
 }
 
@@ -55,7 +62,7 @@ export interface SparkProviderProps {
  * MUI's `theme.components` works. Nested providers merge with their parent.
  * Styling still comes from `styles.css`; this provider only changes props.
  */
-export function SparkProvider({ components, children }: SparkProviderProps) {
+export function SparkProvider({ components, locale, children }: SparkProviderProps) {
   const parent = useContext(DefaultsContext);
   const value = useMemo<DefaultsMap>(() => {
     if (!components) return parent;
@@ -69,7 +76,8 @@ export function SparkProvider({ components, children }: SparkProviderProps) {
     }
     return next;
   }, [parent, components]);
-  return <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;
+  const tree = <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;
+  return locale ? <I18nProvider locale={locale}>{tree}</I18nProvider> : tree;
 }
 
 export default SparkProvider;

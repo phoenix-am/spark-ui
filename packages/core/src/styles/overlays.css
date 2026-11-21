@@ -34,11 +34,36 @@
   transition: color var(--spark-motion-fast);
 }
 .sp-tab[aria-selected='true'] { font-weight: 700; color: var(--spark-text-primary); }
-.sp-tab:hover:not(:disabled) { color: var(--spark-text-primary); }
-.sp-tab:disabled { color: var(--spark-text-disabled); cursor: not-allowed; }
+.sp-tab:hover:not([data-disabled]) { color: var(--spark-text-primary); }
+.sp-tab[data-disabled] { color: var(--spark-text-disabled); cursor: not-allowed; }
+.sp-tab { outline: none; }
 .sp-tab svg path { stroke: currentColor; }
 .sp-tab[aria-selected='true'] svg path { stroke: var(--sp-ink); }
 .sp-tab:focus-visible { outline: 2px solid var(--sp-ink); outline-offset: -2px; }
+
+/* Vertical tabs: the wire runs down the left (right in RTL) edge. */
+.sp-tabs[data-orientation='vertical'] { display: flex; gap: 1.5rem; align-items: flex-start; }
+.sp-tabs[data-orientation='vertical'] .sp-tab-list {
+  flex-direction: column;
+  flex: none;
+  padding-bottom: 0;
+  padding-inline-start: 2px;
+  background: linear-gradient(var(--spark-energy-off), var(--spark-energy-off)) left top / 2px 100% no-repeat;
+}
+[dir='rtl'] .sp-tabs[data-orientation='vertical'] .sp-tab-list { background-position: right top; }
+.sp-tabs[data-orientation='vertical'] .sp-tab { border-radius: 0 var(--spark-radius-small) var(--spark-radius-small) 0; min-height: 2.5rem; }
+.sp-tabs[data-orientation='vertical'] .sp-tab-list__current {
+  left: 0;
+  bottom: auto;
+  width: 2px;
+  height: auto;
+  background-image: repeating-linear-gradient(180deg, var(--sp-line, var(--spark-energy-current)) 0 9px, transparent 9px 18px);
+  background-size: 100% 36px;
+  animation-name: sp-flow-down;
+  transition: top var(--spark-motion-normal) var(--spark-motion-easing), height var(--spark-motion-normal) var(--spark-motion-easing);
+}
+[dir='rtl'] .sp-tabs[data-orientation='vertical'] .sp-tab-list__current { left: auto; right: 0; }
+.sp-tabs[data-orientation='vertical'] .sp-tab-panel { padding: 0.25rem 0; flex: 1; min-width: 0; }
 .sp-tab-panel { padding: 1rem 0; font-family: var(--spark-font); color: var(--spark-text-primary); }
 .sp-tab-panel:focus-visible { outline: 2px solid var(--spark-energy-ink); outline-offset: 2px; }
 

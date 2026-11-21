@@ -1,4 +1,5 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useIsoLayoutEffect } from './useIsoLayoutEffect';
 
 /**
  * Portals render into document.body, outside any `[data-spark-theme]` wrapper.
@@ -9,7 +10,7 @@ export function usePortalTheme(active: boolean) {
   const anchorRef = useRef<HTMLSpanElement>(null);
   const [themeProps, setThemeProps] = useState<{ 'data-spark-theme'?: string; style?: React.CSSProperties }>({});
 
-  useLayoutEffect(() => {
+  useIsoLayoutEffect(() => {
     if (!active) return;
     const host = anchorRef.current?.closest<HTMLElement>('[data-spark-theme]');
     if (!host) return;

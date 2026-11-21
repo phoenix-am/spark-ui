@@ -1,189 +1,246 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
-import { Calendar, CalendarProps } from './Calendar';
-import { cx } from '../internal/cx';
+import React, { useRef } from 'react';
+import { DismissButton, I18nProvider, Overlay, useButton, useDateField, useDatePicker, useDateSegment, useDialog, useLocale, usePopover } from 'react-aria';
+import { useDateFieldState, useDatePickerState, DateFieldState, DatePickerState, DateSegment } from 'react-stately';
+import { DateValue, createCalendar } from '@internationalized/date';
+import type { AriaDateFieldProps, AriaDialogProps } from 'react-aria';
+import { CalendarCore, CalendarProps } from './Calendar';
+import { usePortalTheme } from '../internal/usePortalTheme';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
+import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO, withCalendar } from './dateAdapters';
 
-export interface DatePickerProps extends Omit<CalendarProps, 'autoFocus' | 'onEscape' | 'onChange' | 'value' | 'className'> {
+export interface DatePickerProps
+  extends Pick<CalendarProps, 'min' | 'max' | 'isDateDisabled' | 'firstDayOfWeek' | 'weekStartsOn' | 'locale' | 'calendar' | 'todayLabel'> {
   /** Visible label above the field. */
   label?: React.ReactNode;
+  /** Accessible name when there is no visible label. */
+  'aria-label'?: string;
   /** Controlled value; `null` for no date. */
   value?: Date | null;
   /** Initial value when uncontrolled. */
   defaultValue?: Date | null;
-  /** Called with the picked date, or `null` when cleared. */
+  /** Called with the picked or typed date, or `null` when cleared. */
   onChange?: (date: Date | null) => void;
-  /** Shown when no date is picked. Default "Pick a date". */
-  placeholder?: string;
-  /** Help or error text under the field. */
+  /** Help text under the field (or the error message when `error` is set). */
   helperText?: React.ReactNode;
   /** Marks the field invalid. */
   error?: boolean;
   disabled?: boolean;
-  /** Show a clear button when a date is picked. Default `true`. */
+  required?: boolean;
+  /** Show a clear button when a date is set. Default `true`. */
   clearable?: boolean;
-  /** How the picked date is shown in the field (Intl options). */
-  format?: Intl.DateTimeFormatOptions;
   /** Name for a hidden input carrying the ISO date (YYYY-MM-DD), for plain forms. */
   name?: string;
   /** Default `medium`. */
   size?: 'small' | 'medium' | 'large';
+  /** @deprecated The field now shows editable segments in the locale's order. */
+  placeholder?: string;
+  /** @deprecated The field now shows editable segments in the locale's order. */
+  format?: Intl.DateTimeFormatOptions;
   className?: string;
-  /** Extra classes for each part: root, label, control, trigger, popover, helper. */
-  classNames?: ClassNames<'root' | 'label' | 'control' | 'trigger' | 'popover' | 'helper'>;
+  /** Extra classes for each part: root, label, control, field, trigger, popover, helper. */
+  classNames?: ClassNames<'root' | 'label' | 'control' | 'field' | 'trigger' | 'popover' | 'helper'>;
 }
 
-const toISODate = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-
 /**
- * DatePicker: a field that opens a Calendar. The field lights up while the
- * calendar is open, and the picked day is a lit node with a spark.
- * Escape or a click outside closes it; focus returns to the field.
+ * DatePicker: type a date or pick it from a calendar. The field lights up
+ * while the calendar is open, and the picked day is a lit node with a spark.
+ * Behaviour comes from React Aria: segment-by-segment typing in the
+ * locale's order (DD/MM/YYYY in India, MM/DD/YYYY in the US), arrow keys to
+ * adjust a segment, right-to-left layouts, other calendar systems, and a
+ * dialog popover that restores focus.
  *
  * Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
- * `__label`, `__control`, `__trigger`, `__clear`, `__helper`, `__popover`.
+ * `__label`, `__control`, `.sp-date-field`, `__segment[data-placeholder]`,
+ * `__trigger`, `__clear`, `__helper`, `__popover`.
  */
 export function DatePicker(inProps: DatePickerProps) {
-  const {
+  const props = useDefaults('DatePicker', inProps);
+  const { locale: inherited } = useLocale();
+  return (
+    <I18nProvider locale={withCalendar(props.locale ?? inherited, props.calendar)}>
+      <DatePickerInner {...props} />
+    </I18nProvider>
+  );
+}
+
+function DatePickerInner({
   label,
+  'aria-label': ariaLabel,
   value,
-  defaultValue = null,
+  defaultValue,
   onChange,
-  placeholder = 'Pick a date',
+  min,
+  max,
+  isDateDisabled,
+  firstDayOfWeek,
+  weekStartsOn,
+  todayLabel,
   helperText,
   error,
   disabled,
+  required,
   clearable = true,
-  format = { day: 'numeric', month: 'short', year: 'numeric' },
   name,
   size = 'medium',
-  locale,
   className,
   classNames,
-  ...calendarProps
-} = useDefaults('DatePicker', inProps);
-  const [inner, setInner] = useState<Date | null>(defaultValue);
-  const current = value !== undefined ? value : inner;
-  const [isOpen, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
+}: DatePickerProps) {
+  const { direction } = useLocale();
+  const firstDay = firstDayOfWeek ?? toFirstDay(weekStartsOn);
+  const ariaProps = {
+    label,
+    'aria-label': ariaLabel,
+    value: value === undefined ? undefined : toDateValue(value),
+    defaultValue: toDateValue(defaultValue),
+    onChange: (v: DateValue | null) => onChange?.(fromDateValue(v)),
+    minValue: toDateValue(min) ?? undefined,
+    maxValue: toDateValue(max) ?? undefined,
+    isDateUnavailable: isDateDisabled ? (d: DateValue) => isDateDisabled(fromDateValue(d)!) : undefined,
+    isDisabled: disabled,
+    isRequired: required,
+    isInvalid: error,
+    validationBehavior: 'aria' as const,
+    description: !error && helperText ? helperText : undefined,
+    errorMessage: error && helperText ? helperText : undefined,
+    granularity: 'day' as const,
+    firstDayOfWeek: firstDay,
+    shouldCloseOnSelect: true,
+  };
+  const state = useDatePickerState(ariaProps);
+  const groupRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const id = useId();
-  const labelId = `${id}-label`;
-  const helperId = `${id}-helper`;
-  const dialogId = `${id}-dialog`;
-
-  const display = current ? new Intl.DateTimeFormat(locale, format).format(current) : '';
-
-  const commit = (d: Date | null) => {
-    if (value === undefined) setInner(d);
-    onChange?.(d);
-  };
-
-  const close = (refocus = true) => {
-    setOpen(false);
-    if (refocus) triggerRef.current?.focus();
-  };
-
-  // Close on outside click.
-  useEffect(() => {
-    if (!isOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) close(false);
-    };
-    document.addEventListener('mousedown', onDown);
-    return () => document.removeEventListener('mousedown', onDown);
-  }, [isOpen]);
+  const { groupProps, labelProps, fieldProps, buttonProps, dialogProps, calendarProps, descriptionProps, errorMessageProps } = useDatePicker(
+    ariaProps,
+    state,
+    groupRef,
+  );
+  const { buttonProps: triggerButtonProps } = useButton(buttonProps, triggerRef);
+  const { anchorRef, themeProps } = usePortalTheme(state.isOpen);
 
   return (
     <div
-      ref={rootRef}
       className={slot('sp-date-picker', classNames, 'root', className)}
+      dir={direction}
       data-tone={error ? 'error' : 'brand'}
       data-size={size}
-      data-open={(isOpen && !disabled) || undefined}
+      data-open={state.isOpen || undefined}
       data-invalid={error || undefined}
       data-disabled={disabled || undefined}
-      data-empty={!current || undefined}
+      data-empty={!state.value || undefined}
     >
+      <span ref={anchorRef} hidden />
       {label && (
-        <span id={labelId} className={slot('sp-date-picker__label', classNames, 'label')}>
+        <span {...labelProps} className={slot('sp-date-picker__label', classNames, 'label')}>
           {label}
+          {required && (
+            <span className="sp-field__required" aria-hidden="true">
+              {' '}*
+            </span>
+          )}
         </span>
       )}
-      <div className={slot('sp-date-picker__control', classNames, 'control')}>
-        <button
-          ref={triggerRef}
-          type="button"
-          disabled={disabled}
-          aria-haspopup="dialog"
-          aria-expanded={isOpen}
-          aria-controls={isOpen ? dialogId : undefined}
-          aria-labelledby={label ? `${labelId} ${id}-value` : undefined}
-          aria-describedby={helperText ? helperId : undefined}
-          aria-invalid={error || undefined}
-          onClick={() => setOpen((o) => !o)}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowDown' && !isOpen) {
-              e.preventDefault();
-              setOpen(true);
-            }
-          }}
-          className={slot('sp-date-picker__trigger', classNames, 'trigger')}
-        >
+      <div {...groupProps} ref={groupRef} className={slot('sp-date-picker__control', classNames, 'control')}>
+        <DateField {...fieldProps} className={slot('sp-date-field', classNames, 'field')} />
+        {clearable && state.value && !disabled && (
+          <button type="button" aria-label="Clear date" className="sp-date-picker__clear" onClick={() => state.setValue(null)}>
+            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
+        <button {...triggerButtonProps} ref={triggerRef} className={slot('sp-date-picker__trigger', classNames, 'trigger')}>
           <svg className="sp-date-picker__icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
             <path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          <span id={`${id}-value`} className="sp-date-picker__value">
-            {display || placeholder}
-          </span>
         </button>
-        {clearable && current && !disabled && (
-          <button
-            type="button"
-            aria-label="Clear date"
-            className="sp-date-picker__clear"
-            onClick={() => {
-              commit(null);
-              triggerRef.current?.focus();
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
-          </button>
-        )}
       </div>
       {helperText && (
-        <p id={helperId} className={slot('sp-date-picker__helper', classNames, 'helper')}>
+        <p {...(error ? errorMessageProps : descriptionProps)} className={slot('sp-date-picker__helper', classNames, 'helper')}>
           {helperText}
         </p>
       )}
-      {name && <input type="hidden" name={name} value={current ? toISODate(current) : ''} />}
-
-      {isOpen && (
-        <div
-          id={dialogId}
-          role="dialog"
-          aria-modal="false"
-          aria-label={typeof label === 'string' ? `Choose ${label.toLowerCase()}` : 'Choose date'}
-          className={slot('sp-date-picker__popover', classNames, 'popover')}
-          data-has-label={label ? true : undefined}
-        >
-          <Calendar
-            {...calendarProps}
-            locale={locale}
-            value={current}
-            autoFocus
-            onEscape={() => close()}
-            onChange={(d) => {
-              commit(d);
-              // Let the spark play before the popover closes.
-              window.setTimeout(() => close(), 260);
-            }}
-          />
-        </div>
+      {name && <input type="hidden" name={name} value={toISO(state.value)} />}
+      {state.isOpen && (
+        <DatePopover state={state} triggerRef={groupRef} themeProps={themeProps} className={slot('sp-date-picker__popover', classNames, 'popover')}>
+          <Dialog {...dialogProps}>
+            <CalendarCore {...calendarProps} firstDayOfWeek={firstDay} todayLabel={todayLabel} />
+          </Dialog>
+        </DatePopover>
       )}
     </div>
   );
 }
 
+function DateField({ className, ...props }: AriaDateFieldProps<DateValue> & { className: string }) {
+  const { locale } = useLocale();
+  const state = useDateFieldState({ ...props, locale, createCalendar });
+  const ref = useRef<HTMLDivElement>(null);
+  const { fieldProps } = useDateField(props, state, ref);
+  return (
+    <div {...fieldProps} ref={ref} className={className}>
+      {state.segments.map((segment, i) => (
+        <Segment key={i} segment={segment} state={state} />
+      ))}
+    </div>
+  );
+}
+
+function Segment({ segment, state }: { segment: DateSegment; state: DateFieldState }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const { segmentProps } = useDateSegment(segment, state, ref);
+  return (
+    <span
+      {...segmentProps}
+      ref={ref}
+      className="sp-date-field__segment"
+      data-type={segment.type}
+      data-placeholder={segment.isPlaceholder || undefined}
+      data-literal={segment.type === 'literal' || undefined}
+    >
+      {segment.text}
+    </span>
+  );
+}
+
+function DatePopover({
+  state,
+  triggerRef,
+  themeProps,
+  className,
+  children,
+}: {
+  state: DatePickerState;
+  triggerRef: React.RefObject<HTMLDivElement>;
+  themeProps: ReturnType<typeof usePortalTheme>['themeProps'];
+  className: string;
+  children: React.ReactNode;
+}) {
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const { popoverProps, underlayProps } = usePopover({ popoverRef, triggerRef, placement: 'bottom start', offset: 8 }, state);
+  return (
+    <Overlay>
+      <div {...themeProps} style={{ ...themeProps.style, display: 'contents' }}>
+        <div {...underlayProps} style={{ position: 'fixed', inset: 0 }} />
+        <div {...popoverProps} ref={popoverRef} className={className}>
+          <DismissButton onDismiss={state.close} />
+          {children}
+          <DismissButton onDismiss={state.close} />
+        </div>
+      </div>
+    </Overlay>
+  );
+}
+
+function Dialog({ children, ...props }: AriaDialogProps & { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { dialogProps } = useDialog(props, ref);
+  return (
+    <div {...dialogProps} ref={ref} className="sp-date-picker__dialog">
+      {children}
+    </div>
+  );
+}
+
+export type { FirstDayOfWeek, CalendarSystem };
 export default DatePicker;

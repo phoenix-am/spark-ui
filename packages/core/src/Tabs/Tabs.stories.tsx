@@ -5,14 +5,19 @@ import { Tabs, TabList, Tab, TabPanel } from '.';
 
 /**
  * All tabs sit on one wire; the active tab is the lit segment, and it slides
- * when you switch. Arrow keys, Home and End move between tabs.
+ * when you switch. Arrow keys, Home and End move between tabs (mirrored in
+ * right-to-left languages). Built on React Aria.
  */
 const meta: Meta<typeof Tabs> = {
   title: 'Navigation/Tabs',
   component: Tabs,
   subcomponents: { TabList, Tab, TabPanel } as Record<string, React.ComponentType<unknown>>,
   args: { defaultValue: 'overview' },
-  argTypes: { color: { control: 'inline-radio', options: ['brand', 'success', 'warning', 'error'] } },
+  argTypes: {
+    color: { control: 'inline-radio', options: ['brand', 'success', 'warning', 'error'] },
+    orientation: { control: 'inline-radio', options: ['horizontal', 'vertical'] },
+    activation: { control: 'inline-radio', options: ['automatic', 'manual'] },
+  },
   render: (args) => (
     <Tabs {...args}>
       <TabList aria-label="Project">
@@ -46,3 +51,9 @@ export const WithIcons: Story = {
     </Tabs>
   ),
 };
+
+/** The wire runs down the side; Up and Down move between tabs. */
+export const Vertical: Story = { args: { orientation: 'vertical' } };
+
+/** Arrow keys only move focus; Enter or Space switches. Use when a panel is slow to render. */
+export const ManualActivation: Story = { args: { activation: 'manual' } };

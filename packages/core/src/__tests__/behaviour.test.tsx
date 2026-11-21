@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, Tooltip } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -168,5 +168,128 @@ describe('Tooltip (React Aria)', () => {
     expect(trigger).toHaveAccessibleDescription('Restarts every service');
     await user.keyboard('{Escape}');
     expect(screen.queryByRole('tooltip')).toBeNull();
+  });
+});
+
+describe('Tabs (React Aria)', () => {
+  const renderTabs = (props: Partial<React.ComponentProps<typeof Tabs>> = {}) =>
+    render(
+      <Tabs defaultValue="a" {...props}>
+        <TabList aria-label="Demo">
+          <Tab value="a">A</Tab>
+          <Tab value="b">B</Tab>
+          <Tab value="c" disabled>C</Tab>
+        </TabList>
+        <TabPanel value="a">Panel A</TabPanel>
+        <TabPanel value="b">Panel B</TabPanel>
+        <TabPanel value="c">Panel C</TabPanel>
+      </Tabs>,
+    );
+
+  it('links tabs and panels with aria-controls and skips disabled tabs', async () => {
+    const user = userEvent.setup();
+    renderTabs();
+    const [a, b] = screen.getAllByRole('tab');
+    expect(screen.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', a.id);
+    await user.click(a);
+    await user.keyboard('{ArrowRight}{ArrowRight}');
+    expect(screen.getAllByRole('tab')[0]).toHaveAttribute('aria-selected', 'true');
+    expect(b).toHaveAttribute('aria-selected', 'false');
+  });
+
+  it('uses Up/Down when vertical', async () => {
+    const user = userEvent.setup();
+    renderTabs({ orientation: 'vertical' });
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical');
+    await user.click(screen.getAllByRole('tab')[0]);
+    await user.keyboard('{ArrowDown}');
+    expect(screen.getByText('Panel B')).toBeInTheDocument();
+  });
+
+  it('only switches on Enter with manual activation', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    renderTabs({ activation: 'manual', onChange });
+    await user.click(screen.getAllByRole('tab')[0]);
+    await user.keyboard('{ArrowRight}');
+    expect(screen.getByText('Panel A')).toBeInTheDocument();
+    await user.keyboard('{Enter}');
+    expect(screen.getByText('Panel B')).toBeInTheDocument();
+    expect(onChange).toHaveBeenLastCalledWith('b');
+  });
+
+  it('mirrors arrow keys in right-to-left locales', async () => {
+    const user = userEvent.setup();
+    render(
+      <SparkProvider locale="ar-EG">
+        <Tabs defaultValue="a">
+          <TabList aria-label="Demo">
+            <Tab value="a">A</Tab>
+            <Tab value="b">B</Tab>
+          </TabList>
+          <TabPanel value="a">Panel A</TabPanel>
+          <TabPanel value="b">Panel B</TabPanel>
+        </Tabs>
+      </SparkProvider>,
+    );
+    await user.click(screen.getAllByRole('tab')[0]);
+    await user.keyboard('{ArrowLeft}');
+    expect(screen.getByText('Panel B')).toBeInTheDocument();
+  });
+});
+
+describe('DatePicker (React Aria)', () => {
+  it('accepts typed dates in the locale order and fills the ISO form value', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const { container } = render(<DatePicker label="Start" locale="en-IN" name="start" onChange={onChange} />);
+    const day = screen.getAllByRole('spinbutton')[0];
+    expect(day).toHaveAttribute('aria-label', expect.stringMatching(/day/i));
+    await user.click(day);
+    await user.keyboard('25122026');
+    const picked: Date = onChange.mock.calls.at(-1)[0];
+    expect([picked.getFullYear(), picked.getMonth(), picked.getDate()]).toEqual([2026, 11, 25]);
+    expect(container.querySelector('input[name="start"]')).toHaveValue('2026-12-25');
+  });
+
+  it('opens a calendar dialog, picks a day and clears', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(<DatePicker label="Start" locale="en-IN" defaultValue={new Date(2026, 10, 10)} onChange={onChange} />);
+    await user.click(screen.getByRole('button', { name: /calendar/i }));
+    const dialog = await screen.findByRole('dialog');
+    await user.click(within(dialog).getByRole('button', { name: /12 November 2026/i }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(onChange.mock.calls.at(-1)[0].getDate()).toBe(12);
+    await user.click(screen.getByRole('button', { name: 'Clear date' }));
+    expect(onChange).toHaveBeenLastCalledWith(null);
+  });
+});
+
+describe('Tabs from a Server Component', () => {
+  it('works when children arrive as lazy references, as with React Server Components', async () => {
+    const user = userEvent.setup();
+    // RSC sends client components to the browser as lazy references, so
+    // element.type is not the TabList function. Simulate that here.
+    const lazyOf = <P,>(C: React.ComponentType<P>) => React.lazy(async () => ({ default: C }));
+    const LTabList = lazyOf(TabList), LTab = lazyOf(Tab), LPanel = lazyOf(TabPanel);
+    render(
+      <React.Suspense fallback={null}>
+        <Tabs defaultValue="b">
+          <LTabList aria-label="Lazy">
+            <LTab value="a">A</LTab>
+            <LTab value="b">B</LTab>
+          </LTabList>
+          <LPanel value="a">Panel A</LPanel>
+          <LPanel value="b">Panel B</LPanel>
+        </Tabs>
+      </React.Suspense>,
+    );
+    expect(await screen.findByText('Panel B')).toBeInTheDocument();
+    expect(screen.getAllByRole('tab')).toHaveLength(2);
+    await user.click(screen.getByRole('tab', { name: 'A' }));
+    expect(screen.getByText('Panel A')).toBeInTheDocument();
+    await user.keyboard('{ArrowRight}');
+    expect(screen.getByText('Panel B')).toBeInTheDocument();
   });
 });

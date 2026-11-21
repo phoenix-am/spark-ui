@@ -92,7 +92,24 @@ Style one part of one instance with `classNames`, for example `<Switch className
 
 ## Accessibility
 
-Select, Modal and Tooltip are built on React Aria hooks: typeahead, focus containment and restoration, screen-reader announcements and dismissal behave the way they do in Adobe's products. Every Storybook story is checked with axe in CI (`npm test`), alongside keyboard behaviour tests.
+Select, Modal, Tooltip, Tabs, DatePicker and Calendar are built on React Aria hooks: typeahead, focus containment and restoration, screen-reader announcements and dismissal behave the way they do in Adobe's products. Every Storybook story is checked with axe in CI (`npm test`), alongside keyboard behaviour tests and server-rendering tests.
+
+## Languages, dates and right-to-left
+
+Set the locale once and every date, weekday name, digit and arrow key follows it:
+
+```tsx
+<SparkProvider locale="hi-IN">   {/* or ar-EG for right-to-left, en-US, ja-JP... */}
+  <App />
+</SparkProvider>
+```
+
+- **DatePicker** takes typed dates, one segment per part, in the locale's order (DD/MM/YYYY for `en-IN`, MM/DD/YYYY for `en-US`). Up and Down change a segment. `onChange` gives a plain JS `Date`, and `name` adds a hidden ISO `YYYY-MM-DD` input for forms.
+- **Other calendars:** `<DatePicker calendar="indian" />` shows the Saka calendar; `islamic-umalqura`, `buddhist`, `persian`, `japanese` and more also work. Values stay Gregorian JS Dates.
+- **Tabs** support `orientation="vertical"` and `activation="manual"`, and mirror arrow keys in right-to-left locales.
+- Tabs, DatePicker and the rest work when rendered from a React Server Component.
+
+`DatePicker`'s `format` and `placeholder` props are deprecated (the segments replace them), as is `weekStartsOn` (use `firstDayOfWeek: 'sun' | 'mon' | ...`). They are still accepted and will be removed in 1.0.
 
 ## Packages
 
