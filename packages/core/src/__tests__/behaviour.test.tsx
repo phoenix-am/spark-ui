@@ -637,3 +637,48 @@ describe('Calendar presets and date rules', () => {
     expect(container.querySelector('input[name="stay"]')).toHaveValue('2026-12-01/2026-12-05');
   });
 });
+
+describe('CommandPalette', () => {
+  const { CommandPalette } = jest.requireActual('..');
+  const run = jest.fn();
+  const items = [
+    { heading: 'Pages', items: [{ id: 'home', label: 'Home' }, { id: 'settings', label: 'Settings', keywords: ['preferences'], onSelect: run }] },
+    { heading: 'Actions', items: [{ id: 'export', label: 'Export', disabled: true }, { id: 'cafe', label: 'Café menu' }] },
+  ];
+
+  it('opens with the hotkey, filters by label, keyword and accents, and runs with Enter', async () => {
+    const user = userEvent.setup();
+    const onOpenChange = jest.fn();
+    render(<CommandPalette items={items} onOpenChange={onOpenChange} />);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    await user.keyboard('{Control>}k{/Control}');
+    const input = await screen.findByRole('combobox', { name: 'Search commands' });
+    expect(input).toHaveFocus();
+    await user.type(input, 'prefer');
+    expect(screen.getAllByRole('option').map((o: HTMLElement) => o.textContent)).toEqual(['Settings']);
+    expect(input).toHaveAttribute('aria-activedescendant', screen.getByRole('option').id);
+    await user.keyboard('{Enter}');
+    expect(run).toHaveBeenCalled();
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('skips disabled commands with the arrows and matches without accents', async () => {
+    const user = userEvent.setup();
+    const onSelect = jest.fn();
+    render(<CommandPalette items={items} defaultOpen onSelect={onSelect} />);
+    const input = await screen.findByRole('combobox');
+    await user.keyboard('{ArrowDown}{ArrowDown}');
+    expect(screen.getByRole('option', { selected: true })).toHaveTextContent('Café menu');
+    await user.clear(input);
+    await user.type(input, 'cafe');
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenLastCalledWith(expect.objectContaining({ id: 'cafe' }));
+  });
+
+  it('shows the empty state', async () => {
+    const user = userEvent.setup();
+    render(<CommandPalette items={items} defaultOpen emptyState="Nothing found" />);
+    await user.type(await screen.findByRole('combobox'), 'zzz');
+    expect(screen.getByText('Nothing found')).toBeInTheDocument();
+  });
+});

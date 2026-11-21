@@ -558,6 +558,42 @@ Style hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,
 - `striped?`: `boolean` Shade every other row.
 - `toolbar?`: `ReactNode` Extra content in the toolbar, e.g. filter dropdowns or an export button.
 
+## CommandPalette (`command-palette`)
+A ⌘K launcher: search commands and pages, run with the keyboard.
+
+```tsx
+import { CommandPalette } from '@sparkwire/core';
+```
+Install: `npx sparkwire add command-palette` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-commandpalette--docs
+
+### CommandPalette
+CommandPalette: a ⌘K launcher. Type to find a command or page; arrows move
+the lit node, Enter runs it, Escape closes. Focus stays in the search box
+(ARIA combobox with an active option), the dialog traps focus and returns
+it when closed. Groups, keywords, icons, shortcuts, links and async
+results. Built on the Overlay and InputBase base components and the
+shared list-item look.
+
+Style hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,
+`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__footer`.
+
+- `items`: `(Command | CommandGroup)[]` Commands, or groups of commands with a heading.
+- `aria-label?`: `string` Accessible name for the dialog. Default "Command palette".
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"panel" | "input" | "list" | "group" | "item" | "footer", string>>` Extra classes for each part: panel, input, list, group, item, footer.
+- `closeOnSelect?`: `boolean` Close after a command runs. Default `true`.
+- `defaultOpen?`: `boolean`
+- `emptyState?`: `ReactNode` Shown when nothing matches. Default "No results".
+- `filter?`: `boolean` Match commands to the search yourself. Default `true` (case- and accent-insensitive, best matches first).
+- `hideFooter?`: `boolean` Hide the keyboard hints at the bottom.
+- `hotkey?`: `string | false` Keyboard shortcut that opens and closes the palette. Default `mod+k` (⌘K on Mac, Ctrl+K elsewhere). `false` to turn off.
+- `loading?`: `boolean` Show a loading line, e.g. while fetching.
+- `onOpenChange?`: `((open: boolean) => void)`
+- `onSearchChange?`: `((search: string) => void)` Called with the search text, e.g. to fetch results from a server (with `filter={false}`).
+- `onSelect?`: `((command: Command) => void)` Called with the chosen command, after its own `onSelect`.
+- `open?`: `boolean` Controlled open state.
+- `placeholder?`: `string`
+
 ## Menu (`menu`)
 Actions behind a button, with submenus.
 

@@ -156,6 +156,14 @@ Sorting (Shift+click for several columns), search, per-column filters, paging, r
   columns={[{ key: 'service', header: 'Service', sortable: true }, { key: 'cost', header: 'Cost', sortable: true, cell: (r) => `₹${r.cost}` }]} />
 ```
 
+### CommandPalette
+
+A ⌘K launcher (Ctrl+K on Windows/Linux). Groups, keywords, icons, shortcut hints, links, disabled commands, async results (`filter={false}` + `onSearchChange` + `loading`). Matching ignores case and accents and ranks best matches first.
+
+```tsx
+<CommandPalette items={[{ heading: 'Pages', items: [{ id: 'settings', label: 'Settings', keywords: ['preferences'], onSelect: openSettings }] }]} />
+```
+
 ### Dropdown, Combobox and Menu
 
 | | Use it to | Built on |

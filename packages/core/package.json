@@ -168,6 +168,11 @@
       "types": "./dist/data-table/index.d.ts",
       "import": "./dist/data-table/index.mjs",
       "require": "./dist/data-table/index.js"
+    },
+    "./command-palette": {
+      "types": "./dist/command-palette/index.d.ts",
+      "import": "./dist/command-palette/index.mjs",
+      "require": "./dist/command-palette/index.js"
     }
   },
   "files": [
@@ -256,6 +261,9 @@
       ],
       "data-table": [
         "./dist/data-table/index.d.ts"
+      ],
+      "command-palette": [
+        "./dist/command-palette/index.d.ts"
       ]
     }
   }

@@ -36,6 +36,7 @@ const ENTRIES = [
   ['combobox', ['Combobox/Combobox.tsx'], 'inputs-combobox'],
   ['date-picker', ['DatePicker/DatePicker.tsx', 'DatePicker/DateRangePicker.tsx', 'DatePicker/Calendar.tsx'], 'inputs-datepicker'],
   ['data-table', ['DataTable/DataTable.tsx'], 'data-display-datatable'],
+  ['command-palette', ['CommandPalette/CommandPalette.tsx'], 'navigation-commandpalette'],
   ['menu', ['Menu/Menu.tsx'], 'navigation-menu'],
   ['tabs', ['Tabs/Tabs.tsx'], 'navigation-tabs'],
   ['accordion', ['Accordion/Accordion.tsx'], 'navigation-accordion'],

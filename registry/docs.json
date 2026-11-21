@@ -2073,6 +2073,123 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs"
     },
     {
+      "name": "command-palette",
+      "title": "CommandPalette",
+      "summary": "A ⌘K launcher: search commands and pages, run with the keyboard.",
+      "components": [
+        {
+          "name": "CommandPalette",
+          "description": "CommandPalette: a ⌘K launcher. Type to find a command or page; arrows move\nthe lit node, Enter runs it, Escape closes. Focus stays in the search box\n(ARIA combobox with an active option), the dialog traps focus and returns\nit when closed. Groups, keywords, icons, shortcuts, links and async\nresults. Built on the Overlay and InputBase base components and the\nshared list-item look.\n\nStyle hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,\n`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__footer`.",
+          "props": [
+            {
+              "name": "items",
+              "type": "(Command | CommandGroup)[]",
+              "required": true,
+              "description": "Commands, or groups of commands with a heading."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name for the dialog. Default \"Command palette\"."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"panel\" | \"input\" | \"list\" | \"group\" | \"item\" | \"footer\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: panel, input, list, group, item, footer."
+            },
+            {
+              "name": "closeOnSelect",
+              "type": "boolean",
+              "required": false,
+              "description": "Close after a command runs. Default `true`."
+            },
+            {
+              "name": "defaultOpen",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "emptyState",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown when nothing matches. Default \"No results\"."
+            },
+            {
+              "name": "filter",
+              "type": "boolean",
+              "required": false,
+              "description": "Match commands to the search yourself. Default `true` (case- and accent-insensitive, best matches first)."
+            },
+            {
+              "name": "hideFooter",
+              "type": "boolean",
+              "required": false,
+              "description": "Hide the keyboard hints at the bottom."
+            },
+            {
+              "name": "hotkey",
+              "type": "string | false",
+              "required": false,
+              "description": "Keyboard shortcut that opens and closes the palette. Default `mod+k` (⌘K on Mac, Ctrl+K elsewhere). `false` to turn off."
+            },
+            {
+              "name": "loading",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a loading line, e.g. while fetching."
+            },
+            {
+              "name": "onOpenChange",
+              "type": "((open: boolean) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onSearchChange",
+              "type": "((search: string) => void)",
+              "required": false,
+              "description": "Called with the search text, e.g. to fetch results from a server (with `filter={false}`)."
+            },
+            {
+              "name": "onSelect",
+              "type": "((command: Command) => void)",
+              "required": false,
+              "description": "Called with the chosen command, after its own `onSelect`."
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": false,
+              "description": "Controlled open state."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "import": "import { CommandPalette } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add command-palette",
+        "shadcn": "npx shadcn add @sparkwire/command-palette",
+        "copiedImport": "import { CommandPalette } from '@/components/spark-ui/CommandPalette';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-commandpalette--docs"
+    },
+    {
       "name": "menu",
       "title": "Menu",
       "summary": "Actions behind a button, with submenus.",

@@ -485,6 +485,32 @@
       ]
     },
     {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "CommandPalette",
+      "description": "A ⌘K launcher: search commands and pages, run with the keyboard.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/CommandPalette/CommandPalette.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/CommandPalette/CommandPalette.tsx"
+        },
+        {
+          "path": "components/spark-ui/CommandPalette/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/CommandPalette/index.ts"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
