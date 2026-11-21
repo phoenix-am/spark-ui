@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useId, useState } from 'react';
 import { cx } from '../internal/cx';
+import { useDefaults } from '../internal/defaults';
 
 interface AccordionCtx {
   open: string[];
@@ -23,7 +24,8 @@ export interface AccordionProps {
  * Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
  * `__trigger`, `__chevron`, `__panel`.
  */
-export function Accordion({ multiple = false, defaultOpen = [], children, className }: AccordionProps) {
+export function Accordion(inProps: AccordionProps) {
+  const { multiple = false, defaultOpen = [], children, className } = useDefaults('Accordion', inProps);
   const [open, setOpen] = useState<string[]>(defaultOpen);
   const toggle = (v: string) =>
     setOpen((cur) => (cur.includes(v) ? cur.filter((x) => x !== v) : multiple ? [...cur, v] : [v]));

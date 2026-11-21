@@ -3,6 +3,7 @@ import { TextfieldPropsBase } from './Textfield.types';
 import { useTextField } from './useTextfield';
 import { useForkRef } from './useForkRef';
 import { cx } from '../internal/cx';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 const clamp = (n: number) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
 
@@ -26,6 +27,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     prepend,
     append,
     value,
+    defaultValue,
     onChange,
     onFocus,
     onBlur,
@@ -41,8 +43,9 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     type,
     id,
     className,
+    classNames,
     ...rest
-  } = props;
+  } = useDefaults('Textfield', props);
 
   const {
     value: fieldValue,
@@ -52,7 +55,8 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     focused,
     disabled: isDisabled,
     error: hasError,
-  } = useTextField({ value, onChange, onFocus, onBlur, disabled, error, type });
+  } = useTextField({ value: value ?? defaultValue, onChange, onFocus, onBlur, disabled, error, type });
+  const controlled = value !== undefined;
 
   const level = charge === undefined ? undefined : clamp(typeof charge === 'function' ? charge(fieldValue) : charge);
   const percent = level === undefined ? 0 : Math.round(level * 100);
@@ -72,7 +76,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
 
   return (
     <div
-      className={cx('sp-textfield', className)}
+      className={slot('sp-textfield', classNames, 'root', className)}
       data-tone={hasError ? 'error' : 'brand'}
       data-size={inputSize}
       data-focused={focused || undefined}
@@ -81,21 +85,21 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
       data-disabled={isDisabled || undefined}
     >
       {label && (
-        <label htmlFor={inputId} className="sp-textfield__label">
+        <label htmlFor={inputId} className={slot('sp-textfield__label', classNames, 'label')}>
           {label}
         </label>
       )}
-      <div className="sp-textfield__control" style={containerStyle} onClick={() => inputRef.current?.focus()}>
-        {prepend && <div className="sp-textfield__adornment">{prepend}</div>}
+      <div className={slot('sp-textfield__control', classNames, 'control')} style={containerStyle} onClick={() => inputRef.current?.focus()}>
+        {prepend && <div className={slot('sp-textfield__adornment', classNames, 'adornment')}>{prepend}</div>}
         <input
           ref={handleRef}
           id={inputId}
-          className="sp-textfield__input"
+          className={slot('sp-textfield__input', classNames, 'input')}
           type={masked ? 'text' : type}
           inputMode={masked ? 'numeric' : undefined}
           placeholder={placeholder}
           disabled={isDisabled}
-          value={fieldValue}
+          {...(controlled ? { value: fieldValue } : { defaultValue })}
           aria-invalid={hasError || undefined}
           aria-describedby={describedBy}
           onChange={handleChange}
@@ -103,10 +107,10 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
           onBlur={handleBlur}
           {...rest}
         />
-        {append && <div className="sp-textfield__adornment">{append}</div>}
+        {append && <div className={slot('sp-textfield__adornment', classNames, 'adornment')}>{append}</div>}
       </div>
       {level !== undefined && (
-        <div id={meterId} className="sp-textfield__meter">
+        <div id={meterId} className={slot('sp-textfield__meter', classNames, 'meter')}>
           <div
             role="meter"
             aria-label={typeof label === 'string' ? `${label} charge` : 'Charge'}
@@ -123,7 +127,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
         </div>
       )}
       {helperText && (
-        <p id={helperId} className="sp-textfield__helper">
+        <p id={helperId} className={slot('sp-textfield__helper', classNames, 'helper')}>
           {helperText}
         </p>
       )}

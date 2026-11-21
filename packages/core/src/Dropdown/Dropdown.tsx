@@ -150,6 +150,11 @@ const DropdownBase = React.forwardRef(({
   );
 });
 
+/**
+ * @deprecated Use `Select`, which adds typeahead, full keyboard support,
+ * screen-reader announcements and native form submission. Dropdown will be
+ * removed in a future major version.
+ */
 const Dropdown = (props: DropdownProps) => (
   <DropdownProvider>
     <DropdownBase {...props} />

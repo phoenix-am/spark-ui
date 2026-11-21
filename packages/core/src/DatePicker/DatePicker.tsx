@@ -1,6 +1,7 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { Calendar, CalendarProps } from './Calendar';
 import { cx } from '../internal/cx';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 export interface DatePickerProps extends Omit<CalendarProps, 'autoFocus' | 'onEscape' | 'onChange' | 'value' | 'className'> {
   /** Visible label above the field. */
@@ -27,6 +28,8 @@ export interface DatePickerProps extends Omit<CalendarProps, 'autoFocus' | 'onEs
   /** Default `medium`. */
   size?: 'small' | 'medium' | 'large';
   className?: string;
+  /** Extra classes for each part: root, label, control, trigger, popover, helper. */
+  classNames?: ClassNames<'root' | 'label' | 'control' | 'trigger' | 'popover' | 'helper'>;
 }
 
 const toISODate = (d: Date) =>
@@ -40,7 +43,8 @@ const toISODate = (d: Date) =>
  * Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
  * `__label`, `__control`, `__trigger`, `__clear`, `__helper`, `__popover`.
  */
-export function DatePicker({
+export function DatePicker(inProps: DatePickerProps) {
+  const {
   label,
   value,
   defaultValue = null,
@@ -55,8 +59,9 @@ export function DatePicker({
   size = 'medium',
   locale,
   className,
+  classNames,
   ...calendarProps
-}: DatePickerProps) {
+} = useDefaults('DatePicker', inProps);
   const [inner, setInner] = useState<Date | null>(defaultValue);
   const current = value !== undefined ? value : inner;
   const [isOpen, setOpen] = useState(false);
@@ -92,7 +97,7 @@ export function DatePicker({
   return (
     <div
       ref={rootRef}
-      className={cx('sp-date-picker', className)}
+      className={slot('sp-date-picker', classNames, 'root', className)}
       data-tone={error ? 'error' : 'brand'}
       data-size={size}
       data-open={(isOpen && !disabled) || undefined}
@@ -101,11 +106,11 @@ export function DatePicker({
       data-empty={!current || undefined}
     >
       {label && (
-        <span id={labelId} className="sp-date-picker__label">
+        <span id={labelId} className={slot('sp-date-picker__label', classNames, 'label')}>
           {label}
         </span>
       )}
-      <div className="sp-date-picker__control">
+      <div className={slot('sp-date-picker__control', classNames, 'control')}>
         <button
           ref={triggerRef}
           type="button"
@@ -123,7 +128,7 @@ export function DatePicker({
               setOpen(true);
             }
           }}
-          className="sp-date-picker__trigger"
+          className={slot('sp-date-picker__trigger', classNames, 'trigger')}
         >
           <svg className="sp-date-picker__icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
@@ -148,7 +153,7 @@ export function DatePicker({
         )}
       </div>
       {helperText && (
-        <p id={helperId} className="sp-date-picker__helper">
+        <p id={helperId} className={slot('sp-date-picker__helper', classNames, 'helper')}>
           {helperText}
         </p>
       )}
@@ -160,7 +165,7 @@ export function DatePicker({
           role="dialog"
           aria-modal="false"
           aria-label={typeof label === 'string' ? `Choose ${label.toLowerCase()}` : 'Choose date'}
-          className="sp-date-picker__popover"
+          className={slot('sp-date-picker__popover', classNames, 'popover')}
           data-has-label={label ? true : undefined}
         >
           <Calendar

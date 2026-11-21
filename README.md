@@ -65,11 +65,40 @@ import { ThemeProvider } from '@spark-ui/system';
 
 **Restyle any part:** components expose stable class names and state attributes, for example `.sp-switch[data-state="on"] .sp-switch__bulb` or `.sp-button[data-variant="outlined"]`. Each component's doc comment lists its style hooks.
 
+## App-wide defaults and slots
+
+Set defaults once for the whole app, the way MUI's `theme.components` works. Props set on an instance always win.
+
+```tsx
+import { SparkProvider } from '@spark-ui/core';
+
+<SparkProvider
+  components={{
+    Button: { defaultProps: { variant: 'outlined' }, classNames: { root: 'rounded-full' } },
+    Switch: { classNames: { bulb: 'my-bulb' } },
+  }}
+>
+  <App />
+</SparkProvider>
+```
+
+Style one part of one instance with `classNames`, for example `<Switch classNames={{ bulb: 'my-bulb' }} />`. Button, Switch, Checkbox, Textfield, Slider, Select, Modal, DatePicker, Badge and Field accept it.
+
+## Forms
+
+- Every input submits with a plain `<form>`: Select and DatePicker include hidden inputs, Switch submits `value` while on.
+- Works with React Hook Form: `register` for Textfield and Checkbox, `Controller` for Select and DatePicker (see Storybook, Foundations / Forms).
+- `Field` gives any control (a textarea, a rich-text editor) a linked label, help text and error: `<Field label="Notes" error={err}><textarea /></Field>`.
+
+## Accessibility
+
+Select, Modal and Tooltip are built on React Aria hooks: typeahead, focus containment and restoration, screen-reader announcements and dismissal behave the way they do in Adobe's products. Every Storybook story is checked with axe in CI (`npm test`), alongside keyboard behaviour tests.
+
 ## Packages
 
 | Package | What it holds |
 | --- | --- |
-| `@spark-ui/core` | The components and `styles.css` |
+| `@spark-ui/core` | The components, `SparkProvider` and `styles.css` |
 | `@spark-ui/styles` | Theme tokens, `createTheme`, `themeToCss` |
 | `@spark-ui/system` | Optional `ThemeProvider` and `useTheme` |
 | `@spark-ui/icons` | About 860 SVG icons as React components |

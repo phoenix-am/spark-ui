@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDefaults } from '../internal/defaults';
 
 export type AvatarStatus = 'online' | 'busy' | 'away' | 'offline';
 
@@ -26,7 +27,8 @@ const initials = (name: string) =>
  * LED pulses with current.
  * Style hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.
  */
-export function Avatar({ name, src, size = 'medium', status }: AvatarProps) {
+export function Avatar(inProps: AvatarProps) {
+  const { name, src, size = 'medium', status } = useDefaults('Avatar', inProps);
   const [broken, setBroken] = useState(false);
   return (
     <span role="img" aria-label={status ? `${name} (${status})` : name} className="sp-avatar" data-size={size} data-status={status}>

@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useId, useLayoutEffect, useRef, useState } from 'react';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
+import { useDefaults } from '../internal/defaults';
 
 interface TabsContextValue {
   value: string;
@@ -36,7 +37,8 @@ export interface TabsProps {
  * Style hooks: `.sp-tabs`, `.sp-tab-list`, `.sp-tab[aria-selected]`,
  * `.sp-tab-list__current`, `.sp-tab-panel`.
  */
-export function Tabs({ value, defaultValue, onChange, color = 'brand', children, className }: TabsProps) {
+export function Tabs(inProps: TabsProps) {
+  const { value, defaultValue, onChange, color = 'brand', children, className } = useDefaults('Tabs', inProps);
   const [inner, setInner] = useState(defaultValue);
   const current = value ?? inner;
   const baseId = useId();

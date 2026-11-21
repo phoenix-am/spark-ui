@@ -1,0 +1,36 @@
+/* ------------------------------------------------------------------ Field */
+.sp-field { display: flex; flex-direction: column; gap: 0.375rem; margin-bottom: 1rem; font-family: var(--spark-font); }
+.sp-field__label { font-size: var(--spark-font-size-small); font-weight: 600; color: var(--spark-text-primary); }
+.sp-field[data-disabled] .sp-field__label { color: var(--spark-text-disabled); }
+.sp-field__required { color: var(--spark-error-ink); }
+.sp-field__description,
+.sp-field__error { margin: 0; font-size: var(--spark-font-size-small); color: var(--spark-text-secondary); }
+.sp-field__error { color: var(--spark-error-ink); }
+
+/* A plain textarea or input inside a Field gets the Live Wire look. */
+.sp-field > textarea,
+.sp-field > input:not([type='checkbox']):not([type='radio']):not([type='range']),
+.sp-field > select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.7rem 0.875rem;
+  font-family: var(--spark-font);
+  font-size: var(--spark-font-size-medium);
+  color: var(--spark-text-primary);
+  caret-color: var(--spark-energy-ink);
+  background: var(--spark-surface-base);
+  border: 2px solid var(--spark-surface-border);
+  border-radius: var(--spark-radius-medium);
+  outline: none;
+  transition: border-color var(--spark-motion-normal), box-shadow var(--spark-motion-normal);
+}
+.sp-field > textarea { min-height: 6rem; resize: vertical; line-height: 1.5; }
+.sp-field > textarea:focus,
+.sp-field > input:focus,
+.sp-field > select:focus {
+  border-color: var(--spark-energy-ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--spark-energy-current) 20%, transparent);
+}
+.sp-field[data-invalid] > textarea,
+.sp-field[data-invalid] > input,
+.sp-field[data-invalid] > select { border-color: var(--spark-error-ink); }

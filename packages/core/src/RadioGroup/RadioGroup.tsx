@@ -1,6 +1,7 @@
 import React, { useId, useState } from 'react';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
+import { useDefaults } from '../internal/defaults';
 
 export interface RadioOption {
   /** Value submitted and passed to `onChange`. */
@@ -41,7 +42,8 @@ export interface RadioGroupProps {
  *
  * Style hooks: `.sp-radio-group`, `__option[data-checked]`, `__dot`, `__text`.
  */
-export function RadioGroup({
+export function RadioGroup(inProps: RadioGroupProps) {
+  const {
   label,
   options,
   value,
@@ -53,7 +55,7 @@ export function RadioGroup({
   helperText,
   error,
   className,
-}: RadioGroupProps) {
+} = useDefaults('RadioGroup', inProps);
   const [inner, setInner] = useState(defaultValue);
   const current = value ?? inner;
   const autoName = useId();

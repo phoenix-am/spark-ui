@@ -45,7 +45,10 @@ export interface UseTextFieldResult {
 }
 
 export interface TextfieldPropsBase extends InputHTMLAttributes<HTMLInputElement> {
+  /** Visible label, linked to the input. */
   label?: string;
+  /** Initial value when uncontrolled (no `value`). Works with React Hook Form's `register`. */
+  defaultValue?: string;
   placeholder?: string;
   inputSize?: 'small' | 'medium' | 'large';
   disabled?: boolean;
@@ -63,6 +66,8 @@ export interface TextfieldPropsBase extends InputHTMLAttributes<HTMLInputElement
   charge?: number | ((value: string) => number);
   /** Text announced next to the meter. Receives the charge as 0..100. */
   chargeLabel?: (percent: number) => React.ReactNode;
+  /** Extra classes for each part: root, label, control, input, adornment, meter, helper. */
+  classNames?: Partial<Record<'root' | 'label' | 'control' | 'input' | 'adornment' | 'meter' | 'helper', string>>;
   variant?: 'outlined' | 'filled' | 'standard';
   prepend?: React.ReactNode;
   append?: React.ReactNode;

@@ -1,14 +1,14 @@
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { FocusScope, useDialog, useModalOverlay } from 'react-aria';
+import { useOverlayTriggerState } from 'react-stately';
 import { usePortalTheme } from '../internal/usePortalTheme';
-
-const FOCUSABLE =
-  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 export interface ModalProps {
   /** Whether the dialog is shown. */
   open: boolean;
-  /** Called on Escape, the close button, or a backdrop click. */
+  /** Called on Escape, the close button, or a click outside the dialog. */
   onClose: () => void;
   /** Dialog heading; also its accessible name. */
   title: React.ReactNode;
@@ -19,109 +19,89 @@ export interface ModalProps {
   actions?: React.ReactNode;
   /** Max width: small 400px, medium 520px, large 720px. */
   size?: 'small' | 'medium' | 'large';
-  /** Close when the backdrop is clicked. Default `true`. */
+  /** Close when the user clicks outside the dialog. Default `true`. */
   closeOnBackdrop?: boolean;
   /** Class for the dialog panel. */
   className?: string;
+  /** Extra classes for each part: root, backdrop, panel, header, title, description, close, body, actions. */
+  classNames?: ClassNames<'root' | 'backdrop' | 'panel' | 'header' | 'title' | 'description' | 'close' | 'body' | 'actions'>;
 }
 
 /**
  * Modal: a power cut. The page dims with a flicker and the dialog is the only
- * thing left lit. Traps focus, closes on Escape and gives focus back on close.
+ * thing left lit. Behaviour comes from React Aria: focus is contained and
+ * restored, the page behind is hidden from screen readers and can't scroll,
+ * and Escape or an outside click closes it.
  *
  * Style hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,
  * `__header`, `__title`, `__description`, `__close`, `__body`, `__actions`.
  */
-export function Modal({ open, onClose, title, description, children, actions, size = 'medium', closeOnBackdrop = true, className }: ModalProps) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const restoreRef = useRef<HTMLElement | null>(null);
-  const titleId = useId();
-  const descId = useId();
+export function Modal(inProps: ModalProps) {
+  const { open, onClose, ...rest } = useDefaults('Modal', inProps);
   const { anchorRef, themeProps } = usePortalTheme(open);
-  const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
-
-  useEffect(() => {
-    if (!open) return;
-    restoreRef.current = document.activeElement as HTMLElement;
-    const { overflow } = document.body.style;
-    document.body.style.overflow = 'hidden';
-
-    const panel = panelRef.current;
-    const first = panel?.querySelector<HTMLElement>(FOCUSABLE);
-    (first ?? panel)?.focus();
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.stopPropagation();
-        onCloseRef.current();
-      }
-      if (e.key === 'Tab' && panel) {
-        const items = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE));
-        if (!items.length) return;
-        const firstEl = items[0];
-        const lastEl = items[items.length - 1];
-        if (e.shiftKey && document.activeElement === firstEl) {
-          e.preventDefault();
-          lastEl.focus();
-        } else if (!e.shiftKey && document.activeElement === lastEl) {
-          e.preventDefault();
-          firstEl.focus();
-        }
-      }
-    };
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = overflow;
-      restoreRef.current?.focus?.();
-    };
-  }, [open]);
-
   const anchor = <span ref={anchorRef} hidden />;
   if (!open || typeof document === 'undefined') return anchor;
-
   return (
     <>
-    {anchor}
-    {createPortal(
-    <div className="sp-modal" data-state="open" {...themeProps}>
-      <div aria-hidden="true" className="sp-modal__backdrop" onClick={closeOnBackdrop ? onClose : undefined} />
-      <div
-        ref={panelRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={description ? descId : undefined}
-        tabIndex={-1}
-        data-size={size}
-        className={['sp-modal__panel', className].filter(Boolean).join(' ')}
-      >
-        <div aria-hidden="true" className="sp-modal__current sp-current" />
-        <div className="sp-modal__header">
-          <div className="sp-modal__heading">
-            <h2 id={titleId} className="sp-modal__title">
-              {title}
-            </h2>
-            {description && (
-              <p id={descId} className="sp-modal__description">
-                {description}
-              </p>
-            )}
-          </div>
-          <button type="button" aria-label="Close" onClick={onClose} className="sp-modal__close">
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </button>
-        </div>
-        {children && <div className="sp-modal__body">{children}</div>}
-        <div className="sp-modal__actions">{actions}</div>
-      </div>
-    </div>,
-    document.body,
-  )}
+      {anchor}
+      {createPortal(<ModalSurface {...rest} open={open} onClose={onClose} themeProps={themeProps} />, document.body)}
     </>
+  );
+}
+
+function ModalSurface({
+  onClose,
+  title,
+  description,
+  children,
+  actions,
+  size = 'medium',
+  closeOnBackdrop = true,
+  className,
+  classNames,
+  themeProps,
+}: ModalProps & { themeProps: ReturnType<typeof usePortalTheme>['themeProps'] }) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const state = useOverlayTriggerState({ isOpen: true, onOpenChange: (isOpen) => !isOpen && onClose() });
+  const { modalProps, underlayProps } = useModalOverlay({ isDismissable: closeOnBackdrop }, state, panelRef);
+  const { dialogProps, titleProps } = useDialog({}, panelRef);
+  const descId = React.useId();
+
+  return (
+    <div className={slot('sp-modal', classNames, 'root')} data-state="open" {...themeProps} {...underlayProps}>
+      <div aria-hidden="true" className={slot('sp-modal__backdrop', classNames, 'backdrop')} />
+      <FocusScope contain restoreFocus autoFocus>
+        <div
+          {...modalProps}
+          {...dialogProps}
+          ref={panelRef}
+          aria-describedby={description ? descId : undefined}
+          data-size={size}
+          className={slot('sp-modal__panel', classNames, 'panel', className)}
+        >
+          <div aria-hidden="true" className="sp-modal__current sp-current" />
+          <div className={slot('sp-modal__header', classNames, 'header')}>
+            <div className="sp-modal__heading">
+              <h2 {...titleProps} className={slot('sp-modal__title', classNames, 'title')}>
+                {title}
+              </h2>
+              {description && (
+                <p id={descId} className={slot('sp-modal__description', classNames, 'description')}>
+                  {description}
+                </p>
+              )}
+            </div>
+            <button type="button" aria-label="Close" onClick={onClose} className={slot('sp-modal__close', classNames, 'close')}>
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
+          </div>
+          {children && <div className={slot('sp-modal__body', classNames, 'body')}>{children}</div>}
+          <div className={slot('sp-modal__actions', classNames, 'actions')}>{actions}</div>
+        </div>
+      </FocusScope>
+    </div>
   );
 }
 

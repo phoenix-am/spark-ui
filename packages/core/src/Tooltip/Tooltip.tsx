@@ -1,11 +1,15 @@
-import React, { cloneElement, isValidElement, useEffect, useId, useRef, useState } from 'react';
+import React, { cloneElement, isValidElement, useRef } from 'react';
+import { mergeProps, useTooltip, useTooltipTrigger } from 'react-aria';
+import { useTooltipTriggerState } from 'react-stately';
+import { useDefaults } from '../internal/defaults';
+import { cx } from '../internal/cx';
 
 export interface TooltipProps {
   /** Tooltip text. Keep it short; it is read as the trigger's description. */
   title: React.ReactNode;
   /** Side of the trigger to show on. Default `top`. */
   placement?: 'top' | 'bottom' | 'left' | 'right';
-  /** Delay before showing, in ms. Default 250. */
+  /** Delay before showing on hover, in ms. Default 250. Keyboard focus shows it at once. */
   delay?: number;
   /** A single focusable element, e.g. a Button. */
   children: React.ReactElement;
@@ -15,44 +19,33 @@ export interface TooltipProps {
 
 /**
  * Tooltip: a short charged label that arcs out from its trigger on hover or
- * keyboard focus. Escape dismisses it.
+ * keyboard focus. Behaviour comes from React Aria: hover delay with warm-up
+ * across nearby tooltips, instant on keyboard focus, Escape dismisses.
  *
  * Style hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.
  */
-export function Tooltip({ title, placement = 'top', delay = 250, children, className }: TooltipProps) {
-  const [open, setOpen] = useState(false);
-  const timer = useRef<number>();
-  const id = useId();
+export function Tooltip(inProps: TooltipProps) {
+  const { title, placement = 'top', delay = 250, children, className } = useDefaults('Tooltip', inProps);
+  const wrapperRef = useRef<HTMLSpanElement>(null);
+  const state = useTooltipTriggerState({ delay, closeDelay: 0 });
+  const { triggerProps, tooltipProps } = useTooltipTrigger({ delay, closeDelay: 0 }, state, wrapperRef);
+  const { tooltipProps: bubbleProps } = useTooltip(tooltipProps, state);
 
-  const show = () => {
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setOpen(true), delay);
-  };
-  const hide = () => {
-    window.clearTimeout(timer.current);
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && hide();
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open]);
-
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-
+  // React Aria's focus handling only listens on the focusable element itself
+  // (it ignores focus bubbling up from children), so merge the trigger props
+  // into the child. The wrapper only positions the bubble.
   const trigger = isValidElement(children)
-    ? cloneElement(children as React.ReactElement<Record<string, unknown>>, {
-        'aria-describedby': open ? id : undefined,
-      })
+    ? cloneElement(
+        children as React.ReactElement<Record<string, unknown>>,
+        mergeProps((children as React.ReactElement<Record<string, unknown>>).props, triggerProps),
+      )
     : children;
 
   return (
-    <span className="sp-tooltip" onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide}>
+    <span ref={wrapperRef} className="sp-tooltip">
       {trigger}
-      {open && (
-        <span role="tooltip" id={id} data-placement={placement} className={['sp-tooltip__bubble', className].filter(Boolean).join(' ')}>
+      {state.isOpen && (
+        <span {...bubbleProps} data-placement={placement} className={cx('sp-tooltip__bubble', className)}>
           {title}
         </span>
       )}

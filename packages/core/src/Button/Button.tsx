@@ -2,12 +2,14 @@ import React, { ElementType, useRef } from 'react';
 import { PolymorphicButtonProps } from './Button.types';
 import { Spark, SparkHandle } from '../Spark';
 import { cx } from '../internal/cx';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 /**
  * Button: throws sparks from the press point. Outlined and text buttons show
  * current flowing along a wire on hover; a disabled button is a dead circuit.
  */
-const Button = <C extends ElementType = 'button'>({
+const Button = <C extends ElementType = 'button'>(inProps: PolymorphicButtonProps<C>) => {
+  const {
   as: Component = 'button',
   variant = 'contained',
   color = 'brand',
@@ -22,8 +24,9 @@ const Button = <C extends ElementType = 'button'>({
   disableElevation = false,
   spark,
   ripple,
+  classNames,
   ...rest
-}: PolymorphicButtonProps<C>) => {
+} = useDefaults('Button', inProps);
   const sparkRef = useRef<SparkHandle>(null);
   const sparksOn = spark ?? ripple ?? true;
   const isButton = Component === 'button';
@@ -39,7 +42,7 @@ const Button = <C extends ElementType = 'button'>({
 
   return (
     <Component
-      className={cx('sp-button', className)}
+      className={slot('sp-button', classNames as ClassNames<'root' | 'icon'> | undefined, 'root', className)}
       data-variant={variant}
       data-tone={color}
       data-size={size}
@@ -52,9 +55,9 @@ const Button = <C extends ElementType = 'button'>({
       type={isButton ? (rest as { type?: string }).type ?? 'button' : undefined}
       {...rest}
     >
-      {startIcon && <span className="sp-button__icon slot-startIcon">{startIcon}</span>}
+      {startIcon && <span className={slot('sp-button__icon slot-startIcon', classNames as ClassNames<'icon'> | undefined, 'icon')}>{startIcon}</span>}
       {children}
-      {endIcon && <span className="sp-button__icon slot-endIcon">{endIcon}</span>}
+      {endIcon && <span className={slot('sp-button__icon slot-endIcon', classNames as ClassNames<'icon'> | undefined, 'icon')}>{endIcon}</span>}
       {sparksOn && (
         <Spark
           ref={sparkRef}

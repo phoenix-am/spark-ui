@@ -22,6 +22,8 @@ export interface ButtonPropsBase {
   spark?: boolean;
   /** @deprecated Use `spark`. Kept so existing code keeps working. */
   ripple?: boolean;
+  /** Extra classes for each part: root, icon. */
+  classNames?: Partial<Record<'root' | 'icon', string>>;
 }
 
 // Type map for Button with default component and props

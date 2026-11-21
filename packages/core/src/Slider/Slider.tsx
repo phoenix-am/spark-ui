@@ -1,6 +1,7 @@
 import React, { forwardRef, useId, useState } from 'react';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 export interface SliderProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'defaultValue' | 'onChange'> {
@@ -21,6 +22,8 @@ export interface SliderProps
   formatValue?: (value: number) => string;
   /** Default `brand`. */
   color?: Tone;
+  /** Extra classes for each part: root, header, label, value, input. */
+  classNames?: ClassNames<'root' | 'header' | 'label' | 'value' | 'input'>;
 }
 
 /**
@@ -30,10 +33,8 @@ export interface SliderProps
  * Style hooks: `.sp-slider`, `__header`, `__value`, `__input`; the fill level
  * is the `--sp-pct` variable (0–100).
  */
-export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
-  { label, value, defaultValue, min = 0, max = 100, step = 1, onChange, formatValue = String, color = 'brand', disabled, id, className, style, ...rest },
-  ref,
-) {
+export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(inProps, ref) {
+  const { label, value, defaultValue, min = 0, max = 100, step = 1, onChange, formatValue = String, color = 'brand', disabled, id, className, style, classNames, ...rest } = useDefaults('Slider', inProps);
   const [inner, setInner] = useState(defaultValue ?? min);
   const v = value ?? inner;
   const pct = max === min ? 0 : ((v - min) / (max - min)) * 100;
@@ -42,17 +43,17 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
 
   return (
     <div
-      className={cx('sp-slider', className)}
+      className={slot('sp-slider', classNames, 'root', className)}
       data-tone={color}
       data-disabled={disabled || undefined}
       style={{ ...style, '--sp-pct': pct } as React.CSSProperties}
     >
       {label && (
-        <div className="sp-slider__header">
-          <label htmlFor={inputId} className="sp-slider__label">
+        <div className={slot('sp-slider__header', classNames, 'header')}>
+          <label htmlFor={inputId} className={slot('sp-slider__label', classNames, 'label')}>
             {label}
           </label>
-          <output htmlFor={inputId} className="sp-slider__value">
+          <output htmlFor={inputId} className={slot('sp-slider__value', classNames, 'value')}>
             {formatValue(v)}
           </output>
         </div>
@@ -67,7 +68,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
         value={v}
         disabled={disabled}
         aria-valuetext={formatValue(v)}
-        className="sp-slider__input"
+        className={slot('sp-slider__input', classNames, 'input')}
         onChange={(e) => {
           const n = Number(e.target.value);
           if (value === undefined) setInner(n);

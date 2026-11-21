@@ -12,6 +12,7 @@ import {
   startOfMonth,
   weekdayNames,
 } from './dateUtils';
+import { useDefaults } from '../internal/defaults';
 
 export interface CalendarProps {
   /** The selected day. */
@@ -45,7 +46,8 @@ export interface CalendarProps {
  * Style hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,
  * `__day` with `[data-selected]`, `[data-today]`, `[data-outside]`, `:disabled`.
  */
-export function Calendar({
+export function Calendar(inProps: CalendarProps) {
+  const {
   value,
   onChange,
   min,
@@ -57,7 +59,7 @@ export function Calendar({
   todayLabel = 'Today',
   onEscape,
   className,
-}: CalendarProps) {
+} = useDefaults('Calendar', inProps);
   const today = startOfDay(new Date());
   const [focused, setFocused] = useState<Date>(startOfDay(value ?? clampToRange(today, min, max)));
   const [month, setMonth] = useState<Date>(startOfMonth(focused));

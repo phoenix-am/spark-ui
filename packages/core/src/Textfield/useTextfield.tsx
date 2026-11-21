@@ -64,11 +64,11 @@ export const useTextField = ({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const rawValue = event.target.value;
     const newValue = applyMasking(rawValue);
+    // Write the masked value back so uncontrolled inputs (and form libraries
+    // reading the DOM, like React Hook Form) see it too.
+    if (newValue !== rawValue) event.target.value = newValue;
     setValue(newValue);
-
-    if (onChangeProp) {
-      onChangeProp({ ...event, target: { ...event.target, value: newValue } });
-    }
+    onChangeProp?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {

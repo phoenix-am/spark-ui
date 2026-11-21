@@ -9,8 +9,11 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "@spark-ui/icons": "0.1.0",
     "@spark-ui/utils": "0.1.0",
-    "@spark-ui/icons": "0.1.0"
+    "react-aria": "^3.53.1",
+    "react-stately": "^3.51.0",
+    "@react-types/shared": "^3.37.0"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",

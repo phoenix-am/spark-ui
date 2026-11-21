@@ -1,5 +1,6 @@
 import React from 'react';
 import { cx } from '../internal/cx';
+import { useDefaults } from '../internal/defaults';
 
 /* ------------------------------------------------------------------- Card */
 
@@ -18,7 +19,8 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
  * Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover.
  * Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
  */
-export function Card({ live = false, interactive = false, as: Tag = 'div', padding = 'medium', className, children, ...rest }: CardProps) {
+export function Card(inProps: CardProps) {
+  const { live = false, interactive = false, as: Tag = 'div', padding = 'medium', className, children, ...rest } = useDefaults('Card', inProps);
   return (
     <Tag
       className={cx('sp-card', className)}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 /* ------------------------------------------------------------------ Badge */
 
@@ -13,19 +14,22 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   pulse?: boolean;
   /** `soft` tinted background (default) or `solid` fill. */
   variant?: 'soft' | 'solid';
+  /** Extra classes for each part: root, led. */
+  classNames?: ClassNames<'root' | 'led'>;
 }
 
 /** Badge: a status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`. */
-export function Badge({ tone = 'brand', led = true, pulse = false, variant = 'soft', className, children, ...rest }: BadgeProps) {
+export function Badge(inProps: BadgeProps) {
+  const { tone = 'brand', led = true, pulse = false, variant = 'soft', className, classNames, children, ...rest } = useDefaults('Badge', inProps);
   return (
     <span
-      className={cx('sp-badge', className)}
+      className={slot('sp-badge', classNames, 'root', className)}
       data-tone={tone}
       data-variant={variant}
       data-pulse={pulse || undefined}
       {...rest}
     >
-      {led && <span aria-hidden="true" className="sp-badge__led" />}
+      {led && <span aria-hidden="true" className={slot('sp-badge__led', classNames, 'led')} />}
       {children}
     </span>
   );
@@ -50,7 +54,8 @@ export interface ProgressProps {
  * Progress: a charge bar. At 100% the bar is fully charged and current flows.
  * Style hooks: `.sp-progress[data-state="charging"|"charged"|"indeterminate"]`, `__track`, `__fill`.
  */
-export function Progress({ value, label, showValue, tone = 'brand', size = 'medium' }: ProgressProps) {
+export function Progress(inProps: ProgressProps) {
+  const { value, label, showValue, tone = 'brand', size = 'medium' } = useDefaults('Progress', inProps);
   const v = value === undefined ? undefined : Math.max(0, Math.min(100, value));
   const state = v === undefined ? 'indeterminate' : v === 100 ? 'charged' : 'charging';
   const showNumber = v !== undefined && showValue !== false;
@@ -95,7 +100,8 @@ export interface SpinnerProps {
 const spinners = { small: 16, medium: 24, large: 36 };
 
 /** Spinner: an arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`. */
-export function Spinner({ size = 'medium', tone = 'brand', label = 'Loading' }: SpinnerProps) {
+export function Spinner(inProps: SpinnerProps) {
+  const { size = 'medium', tone = 'brand', label = 'Loading' } = useDefaults('Spinner', inProps);
   const s = spinners[size];
   const stroke = Math.max(2, s / 10);
   const r = (s - stroke) / 2;
