@@ -15,6 +15,7 @@ import { Spark, SparkHandle } from '../Spark';
 import { FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO } from '../DatePicker/dateAdapters';
 
 export { useSliderThumb } from 'react-aria';
+export { useDataTable } from '../DataTable/useDataTable';
 export { toDateValue, fromDateValue, toISO, withCalendar } from '../DatePicker/dateAdapters';
 
 type DataProps = Record<`data-${string}`, string | true | undefined>;

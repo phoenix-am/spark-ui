@@ -41,6 +41,7 @@ const ITEMS = {
   Select: { description: 'Alias of Dropdown.' },
   Combobox: { description: 'Type to search, then pick.' },
   Menu: { description: 'Actions behind a button, with submenus.' },
+  DataTable: { name: 'data-table', description: 'Sort, search, filter, page and select rows; responsive div grid, no table library.' },
   Tabs: { description: 'Tabs on one wire; the active tab is lit.' },
   Accordion: { description: 'Sections that power on as they open.' },
   Modal: { description: 'A dialog that powers on, with focus trapping.' },

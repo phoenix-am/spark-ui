@@ -406,6 +406,71 @@ Style hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,
 - `value?`: `Date | null` The selected day.
 - `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
+## DataTable (`data-table`)
+Sort, search, filter, page and select rows; responsive div grid, no table library.
+
+```tsx
+import { DataTable } from '@sparkwire/core';
+```
+Install: `npx sparkwire add data-table` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs
+
+### DataTable
+DataTable: sort, search, filter, page and select rows. Built from divs on a
+CSS grid (like MUI's Data Grid), so it adapts to its container: in narrow
+spaces rows become labelled cards. The table logic is Spark UI's own
+(`useDataTable`); React Aria supplies grid keyboard navigation and
+screen-reader semantics. Sorted headers and selected rows light up.
+
+Keyboard: arrows move between cells, Home/End and Page Up/Down jump,
+Space selects a row, Enter activates it, Shift+click sorts by more than
+one column.
+
+Style hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,
+`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable]`,
+`__row[data-selected][data-focus-visible]`, `__cell[data-align]`, `__footer`.
+
+- `columns`: `DataTableColumn<RowT>[]`
+- `data`: `RowT[]`
+- `aria-label?`: `string` Accessible name; describe what the table lists.
+- `aria-labelledby?`: `string`
+- `bulkActions?`: `((rows: RowT[]) => ReactNode)` Actions shown when rows are selected, e.g. a delete button. Receives the selected rows.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "toolbar" | "grid" | "header" | "columnHeader" | "row" | "cell" | "footer", string>>` Extra classes for each part.
+- `defaultFilters?`: `Record<string, unknown>`
+- `defaultPage?`: `number`
+- `defaultPageSize?`: `number`
+- `defaultSearch?`: `string`
+- `defaultSelectedKeys?`: `Iterable<string>`
+- `defaultSort?`: `SortRule[]`
+- `density?`: `"compact" | "normal" | "comfortable"` Row height. Default `normal`.
+- `emptyState?`: `ReactNode` Shown when there are no rows. Default "No results".
+- `filters?`: `Record<string, unknown>` Controlled per-column filter values, keyed by column.
+- `getRowKey?`: `((row: RowT, index: number) => string)` Stable id for each row. Default: `row.id`, then the index.
+- `loading?`: `boolean` Show placeholder rows while data loads.
+- `manual?`: `boolean` Server-side mode: you sort, filter and page the data yourself (e.g. in an API call) and pass the current page as `data` with the total `rowCount`.
+- `maxHeight?`: `string | number` Fix the height and scroll the body under a sticky header, e.g. `400`.
+- `onFiltersChange?`: `((filters: Record<string, unknown>) => void)`
+- `onPageChange?`: `((page: number) => void)`
+- `onPageSizeChange?`: `((size: number) => void)`
+- `onRowAction?`: `((row: RowT, key: string) => void)` Called when a row is activated (click, or Enter on the row).
+- `onSearchChange?`: `((search: string) => void)`
+- `onSelectionChange?`: `((keys: Set<string>) => void)`
+- `onSortChange?`: `((sort: SortRule[]) => void)`
+- `page?`: `number` Controlled page (0-based).
+- `pageSize?`: `number` Rows per page; `0` turns paging off. Default 10.
+- `pageSizeOptions?`: `number[]` Page sizes to offer. Default `[10, 25, 50]`. Pass `[]` to hide the picker.
+- `responsive?`: `"stack" | "scroll"` In a narrow container: `stack` (default) turns rows into labelled cards; `scroll` keeps the grid and scrolls sideways.
+- `rowCount?`: `number` Total rows on the server, for paging in `manual` mode.
+- `search?`: `string` Controlled search text (matches any searchable column).
+- `searchable?`: `boolean` Show a search box over the table.
+- `searchPlaceholder?`: `string` Placeholder for the search box.
+- `selectedKeys?`: `Set<string>` Controlled selected row keys.
+- `selectionMode?`: `"none" | "single" | "multiple"` `multiple` adds checkboxes; `single` selects one row. Default `none`.
+- `sort?`: `SortRule[]` Controlled sort rules (first wins).
+- `stackBelow?`: `number` Container width (px) below which rows stack. Default 640.
+- `striped?`: `boolean` Shade every other row.
+- `toolbar?`: `ReactNode` Extra content in the toolbar, e.g. filter dropdowns or an export button.
+
 ## Menu (`menu`)
 Actions behind a button, with submenus.
 

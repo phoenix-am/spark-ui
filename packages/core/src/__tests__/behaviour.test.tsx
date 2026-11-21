@@ -517,3 +517,71 @@ describe('headless hooks', () => {
     expect(result!.value!.getDate()).toBe(25);
   });
 });
+
+describe('DataTable', () => {
+  const { DataTable, useDataTable } = jest.requireActual('..');
+  const rows = [
+    { id: 'a', name: 'Éclair', qty: 10 },
+    { id: 'b', name: 'apple', qty: 9 },
+    { id: 'c', name: 'Banana', qty: 100 },
+  ];
+  const columns = [
+    { key: 'name', header: 'Name', sortable: true },
+    { key: 'qty', header: 'Qty', sortable: true },
+  ];
+  const names = () => screen.getAllByRole('row').slice(1).map((r: HTMLElement) => within(r).getByRole('rowheader').textContent);
+
+  it('renders an accessible grid from divs and sorts asc → desc → off', async () => {
+    const user = userEvent.setup();
+    render(<DataTable aria-label="Fruit" data={rows} columns={columns} pageSize={0} />);
+    const grid = screen.getByRole('grid', { name: 'Fruit' });
+    expect(grid.tagName).toBe('DIV');
+    const header = screen.getByRole('columnheader', { name: /Name/ });
+    await user.click(header);
+    expect(names()).toEqual(['apple', 'Banana', 'Éclair']); // locale order, accent-insensitive
+    expect(header).toHaveAttribute('aria-sort', 'ascending');
+    await user.click(header);
+    expect(names()).toEqual(['Éclair', 'Banana', 'apple']);
+    await user.click(header);
+    expect(names()).toEqual(['Éclair', 'apple', 'Banana']);
+  });
+
+  it('sorts numbers numerically and searches ignoring accents', async () => {
+    const user = userEvent.setup();
+    render(<DataTable aria-label="Fruit" data={rows} columns={columns} pageSize={0} searchable />);
+    await user.click(screen.getByRole('columnheader', { name: /Qty/ }));
+    expect(names()).toEqual(['apple', 'Éclair', 'Banana']);
+    await user.type(screen.getByRole('searchbox'), 'ecl');
+    expect(names()).toEqual(['Éclair']);
+  });
+
+  it('pages, selects across the page and reports the selection', async () => {
+    const user = userEvent.setup();
+    const onSelectionChange = jest.fn();
+    const many = Array.from({ length: 12 }, (_, i) => ({ id: `r${i}`, name: `Row ${i + 1}`, qty: i }));
+    render(<DataTable aria-label="Rows" data={many} columns={columns} selectionMode="multiple" pageSize={5} onSelectionChange={onSelectionChange} pageSizeOptions={[]} />);
+    expect(screen.getByText('1–5 of 12')).toBeInTheDocument();
+    await user.click(screen.getByRole('checkbox', { name: /Select All/i }));
+    expect(onSelectionChange).toHaveBeenLastCalledWith(new Set(['r0', 'r1', 'r2', 'r3', 'r4']));
+    await user.click(screen.getByRole('button', { name: 'Next page' }));
+    expect(screen.getByText('6–10 of 12')).toBeInTheDocument();
+    const rowsOnPage2 = screen.getAllByRole('row').slice(1);
+    await user.click(within(rowsOnPage2[0]).getByRole('checkbox'));
+    expect(onSelectionChange.mock.calls.at(-1)[0].size).toBe(6);
+  });
+
+  it('shows the empty state', () => {
+    render(<DataTable aria-label="Nothing" data={[]} columns={columns} emptyState="Nothing here" />);
+    expect(screen.getByText('Nothing here')).toBeInTheDocument();
+  });
+
+  it('useDataTable works headless with multi-column sort', () => {
+    let t: ReturnType<typeof useDataTable>;
+    function Demo() {
+      t = useDataTable({ data: [{ g: 'x', n: 2 }, { g: 'y', n: 1 }, { g: 'x', n: 1 }], columns: [{ key: 'g', header: 'G' }, { key: 'n', header: 'N' }], defaultSort: [{ column: 'g', direction: 'ascending' }, { column: 'n', direction: 'ascending' }], pageSize: 0 });
+      return null;
+    }
+    render(<Demo />);
+    expect(t!.rows.map((r: { row: { g: string; n: number } }) => `${r.row.g}${r.row.n}`)).toEqual(['x1', 'x2', 'y1']);
+  });
+});

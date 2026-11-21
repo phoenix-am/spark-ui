@@ -1390,6 +1390,273 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs"
     },
     {
+      "name": "data-table",
+      "title": "DataTable",
+      "summary": "Sort, search, filter, page and select rows; responsive div grid, no table library.",
+      "components": [
+        {
+          "name": "DataTable",
+          "description": "DataTable: sort, search, filter, page and select rows. Built from divs on a\nCSS grid (like MUI's Data Grid), so it adapts to its container: in narrow\nspaces rows become labelled cards. The table logic is Spark UI's own\n(`useDataTable`); React Aria supplies grid keyboard navigation and\nscreen-reader semantics. Sorted headers and selected rows light up.\n\nKeyboard: arrows move between cells, Home/End and Page Up/Down jump,\nSpace selects a row, Enter activates it, Shift+click sorts by more than\none column.\n\nStyle hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,\n`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable]`,\n`__row[data-selected][data-focus-visible]`, `__cell[data-align]`, `__footer`.",
+          "props": [
+            {
+              "name": "columns",
+              "type": "DataTableColumn<RowT>[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "data",
+              "type": "RowT[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name; describe what the table lists."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "bulkActions",
+              "type": "((rows: RowT[]) => ReactNode)",
+              "required": false,
+              "description": "Actions shown when rows are selected, e.g. a delete button. Receives the selected rows."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"toolbar\" | \"grid\" | \"header\" | \"columnHeader\" | \"row\" | \"cell\" | \"footer\", string>>",
+              "required": false,
+              "description": "Extra classes for each part."
+            },
+            {
+              "name": "defaultFilters",
+              "type": "Record<string, unknown>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultPage",
+              "type": "number",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultPageSize",
+              "type": "number",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultSearch",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultSelectedKeys",
+              "type": "Iterable<string>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultSort",
+              "type": "SortRule[]",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "density",
+              "type": "\"compact\" | \"normal\" | \"comfortable\"",
+              "required": false,
+              "description": "Row height. Default `normal`."
+            },
+            {
+              "name": "emptyState",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Shown when there are no rows. Default \"No results\"."
+            },
+            {
+              "name": "filters",
+              "type": "Record<string, unknown>",
+              "required": false,
+              "description": "Controlled per-column filter values, keyed by column."
+            },
+            {
+              "name": "getRowKey",
+              "type": "((row: RowT, index: number) => string)",
+              "required": false,
+              "description": "Stable id for each row. Default: `row.id`, then the index."
+            },
+            {
+              "name": "loading",
+              "type": "boolean",
+              "required": false,
+              "description": "Show placeholder rows while data loads."
+            },
+            {
+              "name": "manual",
+              "type": "boolean",
+              "required": false,
+              "description": "Server-side mode: you sort, filter and page the data yourself (e.g. in an\nAPI call) and pass the current page as `data` with the total `rowCount`."
+            },
+            {
+              "name": "maxHeight",
+              "type": "string | number",
+              "required": false,
+              "description": "Fix the height and scroll the body under a sticky header, e.g. `400`."
+            },
+            {
+              "name": "onFiltersChange",
+              "type": "((filters: Record<string, unknown>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onPageChange",
+              "type": "((page: number) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onPageSizeChange",
+              "type": "((size: number) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onRowAction",
+              "type": "((row: RowT, key: string) => void)",
+              "required": false,
+              "description": "Called when a row is activated (click, or Enter on the row)."
+            },
+            {
+              "name": "onSearchChange",
+              "type": "((search: string) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onSelectionChange",
+              "type": "((keys: Set<string>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onSortChange",
+              "type": "((sort: SortRule[]) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "page",
+              "type": "number",
+              "required": false,
+              "description": "Controlled page (0-based)."
+            },
+            {
+              "name": "pageSize",
+              "type": "number",
+              "required": false,
+              "description": "Rows per page; `0` turns paging off. Default 10."
+            },
+            {
+              "name": "pageSizeOptions",
+              "type": "number[]",
+              "required": false,
+              "description": "Page sizes to offer. Default `[10, 25, 50]`. Pass `[]` to hide the picker."
+            },
+            {
+              "name": "responsive",
+              "type": "\"stack\" | \"scroll\"",
+              "required": false,
+              "description": "In a narrow container: `stack` (default) turns rows into labelled cards;\n`scroll` keeps the grid and scrolls sideways."
+            },
+            {
+              "name": "rowCount",
+              "type": "number",
+              "required": false,
+              "description": "Total rows on the server, for paging in `manual` mode."
+            },
+            {
+              "name": "search",
+              "type": "string",
+              "required": false,
+              "description": "Controlled search text (matches any searchable column)."
+            },
+            {
+              "name": "searchable",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a search box over the table."
+            },
+            {
+              "name": "searchPlaceholder",
+              "type": "string",
+              "required": false,
+              "description": "Placeholder for the search box."
+            },
+            {
+              "name": "selectedKeys",
+              "type": "Set<string>",
+              "required": false,
+              "description": "Controlled selected row keys."
+            },
+            {
+              "name": "selectionMode",
+              "type": "\"none\" | \"single\" | \"multiple\"",
+              "required": false,
+              "description": "`multiple` adds checkboxes; `single` selects one row. Default `none`."
+            },
+            {
+              "name": "sort",
+              "type": "SortRule[]",
+              "required": false,
+              "description": "Controlled sort rules (first wins)."
+            },
+            {
+              "name": "stackBelow",
+              "type": "number",
+              "required": false,
+              "description": "Container width (px) below which rows stack. Default 640."
+            },
+            {
+              "name": "striped",
+              "type": "boolean",
+              "required": false,
+              "description": "Shade every other row."
+            },
+            {
+              "name": "toolbar",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Extra content in the toolbar, e.g. filter dropdowns or an export button."
+            }
+          ]
+        }
+      ],
+      "import": "import { DataTable } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add data-table",
+        "shadcn": "npx shadcn add @sparkwire/data-table",
+        "copiedImport": "import { DataTable } from '@/components/spark-ui/DataTable';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs"
+    },
+    {
       "name": "menu",
       "title": "Menu",
       "summary": "Actions behind a button, with submenus.",

@@ -163,6 +163,11 @@
       "types": "./dist/headless/index.d.ts",
       "import": "./dist/headless/index.mjs",
       "require": "./dist/headless/index.js"
+    },
+    "./data-table": {
+      "types": "./dist/data-table/index.d.ts",
+      "import": "./dist/data-table/index.mjs",
+      "require": "./dist/data-table/index.js"
     }
   },
   "files": [
@@ -248,6 +253,9 @@
       ],
       "headless": [
         "./dist/headless/index.d.ts"
+      ],
+      "data-table": [
+        "./dist/data-table/index.d.ts"
       ]
     }
   }

@@ -147,6 +147,15 @@ Spark UI is built in two layers, like MUI:
 
 Use the base layer to build components we don't ship, and they will match the rest. See *Foundations → Base components* in Storybook. The base layer is unstable until 1.0.
 
+### DataTable
+
+Sorting (Shift+click for several columns), search, per-column filters, paging, row selection with bulk actions, loading and empty states, and server-side mode (`manual`). No table library: the logic is our own `useDataTable` hook (also usable headless), the markup is a div grid like MUI's Data Grid, and React Aria adds grid keyboard navigation and screen-reader semantics. In narrow containers rows become labelled cards (`responsive="stack"`, default) or scroll sideways (`responsive="scroll"`).
+
+```tsx
+<DataTable aria-label="Deployments" data={rows} searchable selectionMode="multiple"
+  columns={[{ key: 'service', header: 'Service', sortable: true }, { key: 'cost', header: 'Cost', sortable: true, cell: (r) => `₹${r.cost}` }]} />
+```
+
 ### Dropdown, Combobox and Menu
 
 | | Use it to | Built on |

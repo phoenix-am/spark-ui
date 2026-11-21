@@ -42,3 +42,5 @@ export { Combobox } from './Combobox';
 export type { ComboboxProps, ComboboxOption, ComboboxOptionGroup } from './Combobox';
 export { Menu } from './Menu';
 export type { MenuProps, MenuItem, MenuSection, MenuEntry } from './Menu';
+export { DataTable, useDataTable } from './DataTable';
+export type { DataTableProps, DataTableColumn, SortRule, UseDataTableOptions } from './DataTable';

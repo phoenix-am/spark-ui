@@ -450,6 +450,41 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "DataTable",
+      "description": "Sort, search, filter, page and select rows; responsive div grid, no table library.",
+      "dependencies": [
+        "@react-types/shared@^3.37.0",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/checkbox",
+        "@sparkwire/dropdown",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/DataTable/DataTable.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DataTable/DataTable.tsx"
+        },
+        {
+          "path": "components/spark-ui/DataTable/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DataTable/index.ts"
+        },
+        {
+          "path": "components/spark-ui/DataTable/useDataTable.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DataTable/useDataTable.ts"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
@@ -692,6 +727,7 @@
         "react-stately@^3.51.0"
       ],
       "registryDependencies": [
+        "@sparkwire/data-table",
         "@sparkwire/date-picker",
         "@sparkwire/spark",
         "@sparkwire/styles",
