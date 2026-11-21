@@ -1,10 +1,10 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { useTheme } from '@spark-ui/system';
+import { useTheme } from '@sparkwire/system';
 
 const meta: Meta = {
   title: 'Foundations/Tokens',
-  parameters: { docs: { description: { component: 'The Live Wire theme tokens from `@spark-ui/styles`.' } } },
+  parameters: { docs: { description: { component: 'The Live Wire theme tokens from `@sparkwire/styles`.' } } },
 };
 export default meta;
 

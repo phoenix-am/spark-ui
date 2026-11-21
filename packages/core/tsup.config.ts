@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup';
 
 // One entry per component so apps can import only what they use, e.g.
-// import { Button } from '@spark-ui/core/button'. Every file is marked
+// import { Button } from '@sparkwire/core/button'. Every file is marked
 // "use client" so components drop straight into Next.js App Router pages.
 export default defineConfig({
   entry: {
@@ -38,5 +38,5 @@ export default defineConfig({
   splitting: true,
   target: 'es2019',
   banner: { js: '"use client";' },
-  external: ['react', 'react-dom', /^@spark-ui\//],
+  external: ['react', 'react-dom', /^@sparkwire\//],
 });

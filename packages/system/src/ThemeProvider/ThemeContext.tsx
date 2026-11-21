@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { BaseTheme, defaultTheme } from '@spark-ui/styles';
+import { BaseTheme, defaultTheme } from '@sparkwire/styles';
 
 export type SparkMode = 'dark' | 'light' | 'system';
 

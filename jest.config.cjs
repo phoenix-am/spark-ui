@@ -18,7 +18,7 @@ module.exports = {
   },
   moduleNameMapper: {
     '\\.css$': '<rootDir>/test/styleStub.js',
-    '^@spark-ui/icons$': '<rootDir>/packages/icons/index.ts',
-    '^@spark-ui/(.*)$': '<rootDir>/packages/$1/src',
+    '^@sparkwire/icons$': '<rootDir>/packages/icons/index.ts',
+    '^@sparkwire/(.*)$': '<rootDir>/packages/$1/src',
   },
 };

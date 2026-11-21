@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import ThemeContext, { SparkMode } from './ThemeContext';
-import { BaseTheme, DeepPartial, Theme, createTheme, defaultTheme, lightTheme, themeToCssVars } from '@spark-ui/styles';
+import { BaseTheme, DeepPartial, Theme, createTheme, defaultTheme, lightTheme, themeToCssVars } from '@sparkwire/styles';
 
 export interface ThemeProviderProps {
   children: ReactNode;
@@ -34,7 +34,7 @@ const usePrefersLight = () => {
 };
 
 /**
- * Optional. Spark UI components are styled by `@spark-ui/core/styles.css`
+ * Optional. Spark UI components are styled by `@sparkwire/core/styles.css`
  * and its CSS variables, so they render correctly without any provider
  * (including in React Server Components). Use the provider to switch modes
  * at runtime, or to apply token overrides to a part of the page.

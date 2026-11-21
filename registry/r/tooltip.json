@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "A hint that flickers on.",
+  "dependencies": [
+    "react-aria@^3.53.1",
+    "react-stately@^3.51.0"
+  ],
+  "registryDependencies": [
+    "@sparkwire/styles",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/Tooltip/Tooltip.tsx",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Tooltip/Tooltip.tsx",
+      "content": "import React, { cloneElement, isValidElement, useRef } from 'react';\nimport { mergeProps, useTooltip, useTooltipTrigger } from 'react-aria';\nimport { useTooltipTriggerState } from 'react-stately';\nimport { useDefaults } from '../internal/defaults';\nimport { cx } from '../internal/cx';\n\nexport interface TooltipProps {\n  /** Tooltip text. Keep it short; it is read as the trigger's description. */\n  title: React.ReactNode;\n  /** Side of the trigger to show on. Default `top`. */\n  placement?: 'top' | 'bottom' | 'left' | 'right';\n  /** Delay before showing on hover, in ms. Default 250. Keyboard focus shows it at once. */\n  delay?: number;\n  /** A single focusable element, e.g. a Button. */\n  children: React.ReactElement;\n  /** Class for the tooltip bubble. */\n  className?: string;\n}\n\n/**\n * Tooltip: a short charged label that arcs out from its trigger on hover or\n * keyboard focus. Behaviour comes from React Aria: hover delay with warm-up\n * across nearby tooltips, instant on keyboard focus, Escape dismisses.\n *\n * Style hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.\n */\nexport function Tooltip(inProps: TooltipProps) {\n  const { title, placement = 'top', delay = 250, children, className } = useDefaults('Tooltip', inProps);\n  const wrapperRef = useRef<HTMLSpanElement>(null);\n  const state = useTooltipTriggerState({ delay, closeDelay: 0 });\n  const { triggerProps, tooltipProps } = useTooltipTrigger({ delay, closeDelay: 0 }, state, wrapperRef);\n  const { tooltipProps: bubbleProps } = useTooltip(tooltipProps, state);\n\n  // React Aria's focus handling only listens on the focusable element itself\n  // (it ignores focus bubbling up from children), so merge the trigger props\n  // into the child. The wrapper only positions the bubble.\n  const trigger = isValidElement(children)\n    ? cloneElement(\n        children as React.ReactElement<Record<string, unknown>>,\n        mergeProps((children as React.ReactElement<Record<string, unknown>>).props, triggerProps),\n      )\n    : children;\n\n  return (\n    <span ref={wrapperRef} className=\"sp-tooltip\">\n      {trigger}\n      {state.isOpen && (\n        <span {...bubbleProps} data-placement={placement} className={cx('sp-tooltip__bubble', className)}>\n          {title}\n        </span>\n      )}\n    </span>\n  );\n}\n\nexport default Tooltip;\n"
+    },
+    {
+      "path": "components/spark-ui/Tooltip/index.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Tooltip/index.ts",
+      "content": "export * from './Tooltip';\n"
+    }
+  ]
+}

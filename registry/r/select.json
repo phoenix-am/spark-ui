@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select",
+  "type": "registry:ui",
+  "title": "Select",
+  "description": "Alias of Dropdown.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@sparkwire/dropdown",
+    "@sparkwire/styles",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/Select/index.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Select/index.ts",
+      "content": "/**\n * `Select` is the same component as `Dropdown`, kept as an alias so both\n * names work. Configure it under `Dropdown` or `Select` in SparkProvider.\n */\nexport { Dropdown as Select } from '../Dropdown/Dropdown';\nexport type { DropdownProps as SelectProps, DropdownOption as SelectOption, DropdownOptionGroup as SelectOptionGroup } from '../Dropdown/Dropdown';\n"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "provider",
+  "type": "registry:ui",
+  "title": "SparkProvider",
+  "description": "App-wide default props, slot classes and locale.",
+  "dependencies": [
+    "react-aria@^3.53.1"
+  ],
+  "registryDependencies": [
+    "@sparkwire/accordion",
+    "@sparkwire/avatar",
+    "@sparkwire/button",
+    "@sparkwire/card",
+    "@sparkwire/checkbox",
+    "@sparkwire/combobox",
+    "@sparkwire/date-picker",
+    "@sparkwire/dropdown",
+    "@sparkwire/field",
+    "@sparkwire/indicators",
+    "@sparkwire/menu",
+    "@sparkwire/modal",
+    "@sparkwire/radio-group",
+    "@sparkwire/select",
+    "@sparkwire/slider",
+    "@sparkwire/styles",
+    "@sparkwire/switch",
+    "@sparkwire/tabs",
+    "@sparkwire/textfield",
+    "@sparkwire/tooltip",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/Provider/SparkProvider.tsx",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Provider/SparkProvider.tsx",
+      "content": "import React, { useContext, useMemo } from 'react';\nimport { I18nProvider } from 'react-aria';\nimport { DefaultsContext, DefaultsMap, ComponentConfig } from '../internal/defaults';\nimport type { ButtonTypeMap } from '../Button/Button.types';\nimport type { SwitchProps } from '../Switch';\nimport type { CheckboxProps } from '../Checkbox';\nimport type { TextfieldProps } from '../Textfield';\nimport type { SliderProps } from '../Slider';\nimport type { RadioGroupProps } from '../RadioGroup';\nimport type { TabsProps } from '../Tabs';\nimport type { AccordionProps } from '../Accordion';\nimport type { ModalProps } from '../Modal';\nimport type { TooltipProps } from '../Tooltip';\nimport type { CardProps } from '../Card';\nimport type { BadgeProps, ProgressProps, SpinnerProps } from '../Indicators';\nimport type { AvatarProps } from '../Avatar';\nimport type { DatePickerProps, CalendarProps } from '../DatePicker';\nimport type { SelectProps } from '../Select';\nimport type { DropdownProps } from '../Dropdown';\nimport type { ComboboxProps } from '../Combobox';\nimport type { MenuProps } from '../Menu';\nimport type { FieldProps } from '../Field';\n\n/** App-wide defaults, keyed by component name. */\nexport interface SparkComponentsConfig {\n  Button?: ComponentConfig<ButtonTypeMap['props']>;\n  Switch?: ComponentConfig<SwitchProps>;\n  Checkbox?: ComponentConfig<CheckboxProps>;\n  Textfield?: ComponentConfig<TextfieldProps>;\n  Slider?: ComponentConfig<SliderProps>;\n  RadioGroup?: ComponentConfig<RadioGroupProps>;\n  Dropdown?: ComponentConfig<DropdownProps>;\n  /** Same component as Dropdown; both keys apply. */\n  Select?: ComponentConfig<SelectProps>;\n  Combobox?: ComponentConfig<ComboboxProps>;\n  Menu?: ComponentConfig<MenuProps>;\n  Field?: ComponentConfig<FieldProps>;\n  Tabs?: ComponentConfig<TabsProps>;\n  Accordion?: ComponentConfig<AccordionProps>;\n  Modal?: ComponentConfig<ModalProps>;\n  Tooltip?: ComponentConfig<TooltipProps>;\n  Card?: ComponentConfig<CardProps>;\n  Badge?: ComponentConfig<BadgeProps>;\n  Progress?: ComponentConfig<ProgressProps>;\n  Spinner?: ComponentConfig<SpinnerProps>;\n  Avatar?: ComponentConfig<AvatarProps>;\n  DatePicker?: ComponentConfig<DatePickerProps>;\n  Calendar?: ComponentConfig<CalendarProps>;\n}\n\nexport interface SparkProviderProps {\n  /**\n   * Defaults for every instance of a component, e.g.\n   * `{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`.\n   * Props set on an instance always win.\n   */\n  components?: SparkComponentsConfig;\n  /**\n   * BCP 47 locale for dates, number formats and keyboard direction, e.g.\n   * `hi-IN`, `ar-EG`, `en-US`. Right-to-left locales mirror arrow keys.\n   * Defaults to the parent provider's, then the browser's.\n   */\n  locale?: string;\n  children: React.ReactNode;\n}\n\n/**\n * SparkProvider: set app-wide defaults and slot class names once, the way\n * MUI's `theme.components` works. Nested providers merge with their parent.\n * Styling still comes from `styles.css`; this provider only changes props.\n */\nexport function SparkProvider({ components, locale, children }: SparkProviderProps) {\n  const parent = useContext(DefaultsContext);\n  const value = useMemo<DefaultsMap>(() => {\n    if (!components) return parent;\n    const next: DefaultsMap = { ...parent };\n    for (const [name, cfg] of Object.entries(components) as [string, ComponentConfig][]) {\n      const up = parent[name];\n      next[name] = {\n        defaultProps: { ...up?.defaultProps, ...cfg.defaultProps },\n        classNames: { ...up?.classNames, ...cfg.classNames },\n      };\n    }\n    return next;\n  }, [parent, components]);\n  const tree = <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;\n  return locale ? <I18nProvider locale={locale}>{tree}</I18nProvider> : tree;\n}\n\nexport default SparkProvider;\n"
+    },
+    {
+      "path": "components/spark-ui/Provider/index.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Provider/index.ts",
+      "content": "export { SparkProvider } from './SparkProvider';\nexport type { SparkProviderProps, SparkComponentsConfig } from './SparkProvider';\n"
+    }
+  ]
+}

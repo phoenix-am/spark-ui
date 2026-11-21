@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { DollarSign, Info, Mail, Lock } from '@spark-ui/icons';
+import { DollarSign, Info, Mail, Lock } from '@sparkwire/icons';
 import { Textfield } from '.';
 
 /**

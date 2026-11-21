@@ -4,7 +4,7 @@ const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCas
 
 /**
  * Turn a theme into CSS custom properties, e.g. `--spark-energy-current`.
- * The same names are used by `@spark-ui/core/styles.css`, so overriding a
+ * The same names are used by `@sparkwire/core/styles.css`, so overriding a
  * variable in plain CSS restyles every component that uses it.
  */
 export function themeToCssVars(theme: Theme): Record<string, string> {

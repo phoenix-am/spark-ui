@@ -1,10 +1,17 @@
 import React, { useRef } from 'react';
 import { HiddenSelect, useButton, useSelect } from 'react-aria';
 import { useSelectState } from 'react-stately';
-import { User } from '@spark-ui/icons';
 import { Popover } from '../base/Popover';
 import { ListBox, ListItems, ListOption, findOption, renderListItems, isGroup } from '../base/ListBox';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
+
+/** Person icon for the deprecated `forTeams` prop (inlined so the component needs no icon package). */
+const User = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);
 
 export type DropdownOption<V extends string | number = string | number> = ListOption<V>;
 export type DropdownOptionGroup<V extends string | number = string | number> = { label: string; options: DropdownOption<V>[] };

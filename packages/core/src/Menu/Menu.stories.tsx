@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Archive, Copy, Download, Edit, Link, Mail, MoreVertical, Share, Trash } from '@spark-ui/icons';
+import { Archive, Copy, Download, Edit, Link, Mail, MoreVertical, Share, Trash } from '@sparkwire/icons';
 import { Menu } from '.';
 import { Button } from '../Button';
 

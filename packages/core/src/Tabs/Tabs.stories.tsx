@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Settings, Activity, Home } from '@spark-ui/icons';
+import { Settings, Activity, Home } from '@sparkwire/icons';
 import { Tabs, TabList, Tab, TabPanel } from '.';
 
 /**

@@ -1,5 +1,5 @@
 {
-  "name": "@spark-ui/system",
+  "name": "@sparkwire/system",
   "version": "0.1.0",
   "description": "A styling engine for the Spark UI library.",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
-    "@spark-ui/styles": "0.1.0"
+    "@sparkwire/styles": "0.1.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",

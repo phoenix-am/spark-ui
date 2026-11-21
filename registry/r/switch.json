@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:ui",
+  "title": "Switch",
+  "description": "A lever switch that lights a bulb.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@sparkwire/styles",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/Switch/Switch.tsx",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Switch/Switch.tsx",
+      "content": "import React, { forwardRef, useId, useState } from 'react';\nimport { Tone } from '../internal/tone';\nimport { cx } from '../internal/cx';\nimport { useDefaults, slot, ClassNames } from '../internal/defaults';\n\nexport interface SwitchProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange' | 'color'> {\n  /** Controlled state. */\n  checked?: boolean;\n  /** Initial state when uncontrolled. */\n  defaultChecked?: boolean;\n  /** Called with the new state when the user flips the switch. */\n  onChange?: (checked: boolean, event: React.MouseEvent<HTMLButtonElement>) => void;\n  /** Visible label. Use `aria-label` instead when there is none. */\n  label?: React.ReactNode;\n  /** Colour of the current when on. Default `brand`. */\n  color?: Tone;\n  /** Default `medium`. */\n  size?: 'small' | 'medium' | 'large';\n  /** Show the bulb that lights when the circuit is closed. Default `true`. */\n  showBulb?: boolean;\n  /** Form field name. When set, a hidden input submits `value` while the switch is on. */\n  name?: string;\n  /** Value submitted with `name` while on. Default `\"on\"`. */\n  value?: string;\n  /** Class for the outer wrapper (the button gets `className`). */\n  wrapperClassName?: string;\n  /** Extra classes for each part: root, control, node, wire, lever, bulb, label. */\n  classNames?: ClassNames<'root' | 'control' | 'node' | 'wire' | 'lever' | 'bulb' | 'label'>;\n}\n\n/**\n * Switch: a lever that closes a circuit. When on, current lights the wire and\n * the bulb; when off, the lever lifts and the circuit goes dark.\n *\n * Style hooks: `.sp-switch`, `[data-state=\"on\"|\"off\"]`, and the parts\n * `.sp-switch__node`, `__wire`, `__lever`, `__bulb`, `__label`.\n */\nexport const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(inProps, ref) {\n  const {\n    checked,\n    defaultChecked = false,\n    onChange,\n    label,\n    color = 'brand',\n    size = 'medium',\n    showBulb = true,\n    disabled,\n    id,\n    onClick,\n    className,\n    wrapperClassName,\n    classNames,\n    name,\n    value = 'on',\n    ...rest\n  } = useDefaults('Switch', inProps);\n  const [inner, setInner] = useState(defaultChecked);\n  const on = checked ?? inner;\n  const autoId = useId();\n  const labelId = `${id ?? autoId}-label`;\n  const state = on ? 'on' : 'off';\n\n  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {\n    onClick?.(event);\n    if (event.defaultPrevented || disabled) return;\n    if (checked === undefined) setInner(!on);\n    onChange?.(!on, event);\n  };\n\n  return (\n    <span\n      className={slot('sp-switch', classNames, 'root', wrapperClassName)}\n      data-tone={color}\n      data-size={size}\n      data-state={state}\n      data-disabled={disabled || undefined}\n    >\n      <button\n        ref={ref}\n        id={id}\n        type=\"button\"\n        role=\"switch\"\n        aria-checked={on}\n        aria-labelledby={label ? labelId : undefined}\n        disabled={disabled}\n        onClick={handleClick}\n        className={slot('sp-switch__control', classNames, 'control', className)}\n        data-state={state}\n        {...rest}\n      >\n        <span className={slot('sp-switch__node', classNames, 'node')} />\n        <span className={slot('sp-switch__wire', classNames, 'wire')} />\n        <span className=\"sp-switch__pivot\">\n          <span className={slot('sp-switch__lever', classNames, 'lever')} />\n        </span>\n        <span className={slot('sp-switch__wire', classNames, 'wire')} />\n        {showBulb && <span className={slot('sp-switch__bulb', classNames, 'bulb')} />}\n      </button>\n      {name && on && <input type=\"hidden\" name={name} value={value} />}\n      {label && (\n        <span id={labelId} className={slot('sp-switch__label', classNames, 'label')}>\n          {label}\n        </span>\n      )}\n    </span>\n  );\n});\n\nSwitch.displayName = 'Switch';\n\nexport default Switch;\n"
+    },
+    {
+      "path": "components/spark-ui/Switch/index.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Switch/index.ts",
+      "content": "export { Switch } from './Switch';\nexport type { SwitchProps } from './Switch';\n"
+    }
+  ]
+}

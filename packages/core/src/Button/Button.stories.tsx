@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Mail, Zap, ArrowRight } from '@spark-ui/icons';
+import { Mail, Zap, ArrowRight } from '@sparkwire/icons';
 import { Button } from '.';
 
 /**

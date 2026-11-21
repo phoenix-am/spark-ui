@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { MapPin, Search } from '@spark-ui/icons';
+import { MapPin, Search } from '@sparkwire/icons';
 import { Combobox } from '.';
 
 const cities = [

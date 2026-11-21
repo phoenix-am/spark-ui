@@ -2,14 +2,14 @@ import React, { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useSelectState, useOverlayTriggerState } from 'react-stately';
 import { useButton, useSelect, useOverlayTrigger, useDialog } from 'react-aria';
-import { Globe, Search } from '@spark-ui/icons';
+import { Globe, Search } from '@sparkwire/icons';
 import { ButtonBase, InputBase, Popover, ListBox, renderListItems, findOption } from '../base';
 
 /**
  * The base components are the building blocks under the advanced ones:
  * **ButtonBase**, **InputBase**, **Popover**, **ListBox** (with
  * `ListItemContent`) and **Overlay**. Import them from
- * `@spark-ui/core/base` to build components we don't ship, and they will
+ * `@sparkwire/core/base` to build components we don't ship, and they will
  * match the rest of the library. Unstable until 1.0.
  */
 const meta: Meta = { title: 'Foundations/Base components', parameters: { layout: 'padded' } };

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Preview } from '@storybook/react';
 import { create } from '@storybook/theming/create';
-import { ThemeProvider } from '@spark-ui/system';
+import { ThemeProvider } from '@sparkwire/system';
 import '../packages/core/src/styles/index.css';
 
 // Live Wire's typeface.

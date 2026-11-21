@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { prefersReducedMotion } from '@spark-ui/utils';
+import { prefersReducedMotion } from '@sparkwire/utils';
 
 export interface SparkProps {
   /** Particle colours. Defaults to the theme's `--spark-energy-spark-1…3`. */

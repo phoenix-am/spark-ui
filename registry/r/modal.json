@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "modal",
+  "type": "registry:ui",
+  "title": "Modal",
+  "description": "A dialog that powers on, with focus trapping.",
+  "dependencies": [
+    "react-aria@^3.53.1"
+  ],
+  "registryDependencies": [
+    "@sparkwire/base",
+    "@sparkwire/styles",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/Modal/Modal.tsx",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Modal/Modal.tsx",
+      "content": "import React from 'react';\nimport { useDialog } from 'react-aria';\nimport { Overlay } from '../base/Overlay';\nimport { useDefaults, slot, ClassNames } from '../internal/defaults';\n\nexport interface ModalProps {\n  /** Whether the dialog is shown. */\n  open: boolean;\n  /** Called on Escape, the close button, or a click outside the dialog. */\n  onClose: () => void;\n  /** Dialog heading; also its accessible name. */\n  title: React.ReactNode;\n  /** Supporting text under the title; read as the dialog's description. */\n  description?: React.ReactNode;\n  children?: React.ReactNode;\n  /** Buttons, usually. Rendered right-aligned in the footer. */\n  actions?: React.ReactNode;\n  /** Max width: small 400px, medium 520px, large 720px. */\n  size?: 'small' | 'medium' | 'large';\n  /** Close when the user clicks outside the dialog. Default `true`. */\n  closeOnBackdrop?: boolean;\n  /** Class for the dialog panel. */\n  className?: string;\n  /** Extra classes for each part: root, backdrop, panel, header, title, description, close, body, actions. */\n  classNames?: ClassNames<'root' | 'backdrop' | 'panel' | 'header' | 'title' | 'description' | 'close' | 'body' | 'actions'>;\n}\n\n/**\n * Modal: a power cut. The page dims with a flicker and the dialog is the only\n * thing left lit. Behaviour comes from React Aria: focus is contained and\n * restored, the page behind is hidden from screen readers and can't scroll,\n * and Escape or an outside click closes it. Built on the Overlay base.\n *\n * Style hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,\n * `__header`, `__title`, `__description`, `__close`, `__body`, `__actions`.\n */\nexport function Modal(inProps: ModalProps) {\n  const { open, onClose, closeOnBackdrop = true, classNames, ...rest } = useDefaults('Modal', inProps);\n  return (\n    <Overlay\n      open={open}\n      onClose={onClose}\n      dismissable={closeOnBackdrop}\n      className={slot('sp-modal', classNames, 'root')}\n      backdropClassName={slot('sp-modal__backdrop', classNames, 'backdrop')}\n    >\n      {({ panelProps, panelRef }) => (\n        <ModalPanel {...rest} onClose={onClose} classNames={classNames} panelProps={panelProps} panelRef={panelRef} />\n      )}\n    </Overlay>\n  );\n}\n\nfunction ModalPanel({\n  onClose,\n  title,\n  description,\n  children,\n  actions,\n  size = 'medium',\n  className,\n  classNames,\n  panelProps,\n  panelRef,\n}: Omit<ModalProps, 'open'> & { panelProps: React.HTMLAttributes<HTMLElement>; panelRef: React.RefObject<HTMLDivElement> }) {\n  const { dialogProps, titleProps } = useDialog({}, panelRef);\n  const descId = React.useId();\n\n  return (\n    <div\n      {...panelProps}\n      {...dialogProps}\n      ref={panelRef}\n      aria-describedby={description ? descId : undefined}\n      data-size={size}\n      className={slot('sp-modal__panel', classNames, 'panel', className)}\n    >\n      <div aria-hidden=\"true\" className=\"sp-modal__current sp-current\" />\n      <div className={slot('sp-modal__header', classNames, 'header')}>\n        <div className=\"sp-modal__heading\">\n          <h2 {...titleProps} className={slot('sp-modal__title', classNames, 'title')}>\n            {title}\n          </h2>\n          {description && (\n            <p id={descId} className={slot('sp-modal__description', classNames, 'description')}>\n              {description}\n            </p>\n          )}\n        </div>\n        <button type=\"button\" aria-label=\"Close\" onClick={onClose} className={slot('sp-modal__close', classNames, 'close')}>\n          <svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\">\n            <path d=\"M3 3l10 10M13 3L3 13\" stroke=\"currentColor\" strokeWidth=\"2\" strokeLinecap=\"round\" />\n          </svg>\n        </button>\n      </div>\n      {children && <div className={slot('sp-modal__body', classNames, 'body')}>{children}</div>}\n      <div className={slot('sp-modal__actions', classNames, 'actions')}>{actions}</div>\n    </div>\n  );\n}\n\nexport default Modal;\n"
+    },
+    {
+      "path": "components/spark-ui/Modal/index.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Modal/index.ts",
+      "content": "export * from './Modal';\n"
+    }
+  ]
+}

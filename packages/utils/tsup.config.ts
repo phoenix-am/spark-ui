@@ -8,5 +8,5 @@ export default defineConfig({
   sourcemap: true,
   treeshake: true,
   target: 'es2019',
-  external: ['react', 'react-dom', /^@spark-ui\//],
+  external: ['react', 'react-dom', /^@sparkwire\//],
 });

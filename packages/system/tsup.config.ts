@@ -8,5 +8,5 @@ export default defineConfig({
   sourcemap: true,
   target: 'es2019',
   banner: { js: '"use client";' },
-  external: ['react', 'react-dom', /^@spark-ui\//],
+  external: ['react', 'react-dom', /^@sparkwire\//],
 });

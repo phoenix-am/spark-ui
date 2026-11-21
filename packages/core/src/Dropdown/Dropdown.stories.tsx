@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { User, Home, Settings } from '@spark-ui/icons';
+import { User, Home, Settings } from '@sparkwire/icons';
 import { Dropdown } from '.';
 
 const regions = [

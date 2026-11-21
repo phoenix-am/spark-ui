@@ -18,7 +18,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build -w @spark-ui/utils -w @spark-ui/styles -w @spark-ui/icons -w @spark-ui/system -w @spark-ui/core",
+    "build": "npm run build -w @sparkwire/utils -w @sparkwire/styles -w @sparkwire/icons -w @sparkwire/system -w @sparkwire/core && npm run registry",
     "test": "jest",
     "lint": "lerna run lint",
     "clean": "lerna clean",
@@ -27,7 +27,8 @@
     "generate:component": "plop component --plopfile ./generators/plopfile.js",
     "generate:icons": "node ./packages/icons/scripts/convert-svg-to-react.js",
     "build:icons": "cd ./packages/icons && npm run build",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "registry": "node scripts/build-registry.mjs"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.24.7",

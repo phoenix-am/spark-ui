@@ -1,6 +1,5 @@
 import { ReactNode, ElementType } from 'react';
-import { OverrideProps } from '@spark-ui/utils';
-import { Theme } from '@spark-ui/styles';
+import { OverrideProps } from '@sparkwire/utils';
 
 export type ButtonVariant = 'text' | 'outlined' | 'contained';
 export type ButtonSize = 'small' | 'medium' | 'large';
@@ -60,8 +59,5 @@ export type ButtonSlotProps = {
   endIcon?: ReactNode;
 };
 
-export interface WithTheme {
-  theme: Theme;
-}
 
 export type { ElementType, ReactNode };
