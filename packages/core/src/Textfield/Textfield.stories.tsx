@@ -1,104 +1,63 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { DollarSign, Info, Mail, Lock } from '@spark-ui/icons';
 import { Textfield } from '.';
-import { ThemeProvider } from '@spark-ui/system';
-import { TextfieldPropsBase } from './Textfield.types';
-import { DollarSign, Info, Mail } from '@spark-ui/icons';
-import { Dropdown } from '../Dropdown';
 
+/**
+ * Text input. In Live Wire a field can **charge up** as its value becomes
+ * valid: pass `charge` as a number (0 to 1) or a function of the value.
+ */
 const meta: Meta<typeof Textfield> = {
-  component: (props: TextfieldPropsBase) => {
-    return <ThemeProvider>
-      <Textfield {...props} />
-    </ThemeProvider>
+  title: 'Inputs/Textfield',
+  component: Textfield,
+  args: { label: 'Email', placeholder: 'you@spark.dev', inputSize: 'medium' },
+  argTypes: {
+    inputSize: { control: 'inline-radio', options: ['small', 'medium', 'large'] },
+    prepend: { control: false },
+    append: { control: false },
+    charge: { control: { type: 'range', min: 0, max: 1, step: 0.05 } },
   },
-  title: "Spark UI/Textfield",
+  decorators: [(Story) => <div style={{ maxWidth: 420 }}><Story /></div>],
+};
+export default meta;
+type Story = StoryObj<typeof Textfield>;
+
+export const Playground: Story = {};
+
+export const WithIcons: Story = { args: { prepend: <Mail />, append: <Info /> } };
+
+export const WithHelperText: Story = { args: { helperText: "We'll never share it." } };
+
+export const Error: Story = {
+  args: { label: 'Webhook URL', value: 'htp://example', error: true, helperText: 'Use http:// or https://' },
 };
 
-export default meta;
+export const Disabled: Story = { args: { disabled: true, value: 'locked@spark.dev' } };
 
-type BaseStory = StoryObj<typeof Textfield>;
-
-export const Base: BaseStory = {
-  args: {
-    placeholder: 'Email',
-    inputSize: 'medium',
-  }
-}
-
-export const WithIcon: BaseStory = {
-  args: {
-    ...Base.args,
-    prepend: <Mail />,
-    append: <Info />,
-  }
-}
-
-export const WithErrorIcon: BaseStory = {
-  args: {
-    ...Base.args,
-    error: true,
-    prepend: <Mail />,
-    append: <Info />,
-  }
-}
-
-export const WithHelperText: BaseStory = {
-  args: {
-    ...Base.args,
-    helperText: 'This is error text!!'
-  }
-}
-
-export const WithList: BaseStory = {
-  args: {
-    placeholder: 'Select',
-    prepend: <Dropdown
-    options={[
-      { label: 'US', value: 'USA' },
-      { label: 'CA', value: 'Canada' },
-      { label: 'IN', value: 'India' },
-      { label: 'AF', value: 'Afghanistan' },
-    ]}
-    showBorder={false}
-    placeholder='Select'
-    containerStyle={{
-      width: '60px'
-    }}
-  />,
-    containerStyle: {
-      padding: '10px'
-    }
-  }
-}
-
-export const WithCurrency: BaseStory = {
-  args: {
-    placeholder: 'Select',
-    prepend: <DollarSign />,
-    containerStyle: {
-      padding: '10px'
-    },
-    onChange: (e) => console.log(e),
-    type: "currency"
-  }
-}
-
-export const ChargingPassword: BaseStory = {
+/** Type 8 characters to fully charge the field. */
+export const ChargingPassword: Story = {
   args: {
     label: 'New password',
     type: 'password',
     placeholder: 'Type 8+ characters',
+    prepend: <Lock />,
     charge: (value: string) => value.length / 8,
-    chargeLabel: (percent: number) =>
-      percent >= 100 ? 'Fully charged. Strong password.' : `${percent}% charged`,
-  }
-}
+    chargeLabel: (p: number) => (p >= 100 ? 'Fully charged. Strong password.' : `${p}% charged`),
+  },
+};
 
-export const Charged: BaseStory = {
-  args: {
-    label: 'Profile completeness',
-    value: 'Asha Patel',
-    charge: 1,
-  }
-}
+export const Charged: Story = { args: { label: 'Display name', value: 'Asha Patel', charge: 1 } };
+
+export const Currency: Story = {
+  args: { label: 'Amount', placeholder: '0.00', type: 'currency', prepend: <DollarSign /> },
+};
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 8 }}>
+      <Textfield {...args} label="Small" inputSize="small" />
+      <Textfield {...args} label="Medium" inputSize="medium" />
+      <Textfield {...args} label="Large" inputSize="large" />
+    </div>
+  ),
+};

@@ -1,186 +1,88 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import {Button} from '.';
-import { ThemeProvider } from '@spark-ui/system';
-import { ButtonPropsBase } from './Button.types';
-import { Mail } from '@spark-ui/icons';
+import { fn } from '@storybook/test';
+import { Mail, Zap, ArrowRight } from '@spark-ui/icons';
+import { Button } from '.';
 
+/**
+ * Buttons throw sparks from the press point. Outlined and text buttons show
+ * current flowing along a wire on hover. A disabled button is a dead circuit.
+ */
 const meta: Meta<typeof Button> = {
-  component: (props: ButtonPropsBase) => {
-    return <ThemeProvider>
-      <Button {...props} />
-    </ThemeProvider>
+  title: 'Actions/Button',
+  component: Button,
+  args: { children: 'Ignite', onClick: fn() },
+  argTypes: {
+    variant: { control: 'inline-radio', options: ['contained', 'outlined', 'text'] },
+    color: { control: 'inline-radio', options: ['brand', 'success', 'warning', 'error'] },
+    size: { control: 'inline-radio', options: ['small', 'medium', 'large'] },
+    spark: { control: 'boolean', description: 'Throw sparks on click' },
+    startIcon: { control: false },
+    endIcon: { control: false },
   },
-  title: "Spark UI/Button",
+};
+export default meta;
+type Story = StoryObj<typeof Button>;
+
+export const Playground: Story = {};
+
+export const Variants: Story = {
+  render: (args) => (
+    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+      <Button {...args} variant="contained">Contained</Button>
+      <Button {...args} variant="outlined">Outlined</Button>
+      <Button {...args} variant="text">Text</Button>
+    </div>
+  ),
 };
 
-export default meta;
-type BaseStory = StoryObj<typeof Button>;
-type TextStory = StoryObj<typeof Button>;
-type ContainedStory = StoryObj<typeof Button>;
-type OutlinedStory = StoryObj<typeof Button>;
+export const Colors: Story = {
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 12 }}>
+      {(['contained', 'outlined', 'text'] as const).map((v) => (
+        <div key={v} style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <Button {...args} variant={v} color="brand">Brand</Button>
+          <Button {...args} variant={v} color="success">Success</Button>
+          <Button {...args} variant={v} color="warning">Warning</Button>
+          <Button {...args} variant={v} color="error">Error</Button>
+        </div>
+      ))}
+    </div>
+  ),
+};
 
-const BaseTemplate: BaseStory = {
-  args: {
-    children: 'Click here',
-  }
-}
+export const Sizes: Story = {
+  render: (args) => (
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+      <Button {...args} size="small">Small</Button>
+      <Button {...args} size="medium">Medium</Button>
+      <Button {...args} size="large">Large</Button>
+    </div>
+  ),
+};
 
-const TextTemplate: TextStory = {
-  args: {
-    ...BaseTemplate.args,
-    variant: 'text',
-  }
-}
+export const WithIcons: Story = {
+  render: (args) => (
+    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+      <Button {...args} startIcon={<Zap />}>Ignite</Button>
+      <Button {...args} variant="outlined" startIcon={<Mail />}>Email</Button>
+      <Button {...args} variant="text" endIcon={<ArrowRight />}>Continue</Button>
+    </div>
+  ),
+};
 
-const ContainedTemplate: ContainedStory = {
-  args: {
-    ...BaseTemplate.args,
-    variant: 'contained',
-  }
-}
+export const Disabled: Story = {
+  render: (args) => (
+    <div style={{ display: 'flex', gap: 12 }}>
+      <Button {...args} disabled>Contained</Button>
+      <Button {...args} variant="outlined" disabled>Outlined</Button>
+      <Button {...args} variant="text" disabled>Text</Button>
+    </div>
+  ),
+};
 
-const OutlinedTemplate: OutlinedStory = {
-  args: {
-    ...BaseTemplate.args,
-    variant: 'outlined',
-  }
-}
+export const FullWidth: Story = { args: { fullWidth: true, children: 'Deploy to production' } };
 
-//#region Colors with variant `text`
-export const TextBrand: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    color: 'brand',
-  }
-}
+export const AsLink: Story = { args: { as: 'a', href: '#', variant: 'outlined', children: 'I am a link' } };
 
-export const TextError: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    color: 'error',
-  }
-}
-
-export const TextSuccess: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    color: 'success',
-  }
-}
-
-export const TextWarning: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    color: 'warning',
-  }
-}
-//#endregion
-
-//#region Colors with variant `contained`
-
-export const ContainedBrand: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    color: 'brand',
-  }
-}
-
-export const ContainedError: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    color: 'error',
-  }
-}
-
-export const ContainedSuccess: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    color: 'success',
-  }
-}
-
-export const ContainedWarning: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    color: 'warning',
-  }
-}
-//#endregion
-
-//#region Colors with variant `outlined`
-
-export const OutlinedBrand: OutlinedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    color: 'brand',
-  }
-}
-
-export const OutlinedError: OutlinedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    color: 'error',
-  }
-}
-
-export const OutlinedSuccess: OutlinedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    color: 'success',
-  }
-}
-
-export const OutlinedWarning: OutlinedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    color: 'warning',
-  }
-}
-//#endregion
-
-//#region Colors with variant `text` and disabled
-export const TextDisabledPrimary: TextStory = {
-  args: {
-    ...TextTemplate.args,
-    disabled: true,
-    color: 'brand'
-  }
-}
-//#endregion
-
-//#region Colors with variant `contained` and disabled
-export const ContainedDisabledPrimary: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    disabled: true,
-  }
-}
-//#endregion
-
-//#region Colors with variant `outlined` and disabled
-export const OutlinedDisabledPrimary: ContainedStory = {
-  args: {
-    ...OutlinedTemplate.args,
-    disabled: true,
-  }
-}
-//#endregion
-
-//#region Colors with variant `outlined` and disabled
-export const ContainedIconPrimary: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    startIcon: <Mail />
-  }
-}
-//#endregion
-
-//#region Without ripple
-export const Contained: ContainedStory = {
-  args: {
-    ...ContainedTemplate.args,
-    ripple: false
-  }
-}
-//#endregion
+export const WithoutSparks: Story = { args: { spark: false, children: 'Quiet button' } };

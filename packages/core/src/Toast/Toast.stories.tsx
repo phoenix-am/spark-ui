@@ -1,29 +1,30 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ThemeProvider } from '@spark-ui/system';
-import { ToastProvider, useToast } from './Toast';
+import { ToastProvider, useToast } from '.';
 import { Button } from '../Button';
 
-const meta: Meta = { title: 'Spark UI/Toast' };
+/**
+ * Wrap your app in `ToastProvider`, then call `useToast().toast({...})` from
+ * anywhere. The bottom bar discharges as the timer runs and pauses on hover.
+ */
+const meta: Meta<typeof ToastProvider> = {
+  title: 'Overlays/Toast',
+  component: ToastProvider,
+  decorators: [(Story) => <ToastProvider><Story /></ToastProvider>],
+};
 export default meta;
+type Story = StoryObj<typeof ToastProvider>;
 
-const Triggers = () => {
+function Triggers() {
   const { toast } = useToast();
   return (
     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-      <Button onClick={() => toast({ title: 'Deployed', description: 'Your build is live.', tone: 'success' })}>Success</Button>
-      <Button variant="outlined" onClick={() => toast({ title: 'Saved', action: { label: 'Undo', onClick: () => {} } })}>With action</Button>
-      <Button color="error" onClick={() => toast({ title: 'Short circuit', description: 'The build failed.', tone: 'error', duration: 0 })}>Error</Button>
+      <Button color="success" onClick={() => toast({ title: 'Deployed', description: 'Your build is live.', tone: 'success' })}>Success</Button>
+      <Button onClick={() => toast({ title: 'Draft saved', action: { label: 'Undo', onClick: () => {} } })}>With action</Button>
+      <Button color="warning" variant="outlined" onClick={() => toast({ title: 'High load', description: 'CPU at 92%.', tone: 'warning' })}>Warning</Button>
+      <Button color="error" variant="outlined" onClick={() => toast({ title: 'Short circuit', description: 'The build failed on step 3.', tone: 'error', duration: 0 })}>Error (stays)</Button>
     </div>
   );
-};
+}
 
-export const Base: StoryObj = {
-  render: () => (
-    <ThemeProvider>
-      <ToastProvider>
-        <Triggers />
-      </ToastProvider>
-    </ThemeProvider>
-  ),
-};
+export const Playground: Story = { render: () => <Triggers /> };

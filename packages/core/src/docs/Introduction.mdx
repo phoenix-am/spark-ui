@@ -1,0 +1,51 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# Spark UI · Live Wire
+
+**Components that carry current.** Spark UI is a React component library whose
+default theme, Live Wire, takes the name literally:
+
+- **Buttons** throw sparks from the press point.
+- **Switches** are levers that close a circuit and light a bulb.
+- **Textfields** charge up as their value becomes valid.
+- **Tabs, Accordions and Progress bars** show current flowing through the active part.
+- **Modals** arrive like a power cut: the page flickers and dims.
+
+Every animation respects the operating system's *reduce motion* setting.
+
+## Install
+
+```bash
+npm install @spark-ui/core @spark-ui/system @spark-ui/styles @emotion/react
+```
+
+## Use
+
+```tsx
+import { ThemeProvider } from '@spark-ui/system';
+import { Button, Switch, Textfield } from '@spark-ui/core';
+
+export function App() {
+  return (
+    <ThemeProvider>
+      <Textfield label="Password" type="password" charge={(v) => v.length / 8} />
+      <Switch label="Power" defaultChecked />
+      <Button>Ignite</Button>
+    </ThemeProvider>
+  );
+}
+```
+
+## Packages
+
+| Package | What it holds |
+| --- | --- |
+| `@spark-ui/core` | The components |
+| `@spark-ui/styles` | Theme tokens: colours, energy, surfaces, motion |
+| `@spark-ui/system` | `ThemeProvider` and `useTheme` |
+| `@spark-ui/icons` | About 860 SVG icons as React components |
+| `@spark-ui/utils` | Helpers such as `alpha()` and slot utilities |
+
+Browse the sidebar for each component's stories, controls and props.
