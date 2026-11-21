@@ -564,6 +564,33 @@
       ]
     },
     {
+      "name": "number-field",
+      "type": "registry:ui",
+      "title": "NumberField",
+      "description": "Locale-formatted numbers (₹1,00,000, %, units) with steppers.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/NumberField/NumberField.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/NumberField/NumberField.tsx"
+        },
+        {
+          "path": "components/spark-ui/NumberField/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/NumberField/index.ts"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",

@@ -6,6 +6,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: {
     'base/index': 'src/base/index.ts',
+    'number-field/index': 'src/NumberField/index.ts',
     'sidebar/index': 'src/Sidebar/index.ts',
     'drawer/index': 'src/Drawer/index.ts',
     'command-palette/index': 'src/CommandPalette/index.ts',

@@ -734,3 +734,25 @@ describe('Sidebar', () => {
     expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
   });
 });
+
+describe('NumberField', () => {
+  const { NumberField } = jest.requireActual('..');
+  it('formats Indian rupees, steps with buttons and keys, clamps, and submits the plain number', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const { container } = render(
+      <SparkProvider locale="en-IN">
+        <NumberField label="Budget" name="budget" defaultValue={100000} step={1000} max={102000} formatOptions={{ style: 'currency', currency: 'INR', maximumFractionDigits: 0 }} onChange={onChange} />
+      </SparkProvider>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Budget' });
+    expect(input).toHaveValue('₹1,00,000');
+    await user.click(screen.getByRole('button', { name: /Increase/i }));
+    expect(onChange).toHaveBeenLastCalledWith(101000);
+    act(() => input.focus());
+    await user.keyboard('{ArrowUp}{ArrowUp}');
+    expect(onChange).toHaveBeenLastCalledWith(102000);
+    expect(screen.getByRole('button', { name: /Increase/i })).toBeDisabled();
+    expect(container.querySelector('input[name="budget"]')).toHaveValue('102000');
+  });
+});

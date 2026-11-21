@@ -239,6 +239,46 @@ Style hooks: `.sp-field[data-invalid][data-disabled]`, `__label`,
 - `id?`: `string` Control id. Generated when omitted.
 - `required?`: `boolean` Adds a required marker and `required` on the control.
 
+## NumberField (`number-field`)
+Locale-formatted numbers (₹1,00,000, %, units) with steppers.
+
+```tsx
+import { NumberField } from '@sparkwire/core';
+```
+Install: `npx sparkwire add number-field` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs
+
+### NumberField
+NumberField: a number input that formats as you'd write it in your
+language (₹1,00,000 in India, $100,000 in the US, 15 %, 2.5 kg). Up/Down
+and the − / + buttons step; Page Up/Down step by tens; Home/End jump to
+min/max; values are clamped and snapped to `step` on blur. Built on React
+Aria's number field and the InputBase base component.
+
+Style hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,
+`__stepper`, `__helper`; the field is `.sp-input-base`.
+
+- `aria-label?`: `string`
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "label" | "field" | "input" | "stepper" | "helper", string>>` Extra classes for each part: root, label, field, input, stepper, helper.
+- `defaultValue?`: `number | null`
+- `disabled?`: `boolean`
+- `error?`: `ReactNode` An error message, or `true` to mark the field invalid and show `helperText` as the error.
+- `formatOptions?`: `NumberFormatOptions` How the number looks, in the user's locale: `{ style: 'currency', currency: 'INR' }`, `{ style: 'percent' }`, `{ style: 'unit', unit: 'kilogram' }`, `{ maximumFractionDigits: 2 }`…
+- `helperText?`: `ReactNode` Help text under the field (shown in the error colour when `error` is `true`).
+- `hideSteppers?`: `boolean` Hide the − / + buttons.
+- `label?`: `string` Visible label. Use `aria-label` instead if there is no visible label.
+- `max?`: `number`
+- `min?`: `number`
+- `name?`: `string` Form field name; submits the plain number (e.g. 100000, not "₹1,00,000").
+- `onChange?`: `((value: number) => void)` Called with the parsed number (or NaN when cleared) as the value commits.
+- `placeholder?`: `string`
+- `readOnly?`: `boolean`
+- `required?`: `boolean`
+- `size?`: `"small" | "medium" | "large"` Default `medium`.
+- `startIcon?`: `ReactNode`
+- `step?`: `number` Step for the buttons and arrow keys. Default 1.
+- `value?`: `number | null` Controlled value; `null` when empty.
+
 ## Dropdown (`dropdown`)
 Pick one value from a list.
 

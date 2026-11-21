@@ -183,6 +183,11 @@
       "types": "./dist/sidebar/index.d.ts",
       "import": "./dist/sidebar/index.mjs",
       "require": "./dist/sidebar/index.js"
+    },
+    "./number-field": {
+      "types": "./dist/number-field/index.d.ts",
+      "import": "./dist/number-field/index.mjs",
+      "require": "./dist/number-field/index.js"
     }
   },
   "files": [
@@ -280,6 +285,9 @@
       ],
       "sidebar": [
         "./dist/sidebar/index.d.ts"
+      ],
+      "number-field": [
+        "./dist/number-field/index.d.ts"
       ]
     }
   }

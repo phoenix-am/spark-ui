@@ -50,3 +50,5 @@ export { Drawer } from './Drawer';
 export type { DrawerProps } from './Drawer';
 export { Sidebar } from './Sidebar';
 export type { SidebarProps, SidebarItem, SidebarSection } from './Sidebar';
+export { NumberField } from './NumberField';
+export type { NumberFieldProps } from './NumberField';

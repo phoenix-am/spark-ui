@@ -751,6 +751,153 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs"
     },
     {
+      "name": "number-field",
+      "title": "NumberField",
+      "summary": "Locale-formatted numbers (₹1,00,000, %, units) with steppers.",
+      "components": [
+        {
+          "name": "NumberField",
+          "description": "NumberField: a number input that formats as you'd write it in your\nlanguage (₹1,00,000 in India, $100,000 in the US, 15 %, 2.5 kg). Up/Down\nand the − / + buttons step; Page Up/Down step by tens; Home/End jump to\nmin/max; values are clamped and snapped to `step` on blur. Built on React\nAria's number field and the InputBase base component.\n\nStyle hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,\n`__stepper`, `__helper`; the field is `.sp-input-base`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"label\" | \"field\" | \"input\" | \"stepper\" | \"helper\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, label, field, input, stepper, helper."
+            },
+            {
+              "name": "defaultValue",
+              "type": "number | null",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "error",
+              "type": "ReactNode",
+              "required": false,
+              "description": "An error message, or `true` to mark the field invalid and show `helperText` as the error."
+            },
+            {
+              "name": "formatOptions",
+              "type": "NumberFormatOptions",
+              "required": false,
+              "description": "How the number looks, in the user's locale: `{ style: 'currency', currency: 'INR' }`,\n`{ style: 'percent' }`, `{ style: 'unit', unit: 'kilogram' }`, `{ maximumFractionDigits: 2 }`…"
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help text under the field (shown in the error colour when `error` is `true`)."
+            },
+            {
+              "name": "hideSteppers",
+              "type": "boolean",
+              "required": false,
+              "description": "Hide the − / + buttons."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "required": false,
+              "description": "Visible label. Use `aria-label` instead if there is no visible label."
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "min",
+              "type": "number",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Form field name; submits the plain number (e.g. 100000, not \"₹1,00,000\")."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: number) => void)",
+              "required": false,
+              "description": "Called with the parsed number (or NaN when cleared) as the value commits."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "readOnly",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Default `medium`."
+            },
+            {
+              "name": "startIcon",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "step",
+              "type": "number",
+              "required": false,
+              "description": "Step for the buttons and arrow keys. Default 1."
+            },
+            {
+              "name": "value",
+              "type": "number | null",
+              "required": false,
+              "description": "Controlled value; `null` when empty."
+            }
+          ]
+        }
+      ],
+      "import": "import { NumberField } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add number-field",
+        "shadcn": "npx shadcn add @sparkwire/number-field",
+        "copiedImport": "import { NumberField } from '@/components/spark-ui/NumberField';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs"
+    },
+    {
       "name": "dropdown",
       "title": "Dropdown",
       "summary": "Pick one value from a list.",

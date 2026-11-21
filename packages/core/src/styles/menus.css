@@ -216,3 +216,15 @@
 .sp-sidebar__header { padding-inline: 1.125rem; }
 .sp-sidebar__footer { margin-inline: 0.625rem; }
 .sp-sidebar[data-mobile] .sp-sidebar__nav { padding-inline: 0.625rem; }
+
+/* ------------------------------------------------------------ NumberField */
+.sp-number-field { display: flex; flex-direction: column; margin-bottom: 1rem; font-family: var(--spark-font); }
+.sp-number-field__label { margin-bottom: 0.375rem; font-size: var(--spark-font-size-small); font-weight: 600; color: var(--spark-text-primary); }
+.sp-number-field[data-disabled] .sp-number-field__label { color: var(--spark-text-disabled); }
+.sp-number-field .sp-input-base { padding-inline-end: 0.375rem; }
+.sp-number-field__input { font-variant-numeric: tabular-nums; }
+.sp-number-field__steppers { display: inline-flex; gap: 0.125rem; }
+.sp-number-field__stepper:disabled { opacity: 0.35; cursor: not-allowed; background: none; }
+.sp-number-field__stepper:active:not(:disabled) { color: var(--sp-ink); box-shadow: 0 0 8px var(--sp-glow); }
+.sp-number-field__helper { margin: 0.375rem 0 0; font-size: var(--spark-font-size-small); color: var(--spark-text-secondary); }
+.sp-number-field[data-invalid] .sp-number-field__helper { color: var(--sp-ink); }

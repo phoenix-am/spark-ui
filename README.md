@@ -147,6 +147,10 @@ Spark UI is built in two layers, like MUI:
 
 Use the base layer to build components we don't ship, and they will match the rest. See *Foundations → Base components* in Storybook. The base layer is unstable until 1.0.
 
+### NumberField
+
+Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
+
 ### DataTable
 
 Sorting (Shift+click for several columns), search, per-column filters, paging, row selection with bulk actions, loading and empty states, and server-side mode (`manual`). No table library: the logic is our own `useDataTable` hook (also usable headless), the markup is a div grid like MUI's Data Grid, and React Aria adds grid keyboard navigation and screen-reader semantics. In narrow containers rows become labelled cards (`responsive="stack"`, default) or scroll sideways (`responsive="scroll"`).

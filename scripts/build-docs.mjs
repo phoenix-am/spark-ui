@@ -32,6 +32,7 @@ const ENTRIES = [
   ['slider', ['Slider/Slider.tsx'], 'inputs-slider'],
   ['textfield', ['Textfield/Textfield.tsx'], 'inputs-textfield'],
   ['field', ['Field/Field.tsx'], 'inputs-field'],
+  ['number-field', ['NumberField/NumberField.tsx'], 'inputs-numberfield'],
   ['dropdown', ['Dropdown/Dropdown.tsx'], 'inputs-dropdown'],
   ['combobox', ['Combobox/Combobox.tsx'], 'inputs-combobox'],
   ['date-picker', ['DatePicker/DatePicker.tsx', 'DatePicker/DateRangePicker.tsx', 'DatePicker/Calendar.tsx'], 'inputs-datepicker'],
