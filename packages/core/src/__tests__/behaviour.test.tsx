@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -754,5 +754,42 @@ describe('NumberField', () => {
     expect(onChange).toHaveBeenLastCalledWith(102000);
     expect(screen.getByRole('button', { name: /Increase/i })).toBeDisabled();
     expect(container.querySelector('input[name="budget"]')).toHaveValue('102000');
+  });
+});
+
+describe('Charts', () => {
+  const data = [{ m: 'Jan', a: 10, b: 4 }, { m: 'Feb', a: 20, b: 6 }, { m: 'Mar', a: 15, b: 9 }];
+  const series = [{ key: 'a' as const, label: 'Alpha' }, { key: 'b' as const, label: 'Beta' }];
+
+  it('LineChart: keyboard shows a tooltip; legend hides a series; table view lists rows', async () => {
+    const user = userEvent.setup();
+    render(<LineChart title="Trend" data={data} x="m" series={series} />);
+    const plot = screen.getByRole('img', { name: /Trend: Alpha, Beta/ });
+    plot.focus();
+    await user.keyboard('{ArrowRight}');
+    expect(screen.getByRole('status')).toHaveTextContent(/Jan.*Alpha.*10|Jan.*Beta.*4/);
+    await user.click(screen.getByRole('button', { name: 'Beta' }));
+    expect(screen.getByRole('button', { name: 'Beta' })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('img', { name: /Trend: Alpha$/ })).toBeInTheDocument();
+    expect(screen.getAllByRole('row')).toHaveLength(4);
+  });
+
+  it('BarChart: stacked tooltip shows the total', async () => {
+    const user = userEvent.setup();
+    render(<BarChart title="Bars" data={data} x="m" series={series} stacked />);
+    screen.getByRole('img', { name: /Bars/ }).focus();
+    await user.keyboard('{ArrowRight}{ArrowRight}');
+    expect(screen.getByRole('status')).toHaveTextContent('Feb · 26');
+  });
+
+  it('DonutChart: slices are focusable with value and share', async () => {
+    render(<DonutChart title="Share" data={[{ label: 'A', value: 75 }, { label: 'B', value: 25 }]} />);
+    expect(screen.getByRole('img', { name: 'A: 75, 75%' })).toHaveAttribute('tabindex', '0');
+    expect(screen.getByRole('img', { name: 'B: 25, 25%' })).toBeInTheDocument();
+  });
+
+  it('Sparkline: names its range', () => {
+    render(<Sparkline aria-label="Visits" data={[3, 9, 5]} />);
+    expect(screen.getByRole('img', { name: 'Visits: from 3 to 5, low 3, high 9' })).toBeInTheDocument();
   });
 });

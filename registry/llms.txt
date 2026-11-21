@@ -22,6 +22,7 @@ Key facts for writing code:
 - [Textfield](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs): A field that charges as you type. Exports: Textfield.
 - [Field](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs): Label, help text and error wiring for any control. Exports: Field.
 - [NumberField](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs): Locale-formatted numbers (₹1,00,000, %, units) with steppers. Exports: NumberField.
+- [Charts](https://phoenix-am.github.io/spark-ui/?path=/docs/data-charts--docs): Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view. Exports: LineChart, BarChart, DonutChart, Sparkline.
 - [Dropdown](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs): Pick one value from a list. Exports: Dropdown.
 - [Combobox](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs): Type to search, then pick. Exports: Combobox.
 - [DatePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs): DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems. Exports: DatePicker, DateRangePicker, Calendar, RangeCalendar.

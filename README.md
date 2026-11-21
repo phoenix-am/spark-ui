@@ -151,6 +151,16 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### Charts
+
+Our own SVG charts, no chart library (`@sparkwire/core/charts`): `LineChart` (add `area` or `stacked`), `BarChart` (grouped, `stacked`, `horizontal`), `DonutChart` and `Sparkline`. The palette (`--spark-chart-1…8`) is checked with a colour-blindness validator, with separate light and dark steps, and is assigned in a fixed order so a series keeps its colour when others are hidden. Marks are thin (2px lines, bars rounded only at the data end, 2px gaps), there is one y axis, a tooltip on hover or keyboard (focus the chart, then arrow keys), legend toggles, and a "Data table" view for screen readers and print. Width follows the container; values format with `Intl` (`valueFormat={{ style: 'currency', currency: 'INR', notation: 'compact' }}`).
+
+```tsx
+<LineChart title="Revenue by channel" data={rows} x="month"
+  series={[{ key: 'web', label: 'Web' }, { key: 'mobile', label: 'Mobile' }]} />
+<DonutChart title="Traffic sources" data={[{ label: 'Search', value: 48200 }, { label: 'Direct', value: 26100 }]} />
+```
+
 ### DataTable
 
 Sorting (Shift+click for several columns), search, per-column filters, paging, row selection with bulk actions, loading and empty states, and server-side mode (`manual`). No table library: the logic is our own `useDataTable` hook (also usable headless), the markup is a div grid like MUI's Data Grid, and React Aria adds grid keyboard navigation and screen-reader semantics. In narrow containers rows become labelled cards (`responsive="stack"`, default) or scroll sideways (`responsive="scroll"`).

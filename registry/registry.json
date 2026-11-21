@@ -564,6 +564,41 @@
       ]
     },
     {
+      "name": "charts",
+      "type": "registry:ui",
+      "title": "Charts",
+      "description": "Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Charts/CartesianChart.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/CartesianChart.tsx"
+        },
+        {
+          "path": "components/spark-ui/Charts/DonutChart.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/DonutChart.tsx"
+        },
+        {
+          "path": "components/spark-ui/Charts/core.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/core.tsx"
+        },
+        {
+          "path": "components/spark-ui/Charts/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/index.ts"
+        }
+      ]
+    },
+    {
       "name": "number-field",
       "type": "registry:ui",
       "title": "NumberField",

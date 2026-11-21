@@ -279,6 +279,100 @@ Style hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,
 - `step?`: `number` Step for the buttons and arrow keys. Default 1.
 - `value?`: `number | null` Controlled value; `null` when empty.
 
+## Charts (`charts`)
+Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.
+
+```tsx
+import { LineChart, BarChart, DonutChart, Sparkline } from '@sparkwire/core';
+```
+Install: `npx sparkwire add charts` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-charts--docs
+
+### LineChart
+LineChart (and AreaChart with `area` / `stacked`): change over time or an
+ordered axis. Thin 2px lines that draw in like current, a crosshair and
+tooltip that follow the pointer, keyboard stepping (focus the chart, then
+← →), legend toggles, and a data-table view. One y axis only.
+
+Style hooks: `.sp-chart[data-kind="line"|"area"]`, `__line`, `__area`,
+`__crosshair`, `__point`, `__grid`, `__axis`. Colours: `--spark-chart-1…8`.
+
+- `data`: `Row[]`
+- `series`: `ChartSeries<Row>[]` One or more series (up to 8; fold the rest into "Other").
+- `x`: `string` Field used for the category / x axis.
+- `area?`: `boolean` Fill under each line.
+- `aria-label?`: `string` Accessible name when there is no visible title.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot" | "tooltip" | "table", string>>`
+- `curved?`: `boolean` Smooth the lines. Default `true`.
+- `description?`: `string` One-line summary for screen readers, e.g. "Revenue rose 40% in Q3".
+- `formatX?`: `((value: unknown) => string)` Format x values for axis, tooltip and table. Default: dates by locale, others as text.
+- `height?`: `number` Height in px. Width follows the container. Default 280.
+- `legend?`: `boolean` Show the legend (default: when there are 2+ series).
+- `showPoints?`: `boolean` Show a dot on every point (default: only the hovered one).
+- `stacked?`: `boolean` Stack the series (implies `area`).
+- `tableView?`: `boolean` Show a "Data table" toggle under the chart. Default `true`.
+- `title?`: `ReactNode` Title shown above the chart; also its accessible name.
+- `valueFormat?`: `NumberFormatOptions` Intl options for values, e.g. `{ style: 'currency', currency: 'INR', notation: 'compact' }`.
+- `zeroBaseline?`: `boolean` Start the y axis at zero. Default `true` for areas, `false` for lines.
+
+### BarChart
+BarChart: compare amounts across categories. Grouped or `stacked`,
+vertical or `horizontal`. Thin bars with 4px rounded data ends, square to
+the baseline, a 2px gap between neighbours; a per-group tooltip on hover
+or keyboard (focus the chart, then arrow keys), legend toggles and a
+data-table view.
+
+Style hooks: `.sp-chart[data-kind="bar"]`, `__bar[data-active]`, `__band`.
+
+- `data`: `Row[]`
+- `series`: `ChartSeries<Row>[]` One or more series (up to 8; fold the rest into "Other").
+- `x`: `string` Field used for the category / x axis.
+- `aria-label?`: `string` Accessible name when there is no visible title.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot" | "tooltip" | "table", string>>`
+- `description?`: `string` One-line summary for screen readers, e.g. "Revenue rose 40% in Q3".
+- `formatX?`: `((value: unknown) => string)` Format x values for axis, tooltip and table. Default: dates by locale, others as text.
+- `height?`: `number` Height in px. Width follows the container. Default 280.
+- `horizontal?`: `boolean` Bars run left to right (good for long category names).
+- `legend?`: `boolean` Show the legend (default: when there are 2+ series).
+- `stacked?`: `boolean` Stack the series in one bar instead of side by side.
+- `tableView?`: `boolean` Show a "Data table" toggle under the chart. Default `true`.
+- `title?`: `ReactNode` Title shown above the chart; also its accessible name.
+- `valueFormat?`: `NumberFormatOptions` Intl options for values, e.g. `{ style: 'currency', currency: 'INR', notation: 'compact' }`.
+
+### DonutChart
+DonutChart: share of a whole. Slices start at 12 o'clock in data order,
+separated by a 2px surface gap; the legend lists every slice with its
+value and percentage so identity never depends on colour alone. Hover or
+focus a slice (Tab, then ← →) for its tooltip.
+
+Style hooks: `.sp-chart[data-kind="donut"]`, `__slice[data-active]`, `__center`.
+
+- `data`: `DonutSlice[]` Parts of one whole. Keep it to 6 or fewer; fold the rest into "Other".
+- `aria-label?`: `string`
+- `centerCaption?`: `ReactNode` Small caption under the headline. Default "Total".
+- `centerLabel?`: `ReactNode` Headline in the hole. Default: the total.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot", string>>`
+- `size?`: `number` Diameter in px. Default 200.
+- `thickness?`: `number` Ring thickness in px. Default 28.
+- `title?`: `ReactNode`
+- `valueFormat?`: `NumberFormatOptions`
+
+### Sparkline
+Sparkline: a word-sized trend for tables, stat tiles and cards. No axes;
+the last point is marked so the current value is easy to find. Its
+accessible name states the first, last and range.
+
+- `aria-label`: `string` What the line shows, for screen readers, e.g. "Sign-ups, last 30 days".
+- `data`: `number[]` Values in order (oldest first).
+- `area?`: `boolean` Fill under the line.
+- `className?`: `string`
+- `color?`: `string` Line colour. Default `--spark-chart-1`.
+- `height?`: `number`
+- `showLast?`: `boolean` Mark the last value with a dot. Default `true`.
+- `width?`: `number`
+
 ## Dropdown (`dropdown`)
 Pick one value from a list.
 

@@ -45,6 +45,7 @@ const ITEMS = {
   CommandPalette: { name: 'command-palette', description: 'A ⌘K launcher: search commands and pages, run with the keyboard.' },
   Drawer: { description: 'A panel that slides in from an edge, with focus trapping.' },
   Sidebar: { description: 'App navigation: sections, nested groups, collapsed rail, drawer on small screens.' },
+  Charts: { name: 'charts', description: 'Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.' },
   NumberField: { name: 'number-field', description: 'Locale-formatted numbers (₹1,00,000, %, units) with steppers.' },
   Tabs: { description: 'Tabs on one wire; the active tab is lit.' },
   Accordion: { description: 'Sections that power on as they open.' },

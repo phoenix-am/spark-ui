@@ -898,6 +898,351 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs"
     },
     {
+      "name": "charts",
+      "title": "Charts",
+      "summary": "Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.",
+      "components": [
+        {
+          "name": "LineChart",
+          "description": "LineChart (and AreaChart with `area` / `stacked`): change over time or an\nordered axis. Thin 2px lines that draw in like current, a crosshair and\ntooltip that follow the pointer, keyboard stepping (focus the chart, then\n← →), legend toggles, and a data-table view. One y axis only.\n\nStyle hooks: `.sp-chart[data-kind=\"line\"|\"area\"]`, `__line`, `__area`,\n`__crosshair`, `__point`, `__grid`, `__axis`. Colours: `--spark-chart-1…8`.",
+          "props": [
+            {
+              "name": "data",
+              "type": "Row[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "series",
+              "type": "ChartSeries<Row>[]",
+              "required": true,
+              "description": "One or more series (up to 8; fold the rest into \"Other\")."
+            },
+            {
+              "name": "x",
+              "type": "string",
+              "required": true,
+              "description": "Field used for the category / x axis."
+            },
+            {
+              "name": "area",
+              "type": "boolean",
+              "required": false,
+              "description": "Fill under each line."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name when there is no visible title."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"title\" | \"legend\" | \"plot\" | \"tooltip\" | \"table\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "curved",
+              "type": "boolean",
+              "required": false,
+              "description": "Smooth the lines. Default `true`."
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": false,
+              "description": "One-line summary for screen readers, e.g. \"Revenue rose 40% in Q3\"."
+            },
+            {
+              "name": "formatX",
+              "type": "((value: unknown) => string)",
+              "required": false,
+              "description": "Format x values for axis, tooltip and table. Default: dates by locale, others as text."
+            },
+            {
+              "name": "height",
+              "type": "number",
+              "required": false,
+              "description": "Height in px. Width follows the container. Default 280."
+            },
+            {
+              "name": "legend",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the legend (default: when there are 2+ series)."
+            },
+            {
+              "name": "showPoints",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a dot on every point (default: only the hovered one)."
+            },
+            {
+              "name": "stacked",
+              "type": "boolean",
+              "required": false,
+              "description": "Stack the series (implies `area`)."
+            },
+            {
+              "name": "tableView",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a \"Data table\" toggle under the chart. Default `true`."
+            },
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Title shown above the chart; also its accessible name."
+            },
+            {
+              "name": "valueFormat",
+              "type": "NumberFormatOptions",
+              "required": false,
+              "description": "Intl options for values, e.g. `{ style: 'currency', currency: 'INR', notation: 'compact' }`."
+            },
+            {
+              "name": "zeroBaseline",
+              "type": "boolean",
+              "required": false,
+              "description": "Start the y axis at zero. Default `true` for areas, `false` for lines."
+            }
+          ]
+        },
+        {
+          "name": "BarChart",
+          "description": "BarChart: compare amounts across categories. Grouped or `stacked`,\nvertical or `horizontal`. Thin bars with 4px rounded data ends, square to\nthe baseline, a 2px gap between neighbours; a per-group tooltip on hover\nor keyboard (focus the chart, then arrow keys), legend toggles and a\ndata-table view.\n\nStyle hooks: `.sp-chart[data-kind=\"bar\"]`, `__bar[data-active]`, `__band`.",
+          "props": [
+            {
+              "name": "data",
+              "type": "Row[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "series",
+              "type": "ChartSeries<Row>[]",
+              "required": true,
+              "description": "One or more series (up to 8; fold the rest into \"Other\")."
+            },
+            {
+              "name": "x",
+              "type": "string",
+              "required": true,
+              "description": "Field used for the category / x axis."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name when there is no visible title."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"title\" | \"legend\" | \"plot\" | \"tooltip\" | \"table\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": false,
+              "description": "One-line summary for screen readers, e.g. \"Revenue rose 40% in Q3\"."
+            },
+            {
+              "name": "formatX",
+              "type": "((value: unknown) => string)",
+              "required": false,
+              "description": "Format x values for axis, tooltip and table. Default: dates by locale, others as text."
+            },
+            {
+              "name": "height",
+              "type": "number",
+              "required": false,
+              "description": "Height in px. Width follows the container. Default 280."
+            },
+            {
+              "name": "horizontal",
+              "type": "boolean",
+              "required": false,
+              "description": "Bars run left to right (good for long category names)."
+            },
+            {
+              "name": "legend",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the legend (default: when there are 2+ series)."
+            },
+            {
+              "name": "stacked",
+              "type": "boolean",
+              "required": false,
+              "description": "Stack the series in one bar instead of side by side."
+            },
+            {
+              "name": "tableView",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a \"Data table\" toggle under the chart. Default `true`."
+            },
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Title shown above the chart; also its accessible name."
+            },
+            {
+              "name": "valueFormat",
+              "type": "NumberFormatOptions",
+              "required": false,
+              "description": "Intl options for values, e.g. `{ style: 'currency', currency: 'INR', notation: 'compact' }`."
+            }
+          ]
+        },
+        {
+          "name": "DonutChart",
+          "description": "DonutChart: share of a whole. Slices start at 12 o'clock in data order,\nseparated by a 2px surface gap; the legend lists every slice with its\nvalue and percentage so identity never depends on colour alone. Hover or\nfocus a slice (Tab, then ← →) for its tooltip.\n\nStyle hooks: `.sp-chart[data-kind=\"donut\"]`, `__slice[data-active]`, `__center`.",
+          "props": [
+            {
+              "name": "data",
+              "type": "DonutSlice[]",
+              "required": true,
+              "description": "Parts of one whole. Keep it to 6 or fewer; fold the rest into \"Other\"."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "centerCaption",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Small caption under the headline. Default \"Total\"."
+            },
+            {
+              "name": "centerLabel",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Headline in the hole. Default: the total."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"title\" | \"legend\" | \"plot\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "number",
+              "required": false,
+              "description": "Diameter in px. Default 200."
+            },
+            {
+              "name": "thickness",
+              "type": "number",
+              "required": false,
+              "description": "Ring thickness in px. Default 28."
+            },
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "valueFormat",
+              "type": "NumberFormatOptions",
+              "required": false,
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "Sparkline",
+          "description": "Sparkline: a word-sized trend for tables, stat tiles and cards. No axes;\nthe last point is marked so the current value is easy to find. Its\naccessible name states the first, last and range.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": true,
+              "description": "What the line shows, for screen readers, e.g. \"Sign-ups, last 30 days\"."
+            },
+            {
+              "name": "data",
+              "type": "number[]",
+              "required": true,
+              "description": "Values in order (oldest first)."
+            },
+            {
+              "name": "area",
+              "type": "boolean",
+              "required": false,
+              "description": "Fill under the line."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "color",
+              "type": "string",
+              "required": false,
+              "description": "Line colour. Default `--spark-chart-1`."
+            },
+            {
+              "name": "height",
+              "type": "number",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "showLast",
+              "type": "boolean",
+              "required": false,
+              "description": "Mark the last value with a dot. Default `true`."
+            },
+            {
+              "name": "width",
+              "type": "number",
+              "required": false,
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "import": "import { LineChart, BarChart, DonutChart, Sparkline } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add charts",
+        "shadcn": "npx shadcn add @sparkwire/charts",
+        "copiedImport": "import { LineChart, BarChart, DonutChart, Sparkline } from '@/components/spark-ui/Charts';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-charts--docs"
+    },
+    {
       "name": "dropdown",
       "title": "Dropdown",
       "summary": "Pick one value from a list.",

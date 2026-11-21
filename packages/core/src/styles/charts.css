@@ -1,0 +1,66 @@
+/* Chart palette: validated colour-blind-safe (dataviz validator) against each
+   mode's surface. Separate light and dark steps, fixed order 1→8. Override
+   --spark-chart-N to rebrand; re-run the validator when you do. */
+:root, [data-spark-theme="dark"] { --spark-chart-1:#3987e5;--spark-chart-2:#d95926;--spark-chart-3:#199e70;--spark-chart-4:#c98500;--spark-chart-5:#d55181;--spark-chart-6:#0ca30c;--spark-chart-7:#9085e9;--spark-chart-8:#e66767;--spark-chart-grid:rgba(255,255,255,.07);--spark-chart-axis:#8b93a3;--spark-chart-baseline:rgba(255,255,255,.18); }
+[data-spark-theme="light"] { --spark-chart-1:#2a78d6;--spark-chart-2:#eb6834;--spark-chart-3:#1baf7a;--spark-chart-4:#eda100;--spark-chart-5:#e87ba4;--spark-chart-6:#008300;--spark-chart-7:#6250d6;--spark-chart-8:#e34948;--spark-chart-grid:#ecedf0;--spark-chart-axis:#6b7280;--spark-chart-baseline:#c9cdd4; }
+@media (prefers-color-scheme: light) { [data-spark-theme="system"] { --spark-chart-1:#2a78d6;--spark-chart-2:#eb6834;--spark-chart-3:#1baf7a;--spark-chart-4:#eda100;--spark-chart-5:#e87ba4;--spark-chart-6:#008300;--spark-chart-7:#6250d6;--spark-chart-8:#e34948;--spark-chart-grid:#ecedf0;--spark-chart-axis:#6b7280;--spark-chart-baseline:#c9cdd4; } }
+@media (prefers-color-scheme: dark) { [data-spark-theme="system"] { --spark-chart-1:#3987e5;--spark-chart-2:#d95926;--spark-chart-3:#199e70;--spark-chart-4:#c98500;--spark-chart-5:#d55181;--spark-chart-6:#0ca30c;--spark-chart-7:#9085e9;--spark-chart-8:#e66767;--spark-chart-grid:rgba(255,255,255,.07);--spark-chart-axis:#8b93a3;--spark-chart-baseline:rgba(255,255,255,.18); } }
+
+/* Charts: own SVG, recessive chrome, thin marks. Colours: --spark-chart-1…8. */
+.sp-chart { margin: 0; display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; font-family: var(--spark-font-sans, inherit); color: var(--spark-text-primary); }
+.sp-chart__title { font-weight: 600; font-size: 0.9375rem; }
+.sp-chart__legend { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; margin: 0; padding: 0; list-style: none; font-size: 0.8125rem; color: var(--spark-text-secondary); }
+.sp-chart__key { all: unset; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.125rem 0.25rem; border-radius: 4px; }
+.sp-chart__key:focus-visible { outline: 2px solid var(--spark-focus-ring, var(--spark-energy-current)); outline-offset: 1px; }
+.sp-chart__key[aria-pressed="false"] { opacity: 0.45; text-decoration: line-through; }
+.sp-chart__swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.sp-chart__plot { position: relative; width: 100%; min-width: 0; }
+.sp-chart__svg { display: block; overflow: visible; outline: none; touch-action: pan-y; }
+.sp-chart__svg:focus-visible { outline: 2px solid var(--spark-focus-ring, var(--spark-energy-current)); outline-offset: 4px; border-radius: 4px; }
+.sp-chart__grid line { stroke: var(--spark-chart-grid); stroke-width: 1; shape-rendering: crispEdges; }
+.sp-chart__grid line[data-zero] { stroke: var(--spark-chart-baseline); }
+.sp-chart__axis { fill: var(--spark-chart-axis); font-size: 11px; font-variant-numeric: tabular-nums; }
+.sp-chart__line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; animation: sp-chart-draw 900ms cubic-bezier(.3,.7,.2,1) both; }
+.sp-chart__area { opacity: 0.16; stroke: none; }
+.sp-chart[data-kind="area"] .sp-chart__area { opacity: 0.22; }
+.sp-chart__dot { stroke: var(--spark-surface-base); stroke-width: 2; }
+.sp-chart__point { stroke: var(--spark-surface-base); stroke-width: 2; }
+.sp-chart__crosshair { stroke: var(--spark-chart-axis); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.7; }
+.sp-chart__band { fill: var(--spark-text-primary); opacity: 0.04; }
+.sp-chart__bar { transition: opacity 120ms; }
+.sp-chart__svg:hover .sp-chart__bar:not([data-active]), .sp-chart__svg:focus-visible .sp-chart__bar:not([data-active]) { opacity: 0.55; }
+@keyframes sp-chart-draw { from { stroke-dashoffset: 1; } }
+@media (prefers-reduced-motion: reduce) { .sp-chart__line { animation: none; } }
+
+.sp-chart__tooltip { position: absolute; z-index: 2; pointer-events: none; min-width: 9rem; padding: 0.5rem 0.625rem; border-radius: 8px;
+  background: var(--spark-surface-raised); border: 1px solid var(--spark-border-subtle, rgba(127,127,127,.25)); box-shadow: 0 8px 24px rgba(0,0,0,.18); font-size: 0.8125rem; white-space: nowrap; }
+.sp-chart__tooltip-heading { font-weight: 600; margin-bottom: 0.25rem; color: var(--spark-text-primary); }
+.sp-chart__tooltip-row { display: flex; align-items: center; gap: 0.4rem; color: var(--spark-text-secondary); line-height: 1.6; }
+.sp-chart__tooltip-label { flex: 1; }
+.sp-chart__tooltip-value { color: var(--spark-text-primary); font-variant-numeric: tabular-nums; font-weight: 500; margin-left: 0.75rem; }
+
+.sp-chart__table summary { cursor: pointer; font-size: 0.8125rem; color: var(--spark-text-secondary); width: max-content; }
+.sp-chart__table summary:focus-visible { outline: 2px solid var(--spark-focus-ring, var(--spark-energy-current)); border-radius: 4px; }
+.sp-chart__table-scroll { overflow-x: auto; margin-top: 0.5rem; }
+.sp-chart__table table { border-collapse: collapse; font-size: 0.8125rem; width: 100%; font-variant-numeric: tabular-nums; }
+.sp-chart__table th, .sp-chart__table td { padding: 0.375rem 0.625rem; text-align: right; border-bottom: 1px solid var(--spark-chart-grid); }
+.sp-chart__table th:first-child { text-align: left; }
+.sp-chart__table thead th { color: var(--spark-text-secondary); font-weight: 500; }
+
+/* Donut */
+.sp-chart__donut { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+.sp-chart__donut-ring { position: relative; flex: none; }
+.sp-chart__slice { transition: opacity 120ms; outline: none; cursor: default; }
+.sp-chart__donut-ring:has([data-active]) .sp-chart__slice:not([data-active]) { opacity: 0.5; }
+.sp-chart__slice:focus-visible { stroke: var(--spark-text-primary); stroke-width: 2; }
+.sp-chart__center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; text-align: center; }
+.sp-chart__center strong { font-size: 1.5rem; font-weight: 650; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.sp-chart__center span { font-size: 0.75rem; color: var(--spark-text-secondary); max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-chart__legend--list { flex-direction: column; flex-wrap: nowrap; gap: 0.375rem; flex: 1; min-width: 12rem; }
+.sp-chart__legend--list li { display: grid; grid-template-columns: 10px 1fr auto 3.25rem; align-items: center; gap: 0.5rem; padding: 0.125rem 0.25rem; border-radius: 4px; }
+.sp-chart__legend--list li[data-active] { background: color-mix(in srgb, var(--spark-text-primary) 6%, transparent); }
+.sp-chart__legend-label { color: var(--spark-text-primary); }
+.sp-chart__legend-value, .sp-chart__legend-pct { text-align: right; font-variant-numeric: tabular-nums; }
+.sp-chart__legend-pct { color: var(--spark-chart-axis); }
+
+.sp-sparkline { display: inline-block; vertical-align: middle; overflow: visible; }

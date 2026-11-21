@@ -48,6 +48,8 @@ export { CommandPalette } from './CommandPalette';
 export type { CommandPaletteProps, Command, CommandGroup } from './CommandPalette';
 export { Drawer } from './Drawer';
 export type { DrawerProps } from './Drawer';
+export { LineChart, BarChart, DonutChart, Sparkline } from './Charts';
+export type { LineChartProps, BarChartProps, DonutChartProps, DonutSlice, SparklineProps, ChartSeries } from './Charts';
 export { Sidebar } from './Sidebar';
 export type { SidebarProps, SidebarItem, SidebarSection } from './Sidebar';
 export { NumberField } from './NumberField';

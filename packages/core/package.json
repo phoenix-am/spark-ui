@@ -188,6 +188,11 @@
       "types": "./dist/number-field/index.d.ts",
       "import": "./dist/number-field/index.mjs",
       "require": "./dist/number-field/index.js"
+    },
+    "./charts": {
+      "types": "./dist/charts/index.d.ts",
+      "import": "./dist/charts/index.mjs",
+      "require": "./dist/charts/index.js"
     }
   },
   "files": [
@@ -288,6 +293,9 @@
       ],
       "number-field": [
         "./dist/number-field/index.d.ts"
+      ],
+      "charts": [
+        "./dist/charts/index.d.ts"
       ]
     }
   }

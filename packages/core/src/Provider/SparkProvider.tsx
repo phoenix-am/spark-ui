@@ -40,6 +40,10 @@ export interface SparkComponentsConfig {
   Drawer?: ComponentConfig<Record<string, unknown>>;
   Sidebar?: ComponentConfig<Record<string, unknown>>;
   NumberField?: ComponentConfig<Record<string, unknown>>;
+  LineChart?: ComponentConfig<Record<string, unknown>>;
+  BarChart?: ComponentConfig<Record<string, unknown>>;
+  DonutChart?: ComponentConfig<Record<string, unknown>>;
+  Sparkline?: ComponentConfig<Record<string, unknown>>;
   RangeCalendar?: ComponentConfig<Record<string, unknown>>;
   Field?: ComponentConfig<FieldProps>;
   Tabs?: ComponentConfig<TabsProps>;
