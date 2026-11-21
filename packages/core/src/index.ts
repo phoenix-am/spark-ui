@@ -48,3 +48,5 @@ export { CommandPalette } from './CommandPalette';
 export type { CommandPaletteProps, Command, CommandGroup } from './CommandPalette';
 export { Drawer } from './Drawer';
 export type { DrawerProps } from './Drawer';
+export { Sidebar } from './Sidebar';
+export type { SidebarProps, SidebarItem, SidebarSection } from './Sidebar';

@@ -27,6 +27,7 @@ Key facts for writing code:
 - [DataTable](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs): Sort, search, filter, page and select rows; responsive div grid, no table library. Exports: DataTable.
 - [CommandPalette](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-commandpalette--docs): A ⌘K launcher: search commands and pages, run with the keyboard. Exports: CommandPalette.
 - [Menu](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs): Actions behind a button, with submenus. Exports: Menu.
+- [Sidebar](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-sidebar--docs): App navigation: sections, nested groups, collapsed rail, drawer on small screens. Exports: Sidebar.
 - [Tabs](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs): Tabs on one wire; the active tab is lit. Exports: Tabs, TabList, Tab, TabPanel.
 - [Accordion](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs): Sections that power on as they open. Exports: Accordion, AccordionItem.
 - [Modal](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs): A dialog that powers on, with focus trapping. Exports: Modal.

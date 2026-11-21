@@ -2301,6 +2301,123 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs"
     },
     {
+      "name": "sidebar",
+      "title": "Sidebar",
+      "summary": "App navigation: sections, nested groups, collapsed rail, drawer on small screens.",
+      "components": [
+        {
+          "name": "Sidebar",
+          "description": "Sidebar: app navigation. Items sit on a wire down the side; the active\nitem is lit. Sections with headings, nested groups that open and close,\nbadges, links (with `aria-current=\"page\"`), a collapsed icon-only rail\nwith tooltips, and a drawer on small screens. A real `<nav>` with lists,\nso the browser's Tab order and screen-reader navigation just work.\n\nStyle hooks: `.sp-sidebar[data-collapsed]`, `__header`, `__nav`,\n`__section`, `__heading`, `__item[data-active][data-open]`, `__badge`,\n`__toggle`, `__footer`. Widths: `--sp-sidebar-width`, `--sp-sidebar-rail`.",
+          "props": [
+            {
+              "name": "items",
+              "type": "(SidebarItem | SidebarSection)[]",
+              "required": true,
+              "description": "Items, or sections of items with a heading."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name of the navigation. Default \"Main\"."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"header\" | \"nav\" | \"section\" | \"heading\" | \"item\" | \"footer\" | \"toggle\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, header, nav, section, heading, item, footer, toggle."
+            },
+            {
+              "name": "collapsed",
+              "type": "boolean",
+              "required": false,
+              "description": "Icon-only rail (desktop). Controlled."
+            },
+            {
+              "name": "collapsible",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the collapse button. Default `true`."
+            },
+            {
+              "name": "defaultCollapsed",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "footer",
+              "type": "ReactNode | ((collapsed: boolean) => ReactNode)",
+              "required": false,
+              "description": "Bottom area, e.g. the signed-in user."
+            },
+            {
+              "name": "header",
+              "type": "ReactNode | ((collapsed: boolean) => ReactNode)",
+              "required": false,
+              "description": "Top area, e.g. a logo. Receives whether the sidebar is collapsed."
+            },
+            {
+              "name": "mobileBreakpoint",
+              "type": "number",
+              "required": false,
+              "description": "Viewport width (px) below which the sidebar becomes a drawer. Default 768. `0` turns this off."
+            },
+            {
+              "name": "mobileOpen",
+              "type": "boolean",
+              "required": false,
+              "description": "Drawer open state on small screens (controlled). Open it from your own menu button."
+            },
+            {
+              "name": "onChange",
+              "type": "((id: string) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onCollapsedChange",
+              "type": "((collapsed: boolean) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "onMobileOpenChange",
+              "type": "((open: boolean) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "Active item id (controlled)."
+            }
+          ]
+        }
+      ],
+      "import": "import { Sidebar } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add sidebar",
+        "shadcn": "npx shadcn add @sparkwire/sidebar",
+        "copiedImport": "import { Sidebar } from '@/components/spark-ui/Sidebar';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-sidebar--docs"
+    },
+    {
       "name": "tabs",
       "title": "Tabs",
       "summary": "Tabs on one wire; the active tab is lit.",

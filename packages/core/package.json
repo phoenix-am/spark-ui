@@ -178,6 +178,11 @@
       "types": "./dist/drawer/index.d.ts",
       "import": "./dist/drawer/index.mjs",
       "require": "./dist/drawer/index.js"
+    },
+    "./sidebar": {
+      "types": "./dist/sidebar/index.d.ts",
+      "import": "./dist/sidebar/index.mjs",
+      "require": "./dist/sidebar/index.js"
     }
   },
   "files": [
@@ -272,6 +277,9 @@
       ],
       "drawer": [
         "./dist/drawer/index.d.ts"
+      ],
+      "sidebar": [
+        "./dist/sidebar/index.d.ts"
       ]
     }
   }

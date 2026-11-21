@@ -703,3 +703,34 @@ describe('Drawer', () => {
     expect(onClose).toHaveBeenCalledTimes(2);
   });
 });
+
+describe('Sidebar', () => {
+  const { Sidebar } = jest.requireActual('..');
+  const items = [
+    { id: 'home', label: 'Home', href: '#home' },
+    { heading: 'Work', items: [{ id: 'projects', label: 'Projects', items: [{ id: 'web', label: 'Website' }, { id: 'app', label: 'App' }] }, { id: 'old', label: 'Old', disabled: true }] },
+  ];
+
+  it('is a labelled nav with the active link marked as the current page and its group open', () => {
+    render(<Sidebar items={items} defaultValue="web" mobileBreakpoint={0} />);
+    expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Website' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('button', { name: /Projects/ })).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('button', { name: 'Old' })).toBeDisabled();
+  });
+
+  it('selects items, toggles groups and collapses to a rail', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const onCollapsedChange = jest.fn();
+    render(<Sidebar items={items} onChange={onChange} onCollapsedChange={onCollapsedChange} mobileBreakpoint={0} />);
+    const group = screen.getByRole('button', { name: /Projects/ });
+    expect(group).toHaveAttribute('aria-expanded', 'false');
+    await user.click(group);
+    await user.click(screen.getByRole('button', { name: 'App' }));
+    expect(onChange).toHaveBeenLastCalledWith('app');
+    await user.click(screen.getByRole('button', { name: 'Collapse sidebar' }));
+    expect(onCollapsedChange).toHaveBeenLastCalledWith(true);
+    expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
+  });
+});

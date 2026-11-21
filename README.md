@@ -156,6 +156,14 @@ Sorting (Shift+click for several columns), search, per-column filters, paging, r
   columns={[{ key: 'service', header: 'Service', sortable: true }, { key: 'cost', header: 'Cost', sortable: true, cell: (r) => `₹${r.cost}` }]} />
 ```
 
+### Sidebar
+
+App navigation: sections with headings, nested groups, badges, links (`aria-current="page"`), a collapsed icon-only rail with tooltips, and a Drawer below `mobileBreakpoint` (open it with `mobileOpen` from your own menu button). `header` and `footer` can be functions of the collapsed state.
+
+```tsx
+<Sidebar items={[{ id: 'home', label: 'Home', icon: <Home />, href: '/' }, { heading: 'Work', items: [...] }]} value={page} onChange={setPage} />
+```
+
 ### Drawer
 
 A panel that slides in from an edge (`placement="start" | "end" | "top" | "bottom"`; start/end follow reading direction), sized `small`/`medium`/`large`/`full` or any CSS length. Title, description, scrolling body and an `actions` footer; focus trapped and returned, Escape and backdrop click close it.

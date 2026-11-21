@@ -44,6 +44,7 @@ const ITEMS = {
   DataTable: { name: 'data-table', description: 'Sort, search, filter, page and select rows; responsive div grid, no table library.' },
   CommandPalette: { name: 'command-palette', description: 'A ⌘K launcher: search commands and pages, run with the keyboard.' },
   Drawer: { description: 'A panel that slides in from an edge, with focus trapping.' },
+  Sidebar: { description: 'App navigation: sections, nested groups, collapsed rail, drawer on small screens.' },
   Tabs: { description: 'Tabs on one wire; the active tab is lit.' },
   Accordion: { description: 'Sections that power on as they open.' },
   Modal: { description: 'A dialog that powers on, with focus trapping.' },

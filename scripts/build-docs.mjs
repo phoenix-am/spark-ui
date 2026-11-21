@@ -38,6 +38,7 @@ const ENTRIES = [
   ['data-table', ['DataTable/DataTable.tsx'], 'data-display-datatable'],
   ['command-palette', ['CommandPalette/CommandPalette.tsx'], 'navigation-commandpalette'],
   ['menu', ['Menu/Menu.tsx'], 'navigation-menu'],
+  ['sidebar', ['Sidebar/Sidebar.tsx'], 'navigation-sidebar'],
   ['tabs', ['Tabs/Tabs.tsx'], 'navigation-tabs'],
   ['accordion', ['Accordion/Accordion.tsx'], 'navigation-accordion'],
   ['modal', ['Modal/Modal.tsx'], 'overlays-modal'],

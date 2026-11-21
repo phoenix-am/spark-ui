@@ -629,6 +629,42 @@ Style hooks: `.sp-menu`, `.sp-list-item[data-focused][data-danger][data-disabled
 - `selectionMode?`: `"none" | "single" | "multiple"` Make items checkable: `single` (like radio) or `multiple` (like checkboxes). Default `none`.
 - `trigger?`: `ReactElement<any, string | JSXElementConstructor<any>>` Your own trigger, e.g. `<Button variant="text">` or an icon button. It must accept a ref.
 
+## Sidebar (`sidebar`)
+App navigation: sections, nested groups, collapsed rail, drawer on small screens.
+
+```tsx
+import { Sidebar } from '@sparkwire/core';
+```
+Install: `npx sparkwire add sidebar` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-sidebar--docs
+
+### Sidebar
+Sidebar: app navigation. Items sit on a wire down the side; the active
+item is lit. Sections with headings, nested groups that open and close,
+badges, links (with `aria-current="page"`), a collapsed icon-only rail
+with tooltips, and a drawer on small screens. A real `<nav>` with lists,
+so the browser's Tab order and screen-reader navigation just work.
+
+Style hooks: `.sp-sidebar[data-collapsed]`, `__header`, `__nav`,
+`__section`, `__heading`, `__item[data-active][data-open]`, `__badge`,
+`__toggle`, `__footer`. Widths: `--sp-sidebar-width`, `--sp-sidebar-rail`.
+
+- `items`: `(SidebarItem | SidebarSection)[]` Items, or sections of items with a heading.
+- `aria-label?`: `string` Accessible name of the navigation. Default "Main".
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "header" | "nav" | "section" | "heading" | "item" | "footer" | "toggle", string>>` Extra classes for each part: root, header, nav, section, heading, item, footer, toggle.
+- `collapsed?`: `boolean` Icon-only rail (desktop). Controlled.
+- `collapsible?`: `boolean` Show the collapse button. Default `true`.
+- `defaultCollapsed?`: `boolean`
+- `defaultValue?`: `string`
+- `footer?`: `ReactNode | ((collapsed: boolean) => ReactNode)` Bottom area, e.g. the signed-in user.
+- `header?`: `ReactNode | ((collapsed: boolean) => ReactNode)` Top area, e.g. a logo. Receives whether the sidebar is collapsed.
+- `mobileBreakpoint?`: `number` Viewport width (px) below which the sidebar becomes a drawer. Default 768. `0` turns this off.
+- `mobileOpen?`: `boolean` Drawer open state on small screens (controlled). Open it from your own menu button.
+- `onChange?`: `((id: string) => void)`
+- `onCollapsedChange?`: `((collapsed: boolean) => void)`
+- `onMobileOpenChange?`: `((open: boolean) => void)`
+- `value?`: `string` Active item id (controlled).
+
 ## Tabs (`tabs`)
 Tabs on one wire; the active tab is lit.
 
