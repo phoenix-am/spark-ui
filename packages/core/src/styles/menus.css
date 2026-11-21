@@ -203,3 +203,16 @@
   background: var(--spark-energy-current);
   box-shadow: 0 0 10px var(--spark-energy-glow);
 }
+/* Rail fixes: items fill the row (the Tooltip wrapper is inline by default),
+   full-width separators, roomier rows and icons. */
+.sp-sidebar__nav .sp-tooltip { display: flex; width: 100%; }
+.sp-sidebar[data-collapsed] .sp-sidebar__item { min-height: 2.75rem; margin: 2px 0; }
+.sp-sidebar[data-collapsed] .sp-sidebar__icon svg { width: 20px; height: 20px; }
+.sp-sidebar[data-collapsed] .sp-sidebar__heading { margin: 0.625rem 0.25rem; }
+/* The current bar sits just outside each item; keep it inside the nav's
+   scroll box by moving the side padding from the sidebar onto the nav. */
+.sp-sidebar { padding-inline: 0; }
+.sp-sidebar__nav { padding-inline: 0.625rem; }
+.sp-sidebar__header { padding-inline: 1.125rem; }
+.sp-sidebar__footer { margin-inline: 0.625rem; }
+.sp-sidebar[data-mobile] .sp-sidebar__nav { padding-inline: 0.625rem; }
