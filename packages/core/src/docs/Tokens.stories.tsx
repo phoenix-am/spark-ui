@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { defaultTheme as t } from '@spark-ui/styles';
+import { useTheme } from '@spark-ui/system';
 
 const meta: Meta = {
   title: 'Foundations/Tokens',
@@ -10,21 +10,23 @@ export default meta;
 
 const Swatch = ({ name, value, dark }: { name: string; value: string; dark?: boolean }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
-    <div style={{ height: 56, borderRadius: 6, background: value, border: '1px solid #262C3A' }} />
-    <span style={{ fontSize: 12, fontWeight: 600, color: dark ? '#0B0D12' : '#F2F4F8' }}>{name}</span>
-    <code style={{ fontSize: 11, color: '#A9B0BF' }}>{value}</code>
+    <div style={{ height: 56, borderRadius: 6, background: value, border: '1px solid var(--spark-surface-border)' }} />
+    <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--spark-text-primary)' }}>{name}</span>
+    <code style={{ fontSize: 11, color: 'var(--spark-text-secondary)' }}>{value}</code>
   </div>
 );
 
 const Row = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section style={{ marginBottom: 32 }}>
-    <h3 style={{ margin: '0 0 12px', fontSize: 13, letterSpacing: 2, color: '#A9B0BF' }}>{title.toUpperCase()}</h3>
+    <h3 style={{ margin: '0 0 12px', fontSize: 13, letterSpacing: 2, color: 'var(--spark-text-secondary)' }}>{title.toUpperCase()}</h3>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(96px, 1fr))', gap: 12 }}>{children}</div>
   </section>
 );
 
 export const Colors: StoryObj = {
-  render: () => (
+  render: function Render() {
+    const { theme: t } = useTheme();
+    return (
     <div>
       <Row title="Energy">
         <Swatch name="current" value={t.energy.current} />
@@ -52,24 +54,30 @@ export const Colors: StoryObj = {
         </Row>
       ))}
     </div>
-  ),
+  );
+  },
 };
 
 export const Typography: StoryObj = {
-  render: () => (
+  render: function Render() {
+    const { theme: t } = useTheme();
+    return (
     <div style={{ display: 'grid', gap: 16 }}>
-      <code style={{ color: '#A9B0BF' }}>{t.typography.fontFamily}</code>
+      <code style={{ color: 'var(--spark-text-secondary)' }}>{t.typography.fontFamily}</code>
       {(['large', 'medium', 'small'] as const).map((s) => (
         <div key={s} style={{ fontSize: t.typography.fontSize[s] }}>
           <strong>{s}</strong> · {t.typography.fontSize[s]} · Components that carry current.
         </div>
       ))}
     </div>
-  ),
+  );
+  },
 };
 
 export const RadiusAndMotion: StoryObj = {
-  render: () => (
+  render: function Render() {
+    const { theme: t } = useTheme();
+    return (
     <div style={{ display: 'grid', gap: 24 }}>
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
         {Object.entries(t.borderRadius).map(([k, v]) => (
@@ -83,12 +91,13 @@ export const RadiusAndMotion: StoryObj = {
         <tbody>
           {Object.entries(t.motion).map(([k, v]) => (
             <tr key={k}>
-              <td style={{ padding: '6px 16px 6px 0', color: '#A9B0BF' }}>motion.{k}</td>
+              <td style={{ padding: '6px 16px 6px 0', color: 'var(--spark-text-secondary)' }}>motion.{k}</td>
               <td><code>{String(v)}</code></td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  ),
+  );
+  },
 };

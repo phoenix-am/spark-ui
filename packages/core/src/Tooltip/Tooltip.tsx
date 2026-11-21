@@ -1,35 +1,25 @@
 import React, { cloneElement, isValidElement, useEffect, useId, useRef, useState } from 'react';
-import { css, keyframes } from '@emotion/react';
-import { useTheme } from '@spark-ui/system';
-
-const zap = keyframes`
-  from { opacity: 0; transform: var(--tt-from); }
-  to { opacity: 1; transform: none; }
-`;
 
 export interface TooltipProps {
   /** Tooltip text. Keep it short; it is read as the trigger's description. */
   title: React.ReactNode;
+  /** Side of the trigger to show on. Default `top`. */
   placement?: 'top' | 'bottom' | 'left' | 'right';
-  /** Delay before showing, in ms. */
+  /** Delay before showing, in ms. Default 250. */
   delay?: number;
   /** A single focusable element, e.g. a Button. */
   children: React.ReactElement;
+  /** Class for the tooltip bubble. */
+  className?: string;
 }
-
-const offsets = {
-  top: { pos: 'bottom: calc(100% + 8px); left: 50%; translate: -50% 0;', from: 'translateY(4px)' },
-  bottom: { pos: 'top: calc(100% + 8px); left: 50%; translate: -50% 0;', from: 'translateY(-4px)' },
-  left: { pos: 'right: calc(100% + 8px); top: 50%; translate: 0 -50%;', from: 'translateX(4px)' },
-  right: { pos: 'left: calc(100% + 8px); top: 50%; translate: 0 -50%;', from: 'translateX(-4px)' },
-};
 
 /**
  * Tooltip: a short charged label that arcs out from its trigger on hover or
  * keyboard focus. Escape dismisses it.
+ *
+ * Style hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.
  */
-export function Tooltip({ title, placement = 'top', delay = 250, children }: TooltipProps) {
-  const { theme } = useTheme();
+export function Tooltip({ title, placement = 'top', delay = 250, children, className }: TooltipProps) {
   const [open, setOpen] = useState(false);
   const timer = useRef<number>();
   const id = useId();
@@ -52,7 +42,6 @@ export function Tooltip({ title, placement = 'top', delay = 250, children }: Too
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
-  const o = offsets[placement];
   const trigger = isValidElement(children)
     ? cloneElement(children as React.ReactElement<Record<string, unknown>>, {
         'aria-describedby': open ? id : undefined,
@@ -60,41 +49,10 @@ export function Tooltip({ title, placement = 'top', delay = 250, children }: Too
     : children;
 
   return (
-    <span
-      onMouseEnter={show}
-      onMouseLeave={hide}
-      onFocus={show}
-      onBlur={hide}
-      css={css`position: relative; display: inline-flex;`}
-    >
+    <span className="sp-tooltip" onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide}>
       {trigger}
       {open && (
-        <span
-          role="tooltip"
-          id={id}
-          style={{ '--tt-from': o.from } as React.CSSProperties}
-          css={css`
-            position: absolute;
-            ${o.pos}
-            z-index: ${theme.zIndex.tooltip};
-            width: max-content;
-            max-width: 240px;
-            padding: 0.4rem 0.65rem;
-            border-radius: ${theme.borderRadius.small};
-            background: ${theme.energy.hot};
-            color: ${theme.text.onEnergy};
-            font-family: ${theme.typography.fontFamily};
-            font-size: 0.8125rem;
-            font-weight: 600;
-            line-height: 1.4;
-            box-shadow: 0 0 16px ${theme.energy.glow};
-            pointer-events: none;
-            animation: ${zap} ${theme.motion.fast} ${theme.motion.easing} both;
-            @media (prefers-reduced-motion: reduce) {
-              animation: none;
-            }
-          `}
-        >
+        <span role="tooltip" id={id} data-placement={placement} className={['sp-tooltip__bubble', className].filter(Boolean).join(' ')}>
           {title}
         </span>
       )}

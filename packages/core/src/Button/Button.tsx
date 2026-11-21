@@ -1,11 +1,12 @@
 import React, { ElementType, useRef } from 'react';
-import { useTheme } from '@spark-ui/system';
-import { ButtonStyles } from './Button.styles';
 import { PolymorphicButtonProps } from './Button.types';
-import { applySlots } from '@spark-ui/utils';
 import { Spark, SparkHandle } from '../Spark';
-import { getTone } from '../internal/tone';
+import { cx } from '../internal/cx';
 
+/**
+ * Button: throws sparks from the press point. Outlined and text buttons show
+ * current flowing along a wire on hover; a disabled button is a dead circuit.
+ */
 const Button = <C extends ElementType = 'button'>({
   as: Component = 'button',
   variant = 'contained',
@@ -13,7 +14,7 @@ const Button = <C extends ElementType = 'button'>({
   size = 'medium',
   onClick,
   disabled = false,
-  className = '',
+  className,
   startIcon,
   endIcon,
   children,
@@ -23,39 +24,45 @@ const Button = <C extends ElementType = 'button'>({
   ripple,
   ...rest
 }: PolymorphicButtonProps<C>) => {
-  const { theme } = useTheme();
-  const styles = ButtonStyles({ variant, color, size, fullWidth, disableElevation, theme });
   const sparkRef = useRef<SparkHandle>(null);
   const sparksOn = spark ?? ripple ?? true;
-  const tone = getTone(color, theme);
+  const isButton = Component === 'button';
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (disabled) return;
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
     if (sparksOn) sparkRef.current?.burst(event);
     onClick?.(event as never);
   };
 
-  const element = (
+  return (
     <Component
-      css={styles}
+      className={cx('sp-button', className)}
+      data-variant={variant}
+      data-tone={color}
+      data-size={size}
+      data-full-width={fullWidth || undefined}
+      data-flat={disableElevation || undefined}
+      data-disabled={disabled || undefined}
       onClick={handleClick}
-      className={className}
-      disabled={Component === 'button' ? disabled : undefined}
-      aria-disabled={disabled || undefined}
-      type={Component === 'button' ? (rest as { type?: string }).type ?? 'button' : undefined}
+      disabled={isButton ? disabled : undefined}
+      aria-disabled={!isButton && disabled ? true : undefined}
+      type={isButton ? (rest as { type?: string }).type ?? 'button' : undefined}
       {...rest}
     >
+      {startIcon && <span className="sp-button__icon slot-startIcon">{startIcon}</span>}
       {children}
+      {endIcon && <span className="sp-button__icon slot-endIcon">{endIcon}</span>}
       {sparksOn && (
         <Spark
           ref={sparkRef}
-          colors={color === 'brand' ? theme.energy.sparks : [tone.fill, theme.energy.hot, tone.hover]}
+          colors={color === 'brand' ? undefined : ['var(--sp-fill)', 'var(--spark-energy-hot)', 'var(--sp-hover)']}
         />
       )}
     </Component>
   );
-
-  return applySlots({ slots: { startIcon, endIcon }, component: element });
 };
 
 export default Button;

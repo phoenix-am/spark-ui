@@ -1,21 +1,14 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { css, keyframes } from '@emotion/react';
-import { useTheme } from '@spark-ui/system';
 import { prefersReducedMotion } from '@spark-ui/utils';
 
-const fly = keyframes`
-  0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  100% { transform: translate(calc(-50% + var(--spark-dx)), calc(-50% + var(--spark-dy))) scale(0.2); opacity: 0; }
-`;
-
 export interface SparkProps {
-  /** Particle colours. Defaults to `theme.energy.sparks`. */
+  /** Particle colours. Defaults to the theme's `--spark-energy-spark-1…3`. */
   colors?: string[];
-  /** Particles per burst. */
+  /** Particles per burst. Default 10. */
   count?: number;
-  /** Burst duration in ms. Defaults to `theme.motion.spark`. */
+  /** Burst duration in milliseconds. Default 700. */
   duration?: number;
-  /** How far particles travel, in px. */
+  /** How far particles travel, in px. Default 70. */
   spread?: number;
 }
 
@@ -35,6 +28,7 @@ interface Particle {
 }
 
 let nextId = 0;
+const themeSparks = ['var(--spark-energy-spark-1)', 'var(--spark-energy-spark-2)', 'var(--spark-energy-spark-3)'];
 
 /**
  * Spark: the signature Live Wire effect. Place it inside a `position: relative`
@@ -42,12 +36,10 @@ let nextId = 0;
  * who prefer reduced motion.
  */
 export const Spark = forwardRef<SparkHandle, SparkProps>(function Spark(
-  { colors, count = 10, duration, spread = 70 },
+  { colors, count = 10, duration = 700, spread = 70 },
   ref,
 ) {
-  const { theme } = useTheme();
-  const palette = colors ?? theme.energy.sparks;
-  const ms = duration ?? theme.motion.spark;
+  const palette = colors ?? themeSparks;
   const layerRef = useRef<HTMLSpanElement>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
   const timers = useRef<number[]>([]);
@@ -86,29 +78,20 @@ export const Spark = forwardRef<SparkHandle, SparkProps>(function Spark(
       setParticles((prev) => [...prev, ...batch]);
       const ids = new Set(batch.map((p) => p.id));
       timers.current.push(
-        window.setTimeout(() => setParticles((prev) => prev.filter((p) => !ids.has(p.id))), ms + 50),
+        window.setTimeout(() => setParticles((prev) => prev.filter((p) => !ids.has(p.id))), duration + 50),
       );
     },
-    [count, spread, palette, ms],
+    [count, spread, palette, duration],
   );
 
   useImperativeHandle(ref, () => ({ burst }), [burst]);
 
   return (
-    <span
-      ref={layerRef}
-      aria-hidden="true"
-      css={css`
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: visible;
-        z-index: 1;
-      `}
-    >
+    <span ref={layerRef} aria-hidden="true" className="sp-spark">
       {particles.map((p) => (
         <span
           key={p.id}
+          className="sp-spark__particle"
           style={
             {
               left: p.x,
@@ -117,15 +100,11 @@ export const Spark = forwardRef<SparkHandle, SparkProps>(function Spark(
               height: p.size,
               background: p.color,
               boxShadow: `0 0 6px ${p.color}`,
-              '--spark-dx': `${p.dx}px`,
-              '--spark-dy': `${p.dy}px`,
+              animationDuration: `${duration}ms`,
+              '--sp-dx': `${p.dx}px`,
+              '--sp-dy': `${p.dy}px`,
             } as React.CSSProperties
           }
-          css={css`
-            position: absolute;
-            border-radius: 50%;
-            animation: ${fly} ${ms}ms ${theme.motion.easing} forwards;
-          `}
         />
       ))}
     </span>

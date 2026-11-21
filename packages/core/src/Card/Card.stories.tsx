@@ -19,7 +19,7 @@ const meta: Meta<typeof Card> = {
     <div style={{ maxWidth: 380 }}>
       <Card {...args}>
         <CardHeader title="api-gateway" subtitle="Deployed 4 min ago" media={<Avatar name="Asha Patel" size="small" />} action={<Badge pulse>Live</Badge>} />
-        <span style={{ fontSize: 14, color: '#A9B0BF' }}>Handling 1.2k requests a minute.</span>
+        <span style={{ fontSize: 14, color: 'var(--spark-text-secondary)' }}>Handling 1.2k requests a minute.</span>
         <CardFooter>
           <Button size="small" variant="outlined">Logs</Button>
           <Button size="small" variant="text">Restart</Button>

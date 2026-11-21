@@ -1,4 +1,3 @@
-import { Theme as EmotionTheme } from '@emotion/react';
 import { Theme } from './types/theme';
 
 /**
@@ -6,6 +5,13 @@ import { Theme } from './types/theme';
  * sparks, toggles close a circuit, inputs charge up as they become valid.
  */
 export const defaultTheme: Theme = {
+  mode: 'dark',
+  tones: {
+    brand: { fill: '#FFD60A', ink: '#FFD60A', hover: '#FFE24D', glow: 'rgba(255, 214, 10, 0.35)' },
+    success: { fill: '#1FE58A', ink: '#1FE58A', hover: '#47F5A0', glow: 'rgba(31, 229, 138, 0.35)' },
+    warning: { fill: '#FF9F1C', ink: '#FF9F1C', hover: '#FFB347', glow: 'rgba(255, 159, 28, 0.35)' },
+    error: { fill: '#FF5C5C', ink: '#FF5C5C', hover: '#FF7A7A', glow: 'rgba(255, 92, 92, 0.35)' },
+  },
   colors: {
     primary: {
       gray: {
@@ -243,6 +249,7 @@ export const defaultTheme: Theme = {
   },
   energy: {
     current: '#FFD60A',
+    ink: '#FFD60A',
     hot: '#FFF3B0',
     glow: 'rgba(255, 214, 10, 0.35)',
     off: '#3A4150',
@@ -265,7 +272,54 @@ export const defaultTheme: Theme = {
   }
 };
 
-export type BaseTheme = EmotionTheme & Theme;
+/** @deprecated Same as `Theme`; kept for older imports. */
+export type BaseTheme = Theme;
 
 
 export const liveWireTheme = defaultTheme;
+
+/**
+ * Live Wire, light mode. Fills keep their voltage; anything drawn as text or a
+ * thin line uses a darker "ink" so it stays readable on white (4.5:1 or more).
+ */
+export const lightTheme: Theme = {
+  ...defaultTheme,
+  mode: 'light',
+  tones: {
+    brand: { fill: '#FFD60A', ink: '#7A5E00', hover: '#FFE24D', glow: 'rgba(209, 163, 0, 0.35)' },
+    success: { fill: '#1FE58A', ink: '#00704A', hover: '#47F5A0', glow: 'rgba(0, 166, 94, 0.3)' },
+    warning: { fill: '#FF9F1C', ink: '#9A4A00', hover: '#FFB347', glow: 'rgba(204, 116, 0, 0.3)' },
+    error: { fill: '#FF5C5C', ink: '#B3161C', hover: '#FF7A7A', glow: 'rgba(217, 38, 38, 0.28)' },
+  },
+  surface: {
+    base: '#FFFFFF',
+    raised: '#F6F7F9',
+    sunken: '#ECEEF2',
+    border: '#DCE0E7',
+    borderStrong: '#B4BBC8',
+  },
+  text: {
+    primary: '#0B0D12',
+    secondary: '#4A5263',
+    disabled: '#9AA1AE',
+    onEnergy: '#0B0D12',
+  },
+  energy: {
+    ...defaultTheme.energy,
+    ink: '#7A5E00',
+    glow: 'rgba(209, 163, 0, 0.35)',
+    off: '#C9CFDB',
+    sparks: ['#F5C400', '#FF9F1C', '#FFD60A'],
+  },
+  shadows: {
+    extraSmall: '0 1px 2px rgba(16, 24, 40, 0.06)',
+    small: '0 1px 3px rgba(16, 24, 40, 0.1)',
+    medium: '0 4px 10px rgba(16, 24, 40, 0.1)',
+    large: '0 12px 24px rgba(16, 24, 40, 0.12)',
+    xlarge: '0 20px 32px rgba(16, 24, 40, 0.14)',
+    '2xlarge': '0 24px 48px rgba(16, 24, 40, 0.18)',
+    '3xlarge': '0 32px 64px rgba(16, 24, 40, 0.2)',
+  },
+};
+
+export const darkTheme = defaultTheme;

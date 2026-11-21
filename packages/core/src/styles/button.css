@@ -1,0 +1,117 @@
+/* Spark */
+.sp-spark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
+}
+.sp-spark__particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: sp-spark-fly 700ms var(--spark-motion-easing) forwards;
+}
+
+/* Button */
+.sp-button {
+  --sp-h: 2.75rem;
+  --sp-px: 1.25rem;
+  position: relative;
+  overflow: visible;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--sp-h);
+  padding: 0 var(--sp-px);
+  box-sizing: border-box;
+  font-family: var(--spark-font);
+  font-size: var(--spark-font-size-medium);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: var(--spark-radius-medium);
+  border: 2px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--spark-motion-normal) var(--spark-motion-easing),
+    box-shadow var(--spark-motion-normal) var(--spark-motion-easing),
+    transform var(--spark-motion-fast) var(--spark-motion-easing),
+    color var(--spark-motion-normal);
+}
+.sp-button[data-size='small'] { --sp-h: 2.25rem; --sp-px: 0.875rem; font-size: var(--spark-font-size-small); }
+.sp-button[data-size='large'] { --sp-h: 3.25rem; --sp-px: 1.75rem; font-size: var(--spark-font-size-large); }
+.sp-button[data-full-width] { display: flex; width: 100%; }
+.sp-button__icon { display: inline-flex; align-items: center; }
+.sp-button__icon svg path { stroke: currentColor; }
+
+/* The wire under text/outlined buttons. Current flows through it on hover. */
+.sp-button::after {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.3rem;
+  height: 2px;
+  border-radius: 1px;
+  opacity: 0;
+  transition: opacity var(--spark-motion-fast);
+  --sp-line: var(--sp-ink);
+}
+.sp-button:active:not(:disabled):not([data-disabled]) { transform: translateY(1px); }
+.sp-button:focus-visible { outline: 2px solid var(--sp-ink); outline-offset: 3px; }
+
+.sp-button[data-variant='contained'] {
+  background-color: var(--sp-fill);
+  border-color: var(--sp-fill);
+  color: var(--spark-text-on-energy);
+  box-shadow: 0 0 18px var(--sp-glow);
+}
+.sp-button[data-variant='contained']:hover:not(:disabled):not([data-disabled]) {
+  background-color: var(--sp-hover);
+  box-shadow: 0 0 30px var(--sp-glow), 0 0 12px var(--sp-glow);
+}
+.sp-button[data-variant='contained'][data-flat] { box-shadow: none; }
+
+.sp-button[data-variant='outlined'] {
+  background-color: transparent;
+  border-color: var(--sp-ink);
+  color: var(--sp-ink);
+}
+.sp-button[data-variant='outlined']:hover:not(:disabled):not([data-disabled]) {
+  background-color: var(--spark-surface-raised);
+  box-shadow: inset 0 0 12px var(--sp-glow);
+}
+.sp-button[data-variant='text'] {
+  background-color: transparent;
+  color: var(--sp-ink);
+}
+.sp-button[data-variant='outlined']:hover:not(:disabled):not([data-disabled])::after,
+.sp-button[data-variant='text']:hover:not(:disabled):not([data-disabled])::after {
+  opacity: 1;
+  background-color: color-mix(in srgb, var(--sp-ink) 30%, transparent);
+  background-image: repeating-linear-gradient(90deg, var(--sp-ink) 0 9px, transparent 9px 18px);
+  background-size: 36px 100%;
+  animation: sp-flow 0.6s linear infinite;
+}
+
+/* Disabled = no power in the circuit. */
+.sp-button:disabled,
+.sp-button[data-disabled] {
+  cursor: not-allowed;
+  color: var(--spark-text-disabled);
+  box-shadow: none;
+}
+.sp-button[data-variant='contained']:disabled,
+.sp-button[data-variant='contained'][data-disabled] {
+  background-color: var(--spark-surface-raised);
+  border-color: var(--spark-surface-border);
+  border-style: dashed;
+}
+.sp-button[data-variant='outlined']:disabled,
+.sp-button[data-variant='outlined'][data-disabled] {
+  border-color: var(--spark-surface-border);
+  border-style: dashed;
+}

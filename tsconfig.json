@@ -16,7 +16,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./packages",
-    "jsxImportSource": "@emotion/react",
+    "jsxImportSource": "react",
     "paths": {
       "@spark-ui/*": ["packages/*/src"]
     }

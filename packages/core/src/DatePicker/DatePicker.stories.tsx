@@ -80,7 +80,7 @@ export const InAForm: Story = {
       >
         <DatePicker {...args} label="Check-in" name="checkin" min={today} />
         <Button type="submit">Book</Button>
-        {sent && <p style={{ color: '#A9B0BF', fontSize: 14 }}>Submitted checkin = {sent}</p>}
+        {sent && <p style={{ color: 'var(--spark-text-secondary)', fontSize: 14 }}>Submitted checkin = {sent}</p>}
       </form>
     );
   },

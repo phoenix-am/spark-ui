@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { css } from '@emotion/react';
-import { useTheme } from '@spark-ui/system';
-import { alpha } from '@spark-ui/utils';
 import { Spark, SparkHandle } from '../Spark';
+import { cx } from '../internal/cx';
 import {
   addDays,
   addMonths,
@@ -18,6 +16,7 @@ import {
 export interface CalendarProps {
   /** The selected day. */
   value?: Date | null;
+  /** Called with the picked day. */
   onChange?: (date: Date) => void;
   /** Earliest selectable day. */
   min?: Date;
@@ -35,13 +34,16 @@ export interface CalendarProps {
   todayLabel?: string;
   /** Called on Escape, so a popover can close. */
   onEscape?: () => void;
+  className?: string;
 }
 
 /**
  * Calendar: a month grid. The selected day is a lit node, today is a ring,
- * and picking a day throws a spark. Fully keyboard operable: arrows move by
- * day/week, PageUp/PageDown by month (with Shift: by year), Home/End to the
- * start/end of the week, Enter or Space selects.
+ * and picking a day throws a spark. Arrows move by day/week, PageUp/PageDown
+ * by month (Shift: year), Home/End to the week's start/end, Enter selects.
+ *
+ * Style hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,
+ * `__day` with `[data-selected]`, `[data-today]`, `[data-outside]`, `:disabled`.
  */
 export function Calendar({
   value,
@@ -54,8 +56,8 @@ export function Calendar({
   autoFocus = false,
   todayLabel = 'Today',
   onEscape,
+  className,
 }: CalendarProps) {
-  const { theme } = useTheme();
   const today = startOfDay(new Date());
   const [focused, setFocused] = useState<Date>(startOfDay(value ?? clampToRange(today, min, max)));
   const [month, setMonth] = useState<Date>(startOfMonth(focused));
@@ -84,8 +86,7 @@ export function Calendar({
   // Keep the focused day's button focused after keyboard moves.
   useEffect(() => {
     if (!shouldFocus.current) return;
-    const btn = gridRef.current?.querySelector<HTMLButtonElement>('button[tabindex="0"]');
-    btn?.focus();
+    gridRef.current?.querySelector<HTMLButtonElement>('button[tabindex="0"]')?.focus();
   }, [focused, month]);
 
   const moveTo = (d: Date) => {
@@ -128,64 +129,25 @@ export function Calendar({
     }
   };
 
-  const navBtn = css`
-    width: 2.25rem;
-    height: 2.25rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid ${theme.surface.border};
-    border-radius: ${theme.borderRadius.small};
-    background: transparent;
-    color: ${theme.text.primary};
-    cursor: pointer;
-    &:hover:not(:disabled) {
-      border-color: ${theme.energy.current};
-      color: ${theme.energy.current};
-    }
-    &:disabled {
-      color: ${theme.text.disabled};
-      cursor: not-allowed;
-    }
-    &:focus-visible {
-      outline: 2px solid ${theme.energy.current};
-      outline-offset: 2px;
-    }
-  `;
-
   return (
-    <div
-      css={css`
-        position: relative;
-        width: 18.5rem;
-        max-width: 100%;
-        font-family: ${theme.typography.fontFamily};
-        color: ${theme.text.primary};
-      `}
-    >
-      <div css={css`display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;`}>
-        <button type="button" css={navBtn} aria-label="Previous month" disabled={prevDisabled} onClick={() => setMonth(addMonths(month, -1))}>
+    <div className={cx('sp-calendar', className)}>
+      <div className="sp-calendar__header">
+        <button type="button" className="sp-calendar__nav" aria-label="Previous month" disabled={prevDisabled} onClick={() => setMonth(addMonths(month, -1))}>
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
-        <h2 aria-live="polite" css={css`margin: 0; font-size: 0.9375rem; font-weight: 700;`}>
+        <h2 aria-live="polite" className="sp-calendar__title">
           {monthLabel}
         </h2>
-        <button type="button" css={navBtn} aria-label="Next month" disabled={nextDisabled} onClick={() => setMonth(addMonths(month, 1))}>
+        <button type="button" className="sp-calendar__nav" aria-label="Next month" disabled={nextDisabled} onClick={() => setMonth(addMonths(month, 1))}>
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </div>
 
-      <table
-        ref={gridRef}
-        role="grid"
-        aria-label={monthLabel}
-        onKeyDown={onKeyDown}
-        css={css`width: 100%; border-collapse: collapse; table-layout: fixed;`}
-      >
+      <table ref={gridRef} role="grid" aria-label={monthLabel} onKeyDown={onKeyDown} className="sp-calendar__grid">
         <thead>
           <tr>
             {dayNames.map((n) => (
-              <th key={n} scope="col" abbr={n} css={css`padding: 0 0 0.375rem; font-size: 0.6875rem; font-weight: 600; color: ${theme.text.secondary};`}>
+              <th key={n} scope="col" abbr={n} className="sp-calendar__weekday">
                 {n}
               </th>
             ))}
@@ -198,48 +160,21 @@ export function Calendar({
                 const outside = d.getMonth() !== month.getMonth();
                 const selected = isSameDay(d, value);
                 const isToday = isSameDay(d, today);
-                const off = disabled(d);
                 const tabbable = isSameDay(d, tabTarget) && !outside;
                 return (
-                  <td key={d.toISOString()} role="gridcell" aria-selected={selected || undefined} css={css`padding: 2px; text-align: center;`}>
+                  <td key={d.toISOString()} role="gridcell" aria-selected={selected || undefined} className="sp-calendar__cell">
                     <button
                       type="button"
                       tabIndex={tabbable ? 0 : -1}
-                      disabled={off}
+                      disabled={disabled(d)}
                       aria-label={longDay.format(d)}
                       aria-current={isToday ? 'date' : undefined}
+                      data-selected={selected || undefined}
+                      data-today={isToday || undefined}
+                      data-outside={outside || undefined}
                       onClick={(e) => select(d, e)}
                       onFocus={() => setFocused(d)}
-                      css={css`
-                        position: relative;
-                        width: 100%;
-                        aspect-ratio: 1;
-                        max-width: 2.5rem;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        border: 2px solid ${selected ? theme.energy.current : isToday ? theme.surface.borderStrong : 'transparent'};
-                        border-radius: 50%;
-                        background: ${selected ? theme.energy.current : 'transparent'};
-                        color: ${selected ? theme.text.onEnergy : off ? theme.text.disabled : outside ? theme.colors.primary.gray['400'] : theme.text.primary};
-                        font: inherit;
-                        font-size: 0.875rem;
-                        font-weight: ${selected || isToday ? 700 : 500};
-                        font-variant-numeric: tabular-nums;
-                        text-decoration: ${off ? 'line-through' : 'none'};
-                        box-shadow: ${selected ? `0 0 16px ${theme.energy.glow}` : 'none'};
-                        cursor: ${off ? 'not-allowed' : 'pointer'};
-                        transition: background ${theme.motion.fast}, box-shadow ${theme.motion.normal}, border-color ${theme.motion.fast};
-
-                        &:hover:not(:disabled) {
-                          border-color: ${theme.energy.current};
-                          box-shadow: 0 0 10px ${alpha(theme.energy.current, 0.25)};
-                        }
-                        &:focus-visible {
-                          outline: 2px solid ${theme.energy.current};
-                          outline-offset: 2px;
-                        }
-                      `}
+                      className="sp-calendar__day"
                     >
                       {d.getDate()}
                     </button>
@@ -251,32 +186,15 @@ export function Calendar({
         </tbody>
       </table>
 
-      <div css={css`display: flex; justify-content: flex-start; align-items: center; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid ${theme.surface.border};`}>
+      <div className="sp-calendar__footer">
         <button
           type="button"
+          className="sp-calendar__today"
           disabled={disabled(today)}
           onClick={(e) => {
             setMonth(startOfMonth(today));
             select(today, e);
           }}
-          css={css`
-            border: none;
-            background: none;
-            padding: 0.25rem 0;
-            font: inherit;
-            font-size: 0.8125rem;
-            font-weight: 700;
-            color: ${theme.energy.current};
-            cursor: pointer;
-            &:disabled {
-              color: ${theme.text.disabled};
-              cursor: not-allowed;
-            }
-            &:focus-visible {
-              outline: 2px solid ${theme.energy.current};
-              outline-offset: 2px;
-            }
-          `}
         >
           {todayLabel}
         </button>

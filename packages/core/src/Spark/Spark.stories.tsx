@@ -26,10 +26,10 @@ const meta: Meta<typeof Spark> = {
           position: 'relative',
           width: 320,
           height: 180,
-          border: '2px dashed #3A4150',
+          border: '2px dashed var(--spark-energy-off)',
           borderRadius: 8,
-          background: '#141822',
-          color: '#A9B0BF',
+          background: 'var(--spark-surface-raised)',
+          color: 'var(--spark-text-secondary)',
           font: 'inherit',
           cursor: 'pointer',
         }}

@@ -18,25 +18,32 @@ Every animation respects the operating system's *reduce motion* setting.
 ## Install
 
 ```bash
-npm install @spark-ui/core @spark-ui/system @spark-ui/styles @emotion/react
+npm install @spark-ui/core
 ```
 
 ## Use
 
 ```tsx
-import { ThemeProvider } from '@spark-ui/system';
+import '@spark-ui/core/styles.css'; // once, e.g. in app/layout.tsx
+
 import { Button, Switch, Textfield } from '@spark-ui/core';
 
 export function App() {
   return (
-    <ThemeProvider>
+    <>
       <Textfield label="Password" type="password" charge={(v) => v.length / 8} />
       <Switch label="Power" defaultChecked />
       <Button>Ignite</Button>
-    </ThemeProvider>
+    </>
   );
 }
 ```
+
+No provider or CSS-in-JS runtime is needed, so components work in React Server Component pages.
+
+## Theme
+
+Use the **Mode** button in the toolbar above to switch between dark and light. In an app, set `data-spark-theme="light"` (or `"system"`) on `<html>`, and override any token as a CSS variable, for example `--spark-energy-current`. See **Foundations / Tokens** for every value.
 
 ## Packages
 

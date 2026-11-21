@@ -1,7 +1,5 @@
 import React, { ReactNode, CSSProperties } from 'react';
-import { useTheme } from '@spark-ui/system';
 import { DropdownSizes, DropdownOption as OptionType } from './Dropdown.types';
-import { selectFieldOptionStyles } from './DropdownOption.styles';
 import { Check } from '@spark-ui/icons';
 
 type SelectFieldOptionProps = {
@@ -14,16 +12,15 @@ type SelectFieldOptionProps = {
 };
 
 const SelectFieldOption = ({ option, selected, onSelect, size, prependIcon, style }: SelectFieldOptionProps) => {
-  const { theme } = useTheme();
-  const styles = selectFieldOptionStyles({ theme, size });
 
   return (
     <li
-      css={styles.option}
       role="option"
       aria-selected={selected}
       aria-disabled={option.disabled || undefined}
-      className={selected ? 'selected' : ''}
+      className={selected ? 'sp-dropdown__option selected' : 'sp-dropdown__option'}
+      data-selected={selected || undefined}
+      data-disabled={option.disabled || undefined}
       onClick={() => !option.disabled && onSelect(option.value)}
       style={{...style}}
     >

@@ -10,9 +10,13 @@ export type ButtonColor = 'brand' | 'error' | 'success' | 'warning';
 export interface ButtonPropsBase {
   children?: ReactNode;
   className?: string;
+  /** Dead circuit: no clicks, no sparks, dashed outline. */
   disabled?: boolean;
+  /** Icon before the label. Coloured with the text. */
   startIcon?: ReactNode;
+  /** Icon after the label. Coloured with the text. */
   endIcon?: ReactNode;
+  /** Stretch to the container's width. */
   fullWidth?: boolean;
   /** Throw sparks from the press point on click. Default `true`. */
   spark?: boolean;
@@ -24,10 +28,15 @@ export interface ButtonPropsBase {
 export type ButtonTypeMap<P = {}, D extends ElementType = 'button'> = {
   props: P &
     ButtonPropsBase & {
+      /** `contained` (filled, default), `outlined` or `text`. */
       variant?: ButtonVariant;
+      /** Tone of the current. Default `brand`. */
       color?: ButtonColor;
+      /** Height 36, 44 or 52px. Default `medium`. */
       size?: ButtonSize;
+      /** Use with `as="a"` to render a link that looks like a button. */
       href?: string;
+      /** Remove the glow around contained buttons. */
       disableElevation?: boolean;
     };
   defaultComponent: D;

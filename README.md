@@ -2,22 +2,78 @@
 
 **Spark UI** is a highly customizable, enterprise-grade React component library designed to adhere to best practices in terms of architecture, theming, accessibility, and performance. This library is inspired by Material UI but is fully custom-built without relying on the Material UI framework itself.
 
+## Quick start
+
+```bash
+npm install @spark-ui/core
+```
+
+```tsx
+// app/layout.tsx (Next.js) or your entry file: import the styles once.
+import '@spark-ui/core/styles.css';
+
+// Anywhere, including React Server Components:
+import { Button, Switch, Textfield } from '@spark-ui/core';
+// or per component, to load only what you use:
+import { DatePicker } from '@spark-ui/core/date-picker';
+```
+
+No provider and no CSS-in-JS runtime is needed. Components are plain React + one stylesheet, and every file is marked `"use client"`, so they drop straight into Next.js App Router pages.
+
 ## Live Wire theme
 
 Spark UI's default theme is **Live Wire**: components carry current.
 
-- **Button** throws sparks from the press point. Outlined and text buttons show current flowing along a wire on hover. Turn this off with `spark={false}`.
+- **Button** throws sparks from the press point; outlined and text buttons show current flowing on hover (`spark={false}` turns it off).
 - **Switch** is a lever that closes a circuit and lights a bulb.
-- **Textfield** can charge up as its value becomes valid: pass `charge` (0 to 1, or a function of the value).
-- **Dropdown** lights the node of the selected option.
+- **Textfield** charges up as its value becomes valid (`charge`, 0 to 1 or a function of the value).
+- **Tabs, Accordion, Progress** show current flowing through the active part; **Modal** arrives like a power cut.
 
-Tokens live in `@spark-ui/styles` (`theme.energy`, `theme.surface`, `theme.text`, `theme.motion`). All motion respects `prefers-reduced-motion`.
+All motion respects `prefers-reduced-motion`.
+
+## Theming
+
+**Light, dark or system mode:** set an attribute on any element, usually `<html>`.
+
+```html
+<html data-spark-theme="light">   <!-- "dark" (default), "light" or "system" -->
+```
+
+**Change tokens with plain CSS:** every token is a CSS variable.
+
+```css
+:root {
+  --spark-energy-current: #3af2ff;   /* the colour of the current */
+  --spark-brand-fill: #3af2ff;
+  --spark-brand-ink: #3af2ff;        /* the same colour as text and lines */
+  --spark-radius-medium: 12px;
+  --spark-font: 'Inter', sans-serif;
+}
+```
+
+**Or in TypeScript**, changing only what you need:
 
 ```tsx
-<Textfield label="Password" type="password" charge={(v) => v.length / 8} />
-<Switch label="Power" defaultChecked />
-<Button startIcon={<Zap />}>Ignite</Button>
+import { ThemeProvider } from '@spark-ui/system';
+
+<ThemeProvider mode="system" theme={{ energy: { current: '#3AF2FF', ink: '#3AF2FF' } }}>
+  <App />
+</ThemeProvider>
 ```
+
+`createTheme(partial, mode)` and `themeToCss(theme)` from `@spark-ui/styles` turn the same overrides into a stylesheet.
+
+**Restyle any part:** components expose stable class names and state attributes, for example `.sp-switch[data-state="on"] .sp-switch__bulb` or `.sp-button[data-variant="outlined"]`. Each component's doc comment lists its style hooks.
+
+## Packages
+
+| Package | What it holds |
+| --- | --- |
+| `@spark-ui/core` | The components and `styles.css` |
+| `@spark-ui/styles` | Theme tokens, `createTheme`, `themeToCss` |
+| `@spark-ui/system` | Optional `ThemeProvider` and `useTheme` |
+| `@spark-ui/icons` | About 860 SVG icons as React components |
+| `@spark-ui/utils` | Small helpers |
 
 ## Table of Contents
 

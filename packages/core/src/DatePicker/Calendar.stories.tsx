@@ -18,9 +18,9 @@ const meta: Meta<typeof Calendar> = {
   render: function Render(args) {
     const [date, setDate] = useState<Date | null>(new Date());
     return (
-      <div style={{ display: 'inline-block', padding: 16, background: '#141822', border: '1px solid #262C3A', borderRadius: 8 }}>
+      <div style={{ display: 'inline-block', padding: 16, background: 'var(--spark-surface-raised)', border: '1px solid var(--spark-surface-border)', borderRadius: 8 }}>
         <Calendar {...args} value={date} onChange={setDate} />
-        <p style={{ margin: '12px 0 0', fontSize: 13, color: '#A9B0BF' }}>Selected: {date ? date.toDateString() : 'none'}</p>
+        <p style={{ margin: '12px 0 0', fontSize: 13, color: 'var(--spark-text-secondary)' }}>Selected: {date ? date.toDateString() : 'none'}</p>
       </div>
     );
   },

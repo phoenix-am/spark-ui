@@ -1,7 +1,6 @@
 import React from 'react';
-import { useTheme } from '@spark-ui/system';
 import { DropdownProps } from './Dropdown.types';
-import { dropdownFieldStyles } from './Dropdown.styles';
+import { cx } from '../internal/cx';
 import { DropdownProvider, useDropdownContext } from './DropdownContext';
 import DropdownOption from './DropdownOption';
 import { ChevronDown, ChevronUp, User } from '@spark-ui/icons';
@@ -27,9 +26,9 @@ const DropdownBase = React.forwardRef(({
   inputStyle,
   itemStyle,
   listContainerStyle,
+  className,
 }: DropdownProps, ref) => {
   const { isOpen, setIsOpen, selectedOption, setSelectedOption } = useDropdownContext();
-  const { theme } = useTheme();
 
   const {
     onFocus: handleFocus,
@@ -46,15 +45,6 @@ const DropdownBase = React.forwardRef(({
     onFocus,
   });
 
-  const styles = dropdownFieldStyles({
-    theme,
-    size,
-    disabled: isDisabled,
-    focused,
-    showBorder,
-    error: hasError,
-    open: isOpen,
-  });
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (isDisabled) return;
@@ -90,18 +80,25 @@ const DropdownBase = React.forwardRef(({
 
   return (
     <div
-      css={styles.container}
+      className={cx('sp-dropdown', className)}
+      data-size={size}
+      data-tone={hasError ? 'error' : 'brand'}
+      data-open={(isOpen && !isDisabled) || undefined}
+      data-focused={focused || undefined}
+      data-invalid={hasError || undefined}
+      data-disabled={isDisabled || undefined}
+      data-borderless={!showBorder || undefined}
       onClick={() => !isDisabled && setIsOpen(!isOpen)}
       onFocus={handleFocus}
       onBlur={handleBlur}
       style={{...containerStyle}}
     >
-      {label && <label css={styles.label}>{label}</label>}
-      <div css={styles.control}>
-        {prependIcon && <div css={styles.icon}>{prependIcon || <User />}</div>}
-        {forTeams && <div css={styles.icon}>{<User />}</div>}
+      {label && <label className="sp-dropdown__label">{label}</label>}
+      <div className="sp-dropdown__control">
+        {prependIcon && <div className="sp-dropdown__icon">{prependIcon || <User />}</div>}
+        {forTeams && <div className="sp-dropdown__icon">{<User />}</div>}
         <input
-          css={styles.input}
+          className="sp-dropdown__input"
           readOnly
           role="combobox"
           aria-expanded={isOpen}
@@ -114,15 +111,15 @@ const DropdownBase = React.forwardRef(({
           placeholder={placeholder}
           style={{...inputStyle}}
         />
-        {appendIcon && <div css={styles.icon}>{appendIcon}</div>}
-        <div css={styles.dropdownIcon}>
+        {appendIcon && <div className="sp-dropdown__icon">{appendIcon}</div>}
+        <div className="sp-dropdown__chevron">
           {
             !isOpen ? <ChevronDown /> : <ChevronUp />
           }
         </div>
       </div>
       {isOpen && !disabled && (
-        <ul role="listbox" css={styles.dropdown} style={{...listContainerStyle}}>
+        <ul role="listbox" className="sp-dropdown__list" style={{...listContainerStyle}}>
           {options.length ? options.map((option) => (
             <DropdownOption
               key={option.value}
@@ -148,7 +145,7 @@ const DropdownBase = React.forwardRef(({
           )}
         </ul>
       )}
-      {helperText && <div css={styles.helperText}>{helperText}</div>}
+      {helperText && <div className="sp-dropdown__helper">{helperText}</div>}
     </div>
   );
 });

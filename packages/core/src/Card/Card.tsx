@@ -1,8 +1,5 @@
 import React from 'react';
-import { css, keyframes } from '@emotion/react';
-import { useTheme } from '@spark-ui/system';
-import { alpha } from '@spark-ui/utils';
-import { currentLine } from '../internal/tone';
+import { cx } from '../internal/cx';
 
 /* ------------------------------------------------------------------- Card */
 
@@ -13,59 +10,24 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   interactive?: boolean;
   /** Render as another element, e.g. `article` or `section`. */
   as?: 'div' | 'article' | 'section' | 'li';
+  /** Inner spacing. Default `medium`. */
   padding?: 'none' | 'small' | 'medium' | 'large';
 }
 
-const pads = { none: '0', small: '0.875rem', medium: '1.25rem', large: '1.75rem' };
-
-/** Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover. */
-export function Card({ live = false, interactive = false, as: Tag = 'div', padding = 'medium', children, ...rest }: CardProps) {
-  const { theme } = useTheme();
+/**
+ * Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover.
+ * Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
+ */
+export function Card({ live = false, interactive = false, as: Tag = 'div', padding = 'medium', className, children, ...rest }: CardProps) {
   return (
     <Tag
-      css={css`
-        position: relative;
-        overflow: hidden;
-        box-sizing: border-box;
-        background: ${theme.surface.raised};
-        border: 1px solid ${theme.surface.border};
-        border-radius: ${theme.borderRadius.large};
-        padding: ${pads[padding]};
-        font-family: ${theme.typography.fontFamily};
-        color: ${theme.text.primary};
-        transition: border-color ${theme.motion.normal}, box-shadow ${theme.motion.normal}, transform ${theme.motion.normal} ${theme.motion.easing};
-        ${interactive &&
-        css`
-          &:hover,
-          &:focus-within {
-            border-color: ${theme.surface.borderStrong};
-            box-shadow: ${theme.shadows.large}, 0 0 24px ${alpha(theme.energy.current, 0.12)};
-            transform: translateY(-2px);
-          }
-          @media (prefers-reduced-motion: reduce) {
-            &:hover,
-            &:focus-within {
-              transform: none;
-            }
-          }
-        `}
-      `}
+      className={cx('sp-card', className)}
+      data-live={live || undefined}
+      data-interactive={interactive || undefined}
+      data-padding={padding}
       {...rest}
     >
-      {live && (
-        <span
-          aria-hidden="true"
-          css={css`
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 2px;
-            background-color: ${alpha(theme.energy.current, 0.3)};
-            ${currentLine(theme.energy.current)};
-          `}
-        />
-      )}
+      {live && <span aria-hidden="true" className="sp-card__current sp-current" />}
       {children}
     </Tag>
   );
@@ -81,13 +43,12 @@ export interface CardHeaderProps {
 }
 
 export function CardHeader({ title, subtitle, media, action }: CardHeaderProps) {
-  const { theme } = useTheme();
   return (
-    <div css={css`display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.875rem;`}>
+    <div className="sp-card__header">
       {media}
-      <div css={css`flex: 1; min-width: 0;`}>
-        <h3 css={css`margin: 0; font-size: 1rem; font-weight: 700; line-height: 1.3;`}>{title}</h3>
-        {subtitle && <p css={css`margin: 0.15rem 0 0; font-size: 0.8125rem; color: ${theme.text.secondary};`}>{subtitle}</p>}
+      <div className="sp-card__heading">
+        <h3 className="sp-card__title">{title}</h3>
+        {subtitle && <p className="sp-card__subtitle">{subtitle}</p>}
       </div>
       {action}
     </div>
@@ -95,33 +56,15 @@ export function CardHeader({ title, subtitle, media, action }: CardHeaderProps) 
 }
 
 export function CardFooter({ children }: { children: React.ReactNode }) {
-  const { theme } = useTheme();
-  return (
-    <div
-      css={css`
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.75rem;
-        margin-top: 1.125rem;
-        padding-top: 1rem;
-        border-top: 1px solid ${theme.surface.border};
-      `}
-    >
-      {children}
-    </div>
-  );
+  return <div className="sp-card__footer">{children}</div>;
 }
 
 /* --------------------------------------------------------------- Skeleton */
 
-const charge = keyframes`
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
-`;
-
 export interface SkeletonProps {
+  /** Number (px) or any CSS length. Defaults to 100%. */
   width?: number | string;
+  /** Number (px) or any CSS length. */
   height?: number | string;
   /** `circle` for avatars, `text` for lines of copy. */
   shape?: 'rect' | 'circle' | 'text';
@@ -129,46 +72,29 @@ export interface SkeletonProps {
   lines?: number;
 }
 
+const len = (v: number | string | undefined, fallback: string) => (typeof v === 'number' ? `${v}px` : v ?? fallback);
+
 /** Skeleton: a placeholder that shimmers like a line charging up. */
 export function Skeleton({ width, height, shape = 'rect', lines = 1 }: SkeletonProps) {
-  const { theme } = useTheme();
-  const block = (w: number | string | undefined, h: number | string | undefined, key?: number) => (
-    <span
-      key={key}
-      aria-hidden="true"
-      css={css`
-        display: block;
-        width: ${typeof w === 'number' ? `${w}px` : w ?? '100%'};
-        height: ${typeof h === 'number' ? `${h}px` : h ?? '1rem'};
-        border-radius: ${shape === 'circle' ? '50%' : theme.borderRadius.small};
-        background: linear-gradient(
-          90deg,
-          ${theme.surface.border} 0%,
-          ${theme.surface.border} 40%,
-          ${alpha(theme.energy.current, 0.18)} 50%,
-          ${theme.surface.border} 60%,
-          ${theme.surface.border} 100%
-        );
-        background-size: 200% 100%;
-        animation: ${charge} 1.6s linear infinite;
-        @media (prefers-reduced-motion: reduce) {
-          animation: none;
-        }
-      `}
-    />
-  );
-
   if (shape === 'text') {
     return (
-      <span role="status" aria-label="Loading" css={css`display: flex; flex-direction: column; gap: 0.5rem; width: ${typeof width === 'number' ? `${width}px` : width ?? '100%'};`}>
-        {Array.from({ length: lines }, (_, i) => block(i === lines - 1 && lines > 1 ? '60%' : '100%', height ?? '0.8rem', i))}
+      <span role="status" aria-label="Loading" className="sp-skeleton-text" style={{ width: len(width, '100%') }}>
+        {Array.from({ length: lines }, (_, i) => (
+          <span
+            key={i}
+            aria-hidden="true"
+            className="sp-skeleton"
+            style={{ width: i === lines - 1 && lines > 1 ? '60%' : '100%', height: len(height, '0.8rem') }}
+          />
+        ))}
       </span>
     );
   }
   const size = shape === 'circle' ? width ?? height ?? 40 : undefined;
+  const w = len(size ?? width, '100%');
   return (
-    <span role="status" aria-label="Loading" css={css`display: inline-block; width: ${typeof (size ?? width) === 'number' ? `${size ?? width}px` : size ?? width ?? '100%'};`}>
-      {block(size ?? width, size ?? height)}
+    <span role="status" aria-label="Loading" className="sp-skeleton-wrap" style={{ width: w }}>
+      <span aria-hidden="true" className="sp-skeleton" data-shape={shape} style={{ width: w, height: len(size ?? height, '1rem') }} />
     </span>
   );
 }
