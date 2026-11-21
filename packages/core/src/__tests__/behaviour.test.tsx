@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -791,5 +791,43 @@ describe('Charts', () => {
   it('Sparkline: names its range', () => {
     render(<Sparkline aria-label="Visits" data={[3, 9, 5]} />);
     expect(screen.getByRole('img', { name: 'Visits: from 3 to 5, low 3, high 9' })).toBeInTheDocument();
+  });
+});
+
+describe('Small components', () => {
+  it('Textarea: counts characters and links help text', async () => {
+    const user = userEvent.setup();
+    render(<Textarea label="Bio" maxLength={10} showCount helperText="Short" />);
+    const box = screen.getByLabelText('Bio');
+    await user.type(box, 'hello');
+    expect(screen.getByText('5 / 10')).toBeInTheDocument();
+    expect(box.getAttribute('aria-describedby')).toContain('helper');
+  });
+  it('Alert: errors are announced; dismiss hides it', async () => {
+    const user = userEvent.setup();
+    const onDismiss = jest.fn();
+    render(<Alert tone="error" title="Failed" onDismiss={onDismiss} />);
+    expect(screen.getByRole('alert')).toHaveTextContent('Failed');
+    await user.click(screen.getByRole('button', { name: 'Dismiss' }));
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(onDismiss).toHaveBeenCalled();
+  });
+  it('Breadcrumbs: last item is the current page; collapses', () => {
+    render(<Breadcrumbs items={[{ label: 'A', href: '/a' }, { label: 'B', href: '/b' }, { label: 'C', href: '/c' }, { label: 'D' }]} maxItems={3} />);
+    expect(screen.getByText('D')).toHaveAttribute('aria-current', 'page');
+    expect(screen.queryByText('B')).toBeNull();
+    expect(screen.getByLabelText('2 more')).toBeInTheDocument();
+  });
+  it('Pagination: range with ellipses; next moves the page', async () => {
+    expect(paginationRange(6, 20)).toEqual([1, 'ellipsis', 5, 6, 7, 'ellipsis', 20]);
+    expect(paginationRange(1, 20)).toEqual([1, 2, 3, 4, 5, 'ellipsis', 20]);
+    expect(paginationRange(20, 20)).toEqual([1, 'ellipsis', 16, 17, 18, 19, 20]);
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(<Pagination count={5} defaultPage={1} onChange={onChange} />);
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
+    await user.click(screen.getByRole('button', { name: 'Next page' }));
+    expect(onChange).toHaveBeenCalledWith(2);
+    expect(screen.getByRole('button', { name: 'Page 2' })).toHaveAttribute('aria-current', 'page');
   });
 });

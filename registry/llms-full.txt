@@ -279,6 +279,109 @@ Style hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,
 - `step?`: `number` Step for the buttons and arrow keys. Default 1.
 - `value?`: `number | null` Controlled value; `null` when empty.
 
+## Textarea (`textarea`)
+Multi-line text that grows with its content, with a character count.
+
+```tsx
+import { Textarea } from '@sparkwire/core';
+```
+Install: `npx sparkwire add textarea` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textarea--docs
+
+### Textarea
+Textarea: multi-line text on the same shell as every other field
+(`.sp-input-base`). Grows with its content (`autoResize`), can show a
+character count, and links its label, help text and error for screen
+readers.
+
+Style hooks: `.sp-textarea[data-invalid]`, `__label`, `__input`, `__helper`, `__count[data-over]`.
+
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `autoResize?`: `boolean` Grow with the content between `minRows` and `maxRows`. Default `true`.
+- `classNames?`: `Partial<Record<"label" | "root" | "field" | "input" | "helper" | "count", string>>`
+- `error?`: `string | boolean` `true` marks it invalid; a string also replaces the helper text.
+- `helperText?`: `ReactNode` Help text under the field.
+- `label?`: `ReactNode`
+- `maxRows?`: `number` Default 10; beyond this it scrolls.
+- `minRows?`: `number` Default 3.
+- `onChange?`: `((value: string, event: ChangeEvent<HTMLTextAreaElement>) => void)`
+- `showCount?`: `boolean` Show "12 / 280" under the field. Uses `maxLength` when set.
+- `variant?`: `"outlined" | "filled" | "standard"` `outlined` (default), `filled` or `standard`.
+
+## Alert (`alert`)
+Info, success, warning and error messages, with actions, dismiss and a banner variant.
+
+```tsx
+import { Alert } from '@sparkwire/core';
+```
+Install: `npx sparkwire add alert` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-alert--docs
+
+### Alert
+Alert: a message about the page or a task — info, success, warning or
+error — with an icon, optional title, actions and a dismiss button. Use
+`variant="banner"` for a site-wide strip. Errors are announced at once;
+others are static unless you set `live`.
+
+Style hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`, `__action`, `__dismiss`.
+
+- `action?`: `ReactNode` Buttons or links on the right (or below on narrow screens).
+- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `classNames?`: `Partial<Record<"title" | "root" | "icon" | "body" | "action" | "dismiss", string>>`
+- `dismissLabel?`: `string`
+- `icon?`: `ReactNode` Replace the tone icon, or `false` to hide it.
+- `live?`: `"polite" | "assertive" | "off"` `polite` announces it when it appears, `assertive` interrupts (errors). Default: `assertive` for error, otherwise none (static content).
+- `onDismiss?`: `(() => void)` Show a close button. Called after it hides.
+- `title?`: `ReactNode`
+- `tone?`: `AlertTone` Default `info`. Each tone ships with its own icon, so meaning is never colour alone.
+- `variant?`: `"soft" | "outlined" | "banner"` `soft` (default), `outlined`, or `banner` (full-width, square, for the top of a page).
+
+## Navigation (`navigation`)
+Breadcrumbs and Pagination.
+
+```tsx
+import { Breadcrumbs, Pagination } from '@sparkwire/core';
+```
+Install: `npx sparkwire add navigation` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-breadcrumbs--docs
+
+### Breadcrumbs
+Breadcrumbs: where this page sits. The last item is the current page
+(`aria-current="page"`); long trails collapse in the middle with
+`maxItems`. Works with any router through `renderLink`.
+
+Style hooks: `.sp-breadcrumbs`, `__item`, `__link`, `__current`, `__separator`, `__ellipsis`.
+
+- `items`: `BreadcrumbItem[]`
+- `aria-label?`: `string`
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "item" | "link" | "current" | "separator", string>>`
+- `maxItems?`: `number` Show at most this many; the middle collapses to "…". Default: all.
+- `renderLink?`: `((props: { href: string; className: string; children: ReactNode; }) => ReactNode)` Render links with your router, e.g. `({ href, ...p }) => <Link href={href} {...p} />`.
+- `separator?`: `ReactNode` Default "/"-style chevron.
+
+### Pagination
+Pagination: move between pages of results. Previous/next, page numbers
+with ellipses (1 … 4 5 6 … 20), the current page marked
+`aria-current="page"`, and real links when `getHref` is given.
+`variant="compact"` shows "Page 3 of 12" for tight spaces.
+
+Style hooks: `.sp-pagination[data-size]`, `__item[aria-current]`, `__ellipsis`, `__summary`.
+
+- `count`: `number` Total pages.
+- `aria-label?`: `string`
+- `boundaries?`: `number` Pages always shown at each end. Default 1.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "item" | "ellipsis" | "summary", string>>`
+- `defaultPage?`: `number`
+- `disabled?`: `boolean`
+- `getHref?`: `((page: number) => string)` Build an href per page to render real links (good for SEO and new tabs).
+- `labels?`: `{ previous?: string; next?: string; page?: ((n: number) => string) | undefined; of?: ((page: number, count: number) => string) | undefined; } | undefined` Labels for translation.
+- `onChange?`: `((page: number) => void)`
+- `page?`: `number` Current page, 1-based.
+- `siblings?`: `number` Pages shown on each side of the current one. Default 1.
+- `size?`: `"small" | "medium"`
+- `variant?`: `"pages" | "compact"` `pages` (default) or `compact` ("Page 3 of 12" with arrows, for small screens).
+
 ## Charts (`charts`)
 Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.
 

@@ -193,6 +193,21 @@
       "types": "./dist/charts/index.d.ts",
       "import": "./dist/charts/index.mjs",
       "require": "./dist/charts/index.js"
+    },
+    "./textarea": {
+      "types": "./dist/textarea/index.d.ts",
+      "import": "./dist/textarea/index.mjs",
+      "require": "./dist/textarea/index.js"
+    },
+    "./alert": {
+      "types": "./dist/alert/index.d.ts",
+      "import": "./dist/alert/index.mjs",
+      "require": "./dist/alert/index.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.mjs",
+      "require": "./dist/navigation/index.js"
     }
   },
   "files": [
@@ -296,6 +311,15 @@
       ],
       "charts": [
         "./dist/charts/index.d.ts"
+      ],
+      "textarea": [
+        "./dist/textarea/index.d.ts"
+      ],
+      "alert": [
+        "./dist/alert/index.d.ts"
+      ],
+      "navigation": [
+        "./dist/navigation/index.d.ts"
       ]
     }
   }

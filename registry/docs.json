@@ -898,6 +898,339 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs"
     },
     {
+      "name": "textarea",
+      "title": "Textarea",
+      "summary": "Multi-line text that grows with its content, with a character count.",
+      "components": [
+        {
+          "name": "Textarea",
+          "description": "Textarea: multi-line text on the same shell as every other field\n(`.sp-input-base`). Grows with its content (`autoResize`), can show a\ncharacter count, and links its label, help text and error for screen\nreaders.\n\nStyle hooks: `.sp-textarea[data-invalid]`, `__label`, `__input`, `__helper`, `__count[data-over]`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "autoResize",
+              "type": "boolean",
+              "required": false,
+              "description": "Grow with the content between `minRows` and `maxRows`. Default `true`."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"label\" | \"root\" | \"field\" | \"input\" | \"helper\" | \"count\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "error",
+              "type": "string | boolean",
+              "required": false,
+              "description": "`true` marks it invalid; a string also replaces the helper text."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help text under the field."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "maxRows",
+              "type": "number",
+              "required": false,
+              "description": "Default 10; beyond this it scrolls."
+            },
+            {
+              "name": "minRows",
+              "type": "number",
+              "required": false,
+              "description": "Default 3."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: string, event: ChangeEvent<HTMLTextAreaElement>) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "showCount",
+              "type": "boolean",
+              "required": false,
+              "description": "Show \"12 / 280\" under the field. Uses `maxLength` when set."
+            },
+            {
+              "name": "variant",
+              "type": "\"outlined\" | \"filled\" | \"standard\"",
+              "required": false,
+              "description": "`outlined` (default), `filled` or `standard`."
+            }
+          ]
+        }
+      ],
+      "import": "import { Textarea } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add textarea",
+        "shadcn": "npx shadcn add @sparkwire/textarea",
+        "copiedImport": "import { Textarea } from '@/components/spark-ui/Textarea';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textarea--docs"
+    },
+    {
+      "name": "alert",
+      "title": "Alert",
+      "summary": "Info, success, warning and error messages, with actions, dismiss and a banner variant.",
+      "components": [
+        {
+          "name": "Alert",
+          "description": "Alert: a message about the page or a task — info, success, warning or\nerror — with an icon, optional title, actions and a dismiss button. Use\n`variant=\"banner\"` for a site-wide strip. Errors are announced at once;\nothers are static unless you set `live`.\n\nStyle hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`, `__action`, `__dismiss`.",
+          "props": [
+            {
+              "name": "action",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Buttons or links on the right (or below on narrow screens)."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"title\" | \"root\" | \"icon\" | \"body\" | \"action\" | \"dismiss\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "dismissLabel",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "icon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Replace the tone icon, or `false` to hide it."
+            },
+            {
+              "name": "live",
+              "type": "\"polite\" | \"assertive\" | \"off\"",
+              "required": false,
+              "description": "`polite` announces it when it appears, `assertive` interrupts (errors).\nDefault: `assertive` for error, otherwise none (static content)."
+            },
+            {
+              "name": "onDismiss",
+              "type": "(() => void)",
+              "required": false,
+              "description": "Show a close button. Called after it hides."
+            },
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "tone",
+              "type": "AlertTone",
+              "required": false,
+              "description": "Default `info`. Each tone ships with its own icon, so meaning is never colour alone."
+            },
+            {
+              "name": "variant",
+              "type": "\"soft\" | \"outlined\" | \"banner\"",
+              "required": false,
+              "description": "`soft` (default), `outlined`, or `banner` (full-width, square, for the top of a page)."
+            }
+          ]
+        }
+      ],
+      "import": "import { Alert } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add alert",
+        "shadcn": "npx shadcn add @sparkwire/alert",
+        "copiedImport": "import { Alert } from '@/components/spark-ui/Alert';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-alert--docs"
+    },
+    {
+      "name": "navigation",
+      "title": "Navigation",
+      "summary": "Breadcrumbs and Pagination.",
+      "components": [
+        {
+          "name": "Breadcrumbs",
+          "description": "Breadcrumbs: where this page sits. The last item is the current page\n(`aria-current=\"page\"`); long trails collapse in the middle with\n`maxItems`. Works with any router through `renderLink`.\n\nStyle hooks: `.sp-breadcrumbs`, `__item`, `__link`, `__current`, `__separator`, `__ellipsis`.",
+          "props": [
+            {
+              "name": "items",
+              "type": "BreadcrumbItem[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"item\" | \"link\" | \"current\" | \"separator\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "maxItems",
+              "type": "number",
+              "required": false,
+              "description": "Show at most this many; the middle collapses to \"…\". Default: all."
+            },
+            {
+              "name": "renderLink",
+              "type": "((props: { href: string; className: string; children: ReactNode; }) => ReactNode)",
+              "required": false,
+              "description": "Render links with your router, e.g. `({ href, ...p }) => <Link href={href} {...p} />`."
+            },
+            {
+              "name": "separator",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Default \"/\"-style chevron."
+            }
+          ]
+        },
+        {
+          "name": "Pagination",
+          "description": "Pagination: move between pages of results. Previous/next, page numbers\nwith ellipses (1 … 4 5 6 … 20), the current page marked\n`aria-current=\"page\"`, and real links when `getHref` is given.\n`variant=\"compact\"` shows \"Page 3 of 12\" for tight spaces.\n\nStyle hooks: `.sp-pagination[data-size]`, `__item[aria-current]`, `__ellipsis`, `__summary`.",
+          "props": [
+            {
+              "name": "count",
+              "type": "number",
+              "required": true,
+              "description": "Total pages."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "boundaries",
+              "type": "number",
+              "required": false,
+              "description": "Pages always shown at each end. Default 1."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"item\" | \"ellipsis\" | \"summary\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultPage",
+              "type": "number",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "getHref",
+              "type": "((page: number) => string)",
+              "required": false,
+              "description": "Build an href per page to render real links (good for SEO and new tabs)."
+            },
+            {
+              "name": "labels",
+              "type": "{ previous?: string; next?: string; page?: ((n: number) => string) | undefined; of?: ((page: number, count: number) => string) | undefined; } | undefined",
+              "required": false,
+              "description": "Labels for translation."
+            },
+            {
+              "name": "onChange",
+              "type": "((page: number) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "page",
+              "type": "number",
+              "required": false,
+              "description": "Current page, 1-based."
+            },
+            {
+              "name": "siblings",
+              "type": "number",
+              "required": false,
+              "description": "Pages shown on each side of the current one. Default 1."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\"",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "variant",
+              "type": "\"pages\" | \"compact\"",
+              "required": false,
+              "description": "`pages` (default) or `compact` (\"Page 3 of 12\" with arrows, for small screens)."
+            }
+          ]
+        }
+      ],
+      "import": "import { Breadcrumbs, Pagination } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add navigation",
+        "shadcn": "npx shadcn add @sparkwire/navigation",
+        "copiedImport": "import { Breadcrumbs, Pagination } from '@/components/spark-ui/Navigation';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-breadcrumbs--docs"
+    },
+    {
       "name": "charts",
       "title": "Charts",
       "summary": "Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.",

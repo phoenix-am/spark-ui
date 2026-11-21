@@ -564,6 +564,77 @@
       ]
     },
     {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multi-line text that grows with its content, with a character count.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Textarea/Textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textarea/Textarea.tsx"
+        },
+        {
+          "path": "components/spark-ui/Textarea/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textarea/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Info, success, warning and error messages, with actions, dismiss and a banner variant.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Alert/Alert.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Alert/Alert.tsx"
+        },
+        {
+          "path": "components/spark-ui/Alert/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Alert/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "navigation",
+      "type": "registry:ui",
+      "title": "Navigation",
+      "description": "Breadcrumbs and Pagination.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Navigation/Navigation.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Navigation/Navigation.tsx"
+        },
+        {
+          "path": "components/spark-ui/Navigation/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Navigation/index.ts"
+        }
+      ]
+    },
+    {
       "name": "charts",
       "type": "registry:ui",
       "title": "Charts",

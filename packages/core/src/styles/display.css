@@ -193,3 +193,62 @@
 .sp-spinner__arc { stroke: var(--sp-fill); }
 .sp-spinner__head { fill: var(--spark-energy-hot); filter: drop-shadow(0 0 3px var(--sp-fill)); }
 .sp-progress__fill.sp-current { background-color: color-mix(in srgb, var(--sp-fill) 35%, transparent); }
+
+/* Textarea: shares the .sp-input-base shell. */
+.sp-textarea { display: flex; flex-direction: column; margin-bottom: 1rem; font-family: var(--spark-font); }
+.sp-textarea__label { margin-bottom: 0.375rem; font-size: var(--spark-font-size-small); font-weight: 600; color: var(--spark-text-primary); }
+.sp-textarea[data-disabled] .sp-textarea__label { color: var(--spark-text-disabled); }
+.sp-textarea__field { align-items: stretch; padding: 0; }
+.sp-textarea__input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; resize: vertical; color: var(--spark-text-primary);
+  font: inherit; font-size: var(--spark-font-size-medium, 1rem); line-height: 1.5; padding: 0.625rem 0.875rem; box-sizing: border-box; }
+.sp-textarea__input::placeholder { color: var(--spark-text-secondary); opacity: .8; }
+.sp-textarea__input:disabled { cursor: not-allowed; color: var(--spark-text-disabled); }
+.sp-textarea__footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.375rem; font-size: var(--spark-font-size-small); color: var(--spark-text-secondary); }
+.sp-textarea__helper { margin: 0; }
+.sp-textarea[data-invalid] .sp-textarea__helper { color: var(--sp-ink); }
+.sp-textarea__count { font-variant-numeric: tabular-nums; flex: none; }
+.sp-textarea__count[data-over] { color: var(--spark-warning-ink); font-weight: 600; }
+
+/* Alert */
+.sp-alert { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.875rem 1rem; border-radius: var(--spark-radius-medium); font-family: var(--spark-font);
+  font-size: var(--spark-font-size-small); line-height: 1.5; color: var(--spark-text-primary);
+  background: color-mix(in srgb, var(--sp-fill) 12%, var(--spark-surface-base)); border: 1px solid color-mix(in srgb, var(--sp-fill) 35%, transparent); position: relative; }
+.sp-alert[data-variant='outlined'] { background: var(--spark-surface-base); border-width: 1px; border-inline-start: 4px solid var(--sp-fill); }
+.sp-alert[data-variant='banner'] { border-radius: 0; border-width: 0 0 1px; padding-inline: 1.25rem; }
+.sp-alert[data-variant='banner']::before { content: ''; position: absolute; inset: 0 0 auto; height: 2px; --sp-line: var(--sp-fill); }
+.sp-alert__icon { display: flex; color: var(--sp-ink); flex: none; margin-top: 1px; }
+.sp-alert__content { flex: 1; min-width: 0; }
+.sp-alert__title { font-weight: 650; }
+.sp-alert__title + .sp-alert__body { margin-top: 0.125rem; color: var(--spark-text-secondary); }
+.sp-alert__action { display: flex; gap: 0.5rem; align-items: center; flex: none; align-self: center; }
+.sp-alert__dismiss { all: unset; display: flex; padding: 0.25rem; margin: -0.125rem -0.25rem 0 0; border-radius: 6px; cursor: pointer; color: var(--spark-text-secondary); flex: none; }
+.sp-alert__dismiss:hover { color: var(--spark-text-primary); background: color-mix(in srgb, var(--sp-fill) 18%, transparent); }
+.sp-alert__dismiss:focus-visible { outline: 2px solid var(--sp-fill); outline-offset: 1px; }
+@container (max-width: 480px) { .sp-alert { flex-wrap: wrap; } .sp-alert__action { flex-basis: 100%; padding-inline-start: 2rem; } }
+
+/* Breadcrumbs */
+.sp-breadcrumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; margin: 0; padding: 0; list-style: none; font-family: var(--spark-font); font-size: var(--spark-font-size-small); }
+.sp-breadcrumbs__item { display: inline-flex; align-items: center; gap: 0.25rem; min-width: 0; }
+.sp-breadcrumbs__link, .sp-breadcrumbs__current { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.125rem 0.25rem; border-radius: 6px; max-width: 16rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-breadcrumbs__link { color: var(--spark-text-secondary); text-decoration: none; }
+.sp-breadcrumbs__link:hover { color: var(--spark-text-primary); text-decoration: underline; text-underline-offset: 3px; }
+.sp-breadcrumbs__link:focus-visible { outline: 2px solid var(--spark-brand-fill); outline-offset: 1px; }
+.sp-breadcrumbs__current { color: var(--spark-text-primary); font-weight: 600; }
+.sp-breadcrumbs__separator { display: inline-flex; color: var(--spark-text-secondary); opacity: .6; }
+.sp-breadcrumbs__ellipsis { color: var(--spark-text-secondary); padding: 0 0.25rem; }
+
+/* Pagination */
+.sp-pagination ul { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; margin: 0; padding: 0; list-style: none; font-family: var(--spark-font); }
+.sp-pagination { --sp-s: 2.25rem; }
+.sp-pagination[data-size='small'] { --sp-s: 1.875rem; }
+.sp-pagination__item { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; min-width: var(--sp-s); height: var(--sp-s); padding: 0 0.5rem;
+  border-radius: var(--spark-radius-medium); font-size: var(--spark-font-size-small); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--spark-text-primary); cursor: pointer;
+  border: 1px solid transparent; transition: background-color var(--spark-motion-normal); }
+.sp-pagination__item:hover:not(:disabled):not([aria-current]) { background: var(--spark-surface-raised); border-color: var(--spark-surface-border); }
+.sp-pagination__item:focus-visible { outline: 2px solid var(--spark-brand-fill); outline-offset: 1px; }
+.sp-pagination__item[aria-current='page'] { background: var(--spark-brand-fill); color: var(--spark-text-on-energy); box-shadow: 0 0 0 3px var(--spark-brand-glow); cursor: default; }
+.sp-pagination__item:disabled { opacity: .35; cursor: not-allowed; }
+.sp-pagination__ellipsis { min-width: var(--sp-s); text-align: center; color: var(--spark-text-secondary); }
+.sp-pagination__summary { padding: 0 0.75rem; font-size: var(--spark-font-size-small); color: var(--spark-text-secondary); font-variant-numeric: tabular-nums; }
+/* Info is blue so it never reads as a warning (brand yellow sits next to warning amber). */
+.sp-alert[data-kind='info'] { --sp-fill: var(--spark-chart-1); --sp-ink: var(--spark-chart-1); }

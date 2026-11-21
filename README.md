@@ -151,6 +151,13 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### Textarea, Alert, Breadcrumbs, Pagination
+
+- **Textarea**: multi-line text on the same field shell; grows between `minRows` and `maxRows`, `showCount` with `maxLength` shows "12 / 280".
+- **Alert**: `tone` info/success/warning/error, each with its own icon; `title`, `action`, `onDismiss`; `variant="banner"` for a site-wide strip. Errors are announced immediately.
+- **Breadcrumbs**: the last item is the current page; `maxItems` collapses the middle; `renderLink` for your router.
+- **Pagination**: 1 … 4 5 6 … 20 with previous/next, `getHref` for real links, `variant="compact"` for "Page 3 of 12". `paginationRange()` is exported for custom pagers.
+
 ### Charts
 
 Our own SVG charts, no chart library (`@sparkwire/core/charts`): `LineChart` (add `area` or `stacked`), `BarChart` (grouped, `stacked`, `horizontal`), `DonutChart` and `Sparkline`. The palette (`--spark-chart-1…8`) is checked with a colour-blindness validator, with separate light and dark steps, and is assigned in a fixed order so a series keeps its colour when others are hidden. Marks are thin (2px lines, bars rounded only at the data end, 2px gaps), there is one y axis, a tooltip on hover or keyboard (focus the chart, then arrow keys), legend toggles, and a "Data table" view for screen readers and print. Width follows the container; values format with `Intl` (`valueFormat={{ style: 'currency', currency: 'INR', notation: 'compact' }}`).
