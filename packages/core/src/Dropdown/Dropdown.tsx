@@ -52,7 +52,35 @@ const DropdownBase = React.forwardRef(({
     disabled: isDisabled,
     focused,
     showBorder,
+    error: hasError,
+    open: isOpen,
   });
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isDisabled) return;
+    if (event.key === 'Escape') {
+      setIsOpen(false);
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!isOpen) {
+        setIsOpen(true);
+        return;
+      }
+      if (event.key === 'Enter' || event.key === ' ') {
+        setIsOpen(false);
+        return;
+      }
+      const enabled = options.filter((o) => !o.disabled);
+      if (!enabled.length) return;
+      const idx = enabled.findIndex((o) => o.value === selectedOption);
+      const step = event.key === 'ArrowDown' ? 1 : -1;
+      const next = enabled[(idx + step + enabled.length) % enabled.length];
+      setSelectedOption(next.value);
+      onChange?.(next.value);
+    }
+  };
 
   const handleSelectOption = (value: string | number) => {
     setSelectedOption(value);
@@ -69,17 +97,21 @@ const DropdownBase = React.forwardRef(({
       style={{...containerStyle}}
     >
       {label && <label css={styles.label}>{label}</label>}
-      <div
-        css={[styles.control, hasError && 'error', isDisabled && 'disabled']}
-      >
+      <div css={styles.control}>
         {prependIcon && <div css={styles.icon}>{prependIcon || <User />}</div>}
         {forTeams && <div css={styles.icon}>{<User />}</div>}
         <input
           css={styles.input}
           readOnly
+          role="combobox"
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-invalid={hasError || undefined}
+          aria-label={label ?? placeholder}
+          disabled={isDisabled}
+          onKeyDown={handleKeyDown}
           value={options.find((option) => option.value === selectedOption)?.label || ''}
           placeholder={placeholder}
-          onClick={() => !isDisabled && setIsOpen(!isOpen)}
           style={{...inputStyle}}
         />
         {appendIcon && <div css={styles.icon}>{appendIcon}</div>}
@@ -90,7 +122,7 @@ const DropdownBase = React.forwardRef(({
         </div>
       </div>
       {isOpen && !disabled && (
-        <ul css={styles.dropdown} style={{...listContainerStyle}}>
+        <ul role="listbox" css={styles.dropdown} style={{...listContainerStyle}}>
           {options.length ? options.map((option) => (
             <DropdownOption
               key={option.value}

@@ -83,3 +83,22 @@ export const WithCurrency: BaseStory = {
     type: "currency"
   }
 }
+
+export const ChargingPassword: BaseStory = {
+  args: {
+    label: 'New password',
+    type: 'password',
+    placeholder: 'Type 8+ characters',
+    charge: (value: string) => value.length / 8,
+    chargeLabel: (percent: number) =>
+      percent >= 100 ? 'Fully charged. Strong password.' : `${percent}% charged`,
+  }
+}
+
+export const Charged: BaseStory = {
+  args: {
+    label: 'Profile completeness',
+    value: 'Asha Patel',
+    charge: 1,
+  }
+}

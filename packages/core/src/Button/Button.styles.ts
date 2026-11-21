@@ -1,124 +1,131 @@
 import { css } from '@emotion/react';
-import { BaseTheme, ThemeColors } from '@spark-ui/styles';
+import { BaseTheme } from '@spark-ui/styles';
+import { ButtonColor, ButtonSize, ButtonVariant } from './Button.types';
+import { currentLine, getTone } from '../internal/tone';
 
 interface ButtonStylesProps {
-  variant: 'text' | 'outlined' | 'contained';
-  color: 'brand' | 'error' | 'success' | 'warning';
-  size: 'small' | 'medium' | 'large' | '2xlarge' | '3xlarge';
+  variant: ButtonVariant;
+  color: ButtonColor;
+  size: ButtonSize;
+  fullWidth?: boolean;
+  disableElevation?: boolean;
   theme: BaseTheme;
 }
 
-const getColor = (color: 'brand' | 'error' | 'success' | 'warning', theme: ThemeColors): string => {
-  const colorMap: { [key in 'brand' | 'error' | 'success' | 'warning']: string } = {
-    brand: theme.primary.brand['600'],
-    error: theme.primary.error['600'],
-    success: theme.primary.success['600'],
-    warning: theme.primary.warning['600'],
-  };
-  return colorMap[color];
-};
+const heights: Record<ButtonSize, string> = { small: '2.25rem', medium: '2.75rem', large: '3.25rem' };
+const paddings: Record<ButtonSize, string> = { small: '0 0.875rem', medium: '0 1.25rem', large: '0 1.75rem' };
 
-export const ButtonStyles = ({ variant, color, size, theme }: ButtonStylesProps) => {
-  const buttonColor = getColor(color, theme.colors);
+export const ButtonStyles = ({ variant, color, size, fullWidth, disableElevation, theme }: ButtonStylesProps) => {
+  const tone = getTone(color, theme);
 
   return css`
     position: relative;
-    overflow: hidden;
-    font-family: ${theme.typography.fontFamily};
-    border: none;
-    cursor: pointer;
-    border-radius: ${theme.borderRadius[size]};
-    display: flex;
-    padding: ${theme.padding[size]};
+    overflow: visible;
+    display: ${fullWidth ? 'flex' : 'inline-flex'};
+    width: ${fullWidth ? '100%' : 'auto'};
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    text-transform: uppercase;
-    font-weight: 600;
-    line-height: 1.75;
+    gap: 0.5rem;
+    min-height: ${heights[size]};
+    padding: ${paddings[size]};
+    box-sizing: border-box;
+    font-family: ${theme.typography.fontFamily};
+    font-size: ${theme.typography.fontSize[size]};
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border-radius: ${theme.borderRadius.medium};
+    border: 2px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color ${theme.motion.normal} ${theme.motion.easing},
+      box-shadow ${theme.motion.normal} ${theme.motion.easing},
+      transform ${theme.motion.fast} ${theme.motion.easing},
+      color ${theme.motion.normal};
 
-    .slot-startIcon {
-      margin-right: ${theme.spacing[size]};
-      display: inline-flex;
-      align-items: center;
-    }
-
+    .slot-startIcon,
     .slot-endIcon {
-      margin-left: ${theme.spacing[size]};
       display: inline-flex;
       align-items: center;
     }
 
-    &:disabled {
-      background-color: ${theme.colors.primary[color]['200']};
-      color: ${theme.colors.primary[color]['400']};
+    /* The wire under text/outlined buttons. Current flows through it on hover. */
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0.75rem;
+      right: 0.75rem;
+      bottom: 0.3rem;
+      height: 2px;
+      border-radius: 1px;
+      opacity: 0;
+      transition: opacity ${theme.motion.fast};
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid ${tone.fill};
+      outline-offset: 3px;
+    }
+
+    ${variant === 'contained' &&
+    css`
+      background-color: ${tone.fill};
+      border-color: ${tone.fill};
+      color: ${theme.text.onEnergy};
+      box-shadow: ${disableElevation ? 'none' : `0 0 18px ${tone.glow}`};
+
+      &:hover:not(:disabled) {
+        background-color: ${tone.hover};
+        box-shadow: ${disableElevation ? 'none' : `0 0 30px ${tone.glowStrong}`};
+      }
+    `}
+
+    ${variant === 'outlined' &&
+    css`
+      background-color: transparent;
+      border-color: ${tone.fill};
+      color: ${tone.fill};
+
+      &:hover:not(:disabled) {
+        background-color: ${theme.surface.raised};
+        box-shadow: inset 0 0 12px ${tone.glow};
+      }
+      &:hover:not(:disabled)::after {
+        opacity: 1;
+        ${currentLine(tone.fill)};
+      }
+    `}
+
+    ${variant === 'text' &&
+    css`
+      background-color: transparent;
+      color: ${tone.fill};
+
+      &:hover:not(:disabled)::after {
+        opacity: 1;
+        ${currentLine(tone.fill)};
+      }
+    `}
+
+    /* Disabled = no power in the circuit. */
+    &:disabled,
+    &[aria-disabled='true'] {
       cursor: not-allowed;
+      color: ${theme.text.disabled};
+      background-color: ${variant === 'contained' ? theme.surface.raised : 'transparent'};
+      border-color: ${variant === 'text' ? 'transparent' : theme.surface.border};
+      border-style: ${variant === 'text' ? 'solid' : 'dashed'};
+      box-shadow: none;
     }
 
-    &:focus {
-      outline: 2px solid ${theme.colors.primary[color]['200']};
-      outline-offset: 2px;
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
-
-    ${variant === 'contained' && css`
-      background-color: ${buttonColor};
-      color: #fff;
-
-      &:hover {
-        background-color: ${theme.colors.primary[color]['700']};
-      }
-      
-      &:active {
-        background-color: ${theme.colors.primary[color]['700']};
-      }
-
-      &:disabled {
-        background-color: ${theme.colors.primary[color]['300']};
-        color: ${theme.colors.primary[color]['400']};
-        cursor: not-allowed;
-      }
-    `}
-
-    ${variant === 'outlined' && css`
-      border: 2px solid ${buttonColor};
-      background-color: transparent;
-      color: ${buttonColor};
-
-      &:hover {
-        background-color: ${theme.colors.primary[color]['100']};
-      }
-      
-      &:disabled {
-        background-color: transparent;
-        border-color: ${theme.colors.primary[color]['200']};
-        color: ${theme.colors.primary[color]['300']};
-        cursor: not-allowed;
-      }
-    `}
-
-    ${variant === 'text' && css`
-      background-color: transparent;
-      color: ${buttonColor};
-
-      &:hover {
-        background-color: ${theme.colors.primary[color]['100']};
-      }
-
-      &:disabled {
-        background-color: transparent;
-        color: ${theme.colors.primary[color]['200']};
-        cursor: not-allowed;
-      }
-    `}
-
-    ${variant !== 'text' && size === 'large' && css`
-      box-shadow: ${theme.shadows.large};
-    `}
-    ${variant !== 'text' && size === 'medium' && css`
-      box-shadow: ${theme.shadows.medium};
-    `}
-    ${variant !== 'text' && size === 'small' && css`
-      box-shadow: ${theme.shadows.small};
-    `}
   `;
 };

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { BaseTheme } from '@spark-ui/styles';
-import { createSpacing } from '@spark-ui/system';
+import { alpha } from '@spark-ui/utils';
 
 interface InputBaseStylesProps {
   theme: BaseTheme;
@@ -12,60 +12,43 @@ interface InputBaseStylesProps {
   size?: 'small' | 'medium' | 'large';
 }
 
-export const InputBaseStyles = ({ theme, variant, error, disabled, hasAppend, hasPrepend }: InputBaseStylesProps) => {
-  const spacing = createSpacing();
-  const baseStyles = css`
-    padding: ${variant === 'standard' ? '8px 0' : '12px'};
-    padding-left: ${hasPrepend ? spacing(4) : '12px'};
-    padding-right: ${hasAppend ? spacing(4) : '12px'};
-    border-radius: 4px;
-    color: ${theme.colors.primary.gray['900']};
-    background-color: ${variant === 'filled' ? theme.colors.primary.gray['50'] : theme.colors.primary.gray['300']};
-    border: ${variant === 'standard' ? 'none' : `1px solid ${theme.colors.primary.gray['300']}`};
-    border-bottom: ${variant === 'standard' ? `2px solid ${theme.colors.primary.gray['300']}` : ''};
+export const InputBaseStyles = ({ theme, variant = 'outlined', error, hasAppend, hasPrepend }: InputBaseStylesProps) => {
+  const accent = error ? theme.colors.primary.error['400'] : theme.energy.current;
+  const idle = error ? theme.colors.primary.error['400'] : theme.surface.border;
+
+  return css`
+    display: block;
     width: 100%;
     box-sizing: border-box;
-    display: block
+    padding: ${variant === 'standard' ? '0.5rem 0' : '0.75rem'};
+    padding-left: ${hasPrepend ? '2.5rem' : variant === 'standard' ? '0' : '0.75rem'};
+    padding-right: ${hasAppend ? '2.5rem' : variant === 'standard' ? '0' : '0.75rem'};
+    font-family: ${theme.typography.fontFamily};
+    font-size: ${theme.typography.fontSize.medium};
+    color: ${theme.text.primary};
+    caret-color: ${theme.energy.current};
+    background-color: ${variant === 'filled' ? theme.surface.raised : variant === 'standard' ? 'transparent' : theme.surface.base};
+    border: ${variant === 'standard' ? 'none' : `2px solid ${variant === 'filled' ? 'transparent' : idle}`};
+    border-bottom: 2px solid ${idle};
+    border-radius: ${variant === 'standard' ? '0' : theme.borderRadius.medium};
+    outline: none;
+    transition: border-color ${theme.motion.normal}, box-shadow ${theme.motion.normal};
+
+    &::placeholder {
+      color: ${theme.colors.primary.gray['300']};
+    }
 
     &:focus {
-      border-color: ${theme.colors.primary.brand['300']};
-      box-shadow: 0 0 0 3px ${theme.colors.primary.brand['100']};
+      border-color: ${accent};
+      box-shadow: ${variant === 'standard' ? 'none' : `0 0 0 3px ${alpha(accent, 0.18)}`};
     }
 
     &:disabled {
-      background-color: ${theme.colors.primary.gray['100']};
-      color: ${theme.colors.primary.gray['500']};
+      background-color: ${theme.surface.raised};
+      border-style: dashed;
+      border-color: ${theme.surface.border};
+      color: ${theme.text.disabled};
       cursor: not-allowed;
     }
-
-    ${error &&
-    css`
-      border-color: ${theme.colors.primary.error['400']};
-      box-shadow: 0 0 0 3px ${theme.colors.primary.error['100']};
-    `}
-  `;
-
-  const variantStyles = {
-    filled: css`
-      background-color: ${theme.colors.primary.gray['50']};
-      border: none;
-    `,
-    outlined: css`
-      border: 2px solid ${theme.colors.primary.gray['300']};
-    `,
-    standard: css`
-      border-bottom: 2px solid ${theme.colors.primary.gray['300']};
-      border-radius: 0;
-    `,
-  };
-
-  return css`
-    ${baseStyles};
-    ${variant && variantStyles[variant]};
-    ${disabled &&
-    css`
-      background-color: ${theme.colors.primary.gray['200']};
-      border-color: ${theme.colors.primary.gray['300']};
-    `}
   `;
 };

@@ -1,1 +1,2 @@
-export { default as InputBase } from './InputBase';
+export { InputBase } from './InputBase';
+export type { InputBaseProps } from './InputBase.types';

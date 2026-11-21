@@ -228,6 +228,39 @@ export interface Theme {
     medium: string;
     large: string;
     xlarge: string;
+    '2xlarge': string;
+    '3xlarge': string;
+  };
+  /** Live Wire: the surfaces components sit on (dark by default). */
+  surface: {
+    base: string;
+    raised: string;
+    sunken: string;
+    border: string;
+    borderStrong: string;
+  };
+  /** Live Wire: text colours for use on `surface`. */
+  text: {
+    primary: string;
+    secondary: string;
+    disabled: string;
+    /** Text drawn on top of an energised (filled) element. */
+    onEnergy: string;
+  };
+  /** Live Wire: the "current" that flows through interactive components. */
+  energy: {
+    current: string;
+    hot: string;
+    glow: string;
+    off: string;
+    sparks: string[];
+  };
+  /** Live Wire: motion timings. Components respect prefers-reduced-motion. */
+  motion: {
+    fast: string;
+    normal: string;
+    spark: number;
+    easing: string;
   };
   padding: {
     small: string;

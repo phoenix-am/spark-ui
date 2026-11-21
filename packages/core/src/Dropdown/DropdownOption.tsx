@@ -20,6 +20,9 @@ const SelectFieldOption = ({ option, selected, onSelect, size, prependIcon, styl
   return (
     <li
       css={styles.option}
+      role="option"
+      aria-selected={selected}
+      aria-disabled={option.disabled || undefined}
       className={selected ? 'selected' : ''}
       onClick={() => !option.disabled && onSelect(option.value)}
       style={{...style}}

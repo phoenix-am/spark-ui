@@ -2,6 +2,23 @@
 
 **Spark UI** is a highly customizable, enterprise-grade React component library designed to adhere to best practices in terms of architecture, theming, accessibility, and performance. This library is inspired by Material UI but is fully custom-built without relying on the Material UI framework itself.
 
+## Live Wire theme
+
+Spark UI's default theme is **Live Wire**: components carry current.
+
+- **Button** throws sparks from the press point. Outlined and text buttons show current flowing along a wire on hover. Turn this off with `spark={false}`.
+- **Switch** is a lever that closes a circuit and lights a bulb.
+- **Textfield** can charge up as its value becomes valid: pass `charge` (0 to 1, or a function of the value).
+- **Dropdown** lights the node of the selected option.
+
+Tokens live in `@spark-ui/styles` (`theme.energy`, `theme.surface`, `theme.text`, `theme.motion`). All motion respects `prefers-reduced-motion`.
+
+```tsx
+<Textfield label="Password" type="password" charge={(v) => v.length / 8} />
+<Switch label="Power" defaultChecked />
+<Button startIcon={<Zap />}>Ignite</Button>
+```
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)

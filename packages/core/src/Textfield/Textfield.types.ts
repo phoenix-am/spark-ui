@@ -53,8 +53,16 @@ export interface TextfieldPropsBase extends InputHTMLAttributes<HTMLInputElement
   value?: string;
   helperText?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFocus: (event: FocusEvent<HTMLInputElement>) => void;
-  onBlur: (event: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  /**
+   * Live Wire charge meter. A number from 0 to 1, or a function that maps the
+   * current value to 0..1 (e.g. password strength). At 1 the field is fully
+   * charged and current runs along the meter.
+   */
+  charge?: number | ((value: string) => number);
+  /** Text announced next to the meter. Receives the charge as 0..100. */
+  chargeLabel?: (percent: number) => React.ReactNode;
   variant?: 'outlined' | 'filled' | 'standard';
   prepend?: React.ReactNode;
   append?: React.ReactNode;

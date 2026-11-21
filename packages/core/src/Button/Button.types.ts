@@ -2,16 +2,9 @@ import { ReactNode, ElementType } from 'react';
 import { OverrideProps } from '@spark-ui/utils';
 import { Theme } from '@spark-ui/styles';
 
-// Define Button variants, colors, and sizes using Theme's colors
 export type ButtonVariant = 'text' | 'outlined' | 'contained';
 export type ButtonSize = 'small' | 'medium' | 'large';
-export type ButtonColor =
-  | 'primary'
-  | 'secondary'
-  | 'error'
-  | 'success'
-  | 'warning'
-  | 'info';
+export type ButtonColor = 'brand' | 'error' | 'success' | 'warning';
 
 // Base interface for Button props
 export interface ButtonPropsBase {
@@ -21,18 +14,22 @@ export interface ButtonPropsBase {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   fullWidth?: boolean;
+  /** Throw sparks from the press point on click. Default `true`. */
+  spark?: boolean;
+  /** @deprecated Use `spark`. Kept so existing code keeps working. */
   ripple?: boolean;
 }
 
 // Type map for Button with default component and props
 export type ButtonTypeMap<P = {}, D extends ElementType = 'button'> = {
-  props: P & ButtonPropsBase & {
-    variant?: ButtonVariant;
-    color?: ButtonColor;
-    size?: ButtonSize;
-    href?: string;
-    disableElevation?: boolean;
-  };
+  props: P &
+    ButtonPropsBase & {
+      variant?: ButtonVariant;
+      color?: ButtonColor;
+      size?: ButtonSize;
+      href?: string;
+      disableElevation?: boolean;
+    };
   defaultComponent: D;
 };
 
@@ -41,7 +38,8 @@ export type PolymorphicButtonProps<
   D extends ElementType = ButtonTypeMap['defaultComponent'],
   P = {}
 > = OverrideProps<ButtonTypeMap<P, D>, D> & {
-  component?: ElementType;
+  /** Render as another element or component, e.g. `as="a"`. */
+  as?: ElementType;
 };
 
 // Slot props for Button (if applicable)
@@ -51,10 +49,8 @@ export type ButtonSlotProps = {
   endIcon?: ReactNode;
 };
 
-// Example theme-based prop to showcase the use of the `Theme`
 export interface WithTheme {
   theme: Theme;
 }
 
-// These exports are needed to comply with the MUI-based architecture style.
 export type { ElementType, ReactNode };
