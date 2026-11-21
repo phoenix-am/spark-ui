@@ -1,8 +1,6 @@
-import React, { useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { FocusScope, useDialog, useModalOverlay } from 'react-aria';
-import { useOverlayTriggerState } from 'react-stately';
-import { usePortalTheme } from '../internal/usePortalTheme';
+import React from 'react';
+import { useDialog } from 'react-aria';
+import { Overlay } from '../base/Overlay';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 export interface ModalProps {
@@ -31,76 +29,72 @@ export interface ModalProps {
  * Modal: a power cut. The page dims with a flicker and the dialog is the only
  * thing left lit. Behaviour comes from React Aria: focus is contained and
  * restored, the page behind is hidden from screen readers and can't scroll,
- * and Escape or an outside click closes it.
+ * and Escape or an outside click closes it. Built on the Overlay base.
  *
  * Style hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,
  * `__header`, `__title`, `__description`, `__close`, `__body`, `__actions`.
  */
 export function Modal(inProps: ModalProps) {
-  const { open, onClose, ...rest } = useDefaults('Modal', inProps);
-  const { anchorRef, themeProps } = usePortalTheme(open);
-  const anchor = <span ref={anchorRef} hidden />;
-  if (!open || typeof document === 'undefined') return anchor;
+  const { open, onClose, closeOnBackdrop = true, classNames, ...rest } = useDefaults('Modal', inProps);
   return (
-    <>
-      {anchor}
-      {createPortal(<ModalSurface {...rest} open={open} onClose={onClose} themeProps={themeProps} />, document.body)}
-    </>
+    <Overlay
+      open={open}
+      onClose={onClose}
+      dismissable={closeOnBackdrop}
+      className={slot('sp-modal', classNames, 'root')}
+      backdropClassName={slot('sp-modal__backdrop', classNames, 'backdrop')}
+    >
+      {({ panelProps, panelRef }) => (
+        <ModalPanel {...rest} onClose={onClose} classNames={classNames} panelProps={panelProps} panelRef={panelRef} />
+      )}
+    </Overlay>
   );
 }
 
-function ModalSurface({
+function ModalPanel({
   onClose,
   title,
   description,
   children,
   actions,
   size = 'medium',
-  closeOnBackdrop = true,
   className,
   classNames,
-  themeProps,
-}: ModalProps & { themeProps: ReturnType<typeof usePortalTheme>['themeProps'] }) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const state = useOverlayTriggerState({ isOpen: true, onOpenChange: (isOpen) => !isOpen && onClose() });
-  const { modalProps, underlayProps } = useModalOverlay({ isDismissable: closeOnBackdrop }, state, panelRef);
+  panelProps,
+  panelRef,
+}: Omit<ModalProps, 'open'> & { panelProps: React.HTMLAttributes<HTMLElement>; panelRef: React.RefObject<HTMLDivElement> }) {
   const { dialogProps, titleProps } = useDialog({}, panelRef);
   const descId = React.useId();
 
   return (
-    <div className={slot('sp-modal', classNames, 'root')} data-state="open" {...themeProps} {...underlayProps}>
-      <div aria-hidden="true" className={slot('sp-modal__backdrop', classNames, 'backdrop')} />
-      <FocusScope contain restoreFocus autoFocus>
-        <div
-          {...modalProps}
-          {...dialogProps}
-          ref={panelRef}
-          aria-describedby={description ? descId : undefined}
-          data-size={size}
-          className={slot('sp-modal__panel', classNames, 'panel', className)}
-        >
-          <div aria-hidden="true" className="sp-modal__current sp-current" />
-          <div className={slot('sp-modal__header', classNames, 'header')}>
-            <div className="sp-modal__heading">
-              <h2 {...titleProps} className={slot('sp-modal__title', classNames, 'title')}>
-                {title}
-              </h2>
-              {description && (
-                <p id={descId} className={slot('sp-modal__description', classNames, 'description')}>
-                  {description}
-                </p>
-              )}
-            </div>
-            <button type="button" aria-label="Close" onClick={onClose} className={slot('sp-modal__close', classNames, 'close')}>
-              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </button>
-          </div>
-          {children && <div className={slot('sp-modal__body', classNames, 'body')}>{children}</div>}
-          <div className={slot('sp-modal__actions', classNames, 'actions')}>{actions}</div>
+    <div
+      {...panelProps}
+      {...dialogProps}
+      ref={panelRef}
+      aria-describedby={description ? descId : undefined}
+      data-size={size}
+      className={slot('sp-modal__panel', classNames, 'panel', className)}
+    >
+      <div aria-hidden="true" className="sp-modal__current sp-current" />
+      <div className={slot('sp-modal__header', classNames, 'header')}>
+        <div className="sp-modal__heading">
+          <h2 {...titleProps} className={slot('sp-modal__title', classNames, 'title')}>
+            {title}
+          </h2>
+          {description && (
+            <p id={descId} className={slot('sp-modal__description', classNames, 'description')}>
+              {description}
+            </p>
+          )}
         </div>
-      </FocusScope>
+        <button type="button" aria-label="Close" onClick={onClose} className={slot('sp-modal__close', classNames, 'close')}>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
+      {children && <div className={slot('sp-modal__body', classNames, 'body')}>{children}</div>}
+      <div className={slot('sp-modal__actions', classNames, 'actions')}>{actions}</div>
     </div>
   );
 }

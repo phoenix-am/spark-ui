@@ -1,164 +1,223 @@
-import React from 'react';
-import { DropdownProps } from './Dropdown.types';
-import { cx } from '../internal/cx';
-import { DropdownProvider, useDropdownContext } from './DropdownContext';
-import DropdownOption from './DropdownOption';
-import { ChevronDown, ChevronUp, User } from '@spark-ui/icons';
-import { useDropdown } from './useDropdown';
+import React, { useRef } from 'react';
+import { HiddenSelect, useButton, useSelect } from 'react-aria';
+import { useSelectState } from 'react-stately';
+import { User } from '@spark-ui/icons';
+import { Popover } from '../base/Popover';
+import { ListBox, ListItems, ListOption, findOption, renderListItems, isGroup } from '../base/ListBox';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
-const DropdownBase = React.forwardRef(({
-  label,
-  options,
-  placeholder = 'Select an option',
-  disabled = false,
-  prependIcon,
-  appendIcon,
-  size = 'small',
-  error = false,
-  helperText,
-  value,
-  onChange,
-  onBlur,
-  onFocus,
-  showBorder = true,
-  forTeams,
-  containerStyle,
-  inputStyle,
-  itemStyle,
-  listContainerStyle,
-  className,
-}: DropdownProps, ref) => {
-  const { isOpen, setIsOpen, selectedOption, setSelectedOption } = useDropdownContext();
+export type DropdownOption<V extends string | number = string | number> = ListOption<V>;
+export type DropdownOptionGroup<V extends string | number = string | number> = { label: string; options: DropdownOption<V>[] };
 
+export interface DropdownProps<V extends string | number = string | number> {
+  /** Visible label. Use `aria-label` instead if there is no visible label. */
+  label?: string;
+  /** Accessible name when there is no visible label. */
+  'aria-label'?: string;
+  /** Options, or groups of options with a heading: `{ label: 'Asia', options: [...] }`. */
+  options: Array<DropdownOption<V> | DropdownOptionGroup<V>>;
+  /** Controlled value (`null` for none). */
+  value?: V | null;
+  /** Initial value when uncontrolled. */
+  defaultValue?: V;
+  /** Called with the chosen option's value; its type follows the options (numbers stay numbers). */
+  onChange?: (value: V) => void;
+  /** Called when the list opens or closes. */
+  onOpenChange?: (open: boolean) => void;
+  /** Shown when nothing is selected. Default "Select an option". */
+  placeholder?: string;
+  /** Help text under the field (shown in the error colour when `error` is `true`). */
+  helperText?: React.ReactNode;
+  /** An error message, or `true` to mark the field invalid and show `helperText` as the error. */
+  error?: React.ReactNode | boolean;
+  required?: boolean;
+  disabled?: boolean;
+  /** Form field name; a hidden native select submits the value. */
+  name?: string;
+  /** Height 36, 46 or 54px. Default `medium`. */
+  size?: 'small' | 'medium' | 'large';
+  /** Icon at the start of the field. */
+  startIcon?: React.ReactNode;
+  /** Shown when there are no options. Default "No options". */
+  emptyState?: React.ReactNode;
+  onFocus?: (event: React.FocusEvent) => void;
+  onBlur?: (event: React.FocusEvent) => void;
+  className?: string;
+  /** Extra classes for each part: root, label, trigger, value, popover, option, helper. */
+  classNames?: ClassNames<'root' | 'label' | 'trigger' | 'value' | 'popover' | 'option' | 'helper'>;
+
+  /** @deprecated Use `startIcon`. */
+  prependIcon?: React.ReactNode;
+  /** @deprecated Put an `icon` on each option instead. */
+  appendIcon?: React.ReactNode;
+  /** @deprecated Use `classNames` or CSS on `.sp-dropdown__trigger`. */
+  showBorder?: boolean;
+  /** @deprecated Put `icon: <User />` on each option. */
+  forTeams?: boolean;
+  /** @deprecated Use `classNames.root` or `className`. */
+  containerStyle?: React.CSSProperties;
+  /** @deprecated Use `classNames.trigger`. */
+  inputStyle?: React.CSSProperties;
+  /** @deprecated Use `classNames.option`. */
+  itemStyle?: React.CSSProperties;
+  /** @deprecated Use `classNames.popover`. */
+  listContainerStyle?: React.CSSProperties;
+}
+
+/**
+ * Dropdown: pick one value from a list. The chosen option's node lights up.
+ * Built on the Popover and ListBox base components with React Aria:
+ * typeahead on the closed and open list, arrow keys, Home/End, Escape,
+ * groups with headings, screen-reader announcements, and a hidden native
+ * select so plain forms and autofill work. `Select` is the same component.
+ *
+ * Style hooks: `.sp-dropdown[data-open][data-invalid][data-disabled]`,
+ * `__label`, `__trigger`, `__value[data-placeholder]`, `__chevron`,
+ * `__helper`; the list uses `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
+ */
+export function Dropdown<V extends string | number = string | number>(inProps: DropdownProps<V>) {
+  const props = useDefaults('Dropdown', useDefaults('Select', inProps));
   const {
-    onFocus: handleFocus,
-    onBlur: handleBlur,
-    focused,
-    disabled: isDisabled,
-    error: hasError
-  } = useDropdown({
+    label,
+    'aria-label': ariaLabel,
+    options: rawOptions,
     value,
-    disabled,
-    error,
-    onBlur,
+    defaultValue,
     onChange,
+    onOpenChange,
+    placeholder = 'Select an option',
+    helperText,
+    error,
+    required,
+    disabled,
+    name,
+    size = 'medium',
+    startIcon,
+    emptyState = 'No options',
     onFocus,
-  });
+    onBlur,
+    className,
+    classNames,
+    prependIcon,
+    showBorder = true,
+    forTeams,
+    containerStyle,
+    inputStyle,
+    itemStyle,
+    listContainerStyle,
+    appendIcon,
+  } = props;
 
+  // Legacy `forTeams` puts a person icon on every option.
+  const options: ListItems<ListOption<V>> = forTeams
+    ? rawOptions.map((o) =>
+        isGroup(o) ? { ...o, options: o.options.map((x) => ({ icon: <User />, ...x })) } : { icon: <User />, ...o },
+      )
+    : rawOptions;
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isDisabled) return;
-    if (event.key === 'Escape') {
-      setIsOpen(false);
-      return;
-    }
-    if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      event.preventDefault();
-      if (!isOpen) {
-        setIsOpen(true);
-        return;
-      }
-      if (event.key === 'Enter' || event.key === ' ') {
-        setIsOpen(false);
-        return;
-      }
-      const enabled = options.filter((o) => !o.disabled);
-      if (!enabled.length) return;
-      const idx = enabled.findIndex((o) => o.value === selectedOption);
-      const step = event.key === 'ArrowDown' ? 1 : -1;
-      const next = enabled[(idx + step + enabled.length) % enabled.length];
-      setSelectedOption(next.value);
-      onChange?.(next.value);
-    }
+  const invalid = Boolean(error);
+  const message = typeof error === 'boolean' ? (error ? helperText : undefined) : error;
+  const help = typeof error === 'boolean' || !error ? helperText : undefined;
+  const disabledKeys = options.flatMap((o) => (isGroup(o) ? o.options : [o])).filter((o) => o.disabled).map((o) => String(o.value));
+
+  const ariaProps = {
+    label,
+    'aria-label': ariaLabel,
+    children: renderListItems(options),
+    selectedKey: value === undefined ? undefined : value === null ? null : String(value),
+    defaultSelectedKey: defaultValue === undefined ? undefined : String(defaultValue),
+    onSelectionChange: (key: React.Key | null) => {
+      const option = findOption(options, key);
+      if (option) onChange?.(option.value);
+    },
+    onOpenChange,
+    disabledKeys,
+    isDisabled: disabled,
+    isRequired: required,
+    isInvalid: invalid,
+    description: help ? 'description' : undefined,
+    errorMessage: invalid && message ? 'error' : undefined,
+    name,
+    onFocus,
+    onBlur,
   };
-
-  const handleSelectOption = (value: string | number) => {
-    setSelectedOption(value);
-    setIsOpen(false);
-    if (onChange) onChange(value);
-  };
+  const state = useSelectState(ariaProps);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const { labelProps, triggerProps, valueProps, menuProps, descriptionProps, errorMessageProps } = useSelect(ariaProps, state, triggerRef);
+  const { buttonProps } = useButton(triggerProps, triggerRef);
+  const selected = findOption(options, state.selectedKey);
+  const icon = startIcon ?? prependIcon ?? selected?.icon;
 
   return (
     <div
-      className={cx('sp-dropdown', className)}
+      className={slot('sp-dropdown', classNames, 'root', className)}
+      style={containerStyle}
+      data-tone={invalid ? 'error' : 'brand'}
       data-size={size}
-      data-tone={hasError ? 'error' : 'brand'}
-      data-open={(isOpen && !isDisabled) || undefined}
-      data-focused={focused || undefined}
-      data-invalid={hasError || undefined}
-      data-disabled={isDisabled || undefined}
-      data-borderless={!showBorder || undefined}
-      onClick={() => !isDisabled && setIsOpen(!isOpen)}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      style={{...containerStyle}}
+      data-open={state.isOpen || undefined}
+      data-invalid={invalid || undefined}
+      data-disabled={disabled || undefined}
+      data-borderless={showBorder ? undefined : true}
     >
-      {label && <label className="sp-dropdown__label">{label}</label>}
-      <div className="sp-dropdown__control">
-        {prependIcon && <div className="sp-dropdown__icon">{prependIcon || <User />}</div>}
-        {forTeams && <div className="sp-dropdown__icon">{<User />}</div>}
-        <input
-          className="sp-dropdown__input"
-          readOnly
-          role="combobox"
-          aria-expanded={isOpen}
-          aria-haspopup="listbox"
-          aria-invalid={hasError || undefined}
-          aria-label={label ?? placeholder}
-          disabled={isDisabled}
-          onKeyDown={handleKeyDown}
-          value={options.find((option) => option.value === selectedOption)?.label || ''}
-          placeholder={placeholder}
-          style={{...inputStyle}}
-        />
-        {appendIcon && <div className="sp-dropdown__icon">{appendIcon}</div>}
-        <div className="sp-dropdown__chevron">
-          {
-            !isOpen ? <ChevronDown /> : <ChevronUp />
-          }
-        </div>
-      </div>
-      {isOpen && !disabled && (
-        <ul role="listbox" className="sp-dropdown__list" style={{...listContainerStyle}}>
-          {options.length ? options.map((option) => (
-            <DropdownOption
-              key={option.value}
-              option={option}
-              size={size}
-              prependIcon={forTeams ? <User /> : <></>}
-              selected={selectedOption === option.value}
-              style={{...itemStyle}}
-              onSelect={handleSelectOption}
-            />
-          )) : (
-            <DropdownOption
-              key={`no-option`}
-              option={{
-                label: 'No options available',
-                value: '',
-              }}
-              size={size}
-              selected={false}
-              onSelect={() => {}}
-              style={{...itemStyle}}
-            />
+      {label && (
+        <span {...labelProps} className={slot('sp-dropdown__label', classNames, 'label')}>
+          {label}
+          {required && (
+            <span className="sp-field__required" aria-hidden="true">
+              {' '}*
+            </span>
           )}
-        </ul>
+        </span>
       )}
-      {helperText && <div className="sp-dropdown__helper">{helperText}</div>}
+      <HiddenSelect state={state} triggerRef={triggerRef} label={label ?? ariaLabel} name={name} isDisabled={disabled} />
+      <button {...buttonProps} ref={triggerRef} style={inputStyle} className={slot('sp-dropdown__trigger', classNames, 'trigger')}>
+        {icon && (
+          <span className="sp-dropdown__icon" aria-hidden="true">
+            {icon}
+          </span>
+        )}
+        <span {...valueProps} className={slot('sp-dropdown__value', classNames, 'value')} data-placeholder={selected ? undefined : true}>
+          {selected ? selected.label : placeholder}
+        </span>
+        {appendIcon && (
+          <span className="sp-dropdown__icon" aria-hidden="true">
+            {appendIcon}
+          </span>
+        )}
+        <svg className="sp-dropdown__chevron" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {invalid && message ? (
+        <p {...errorMessageProps} className={slot('sp-dropdown__helper', classNames, 'helper')}>
+          {message}
+        </p>
+      ) : (
+        help && (
+          <p {...descriptionProps} className={slot('sp-dropdown__helper', classNames, 'helper')}>
+            {help}
+          </p>
+        )
+      )}
+      {state.isOpen && (
+        <Popover
+          state={state}
+          triggerRef={triggerRef}
+          matchTriggerWidth
+          className={slot('sp-dropdown__popover', classNames, 'popover')}
+          style={listContainerStyle}
+        >
+          <ListBox
+            {...menuProps}
+            state={state}
+            optionClassName={classNames?.option}
+            emptyState={emptyState}
+            optionStyle={itemStyle}
+          />
+        </Popover>
+      )}
     </div>
   );
-});
-
-/**
- * @deprecated Use `Select`, which adds typeahead, full keyboard support,
- * screen-reader announcements and native form submission. Dropdown will be
- * removed in a future major version.
- */
-const Dropdown = (props: DropdownProps) => (
-  <DropdownProvider>
-    <DropdownBase {...props} />
-  </DropdownProvider>
-);
+}
 
 export default Dropdown;

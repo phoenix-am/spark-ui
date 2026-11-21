@@ -3,16 +3,17 @@ import { useIsoLayoutEffect } from './useIsoLayoutEffect';
 
 /**
  * Portals render into document.body, outside any `[data-spark-theme]` wrapper.
- * Put `anchorRef` on an element in the normal tree; spread `themeProps` on the
- * portal's root so it gets the same mode and token overrides.
+ * Put `anchorRef` on an element in the normal tree (or pass `sourceRef`, e.g.
+ * the trigger); spread `themeProps` on the portal's root so it gets the same
+ * mode and token overrides.
  */
-export function usePortalTheme(active: boolean) {
+export function usePortalTheme(active: boolean, sourceRef?: React.RefObject<Element | null>) {
   const anchorRef = useRef<HTMLSpanElement>(null);
   const [themeProps, setThemeProps] = useState<{ 'data-spark-theme'?: string; style?: React.CSSProperties }>({});
 
   useIsoLayoutEffect(() => {
     if (!active) return;
-    const host = anchorRef.current?.closest<HTMLElement>('[data-spark-theme]');
+    const host = (sourceRef?.current ?? anchorRef.current)?.closest<HTMLElement>('[data-spark-theme]');
     if (!host) return;
     const style: Record<string, string> = {};
     for (let i = 0; i < host.style.length; i++) {

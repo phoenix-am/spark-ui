@@ -177,6 +177,8 @@
 .sp-date-picker[data-invalid] .sp-date-picker__helper { color: var(--sp-ink); }
 .sp-date-picker__popover {
   z-index: var(--spark-z-dropdown);
+  max-height: none;
+  overflow: visible;
   padding: 1rem;
   font-family: var(--spark-font);
   background: var(--spark-surface-raised);

@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
-import { DismissButton, I18nProvider, Overlay, useButton, useDateField, useDatePicker, useDateSegment, useDialog, useLocale, usePopover } from 'react-aria';
-import { useDateFieldState, useDatePickerState, DateFieldState, DatePickerState, DateSegment } from 'react-stately';
+import { I18nProvider, useButton, useDateField, useDatePicker, useDateSegment, useDialog, useLocale } from 'react-aria';
+import { useDateFieldState, useDatePickerState, DateFieldState, DateSegment } from 'react-stately';
 import { DateValue, createCalendar } from '@internationalized/date';
 import type { AriaDateFieldProps, AriaDialogProps } from 'react-aria';
 import { CalendarCore, CalendarProps } from './Calendar';
-import { usePortalTheme } from '../internal/usePortalTheme';
+import { Popover } from '../base/Popover';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO, withCalendar } from './dateAdapters';
 
@@ -115,7 +115,6 @@ function DatePickerInner({
     groupRef,
   );
   const { buttonProps: triggerButtonProps } = useButton(buttonProps, triggerRef);
-  const { anchorRef, themeProps } = usePortalTheme(state.isOpen);
 
   return (
     <div
@@ -128,7 +127,6 @@ function DatePickerInner({
       data-disabled={disabled || undefined}
       data-empty={!state.value || undefined}
     >
-      <span ref={anchorRef} hidden />
       {label && (
         <span {...labelProps} className={slot('sp-date-picker__label', classNames, 'label')}>
           {label}
@@ -162,11 +160,11 @@ function DatePickerInner({
       )}
       {name && <input type="hidden" name={name} value={toISO(state.value)} />}
       {state.isOpen && (
-        <DatePopover state={state} triggerRef={groupRef} themeProps={themeProps} className={slot('sp-date-picker__popover', classNames, 'popover')}>
+        <Popover state={state} triggerRef={groupRef} offset={8} className={slot('sp-date-picker__popover', classNames, 'popover')}>
           <Dialog {...dialogProps}>
             <CalendarCore {...calendarProps} firstDayOfWeek={firstDay} todayLabel={todayLabel} />
           </Dialog>
-        </DatePopover>
+        </Popover>
       )}
     </div>
   );
@@ -200,35 +198,6 @@ function Segment({ segment, state }: { segment: DateSegment; state: DateFieldSta
     >
       {segment.text}
     </span>
-  );
-}
-
-function DatePopover({
-  state,
-  triggerRef,
-  themeProps,
-  className,
-  children,
-}: {
-  state: DatePickerState;
-  triggerRef: React.RefObject<HTMLDivElement>;
-  themeProps: ReturnType<typeof usePortalTheme>['themeProps'];
-  className: string;
-  children: React.ReactNode;
-}) {
-  const popoverRef = useRef<HTMLDivElement>(null);
-  const { popoverProps, underlayProps } = usePopover({ popoverRef, triggerRef, placement: 'bottom start', offset: 8 }, state);
-  return (
-    <Overlay>
-      <div {...themeProps} style={{ ...themeProps.style, display: 'contents' }}>
-        <div {...underlayProps} style={{ position: 'fixed', inset: 0 }} />
-        <div {...popoverProps} ref={popoverRef} className={className}>
-          <DismissButton onDismiss={state.close} />
-          {children}
-          <DismissButton onDismiss={state.close} />
-        </div>
-      </div>
-    </Overlay>
   );
 }
 

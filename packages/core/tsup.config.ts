@@ -5,6 +5,12 @@ import { defineConfig } from 'tsup';
 // "use client" so components drop straight into Next.js App Router pages.
 export default defineConfig({
   entry: {
+    'base/index': 'src/base/index.ts',
+    'select/index': 'src/Select/index.ts',
+    'combobox/index': 'src/Combobox/index.ts',
+    'menu/index': 'src/Menu/index.ts',
+    'field/index': 'src/Field/index.ts',
+    'provider/index': 'src/Provider/index.ts',
     "index": "src/index.ts",
     "accordion/index": "src/Accordion/index.ts",
     "avatar/index": "src/Avatar/index.ts",

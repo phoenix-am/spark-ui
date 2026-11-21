@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -347,5 +347,130 @@ describe('Slider (React Aria)', () => {
     expect(ref.current).toHaveValue('4');
     expect(onChange).toHaveBeenLastCalledWith(4);
     expect(onChangeEnd).toHaveBeenLastCalledWith(4);
+  });
+});
+
+describe('Dropdown (base: Popover + ListBox)', () => {
+  it('is the same component as Select', () => {
+    expect(Select).toBe(Dropdown);
+  });
+
+  it('shows group headings, returns numbers as numbers, and submits through the hidden select', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const { container } = render(
+      <form>
+        <Dropdown
+          label="Replicas"
+          name="replicas"
+          onChange={onChange}
+          options={[{ label: 'Small', options: [{ value: 1, label: 'One' }, { value: 2, label: 'Two' }] }, { label: 'Large', options: [{ value: 8, label: 'Eight' }] }]}
+        />
+      </form>,
+    );
+    await user.click(screen.getByRole('button', { name: /Replicas/ }));
+    const list = await screen.findByRole('listbox');
+    expect(within(list).getByRole('group', { name: 'Large' })).toBeInTheDocument();
+    await user.click(within(list).getByRole('option', { name: 'Eight' }));
+    expect(onChange).toHaveBeenLastCalledWith(8);
+    expect(new FormData(container.querySelector('form')!).get('replicas')).toBe('8');
+  });
+
+  it('keeps the old Dropdown props working (error + helperText, prependIcon)', () => {
+    render(<Dropdown label="Region" error helperText="Choose a region" prependIcon={<svg data-testid="icon" />} options={[{ value: 'a', label: 'A' }]} />);
+    expect(screen.getByText('Choose a region')).toBeInTheDocument();
+    expect(screen.getByTestId('icon')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Region/ })).toHaveAttribute('aria-describedby');
+  });
+});
+
+describe('Combobox', () => {
+  const cities = ['Amreli', 'Mumbai', 'Pune', 'São Paulo'].map((c) => ({ value: c.toLowerCase(), label: c }));
+
+  it('filters ignoring case and accents, and picks with the keyboard', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const { container } = render(<Combobox label="City" name="city" options={cities} onChange={onChange} />);
+    const input = screen.getByRole('combobox', { name: 'City' });
+    await user.type(input, 'sao');
+    const list = await screen.findByRole('listbox');
+    expect(within(list).getAllByRole('option').map((o) => o.textContent)).toEqual(['São Paulo']);
+    await user.keyboard('{ArrowDown}{Enter}');
+    expect(onChange).toHaveBeenLastCalledWith('são paulo');
+    expect(input).toHaveValue('São Paulo');
+    expect(container.querySelector('input[name="city"]')).toHaveValue('são paulo');
+  });
+
+  it('shows the empty state and clears', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(<Combobox label="City" options={cities} defaultValue="pune" onChange={onChange} emptyState="Nothing here" />);
+    const input = screen.getByRole('combobox');
+    expect(input).toHaveValue('Pune');
+    await user.click(screen.getByRole('button', { name: 'Clear' }));
+    expect(input).toHaveValue('');
+    expect(onChange).toHaveBeenLastCalledWith(null);
+    await user.type(input, 'zzz');
+    expect(await screen.findByText('Nothing here')).toBeInTheDocument();
+  });
+
+  it('allows custom values', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Combobox label="Tag" name="tag" allowsCustomValue options={cities} />);
+    await user.type(screen.getByRole('combobox'), 'brand-new');
+    await user.tab();
+    expect(container.querySelector('input[name="tag"]')).toHaveValue('brand-new');
+  });
+});
+
+describe('Menu', () => {
+  const items = [
+    { key: 'edit', label: 'Edit', shortcut: '⌘E' },
+    { key: 'archive', label: 'Archive', disabled: true },
+    { key: 'share', label: 'Share', items: [{ key: 'email', label: 'Email' }, { key: 'copy', label: 'Copy link' }] },
+    { key: 'delete', label: 'Delete', danger: true },
+  ];
+
+  it('opens from the trigger, skips disabled items, runs an action and returns focus', async () => {
+    const user = userEvent.setup();
+    const onAction = jest.fn();
+    render(<Menu label="Actions" items={items} onAction={onAction} />);
+    const trigger = screen.getByRole('button', { name: /Actions/ });
+    act(() => trigger.focus());
+    await user.keyboard('{Enter}');
+    const menu = await screen.findByRole('menu', { name: 'Actions' });
+    expect(within(menu).getByRole('menuitem', { name: /Archive/ })).toHaveAttribute('aria-disabled', 'true');
+    expect(document.activeElement).toHaveTextContent('Edit');
+    await user.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+    expect(onAction).toHaveBeenLastCalledWith('delete');
+    await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());
+    await waitFor(() => expect(trigger).toHaveFocus());
+  });
+
+  it('opens a submenu with the right arrow and runs its action', async () => {
+    const user = userEvent.setup();
+    const onAction = jest.fn();
+    render(<Menu label="Actions" items={items} onAction={onAction} />);
+    await user.click(screen.getByRole('button', { name: /Actions/ }));
+    const share = await screen.findByRole('menuitem', { name: /Share/ });
+    expect(share).toHaveAttribute('aria-haspopup', 'menu');
+    act(() => share.focus());
+    await user.keyboard('{ArrowRight}');
+    const menus = await screen.findAllByRole('menu');
+    expect(menus).toHaveLength(2);
+    await waitFor(() => expect(document.activeElement).toHaveTextContent('Email'));
+    await user.keyboard('{ArrowDown}{Enter}');
+    expect(onAction).toHaveBeenLastCalledWith('copy');
+  });
+
+  it('supports multiple checkable items', async () => {
+    const user = userEvent.setup();
+    const onSelectionChange = jest.fn();
+    render(<Menu label="Columns" selectionMode="multiple" defaultSelectedKeys={['a']} onSelectionChange={onSelectionChange} items={[{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }]} />);
+    await user.click(screen.getByRole('button', { name: /Columns/ }));
+    const b = await screen.findByRole('menuitemcheckbox', { name: 'B' });
+    await user.click(b);
+    expect(onSelectionChange).toHaveBeenLastCalledWith(new Set(['a', 'b']));
+    expect(screen.getByRole('menu')).toBeInTheDocument();
   });
 });

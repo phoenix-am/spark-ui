@@ -16,6 +16,9 @@ import type { BadgeProps, ProgressProps, SpinnerProps } from '../Indicators';
 import type { AvatarProps } from '../Avatar';
 import type { DatePickerProps, CalendarProps } from '../DatePicker';
 import type { SelectProps } from '../Select';
+import type { DropdownProps } from '../Dropdown';
+import type { ComboboxProps } from '../Combobox';
+import type { MenuProps } from '../Menu';
 import type { FieldProps } from '../Field';
 
 /** App-wide defaults, keyed by component name. */
@@ -26,7 +29,11 @@ export interface SparkComponentsConfig {
   Textfield?: ComponentConfig<TextfieldProps>;
   Slider?: ComponentConfig<SliderProps>;
   RadioGroup?: ComponentConfig<RadioGroupProps>;
+  Dropdown?: ComponentConfig<DropdownProps>;
+  /** Same component as Dropdown; both keys apply. */
   Select?: ComponentConfig<SelectProps>;
+  Combobox?: ComponentConfig<ComboboxProps>;
+  Menu?: ComponentConfig<MenuProps>;
   Field?: ComponentConfig<FieldProps>;
   Tabs?: ComponentConfig<TabsProps>;
   Accordion?: ComponentConfig<AccordionProps>;

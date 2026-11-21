@@ -94,6 +94,25 @@ Style one part of one instance with `classNames`, for example `<Switch className
 
 Select, Modal, Tooltip, Tabs, DatePicker, Calendar and Slider are built on React Aria hooks: typeahead, focus containment and restoration, screen-reader announcements and dismissal behave the way they do in Adobe's products. Every Storybook story is checked with axe in CI (`npm test`), alongside keyboard behaviour tests and server-rendering tests.
 
+## Base components
+
+Spark UI is built in two layers, like MUI:
+
+- **Base components** (`@spark-ui/core/base`): `ButtonBase`, `InputBase`, `Popover`, `ListBox` (with `ListItemContent`) and `Overlay`. Generic building blocks that already carry the Live Wire look.
+- **Components** built from them: Button on ButtonBase; Textfield and Combobox on InputBase; Dropdown, Combobox, Menu and DatePicker on Popover (+ ListBox); Modal on Overlay.
+
+Use the base layer to build components we don't ship, and they will match the rest. See *Foundations → Base components* in Storybook. The base layer is unstable until 1.0.
+
+### Dropdown, Combobox and Menu
+
+| | Use it to | Built on |
+|---|---|---|
+| `Dropdown` (alias `Select`) | pick one value from a list | Popover + ListBox |
+| `Combobox` | type to search, then pick (or enter free text) | InputBase + Popover + ListBox |
+| `Menu` | run an action (Edit, Delete), with submenus | Popover + shared list items |
+
+Options can be grouped: `options={[{ label: 'Asia', options: [...] }]}`. Dropdown's value type follows its options, so numbers come back as numbers.
+
 ## Languages, dates and right-to-left
 
 Set the locale once and every date, weekday name, digit and arrow key follows it:
@@ -110,7 +129,7 @@ Set the locale once and every date, weekday name, digit and arrow key follows it
 - **Slider** takes a `[start, end]` value for a range with two knobs. `onChangeEnd` fires once on release (for saving or fetching), and `formatOptions` formats numbers in the locale, e.g. `{ style: 'currency', currency: 'INR' }`.
 - Tabs, DatePicker, Slider and the rest work when rendered from a React Server Component.
 
-`DatePicker`'s `format` and `placeholder` props are deprecated (the segments replace them), as is `weekStartsOn` (use `firstDayOfWeek: 'sun' | 'mon' | ...`). They are still accepted and will be removed in 1.0. Slider's `onChange` now receives only the value (no event), which is what React Hook Form's `register` expects too.
+`DatePicker`'s `format` and `placeholder` props are deprecated (the segments replace them), as is `weekStartsOn` (use `firstDayOfWeek: 'sun' | 'mon' | ...`). They are still accepted and will be removed in 1.0. The old Dropdown props (`prependIcon`, `forTeams`, `containerStyle`...) also still work but are deprecated; Dropdown's `value` is now controlled (use `defaultValue` for a starting value), and its CSS classes are `sp-dropdown__*` (Select's were `sp-select__*`). Slider's `onChange` now receives only the value (no event), which is what React Hook Form's `register` expects too.
 
 ## Packages
 

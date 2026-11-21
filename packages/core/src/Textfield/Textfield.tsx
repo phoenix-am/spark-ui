@@ -1,4 +1,5 @@
 import { forwardRef, useId, useRef } from 'react';
+import { InputBase } from '../base/InputBase';
 import { TextfieldPropsBase } from './Textfield.types';
 import { useTextField } from './useTextfield';
 import { useForkRef } from './useForkRef';
@@ -16,7 +17,7 @@ const defaultChargeLabel = (percent: number) =>
  *
  * Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
  * `[data-charged]`, `[data-disabled]`; parts `__label`, `__control`, `__input`,
- * `__adornment`, `__meter`, `__helper`.
+ * `__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).
  */
 const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) => {
   const {
@@ -89,26 +90,30 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
           {label}
         </label>
       )}
-      <div className={slot('sp-textfield__control', classNames, 'control')} style={containerStyle} onClick={() => inputRef.current?.focus()}>
-        {prepend && <div className={slot('sp-textfield__adornment', classNames, 'adornment')}>{prepend}</div>}
-        <input
-          ref={handleRef}
-          id={inputId}
-          className={slot('sp-textfield__input', classNames, 'input')}
-          type={masked ? 'text' : type}
-          inputMode={masked ? 'numeric' : undefined}
-          placeholder={placeholder}
-          disabled={isDisabled}
-          {...(controlled ? { value: fieldValue } : { defaultValue })}
-          aria-invalid={hasError || undefined}
-          aria-describedby={describedBy}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          {...rest}
-        />
-        {append && <div className={slot('sp-textfield__adornment', classNames, 'adornment')}>{append}</div>}
-      </div>
+      <InputBase
+        ref={handleRef}
+        id={inputId}
+        size={inputSize}
+        error={hasError}
+        disabled={isDisabled}
+        startAdornment={prepend}
+        endAdornment={append}
+        rootProps={{ style: containerStyle }}
+        classNames={{
+          root: slot('sp-textfield__control', classNames, 'control'),
+          input: slot('sp-textfield__input', classNames, 'input'),
+          adornment: slot('sp-textfield__adornment', classNames, 'adornment'),
+        }}
+        type={masked ? 'text' : type}
+        inputMode={masked ? 'numeric' : undefined}
+        placeholder={placeholder}
+        {...(controlled ? { value: fieldValue } : { defaultValue })}
+        aria-describedby={describedBy}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...(rest as Omit<typeof rest, 'size'>)}
+      />
       {level !== undefined && (
         <div id={meterId} className={slot('sp-textfield__meter', classNames, 'meter')}>
           <div

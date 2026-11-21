@@ -48,6 +48,11 @@
       "import": "./dist/avatar/index.mjs",
       "require": "./dist/avatar/index.js"
     },
+    "./base": {
+      "types": "./dist/base/index.d.ts",
+      "import": "./dist/base/index.mjs",
+      "require": "./dist/base/index.js"
+    },
     "./button": {
       "types": "./dist/button/index.d.ts",
       "import": "./dist/button/index.mjs",
@@ -63,6 +68,11 @@
       "import": "./dist/checkbox/index.mjs",
       "require": "./dist/checkbox/index.js"
     },
+    "./combobox": {
+      "types": "./dist/combobox/index.d.ts",
+      "import": "./dist/combobox/index.mjs",
+      "require": "./dist/combobox/index.js"
+    },
     "./date-picker": {
       "types": "./dist/date-picker/index.d.ts",
       "import": "./dist/date-picker/index.mjs",
@@ -72,6 +82,11 @@
       "types": "./dist/dropdown/index.d.ts",
       "import": "./dist/dropdown/index.mjs",
       "require": "./dist/dropdown/index.js"
+    },
+    "./field": {
+      "types": "./dist/field/index.d.ts",
+      "import": "./dist/field/index.mjs",
+      "require": "./dist/field/index.js"
     },
     "./indicators": {
       "types": "./dist/indicators/index.d.ts",
@@ -83,15 +98,30 @@
       "import": "./dist/input-base/index.mjs",
       "require": "./dist/input-base/index.js"
     },
+    "./menu": {
+      "types": "./dist/menu/index.d.ts",
+      "import": "./dist/menu/index.mjs",
+      "require": "./dist/menu/index.js"
+    },
     "./modal": {
       "types": "./dist/modal/index.d.ts",
       "import": "./dist/modal/index.mjs",
       "require": "./dist/modal/index.js"
     },
+    "./provider": {
+      "types": "./dist/provider/index.d.ts",
+      "import": "./dist/provider/index.mjs",
+      "require": "./dist/provider/index.js"
+    },
     "./radio-group": {
       "types": "./dist/radio-group/index.d.ts",
       "import": "./dist/radio-group/index.mjs",
       "require": "./dist/radio-group/index.js"
+    },
+    "./select": {
+      "types": "./dist/select/index.d.ts",
+      "import": "./dist/select/index.mjs",
+      "require": "./dist/select/index.js"
     },
     "./slider": {
       "types": "./dist/slider/index.d.ts",
@@ -192,6 +222,24 @@
       ],
       "tooltip": [
         "./dist/tooltip/index.d.ts"
+      ],
+      "base": [
+        "./dist/base/index.d.ts"
+      ],
+      "select": [
+        "./dist/select/index.d.ts"
+      ],
+      "combobox": [
+        "./dist/combobox/index.d.ts"
+      ],
+      "menu": [
+        "./dist/menu/index.d.ts"
+      ],
+      "field": [
+        "./dist/field/index.d.ts"
+      ],
+      "provider": [
+        "./dist/provider/index.d.ts"
       ]
     }
   }
