@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -291,5 +291,61 @@ describe('Tabs from a Server Component', () => {
     expect(screen.getByText('Panel A')).toBeInTheDocument();
     await user.keyboard('{ArrowRight}');
     expect(screen.getByText('Panel B')).toBeInTheDocument();
+  });
+});
+
+describe('Slider (React Aria)', () => {
+  it('moves with arrow keys and Home/End, and labels the value', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(<Slider label="Brightness" defaultValue={50} formatValue={(v) => `${v}%`} onChange={onChange} />);
+    const input = screen.getByRole('slider', { name: 'Brightness' });
+    act(() => input.focus());
+    await user.keyboard('{ArrowRight}');
+    expect(onChange).toHaveBeenLastCalledWith(51);
+    expect(input).toHaveAttribute('aria-valuetext', '51%');
+    await user.keyboard('{End}');
+    expect(onChange).toHaveBeenLastCalledWith(100);
+    expect(screen.getByText('100%')).toBeInTheDocument();
+  });
+
+  it('range: two named knobs that cannot cross, and onChange gets a pair', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(<Slider label="Price" defaultValue={[20, 30]} step={10} onChange={onChange} />);
+    const [lo, hi] = screen.getAllByRole('slider');
+    expect(lo).toHaveAccessibleName(/Minimum/);
+    expect(hi).toHaveAccessibleName(/Maximum/);
+    act(() => lo.focus());
+    await user.keyboard('{ArrowRight}{ArrowRight}{ArrowRight}');
+    expect(onChange).toHaveBeenLastCalledWith([30, 30]);
+    act(() => hi.focus());
+    await user.keyboard('{ArrowLeft}');
+    expect(hi).toHaveValue('30');
+  });
+
+  it('submits values with plain forms, for one or two names', () => {
+    const { container } = render(
+      <form>
+        <Slider label="One" name="one" defaultValue={7} />
+        <Slider label="Range" name={['from', 'to']} defaultValue={[10, 90]} />
+      </form>,
+    );
+    const data = new FormData(container.querySelector('form')!);
+    expect([data.get('one'), data.get('from'), data.get('to')]).toEqual(['7', '10', '90']);
+  });
+
+  it('works with a register-style ref, name and onChange', async () => {
+    const user = userEvent.setup();
+    const ref = React.createRef<HTMLInputElement>();
+    const onChange = jest.fn();
+    const onChangeEnd = jest.fn();
+    render(<Slider label="Instances" name="instances" ref={ref} min={1} max={10} defaultValue={3} onChange={onChange} onChangeEnd={onChangeEnd} />);
+    expect(ref.current).toHaveAttribute('name', 'instances');
+    act(() => ref.current!.focus());
+    await user.keyboard('{ArrowUp}');
+    expect(ref.current).toHaveValue('4');
+    expect(onChange).toHaveBeenLastCalledWith(4);
+    expect(onChangeEnd).toHaveBeenLastCalledWith(4);
   });
 });
