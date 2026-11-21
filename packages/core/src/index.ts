@@ -29,3 +29,5 @@ export { Accordion, AccordionItem } from './Accordion';
 export type { AccordionProps, AccordionItemProps } from './Accordion';
 export { Card, CardHeader, CardFooter, Skeleton } from './Card';
 export type { CardProps, CardHeaderProps, SkeletonProps } from './Card';
+export { DatePicker, Calendar } from './DatePicker';
+export type { DatePickerProps, CalendarProps } from './DatePicker';
