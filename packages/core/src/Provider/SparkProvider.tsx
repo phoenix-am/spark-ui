@@ -37,6 +37,7 @@ export interface SparkComponentsConfig {
   DataTable?: ComponentConfig<Record<string, unknown>>;
   DateRangePicker?: ComponentConfig<Record<string, unknown>>;
   CommandPalette?: ComponentConfig<Record<string, unknown>>;
+  Drawer?: ComponentConfig<Record<string, unknown>>;
   RangeCalendar?: ComponentConfig<Record<string, unknown>>;
   Field?: ComponentConfig<FieldProps>;
   Tabs?: ComponentConfig<TabsProps>;

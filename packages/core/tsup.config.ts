@@ -6,6 +6,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: {
     'base/index': 'src/base/index.ts',
+    'drawer/index': 'src/Drawer/index.ts',
     'command-palette/index': 'src/CommandPalette/index.ts',
     'data-table/index': 'src/DataTable/index.ts',
     'headless/index': 'src/headless/index.tsx',

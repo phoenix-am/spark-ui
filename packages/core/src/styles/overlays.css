@@ -290,3 +290,63 @@
   animation: sp-discharge 4000ms linear both;
 }
 .sp-toast[data-paused] .sp-toast__timer { animation-play-state: paused; }
+
+/* ------------------------------------------------------------------ Drawer */
+.sp-drawer { padding: 0; align-items: stretch; justify-content: flex-end; }
+.sp-drawer__backdrop { animation: sp-fade var(--spark-motion-normal) ease both; }
+@keyframes sp-fade { from { opacity: 0; } }
+.sp-drawer__panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: var(--spark-surface-raised);
+  color: var(--spark-text-primary);
+  box-shadow: var(--spark-shadow-xlarge);
+  outline: none;
+  max-width: 100%;
+  max-height: 100%;
+}
+.sp-drawer__panel[data-placement='end'],
+.sp-drawer__panel[data-placement='start'] { inset-block: 0; width: var(--sp-drawer-size); }
+.sp-drawer__panel[data-placement='end'] { inset-inline-end: 0; border-inline-start: 1px solid var(--spark-surface-border-strong); animation: sp-drawer-end var(--spark-motion-slow, 320ms) var(--spark-motion-easing) both; }
+.sp-drawer__panel[data-placement='start'] { inset-inline-start: 0; border-inline-end: 1px solid var(--spark-surface-border-strong); animation: sp-drawer-start var(--spark-motion-slow, 320ms) var(--spark-motion-easing) both; }
+.sp-drawer__panel[data-placement='top'],
+.sp-drawer__panel[data-placement='bottom'] { inset-inline: 0; height: var(--sp-drawer-size); }
+.sp-drawer__panel[data-placement='top'] { top: 0; border-bottom: 1px solid var(--spark-surface-border-strong); animation: sp-drawer-top var(--spark-motion-slow, 320ms) var(--spark-motion-easing) both; }
+.sp-drawer__panel[data-placement='bottom'] {
+  bottom: 0;
+  border-top: 1px solid var(--spark-surface-border-strong);
+  border-radius: var(--spark-radius-large) var(--spark-radius-large) 0 0;
+  animation: sp-drawer-bottom var(--spark-motion-slow, 320ms) var(--spark-motion-easing) both;
+}
+@keyframes sp-drawer-end { from { transform: translateX(100%); } }
+@keyframes sp-drawer-start { from { transform: translateX(-100%); } }
+[dir='rtl'] .sp-drawer__panel[data-placement='end'] { animation-name: sp-drawer-start; }
+[dir='rtl'] .sp-drawer__panel[data-placement='start'] { animation-name: sp-drawer-end; }
+@keyframes sp-drawer-top { from { transform: translateY(-100%); } }
+@keyframes sp-drawer-bottom { from { transform: translateY(100%); } }
+
+/* Current runs along the inner edge as the drawer powers on. */
+.sp-drawer__current { position: absolute; }
+.sp-drawer__panel[data-placement='end'] .sp-drawer__current,
+.sp-drawer__panel[data-placement='start'] .sp-drawer__current {
+  inset-block: 0;
+  width: 2px;
+  background-image: repeating-linear-gradient(180deg, var(--spark-energy-current) 0 9px, transparent 9px 18px);
+  background-size: 100% 36px;
+  animation-name: sp-flow-down;
+  box-shadow: 0 0 10px var(--spark-energy-glow);
+}
+.sp-drawer__panel[data-placement='end'] .sp-drawer__current { inset-inline-start: -1px; }
+.sp-drawer__panel[data-placement='start'] .sp-drawer__current { inset-inline-end: -1px; }
+.sp-drawer__panel[data-placement='top'] .sp-drawer__current,
+.sp-drawer__panel[data-placement='bottom'] .sp-drawer__current { inset-inline: 0; height: 2px; box-shadow: 0 0 10px var(--spark-energy-glow); }
+.sp-drawer__panel[data-placement='top'] .sp-drawer__current { bottom: -1px; }
+.sp-drawer__panel[data-placement='bottom'] .sp-drawer__current { top: -1px; border-radius: var(--spark-radius-large) var(--spark-radius-large) 0 0; }
+
+.sp-drawer__header { display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem 1.25rem 0.75rem; }
+.sp-drawer__heading { flex: 1; min-width: 0; }
+.sp-drawer__title { margin: 0; font-size: 1.125rem; font-weight: 700; }
+.sp-drawer__description { margin: 0.25rem 0 0; font-size: var(--spark-font-size-small); color: var(--spark-text-secondary); }
+.sp-drawer__body { flex: 1; overflow-y: auto; padding: 0.5rem 1.25rem 1.25rem; }
+.sp-drawer__actions { display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.875rem 1.25rem; border-top: 1px solid var(--spark-surface-border); }

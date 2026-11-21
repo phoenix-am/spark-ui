@@ -156,6 +156,14 @@ Sorting (Shift+click for several columns), search, per-column filters, paging, r
   columns={[{ key: 'service', header: 'Service', sortable: true }, { key: 'cost', header: 'Cost', sortable: true, cell: (r) => `₹${r.cost}` }]} />
 ```
 
+### Drawer
+
+A panel that slides in from an edge (`placement="start" | "end" | "top" | "bottom"`; start/end follow reading direction), sized `small`/`medium`/`large`/`full` or any CSS length. Title, description, scrolling body and an `actions` footer; focus trapped and returned, Escape and backdrop click close it.
+
+```tsx
+<Drawer open={open} onClose={close} title="Filters" actions={<Button onClick={close}>Apply</Button>}>…</Drawer>
+```
+
 ### CommandPalette
 
 A ⌘K launcher (Ctrl+K on Windows/Linux). Groups, keywords, icons, shortcut hints, links, disabled commands, async results (`filter={false}` + `onSearchChange` + `loading`). Matching ignores case and accents and ranks best matches first.

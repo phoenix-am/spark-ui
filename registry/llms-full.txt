@@ -734,6 +734,38 @@ Style hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,
 - `description?`: `ReactNode` Supporting text under the title; read as the dialog's description.
 - `size?`: `"small" | "medium" | "large"` Max width: small 400px, medium 520px, large 720px.
 
+## Drawer (`drawer`)
+A panel that slides in from an edge, with focus trapping.
+
+```tsx
+import { Drawer } from '@sparkwire/core';
+```
+Install: `npx sparkwire add drawer` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-drawer--docs
+
+### Drawer
+Drawer: a panel that slides in from an edge, for filters, details, forms
+or navigation on small screens. Current runs along its inner edge as it
+powers on. Built on the Overlay base: focus is trapped and returned,
+the page behind is hidden from screen readers and doesn't scroll, and
+Escape or a backdrop click closes it.
+
+Style hooks: `.sp-drawer[data-placement]`, `__backdrop`, `__panel`,
+`__header`, `__title`, `__description`, `__body`, `__actions`, `__close`.
+Variable: `--sp-drawer-size`.
+
+- `onClose`: `() => void` Called on Escape, the close button or (when `dismissable`) a click on the backdrop.
+- `open`: `boolean` Whether the drawer is open.
+- `actions?`: `ReactNode` Footer content, e.g. Cancel and Save buttons.
+- `aria-label?`: `string` Accessible name when there is no visible title.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "backdrop" | "panel" | "header" | "title" | "description" | "body" | "actions" | "close", string>>` Extra classes for each part: root, backdrop, panel, header, title, description, body, actions, close.
+- `closeButton?`: `boolean` Show the × button. Default `true`.
+- `description?`: `ReactNode` Text under the title.
+- `dismissable?`: `boolean` Close on a click on the backdrop. Default `true`.
+- `placement?`: `"start" | "end" | "top" | "bottom"` Edge it slides from. `start`/`end` follow reading direction (`end` is the right in English, the left in Arabic). Default `end`.
+- `size?`: `"small" | "medium" | "large" | "full" | (string & {})` `small` (20rem), `medium` (28rem, default), `large` (40rem), `full`, or any CSS length.
+- `title?`: `ReactNode` Heading; also the dialog's accessible name.
+
 ## Tooltip (`tooltip`)
 A hint that flickers on.
 

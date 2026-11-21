@@ -30,6 +30,7 @@ Key facts for writing code:
 - [Tabs](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs): Tabs on one wire; the active tab is lit. Exports: Tabs, TabList, Tab, TabPanel.
 - [Accordion](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs): Sections that power on as they open. Exports: Accordion, AccordionItem.
 - [Modal](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs): A dialog that powers on, with focus trapping. Exports: Modal.
+- [Drawer](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-drawer--docs): A panel that slides in from an edge, with focus trapping. Exports: Drawer.
 - [Tooltip](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs): A hint that flickers on. Exports: Tooltip.
 - [Toast](https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs): Notifications. Exports: ToastProvider, ToastShowOptions.
 - [Card](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs): Card, CardHeader, CardFooter and Skeleton. Exports: Card, CardHeader, Skeleton.

@@ -41,6 +41,7 @@ const ENTRIES = [
   ['tabs', ['Tabs/Tabs.tsx'], 'navigation-tabs'],
   ['accordion', ['Accordion/Accordion.tsx'], 'navigation-accordion'],
   ['modal', ['Modal/Modal.tsx'], 'overlays-modal'],
+  ['drawer', ['Drawer/Drawer.tsx'], 'overlays-drawer'],
   ['tooltip', ['Tooltip/Tooltip.tsx'], 'overlays-tooltip'],
   ['toast', ['Toast/Toast.tsx', '__docgen__/shims.tsx'], 'feedback-toast', ['ToastProvider', 'ToastShowOptions']],
   ['card', ['Card/Card.tsx'], 'data-display-card'],

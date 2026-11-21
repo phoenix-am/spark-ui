@@ -511,6 +511,32 @@
       ]
     },
     {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A panel that slides in from an edge, with focus trapping.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Drawer/Drawer.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Drawer/Drawer.tsx"
+        },
+        {
+          "path": "components/spark-ui/Drawer/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Drawer/index.ts"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",

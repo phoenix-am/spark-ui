@@ -173,6 +173,11 @@
       "types": "./dist/command-palette/index.d.ts",
       "import": "./dist/command-palette/index.mjs",
       "require": "./dist/command-palette/index.js"
+    },
+    "./drawer": {
+      "types": "./dist/drawer/index.d.ts",
+      "import": "./dist/drawer/index.mjs",
+      "require": "./dist/drawer/index.js"
     }
   },
   "files": [
@@ -264,6 +269,9 @@
       ],
       "command-palette": [
         "./dist/command-palette/index.d.ts"
+      ],
+      "drawer": [
+        "./dist/drawer/index.d.ts"
       ]
     }
   }

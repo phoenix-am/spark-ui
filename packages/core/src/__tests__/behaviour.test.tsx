@@ -682,3 +682,24 @@ describe('CommandPalette', () => {
     expect(screen.getByText('Nothing found')).toBeInTheDocument();
   });
 });
+
+describe('Drawer', () => {
+  const { Drawer } = jest.requireActual('..');
+  it('is a labelled dialog that traps focus, closes on Escape and the close button', async () => {
+    const user = userEvent.setup();
+    const onClose = jest.fn();
+    render(
+      <Drawer open onClose={onClose} title="Filters" description="Narrow down" placement="start">
+        <button>Inside</button>
+      </Drawer>,
+    );
+    const dialog = await screen.findByRole('dialog', { name: 'Filters' });
+    expect(dialog).toHaveAttribute('data-placement', 'start');
+    expect(dialog).toHaveAccessibleDescription('Narrow down');
+    expect(dialog.contains(document.activeElement)).toBe(true);
+    await user.keyboard('{Escape}');
+    expect(onClose).toHaveBeenCalledTimes(1);
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+    expect(onClose).toHaveBeenCalledTimes(2);
+  });
+});

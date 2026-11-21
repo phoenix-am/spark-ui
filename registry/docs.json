@@ -2593,6 +2593,99 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs"
     },
     {
+      "name": "drawer",
+      "title": "Drawer",
+      "summary": "A panel that slides in from an edge, with focus trapping.",
+      "components": [
+        {
+          "name": "Drawer",
+          "description": "Drawer: a panel that slides in from an edge, for filters, details, forms\nor navigation on small screens. Current runs along its inner edge as it\npowers on. Built on the Overlay base: focus is trapped and returned,\nthe page behind is hidden from screen readers and doesn't scroll, and\nEscape or a backdrop click closes it.\n\nStyle hooks: `.sp-drawer[data-placement]`, `__backdrop`, `__panel`,\n`__header`, `__title`, `__description`, `__body`, `__actions`, `__close`.\nVariable: `--sp-drawer-size`.",
+          "props": [
+            {
+              "name": "onClose",
+              "type": "() => void",
+              "required": true,
+              "description": "Called on Escape, the close button or (when `dismissable`) a click on the backdrop."
+            },
+            {
+              "name": "open",
+              "type": "boolean",
+              "required": true,
+              "description": "Whether the drawer is open."
+            },
+            {
+              "name": "actions",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Footer content, e.g. Cancel and Save buttons."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name when there is no visible title."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"backdrop\" | \"panel\" | \"header\" | \"title\" | \"description\" | \"body\" | \"actions\" | \"close\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, backdrop, panel, header, title, description, body, actions, close."
+            },
+            {
+              "name": "closeButton",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the × button. Default `true`."
+            },
+            {
+              "name": "description",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Text under the title."
+            },
+            {
+              "name": "dismissable",
+              "type": "boolean",
+              "required": false,
+              "description": "Close on a click on the backdrop. Default `true`."
+            },
+            {
+              "name": "placement",
+              "type": "\"start\" | \"end\" | \"top\" | \"bottom\"",
+              "required": false,
+              "description": "Edge it slides from. `start`/`end` follow reading direction (`end` is the\nright in English, the left in Arabic). Default `end`."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\" | \"full\" | (string & {})",
+              "required": false,
+              "description": "`small` (20rem), `medium` (28rem, default), `large` (40rem), `full`, or any CSS length."
+            },
+            {
+              "name": "title",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Heading; also the dialog's accessible name."
+            }
+          ]
+        }
+      ],
+      "import": "import { Drawer } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add drawer",
+        "shadcn": "npx shadcn add @sparkwire/drawer",
+        "copiedImport": "import { Drawer } from '@/components/spark-ui/Drawer';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-drawer--docs"
+    },
+    {
       "name": "tooltip",
       "title": "Tooltip",
       "summary": "A hint that flickers on.",

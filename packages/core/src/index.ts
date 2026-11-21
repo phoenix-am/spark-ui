@@ -46,3 +46,5 @@ export { DataTable, useDataTable } from './DataTable';
 export type { DataTableProps, DataTableColumn, SortRule, UseDataTableOptions } from './DataTable';
 export { CommandPalette } from './CommandPalette';
 export type { CommandPaletteProps, Command, CommandGroup } from './CommandPalette';
+export { Drawer } from './Drawer';
+export type { DrawerProps } from './Drawer';
