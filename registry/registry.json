@@ -681,7 +681,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "DatePicker",
-      "description": "DatePicker and Calendar with typed entry, locales and calendar systems.",
+      "description": "DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems.",
       "dependencies": [
         "@internationalized/date@^3.12.4",
         "react-aria@^3.53.1",
@@ -705,6 +705,11 @@
           "target": "components/spark-ui/DatePicker/DatePicker.tsx"
         },
         {
+          "path": "components/spark-ui/DatePicker/DateRangePicker.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/DateRangePicker.tsx"
+        },
+        {
           "path": "components/spark-ui/DatePicker/dateAdapters.ts",
           "type": "registry:ui",
           "target": "components/spark-ui/DatePicker/dateAdapters.ts"
@@ -713,6 +718,11 @@
           "path": "components/spark-ui/DatePicker/index.ts",
           "type": "registry:ui",
           "target": "components/spark-ui/DatePicker/index.ts"
+        },
+        {
+          "path": "components/spark-ui/DatePicker/presets.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/presets.ts"
         }
       ]
     },

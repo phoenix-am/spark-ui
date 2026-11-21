@@ -34,7 +34,7 @@ const ENTRIES = [
   ['field', ['Field/Field.tsx'], 'inputs-field'],
   ['dropdown', ['Dropdown/Dropdown.tsx'], 'inputs-dropdown'],
   ['combobox', ['Combobox/Combobox.tsx'], 'inputs-combobox'],
-  ['date-picker', ['DatePicker/DatePicker.tsx', 'DatePicker/Calendar.tsx'], 'inputs-datepicker'],
+  ['date-picker', ['DatePicker/DatePicker.tsx', 'DatePicker/DateRangePicker.tsx', 'DatePicker/Calendar.tsx'], 'inputs-datepicker'],
   ['data-table', ['DataTable/DataTable.tsx'], 'data-display-datatable'],
   ['menu', ['Menu/Menu.tsx'], 'navigation-menu'],
   ['tabs', ['Tabs/Tabs.tsx'], 'navigation-tabs'],
@@ -58,7 +58,7 @@ const parser = docgen.withCustomConfig(path.join(root, 'tsconfig.json'), {
 });
 
 const clean = (s = '') => s.replace(/\r/g, '').trim();
-const INTERNAL = new Set(['CalendarSystem', 'CalendarCore', 'FirstDayOfWeek']);
+const INTERNAL = new Set(['CalendarSystem', 'CalendarCore', 'RangeCalendarCore', 'FirstDayOfWeek', 'DateField', 'Dialog']);
 
 /*
  * Shims for APIs docgen can't read directly: Button's polymorphic forwardRef

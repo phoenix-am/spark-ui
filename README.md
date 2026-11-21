@@ -166,6 +166,19 @@ Sorting (Shift+click for several columns), search, per-column filters, paging, r
 
 Options can be grouped: `options={[{ label: 'Asia', options: [...] }]}`. Dropdown's value type follows its options, so numbers come back as numbers.
 
+## Dates: presets, rules and ranges
+
+```tsx
+<DatePicker label="Due" presets={['today', 'tomorrow', '+7d', '+1m']} disabledDates={holidays} isDateDisabled={isWeekend} />
+<DateRangePicker label="Stay" presets={['+7d', '+1m', 'thisMonth']} startName="checkIn" endName="checkOut" />
+<Calendar enabledDates={openSlots} renderDay={(d, info) => <>{info.formatted}<small>₹4k</small></>} />
+```
+
+- **Presets** are buttons under the calendar. Short names: `'today'`, `'tomorrow'`, `'yesterday'`, `'+7d'`, `'+2w'`, `'+1m'`, `'+1y'` (forward), `'-30d'` (back); for ranges also `'thisWeek'`, `'thisMonth'`, `'thisYear'`. Or pass `{ label, value }` with your own label (any language) and a Date, range or function. The active preset lights up; one that lands on an unavailable day is disabled.
+- **Which days can be picked:** `min`/`max`, `disabledDates` (block-list), `enabledDates` (allow-list: only these), and `isDateDisabled` (a rule, e.g. weekends). They combine.
+- **Customization:** `classNames` for every calendar part, `renderDay` for custom day content, `visibleMonths`, `showToday`.
+- **DateRangePicker / RangeCalendar:** typed start and end, hover preview, two months by default, ranges can't cross unavailable days (unless `allowsNonContiguousRanges`). Submit as `name` (ISO interval `2026-12-01/2026-12-05`) or `startName` + `endName`.
+
 ## Languages, dates and right-to-left
 
 Set the locale once and every date, weekday name, digit and arrow key follows it:

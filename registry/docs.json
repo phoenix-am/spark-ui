@@ -1127,7 +1127,7 @@
     {
       "name": "date-picker",
       "title": "DatePicker",
-      "summary": "DatePicker and Calendar with typed entry, locales and calendar systems.",
+      "summary": "DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems.",
       "components": [
         {
           "name": "DatePicker",
@@ -1144,6 +1144,12 @@
               "type": "CalendarSystem",
               "required": false,
               "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
+            },
+            {
+              "name": "calendarClassNames",
+              "type": "Partial<Record<CalendarSlot, string>>",
+              "required": false,
+              "description": "Extra classes for the calendar's parts (header, day, preset…)."
             },
             {
               "name": "className",
@@ -1176,6 +1182,18 @@
               "description": ""
             },
             {
+              "name": "disabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "Days that can't be picked, e.g. holidays or booked days."
+            },
+            {
+              "name": "enabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "If set, only these days can be picked, e.g. open appointment slots."
+            },
+            {
               "name": "error",
               "type": "boolean",
               "required": false,
@@ -1197,7 +1215,7 @@
               "name": "isDateDisabled",
               "type": "((date: Date) => boolean)",
               "required": false,
-              "description": "Return `true` for days that can't be picked (e.g. weekends, holidays)."
+              "description": "Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above."
             },
             {
               "name": "label",
@@ -1236,10 +1254,28 @@
               "description": "Called with the picked or typed date, or `null` when cleared."
             },
             {
+              "name": "presets",
+              "type": "(DatePreset | DatePresetName)[]",
+              "required": false,
+              "description": "Shortcut buttons under the calendar, replacing the Today button. Short\nnames (`'today'`, `'tomorrow'`, `'+7d'`, `'+1m'`, `'-1y'`) or your own\n`{ label, value }` where value is a Date or a function returning one."
+            },
+            {
+              "name": "renderDay",
+              "type": "((date: Date, info: DayRenderInfo) => ReactNode)",
+              "required": false,
+              "description": "Custom content for a day cell, e.g. a price or an event dot under the number."
+            },
+            {
               "name": "required",
               "type": "boolean",
               "required": false,
               "description": ""
+            },
+            {
+              "name": "showToday",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the Today button. Default `true` for Calendar, `false` for RangeCalendar. Ignored when `presets` is set."
             },
             {
               "name": "size",
@@ -1251,13 +1287,19 @@
               "name": "todayLabel",
               "type": "string",
               "required": false,
-              "description": "Label for the \"Today\" shortcut, for other languages."
+              "description": "Label for the Today button, for other languages."
             },
             {
               "name": "value",
               "type": "Date | null",
               "required": false,
               "description": "Controlled value; `null` for no date."
+            },
+            {
+              "name": "visibleMonths",
+              "type": "number",
+              "required": false,
+              "description": "Months shown side by side. Default 1."
             },
             {
               "name": "format",
@@ -1283,8 +1325,195 @@
           ]
         },
         {
+          "name": "DateRangePicker",
+          "description": "DateRangePicker: type or pick a start and an end date; current flows\nbetween them in the calendar. Two months side by side, shortcut buttons\n(`presets`) under the calendar, and full control over which days can be\npicked. Behaviour comes from React Aria: typed entry in the locale's order,\nhover preview of the range, right-to-left, calendar systems.\n\nStyle hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,\n`__control`, `.sp-date-field`, `__dash`, `__trigger`, `__clear`, `__popover`.",
+          "props": [
+            {
+              "name": "allowsNonContiguousRanges",
+              "type": "boolean",
+              "required": false,
+              "description": "Allow ranges that cross unavailable days. Default `false`."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name when there is no visible label."
+            },
+            {
+              "name": "calendar",
+              "type": "CalendarSystem",
+              "required": false,
+              "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
+            },
+            {
+              "name": "calendarClassNames",
+              "type": "Partial<Record<CalendarSlot, string>>",
+              "required": false,
+              "description": "Extra classes for the calendar's parts."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"label\" | \"control\" | \"field\" | \"trigger\" | \"popover\" | \"helper\", string>>",
+              "required": false,
+              "description": "Extra classes for each part: root, label, control, field, trigger, popover, helper."
+            },
+            {
+              "name": "clearable",
+              "type": "boolean",
+              "required": false,
+              "description": "Show a clear button when a range is set. Default `true`."
+            },
+            {
+              "name": "defaultValue",
+              "type": "DateRange | null",
+              "required": false,
+              "description": "Initial range when uncontrolled."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "Days that can't be picked, e.g. holidays or booked days."
+            },
+            {
+              "name": "enabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "If set, only these days can be picked, e.g. open appointment slots."
+            },
+            {
+              "name": "endName",
+              "type": "string",
+              "required": false,
+              "description": "Hidden input with the end date (ISO), e.g. `checkOut`."
+            },
+            {
+              "name": "error",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "firstDayOfWeek",
+              "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "required": false,
+              "description": "First day of the week. Defaults to the locale's convention."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Help text under the field (or the error message when `error` is set)."
+            },
+            {
+              "name": "isDateDisabled",
+              "type": "((date: Date) => boolean)",
+              "required": false,
+              "description": "Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Visible label above the field."
+            },
+            {
+              "name": "locale",
+              "type": "string",
+              "required": false,
+              "description": "BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's."
+            },
+            {
+              "name": "max",
+              "type": "Date",
+              "required": false,
+              "description": "Latest selectable day."
+            },
+            {
+              "name": "min",
+              "type": "Date",
+              "required": false,
+              "description": "Earliest selectable day."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "One hidden input with an ISO interval, e.g. `2026-12-01/2026-12-07`."
+            },
+            {
+              "name": "onChange",
+              "type": "((range: DateRange | null) => void)",
+              "required": false,
+              "description": "Called with the picked or typed range, or `null` when cleared."
+            },
+            {
+              "name": "presets",
+              "type": "(RangePreset | RangePresetName)[]",
+              "required": false,
+              "description": "Shortcut buttons under the calendar. Short names (`'+7d'` next 7 days,\n`'-30d'` last 30 days, `'thisWeek'`, `'thisMonth'`, `'thisYear'`,\n`'today'`) or your own `{ label, value }`."
+            },
+            {
+              "name": "renderDay",
+              "type": "((date: Date, info: DayRenderInfo) => ReactNode)",
+              "required": false,
+              "description": "Custom content for a day cell, e.g. a price or an event dot under the number."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": "Default `medium`."
+            },
+            {
+              "name": "startName",
+              "type": "string",
+              "required": false,
+              "description": "Hidden input with the start date (ISO), e.g. `checkIn`."
+            },
+            {
+              "name": "value",
+              "type": "DateRange | null",
+              "required": false,
+              "description": "Controlled range; `null` for none."
+            },
+            {
+              "name": "visibleMonths",
+              "type": "number",
+              "required": false,
+              "description": "Months shown in the popover. Default 2."
+            },
+            {
+              "name": "weekStartsOn",
+              "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "required": false,
+              "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
+              "deprecated": true
+            }
+          ]
+        },
+        {
           "name": "Calendar",
-          "description": "Calendar: a month grid. The selected day is a lit node, today is a ring,\nand picking a day throws a spark. Behaviour comes from React Aria: arrows,\nPage Up/Down (Shift for years), Home/End, right-to-left mirroring,\nlocalized names and digits, other calendar systems, and announcements\nwhen the month changes.\n\nStyle hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,\n`__day` with `[data-selected]`, `[data-today]`, `[data-outside]`,\n`[data-unavailable]`, `[data-disabled]`, `[data-focus-visible]`.",
+          "description": "Calendar: a month grid. The selected day is a lit node, today is a ring,\nand picking a day throws a spark. Shortcut buttons (`presets`) sit under\nthe grid. Behaviour comes from React Aria: arrows, Page Up/Down (Shift for\nyears), Home/End, right-to-left mirroring, localized names and digits,\nother calendar systems, and announcements when the month changes.\n\nStyle hooks: `.sp-calendar`, `__header`, `__title`, `__nav`, `__months`,\n`__grid`, `__weekday`, `__day` with `[data-selected]`, `[data-today]`,\n`[data-unavailable]`, `[data-outside]`, `[data-focus-visible]`,\n`__footer`, `__preset[data-active]`. Add classes with `classNames`.",
           "props": [
             {
               "name": "aria-label",
@@ -1311,10 +1540,28 @@
               "description": ""
             },
             {
+              "name": "classNames",
+              "type": "Partial<Record<CalendarSlot, string>>",
+              "required": false,
+              "description": "Extra classes for each part."
+            },
+            {
               "name": "defaultValue",
               "type": "Date | null",
               "required": false,
               "description": "Initial selected day when uncontrolled."
+            },
+            {
+              "name": "disabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "Days that can't be picked, e.g. holidays or booked days."
+            },
+            {
+              "name": "enabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "If set, only these days can be picked, e.g. open appointment slots."
             },
             {
               "name": "firstDayOfWeek",
@@ -1326,7 +1573,7 @@
               "name": "isDateDisabled",
               "type": "((date: Date) => boolean)",
               "required": false,
-              "description": "Return `true` for days that can't be picked (e.g. weekends, holidays)."
+              "description": "Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above."
             },
             {
               "name": "locale",
@@ -1359,16 +1606,185 @@
               "description": "Called on Escape, so a custom popover can close."
             },
             {
+              "name": "presets",
+              "type": "(DatePreset | DatePresetName)[]",
+              "required": false,
+              "description": "Shortcut buttons under the calendar, replacing the Today button. Short\nnames (`'today'`, `'tomorrow'`, `'+7d'`, `'+1m'`, `'-1y'`) or your own\n`{ label, value }` where value is a Date or a function returning one."
+            },
+            {
+              "name": "renderDay",
+              "type": "((date: Date, info: DayRenderInfo) => ReactNode)",
+              "required": false,
+              "description": "Custom content for a day cell, e.g. a price or an event dot under the number."
+            },
+            {
+              "name": "showToday",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the Today button. Default `true` for Calendar, `false` for RangeCalendar. Ignored when `presets` is set."
+            },
+            {
               "name": "todayLabel",
               "type": "string",
               "required": false,
-              "description": "Label for the \"Today\" shortcut, for other languages."
+              "description": "Label for the Today button, for other languages."
             },
             {
               "name": "value",
               "type": "Date | null",
               "required": false,
               "description": "The selected day."
+            },
+            {
+              "name": "visibleMonths",
+              "type": "number",
+              "required": false,
+              "description": "Months shown side by side. Default 1."
+            },
+            {
+              "name": "weekStartsOn",
+              "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "required": false,
+              "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
+              "deprecated": true
+            }
+          ]
+        },
+        {
+          "name": "RangeCalendar",
+          "description": "RangeCalendar: pick a start and an end day; current flows between them.\nHovering after the first click previews the range. Shows two months with\n`visibleMonths={2}`. Shortcut buttons (`presets`) sit under the grid.\n\nStyle hooks: as Calendar, plus `__day[data-range-start][data-range-end][data-in-range]`.",
+          "props": [
+            {
+              "name": "allowsNonContiguousRanges",
+              "type": "boolean",
+              "required": false,
+              "description": "Allow ranges that cross unavailable days. Default `false`."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": "Accessible name for the calendar."
+            },
+            {
+              "name": "autoFocus",
+              "type": "boolean",
+              "required": false,
+              "description": "Move keyboard focus into the grid when the calendar mounts."
+            },
+            {
+              "name": "calendar",
+              "type": "CalendarSystem",
+              "required": false,
+              "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<CalendarSlot, string>>",
+              "required": false,
+              "description": "Extra classes for each part."
+            },
+            {
+              "name": "defaultValue",
+              "type": "DateRange | null",
+              "required": false,
+              "description": "Initial range when uncontrolled."
+            },
+            {
+              "name": "disabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "Days that can't be picked, e.g. holidays or booked days."
+            },
+            {
+              "name": "enabledDates",
+              "type": "Date[]",
+              "required": false,
+              "description": "If set, only these days can be picked, e.g. open appointment slots."
+            },
+            {
+              "name": "firstDayOfWeek",
+              "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "required": false,
+              "description": "First day of the week. Defaults to the locale's convention."
+            },
+            {
+              "name": "isDateDisabled",
+              "type": "((date: Date) => boolean)",
+              "required": false,
+              "description": "Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above."
+            },
+            {
+              "name": "locale",
+              "type": "string",
+              "required": false,
+              "description": "BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's."
+            },
+            {
+              "name": "max",
+              "type": "Date",
+              "required": false,
+              "description": "Latest selectable day."
+            },
+            {
+              "name": "min",
+              "type": "Date",
+              "required": false,
+              "description": "Earliest selectable day."
+            },
+            {
+              "name": "onChange",
+              "type": "((range: DateRange) => void)",
+              "required": false,
+              "description": "Called with the picked range once both ends are chosen."
+            },
+            {
+              "name": "onEscape",
+              "type": "(() => void)",
+              "required": false,
+              "description": "Called on Escape, so a custom popover can close."
+            },
+            {
+              "name": "presets",
+              "type": "(RangePreset | RangePresetName)[]",
+              "required": false,
+              "description": "Shortcut buttons under the calendar. Short names (`'+7d'` next 7 days,\n`'-30d'` last 30 days, `'thisWeek'`, `'thisMonth'`, `'thisYear'`,\n`'today'`) or your own `{ label, value }`."
+            },
+            {
+              "name": "renderDay",
+              "type": "((date: Date, info: DayRenderInfo) => ReactNode)",
+              "required": false,
+              "description": "Custom content for a day cell, e.g. a price or an event dot under the number."
+            },
+            {
+              "name": "showToday",
+              "type": "boolean",
+              "required": false,
+              "description": "Show the Today button. Default `true` for Calendar, `false` for RangeCalendar. Ignored when `presets` is set."
+            },
+            {
+              "name": "todayLabel",
+              "type": "string",
+              "required": false,
+              "description": "Label for the Today button, for other languages."
+            },
+            {
+              "name": "value",
+              "type": "DateRange | null",
+              "required": false,
+              "description": "The selected range."
+            },
+            {
+              "name": "visibleMonths",
+              "type": "number",
+              "required": false,
+              "description": "Months shown side by side. Default 1."
             },
             {
               "name": "weekStartsOn",
@@ -1380,12 +1796,12 @@
           ]
         }
       ],
-      "import": "import { DatePicker, Calendar } from '@sparkwire/core';",
+      "import": "import { DatePicker, DateRangePicker, Calendar, RangeCalendar } from '@sparkwire/core';",
       "install": {
         "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
         "copy": "npx sparkwire add date-picker",
         "shadcn": "npx shadcn add @sparkwire/date-picker",
-        "copiedImport": "import { DatePicker, Calendar } from '@/components/spark-ui/DatePicker';"
+        "copiedImport": "import { DatePicker, DateRangePicker, Calendar, RangeCalendar } from '@/components/spark-ui/DatePicker';"
       },
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs"
     },

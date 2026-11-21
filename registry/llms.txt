@@ -23,7 +23,7 @@ Key facts for writing code:
 - [Field](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs): Label, help text and error wiring for any control. Exports: Field.
 - [Dropdown](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs): Pick one value from a list. Exports: Dropdown.
 - [Combobox](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs): Type to search, then pick. Exports: Combobox.
-- [DatePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs): DatePicker and Calendar with typed entry, locales and calendar systems. Exports: DatePicker, Calendar.
+- [DatePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs): DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems. Exports: DatePicker, DateRangePicker, Calendar, RangeCalendar.
 - [DataTable](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs): Sort, search, filter, page and select rows; responsive div grid, no table library. Exports: DataTable.
 - [Menu](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs): Actions behind a button, with submenus. Exports: Menu.
 - [Tabs](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs): Tabs on one wire; the active tab is lit. Exports: Tabs, TabList, Tab, TabPanel.

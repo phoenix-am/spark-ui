@@ -35,6 +35,8 @@ export interface SparkComponentsConfig {
   Combobox?: ComponentConfig<ComboboxProps>;
   Menu?: ComponentConfig<MenuProps>;
   DataTable?: ComponentConfig<Record<string, unknown>>;
+  DateRangePicker?: ComponentConfig<Record<string, unknown>>;
+  RangeCalendar?: ComponentConfig<Record<string, unknown>>;
   Field?: ComponentConfig<FieldProps>;
   Tabs?: ComponentConfig<TabsProps>;
   Accordion?: ComponentConfig<AccordionProps>;

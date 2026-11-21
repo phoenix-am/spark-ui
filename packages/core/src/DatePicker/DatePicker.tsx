@@ -3,13 +3,21 @@ import { I18nProvider, useButton, useDateField, useDatePicker, useDateSegment, u
 import { useDateFieldState, useDatePickerState, DateFieldState, DateSegment } from 'react-stately';
 import { DateValue, createCalendar } from '@internationalized/date';
 import type { AriaDateFieldProps, AriaDialogProps } from 'react-aria';
-import { CalendarCore, CalendarProps } from './Calendar';
+import { CalendarCore, CalendarProps, CalendarSlot, makeUnavailable } from './Calendar';
+import { toDatePreset } from './presets';
+import { getLocalTimeZone, today } from '@internationalized/date';
 import { Popover } from '../base/Popover';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO, withCalendar } from './dateAdapters';
 
 export interface DatePickerProps
-  extends Pick<CalendarProps, 'min' | 'max' | 'isDateDisabled' | 'firstDayOfWeek' | 'weekStartsOn' | 'locale' | 'calendar' | 'todayLabel'> {
+  extends Pick<
+    CalendarProps,
+    | 'min' | 'max' | 'isDateDisabled' | 'disabledDates' | 'enabledDates' | 'firstDayOfWeek' | 'weekStartsOn' | 'locale' | 'calendar'
+    | 'todayLabel' | 'showToday' | 'presets' | 'renderDay' | 'visibleMonths'
+  > {
+  /** Extra classes for the calendar's parts (header, day, preset…). */
+  calendarClassNames?: ClassNames<CalendarSlot>;
   /** Visible label above the field. */
   label?: React.ReactNode;
   /** Accessible name when there is no visible label. */
@@ -72,6 +80,13 @@ function DatePickerInner({
   min,
   max,
   isDateDisabled,
+  disabledDates,
+  enabledDates,
+  showToday = true,
+  presets,
+  renderDay,
+  visibleMonths,
+  calendarClassNames,
   firstDayOfWeek,
   weekStartsOn,
   todayLabel,
@@ -95,7 +110,7 @@ function DatePickerInner({
     onChange: (v: DateValue | null) => onChange?.(fromDateValue(v)),
     minValue: toDateValue(min) ?? undefined,
     maxValue: toDateValue(max) ?? undefined,
-    isDateUnavailable: isDateDisabled ? (d: DateValue) => isDateDisabled(fromDateValue(d)!) : undefined,
+    isDateUnavailable: makeUnavailable({ isDateDisabled, disabledDates, enabledDates }),
     isDisabled: disabled,
     isRequired: required,
     isInvalid: error,
@@ -162,7 +177,14 @@ function DatePickerInner({
       {state.isOpen && (
         <Popover state={state} triggerRef={groupRef} offset={8} className={slot('sp-date-picker__popover', classNames, 'popover')}>
           <Dialog {...dialogProps}>
-            <CalendarCore {...calendarProps} firstDayOfWeek={firstDay} todayLabel={todayLabel} />
+            <CalendarCore
+              {...calendarProps}
+              firstDayOfWeek={firstDay}
+              presets={presets?.map(toDatePreset) ?? (showToday ? [{ label: todayLabel ?? 'Today', value: () => today(getLocalTimeZone()).toDate(getLocalTimeZone()) }] : [])}
+              renderDay={renderDay}
+              visibleMonths={visibleMonths}
+              classNames={calendarClassNames}
+            />
           </Dialog>
         </Popover>
       )}
@@ -170,7 +192,7 @@ function DatePickerInner({
   );
 }
 
-function DateField({ className, ...props }: AriaDateFieldProps<DateValue> & { className: string }) {
+export function DateField({ className, ...props }: AriaDateFieldProps<DateValue> & { className: string }) {
   const { locale } = useLocale();
   const state = useDateFieldState({ ...props, locale, createCalendar });
   const ref = useRef<HTMLDivElement>(null);
@@ -201,7 +223,7 @@ function Segment({ segment, state }: { segment: DateSegment; state: DateFieldSta
   );
 }
 
-function Dialog({ children, ...props }: AriaDialogProps & { children: React.ReactNode }) {
+export function Dialog({ children, ...props }: AriaDialogProps & { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const { dialogProps } = useDialog(props, ref);
   return (

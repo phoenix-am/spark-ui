@@ -188,3 +188,84 @@
   animation: sp-drop var(--spark-motion-normal) var(--spark-motion-easing) both;
 }
 .sp-date-picker__dialog { outline: none; }
+
+/* ---------------------------------------------- Presets (under the grid) */
+.sp-calendar__footer { flex-wrap: wrap; gap: 0.375rem; }
+.sp-calendar__preset {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--spark-surface-border-strong);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.75rem;
+  color: var(--spark-text-primary);
+  transition: border-color var(--spark-motion-fast), background var(--spark-motion-fast), box-shadow var(--spark-motion-normal);
+}
+.sp-calendar__preset:hover:not(:disabled) { border-color: var(--spark-energy-ink); color: var(--spark-energy-ink); }
+.sp-calendar__preset:focus-visible { outline: 2px solid var(--spark-energy-ink); outline-offset: 2px; }
+.sp-calendar__preset[data-active] {
+  border-color: var(--spark-energy-current);
+  background: color-mix(in srgb, var(--spark-energy-current) 16%, transparent);
+  color: var(--spark-energy-ink);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--spark-energy-glow) 60%, transparent);
+}
+.sp-calendar__preset:disabled { color: var(--spark-text-disabled); border-style: dashed; cursor: not-allowed; }
+
+/* ----------------------------------------------------- Several months */
+.sp-calendar__months { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.sp-calendar__month { flex: 1 1 15rem; min-width: 15rem; }
+.sp-calendar__nav-spacer { width: 2rem; flex: none; }
+
+/* ------------------------------------------- Ranges: current between ends */
+.sp-calendar[data-range] .sp-calendar__cell { padding-inline: 0; }
+.sp-calendar__cell[data-in-range] {
+  background: linear-gradient(color-mix(in srgb, var(--spark-energy-current) 16%, transparent), color-mix(in srgb, var(--spark-energy-current) 16%, transparent)) center / 100% 2.25rem no-repeat;
+}
+.sp-calendar__cell[data-range-start] { background-size: 50% 2.25rem; background-position: right center; }
+.sp-calendar__cell[data-range-end] { background-size: 50% 2.25rem; background-position: left center; }
+.sp-calendar__cell[data-range-start][data-range-end] { background: none; }
+[dir='rtl'] .sp-calendar__cell[data-range-start] { background-position: left center; }
+[dir='rtl'] .sp-calendar__cell[data-range-end] { background-position: right center; }
+/* The wire through the range: a thin flowing line across the middle. */
+.sp-calendar__cell[data-in-range]:not([data-range-start]):not([data-range-end]) .sp-calendar__day::after {
+  content: '';
+  position: absolute;
+  inset-inline: -2px;
+  bottom: 3px;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--spark-energy-ink) 0 4px, transparent 4px 8px);
+  background-size: 16px 100%;
+  opacity: 0.55;
+  animation: sp-flow 900ms linear infinite;
+}
+@keyframes sp-flow { to { background-position: 16px 0; } }
+.sp-calendar__day[data-in-range]:not([data-range-start]):not([data-range-end]) { color: var(--spark-text-primary); }
+.sp-calendar__day[data-range-start],
+.sp-calendar__day[data-range-end] {
+  border-color: var(--spark-energy-current);
+  background: var(--spark-energy-current);
+  color: var(--spark-text-on-energy);
+  font-weight: 700;
+  box-shadow: 0 0 16px var(--spark-energy-glow);
+}
+
+/* ------------------------------------------------------ Custom day content */
+.sp-calendar__day[data-custom] { flex-direction: column; gap: 0; line-height: 1.05; }
+.sp-calendar__day[data-custom] small { font-size: 0.5625rem; font-weight: 600; opacity: 0.75; }
+
+/* ------------------------------------------------------- DateRangePicker */
+.sp-date-range-picker .sp-date-field { flex: 0 0 auto; padding-inline-end: 0.25rem; }
+.sp-date-range-picker .sp-date-field + .sp-date-range-picker__dash + .sp-date-field { padding-inline-start: 0.25rem; flex: 1; }
+.sp-date-range-picker__dash { color: var(--spark-text-secondary); font-size: 0.875rem; }
+.sp-date-range-picker[data-open] .sp-date-range-picker__dash { color: var(--sp-ink); }
+
+/* Fixes: several months need room; range middles are part of the band, not ends. */
+.sp-calendar[data-months] { width: auto; }
+.sp-calendar[data-months] .sp-calendar__month { flex: 0 0 18.5rem; min-width: 0; }
+.sp-calendar[data-range] .sp-calendar__day[data-selected]:not([data-range-start]):not([data-range-end]) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--spark-text-primary);
+  font-weight: 600;
+  box-shadow: none;
+}
+.sp-calendar[data-range] .sp-calendar__day[data-selected]:not([data-range-start]):not([data-range-end]):hover { border-color: var(--spark-energy-ink); }

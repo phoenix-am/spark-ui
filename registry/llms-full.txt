@@ -335,10 +335,10 @@ list `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
 - `value?`: `string | number | null` Controlled selected value (`null` for none).
 
 ## DatePicker (`date-picker`)
-DatePicker and Calendar with typed entry, locales and calendar systems.
+DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems.
 
 ```tsx
-import { DatePicker, Calendar } from '@sparkwire/core';
+import { DatePicker, DateRangePicker, Calendar, RangeCalendar } from '@sparkwire/core';
 ```
 Install: `npx sparkwire add date-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs
 
@@ -356,54 +356,141 @@ Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
 
 - `aria-label?`: `string` Accessible name when there is no visible label.
 - `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
+- `calendarClassNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for the calendar's parts (header, day, preset…).
 - `className?`: `string`
 - `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "popover" | "helper", string>>` Extra classes for each part: root, label, control, field, trigger, popover, helper.
 - `clearable?`: `boolean` Show a clear button when a date is set. Default `true`.
 - `defaultValue?`: `Date | null` Initial value when uncontrolled.
 - `disabled?`: `boolean`
+- `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
+- `enabledDates?`: `Date[]` If set, only these days can be picked, e.g. open appointment slots.
 - `error?`: `boolean` Marks the field invalid.
 - `firstDayOfWeek?`: `"sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat"` First day of the week. Defaults to the locale's convention.
 - `helperText?`: `ReactNode` Help text under the field (or the error message when `error` is set).
-- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked (e.g. weekends, holidays).
+- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above.
 - `label?`: `ReactNode` Visible label above the field.
 - `locale?`: `string` BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's.
 - `max?`: `Date` Latest selectable day.
 - `min?`: `Date` Earliest selectable day.
 - `name?`: `string` Name for a hidden input carrying the ISO date (YYYY-MM-DD), for plain forms.
 - `onChange?`: `((date: Date | null) => void)` Called with the picked or typed date, or `null` when cleared.
+- `presets?`: `(DatePreset | DatePresetName)[]` Shortcut buttons under the calendar, replacing the Today button. Short names (`'today'`, `'tomorrow'`, `'+7d'`, `'+1m'`, `'-1y'`) or your own `{ label, value }` where value is a Date or a function returning one.
+- `renderDay?`: `((date: Date, info: DayRenderInfo) => ReactNode)` Custom content for a day cell, e.g. a price or an event dot under the number.
 - `required?`: `boolean`
+- `showToday?`: `boolean` Show the Today button. Default `true` for Calendar, `false` for RangeCalendar. Ignored when `presets` is set.
 - `size?`: `"small" | "medium" | "large"` Default `medium`.
-- `todayLabel?`: `string` Label for the "Today" shortcut, for other languages.
+- `todayLabel?`: `string` Label for the Today button, for other languages.
 - `value?`: `Date | null` Controlled value; `null` for no date.
+- `visibleMonths?`: `number` Months shown side by side. Default 1.
 - `format?`: `DateTimeFormatOptions` **Deprecated.** The field now shows editable segments in the locale's order.
 - `placeholder?`: `string` **Deprecated.** The field now shows editable segments in the locale's order.
 - `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
+### DateRangePicker
+DateRangePicker: type or pick a start and an end date; current flows
+between them in the calendar. Two months side by side, shortcut buttons
+(`presets`) under the calendar, and full control over which days can be
+picked. Behaviour comes from React Aria: typed entry in the locale's order,
+hover preview of the range, right-to-left, calendar systems.
+
+Style hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,
+`__control`, `.sp-date-field`, `__dash`, `__trigger`, `__clear`, `__popover`.
+
+- `allowsNonContiguousRanges?`: `boolean` Allow ranges that cross unavailable days. Default `false`.
+- `aria-label?`: `string` Accessible name when there is no visible label.
+- `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
+- `calendarClassNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for the calendar's parts.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "popover" | "helper", string>>` Extra classes for each part: root, label, control, field, trigger, popover, helper.
+- `clearable?`: `boolean` Show a clear button when a range is set. Default `true`.
+- `defaultValue?`: `DateRange | null` Initial range when uncontrolled.
+- `disabled?`: `boolean`
+- `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
+- `enabledDates?`: `Date[]` If set, only these days can be picked, e.g. open appointment slots.
+- `endName?`: `string` Hidden input with the end date (ISO), e.g. `checkOut`.
+- `error?`: `boolean`
+- `firstDayOfWeek?`: `"sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat"` First day of the week. Defaults to the locale's convention.
+- `helperText?`: `ReactNode` Help text under the field (or the error message when `error` is set).
+- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above.
+- `label?`: `ReactNode` Visible label above the field.
+- `locale?`: `string` BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's.
+- `max?`: `Date` Latest selectable day.
+- `min?`: `Date` Earliest selectable day.
+- `name?`: `string` One hidden input with an ISO interval, e.g. `2026-12-01/2026-12-07`.
+- `onChange?`: `((range: DateRange | null) => void)` Called with the picked or typed range, or `null` when cleared.
+- `presets?`: `(RangePreset | RangePresetName)[]` Shortcut buttons under the calendar. Short names (`'+7d'` next 7 days, `'-30d'` last 30 days, `'thisWeek'`, `'thisMonth'`, `'thisYear'`, `'today'`) or your own `{ label, value }`.
+- `renderDay?`: `((date: Date, info: DayRenderInfo) => ReactNode)` Custom content for a day cell, e.g. a price or an event dot under the number.
+- `required?`: `boolean`
+- `size?`: `"small" | "medium" | "large"` Default `medium`.
+- `startName?`: `string` Hidden input with the start date (ISO), e.g. `checkIn`.
+- `value?`: `DateRange | null` Controlled range; `null` for none.
+- `visibleMonths?`: `number` Months shown in the popover. Default 2.
+- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
+
 ### Calendar
 Calendar: a month grid. The selected day is a lit node, today is a ring,
-and picking a day throws a spark. Behaviour comes from React Aria: arrows,
-Page Up/Down (Shift for years), Home/End, right-to-left mirroring,
-localized names and digits, other calendar systems, and announcements
-when the month changes.
+and picking a day throws a spark. Shortcut buttons (`presets`) sit under
+the grid. Behaviour comes from React Aria: arrows, Page Up/Down (Shift for
+years), Home/End, right-to-left mirroring, localized names and digits,
+other calendar systems, and announcements when the month changes.
 
-Style hooks: `.sp-calendar`, `__nav`, `__title`, `__grid`, `__weekday`,
-`__day` with `[data-selected]`, `[data-today]`, `[data-outside]`,
-`[data-unavailable]`, `[data-disabled]`, `[data-focus-visible]`.
+Style hooks: `.sp-calendar`, `__header`, `__title`, `__nav`, `__months`,
+`__grid`, `__weekday`, `__day` with `[data-selected]`, `[data-today]`,
+`[data-unavailable]`, `[data-outside]`, `[data-focus-visible]`,
+`__footer`, `__preset[data-active]`. Add classes with `classNames`.
 
 - `aria-label?`: `string` Accessible name for the calendar.
 - `autoFocus?`: `boolean` Move keyboard focus into the grid when the calendar mounts.
 - `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
 - `className?`: `string`
+- `classNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for each part.
 - `defaultValue?`: `Date | null` Initial selected day when uncontrolled.
+- `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
+- `enabledDates?`: `Date[]` If set, only these days can be picked, e.g. open appointment slots.
 - `firstDayOfWeek?`: `"sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat"` First day of the week. Defaults to the locale's convention.
-- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked (e.g. weekends, holidays).
+- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above.
 - `locale?`: `string` BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's.
 - `max?`: `Date` Latest selectable day.
 - `min?`: `Date` Earliest selectable day.
 - `onChange?`: `((date: Date) => void)` Called with the picked day.
 - `onEscape?`: `(() => void)` Called on Escape, so a custom popover can close.
-- `todayLabel?`: `string` Label for the "Today" shortcut, for other languages.
+- `presets?`: `(DatePreset | DatePresetName)[]` Shortcut buttons under the calendar, replacing the Today button. Short names (`'today'`, `'tomorrow'`, `'+7d'`, `'+1m'`, `'-1y'`) or your own `{ label, value }` where value is a Date or a function returning one.
+- `renderDay?`: `((date: Date, info: DayRenderInfo) => ReactNode)` Custom content for a day cell, e.g. a price or an event dot under the number.
+- `showToday?`: `boolean` Show the Today button. Default `true` for Calendar, `false` for RangeCalendar. Ignored when `presets` is set.
+- `todayLabel?`: `string` Label for the Today button, for other languages.
 - `value?`: `Date | null` The selected day.
+- `visibleMonths?`: `number` Months shown side by side. Default 1.
+- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
+
+### RangeCalendar
+RangeCalendar: pick a start and an end day; current flows between them.
+Hovering after the first click previews the range. Shows two months with
+`visibleMonths={2}`. Shortcut buttons (`presets`) sit under the grid.
+
+Style hooks: as Calendar, plus `__day[data-range-start][data-range-end][data-in-range]`.
+
+- `allowsNonContiguousRanges?`: `boolean` Allow ranges that cross unavailable days. Default `false`.
+- `aria-label?`: `string` Accessible name for the calendar.
+- `autoFocus?`: `boolean` Move keyboard focus into the grid when the calendar mounts.
+- `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
+- `className?`: `string`
+- `classNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for each part.
+- `defaultValue?`: `DateRange | null` Initial range when uncontrolled.
+- `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
+- `enabledDates?`: `Date[]` If set, only these days can be picked, e.g. open appointment slots.
+- `firstDayOfWeek?`: `"sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat"` First day of the week. Defaults to the locale's convention.
+- `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above.
+- `locale?`: `string` BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's.
+- `max?`: `Date` Latest selectable day.
+- `min?`: `Date` Earliest selectable day.
+- `onChange?`: `((range: DateRange) => void)` Called with the picked range once both ends are chosen.
+- `onEscape?`: `(() => void)` Called on Escape, so a custom popover can close.
+- `presets?`: `(RangePreset | RangePresetName)[]` Shortcut buttons under the calendar. Short names (`'+7d'` next 7 days, `'-30d'` last 30 days, `'thisWeek'`, `'thisMonth'`, `'thisYear'`, `'today'`) or your own `{ label, value }`.
+- `renderDay?`: `((date: Date, info: DayRenderInfo) => ReactNode)` Custom content for a day cell, e.g. a price or an event dot under the number.
+- `showToday?`: `boolean` Show the Today button. Default `true` for Calendar, `false` for RangeCalendar. Ignored when `presets` is set.
+- `todayLabel?`: `string` Label for the Today button, for other languages.
+- `value?`: `DateRange | null` The selected range.
+- `visibleMonths?`: `number` Months shown side by side. Default 1.
 - `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ## DataTable (`data-table`)

@@ -35,3 +35,51 @@ export const SundayStart: Story = { args: { firstDayOfWeek: 'sun', locale: 'en-I
 /** Hijri (Umm al-Qura) calendar in Arabic, right to left. */
 export const Hijri: Story = { args: { locale: 'ar-SA', calendar: 'islamic-umalqura', todayLabel: 'اليوم' } };
 export const Gujarati: Story = { args: { locale: 'gu-IN', todayLabel: 'આજે' } };
+
+const inDays = (n: number) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
+
+/** Shortcut buttons under the grid. Short names, or your own `{ label, value }`. The active one lights up. */
+export const Presets: Story = { args: { presets: ['today', 'tomorrow', '+7d', '+1m', '+1y'] } };
+
+/** Presets in another language: pass objects with your own labels. */
+export const PresetsHindi: Story = {
+  args: {
+    locale: 'hi-IN',
+    presets: [
+      { label: 'आज', value: () => inDays(0) },
+      { label: 'कल', value: () => inDays(1) },
+      { label: 'एक हफ़्ते में', value: () => inDays(7) },
+    ],
+  },
+};
+
+/** Block specific days (holidays, booked days) and every weekend with a rule. A preset that lands on one is disabled. */
+export const DisabledDates: Story = {
+  args: {
+    disabledDates: [inDays(1), inDays(2), inDays(5)],
+    isDateDisabled: (d: Date) => d.getDay() === 0 || d.getDay() === 6,
+    presets: ['today', 'tomorrow', '+7d'],
+  },
+};
+
+/** Only these days can be picked, e.g. open appointment slots. */
+export const EnabledDatesOnly: Story = { args: { enabledDates: [inDays(2), inDays(3), inDays(9), inDays(10), inDays(16)], showToday: false } };
+
+/** Custom day content: a price under each date. */
+export const CustomDays: Story = {
+  args: {
+    visibleMonths: 1,
+    renderDay: (date: Date, info) => (
+      <>
+        {info.formatted}
+        {!info.outside && !info.unavailable && <small>₹{(3 + (date.getDate() % 5)).toString()}k</small>}
+      </>
+    ),
+  },
+};
+
+/** Two months side by side. */
+export const TwoMonths: Story = { args: { visibleMonths: 2, presets: ['today', '+1m'] } };
+
+/** Classes on any part, e.g. square days with Tailwind-style utilities. */
+export const ClassNames: Story = { args: { classNames: { day: 'demo-square-day', preset: 'demo-preset' } }, decorators: [(S) => <><style>{'.demo-square-day{border-radius:6px!important}.demo-preset{text-transform:uppercase;letter-spacing:.04em}'}</style><S /></>] };

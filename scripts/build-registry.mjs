@@ -50,7 +50,7 @@ const ITEMS = {
   Card: { description: 'Card, CardHeader, CardFooter and Skeleton.' },
   Avatar: { description: 'Avatar and AvatarGroup.' },
   Indicators: { description: 'Badge, Progress and Spinner.' },
-  DatePicker: { name: 'date-picker', description: 'DatePicker and Calendar with typed entry, locales and calendar systems.' },
+  DatePicker: { name: 'date-picker', description: 'DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems.' },
   headless: { name: 'headless', title: 'Headless hooks', description: 'useSwitch, useCheckbox, useSlider, useDatePicker and useSpark: behaviour without markup.' },
   Provider: { name: 'provider', title: 'SparkProvider', description: 'App-wide default props, slot classes and locale.' },
 };

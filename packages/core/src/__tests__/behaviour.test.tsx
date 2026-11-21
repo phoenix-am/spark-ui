@@ -585,3 +585,55 @@ describe('DataTable', () => {
     expect(t!.rows.map((r: { row: { g: string; n: number } }) => `${r.row.g}${r.row.n}`)).toEqual(['x1', 'x2', 'y1']);
   });
 });
+
+describe('Calendar presets and date rules', () => {
+  const { Calendar, DateRangePicker, RangeCalendar } = jest.requireActual('..');
+  const day = (n: number) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
+
+  it('shows presets as buttons, picks with them and marks the active one', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(<Calendar locale="en-IN" presets={['today', 'tomorrow', '+7d']} onChange={onChange} />);
+    expect(screen.getByRole('button', { name: 'In 7 days' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Tomorrow' }));
+    expect(onChange.mock.calls.at(-1)[0].toDateString()).toBe(day(1).toDateString());
+    expect(screen.getByRole('button', { name: 'Tomorrow' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('disables presets that land on a disabled date, and honours enabledDates', () => {
+    render(<Calendar locale="en-IN" presets={['today', 'tomorrow']} disabledDates={[day(1)]} />);
+    expect(screen.getByRole('button', { name: 'Tomorrow' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Today' })).toBeEnabled();
+  });
+
+  it('only allows enabledDates', () => {
+    const allowed = day(2);
+    render(<Calendar locale="en-IN" enabledDates={[allowed]} showToday={false} />);
+    const cells = screen.getAllByRole('button').filter((b: HTMLElement) => b.className.includes('sp-calendar__day'));
+    const enabled = cells.filter((b: HTMLElement) => b.getAttribute('aria-disabled') !== 'true' && !b.hasAttribute('data-unavailable') && !b.hasAttribute('data-outside'));
+    expect(enabled.map((b: HTMLElement) => b.textContent)).toEqual([String(allowed.getDate())]);
+  });
+
+  it('RangeCalendar: a range preset selects start and end and lights the range', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const { container } = render(<RangeCalendar aria-label="Trip" locale="en-IN" presets={['+7d']} onChange={onChange} />);
+    await user.click(screen.getByRole('button', { name: 'Next 7 days' }));
+    const r = onChange.mock.calls.at(-1)[0];
+    expect([r.start.toDateString(), r.end.toDateString()]).toEqual([day(0).toDateString(), day(6).toDateString()]);
+    expect(container.querySelector('[data-range-start]')).toBeInTheDocument();
+  });
+
+  it('DateRangePicker: typed range fills the hidden inputs', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<DateRangePicker label="Stay" locale="en-IN" name="stay" startName="in" endName="out" />);
+    const segments = screen.getAllByRole('spinbutton');
+    await user.click(segments[0]);
+    await user.keyboard('01122026');
+    await user.click(segments[3]);
+    await user.keyboard('05122026');
+    expect(container.querySelector('input[name="in"]')).toHaveValue('2026-12-01');
+    expect(container.querySelector('input[name="out"]')).toHaveValue('2026-12-05');
+    expect(container.querySelector('input[name="stay"]')).toHaveValue('2026-12-01/2026-12-05');
+  });
+});
