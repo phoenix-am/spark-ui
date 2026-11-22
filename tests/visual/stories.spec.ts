@@ -25,6 +25,21 @@ for (const story of stories) {
     await page.clock.setFixedTime(NOW);
     await page.goto(`/iframe.html?id=${story.id}&viewMode=story&globals=mode:dark;energy:off`);
     await page.waitForSelector('#storybook-root > *, #storybook-root:empty', { state: 'attached' });
+    if (story.tags?.includes('slow-visual')) {
+      // Probe: is the page responsive, and is it still changing?
+      for (let i = 0; i < 8; i++) {
+        const t = Date.now();
+        const state = await Promise.race([
+          page.evaluate(() => {
+            const g = document.querySelector('[role=grid]') as HTMLElement | null;
+            return { rows: document.querySelectorAll('[role=row]').length, top: g?.scrollTop, h: g?.clientHeight, sh: g?.scrollHeight, fonts: document.fonts.status };
+          }),
+          new Promise((r) => setTimeout(() => r('NO RESPONSE in 5s'), 5000)),
+        ]);
+        console.log(`[${story.id}] probe ${i} (${Date.now() - t}ms)`, JSON.stringify(state));
+        await new Promise((r) => setTimeout(r, 1000));
+      }
+    }
     await page.waitForLoadState('networkidle');
     await page.evaluate(() => document.fonts.ready);
 
