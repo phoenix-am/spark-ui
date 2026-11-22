@@ -7,7 +7,7 @@ export default function AppWideDefaults() {
       <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
         <Textfield label="Search" inputSize="small" />
         <Button>Go</Button>
-        <Button variant="contained">Override when you need to</Button>
+        <Button variant="contained">Override</Button>
       </div>
     </SparkProvider>
   );

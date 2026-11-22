@@ -205,8 +205,18 @@ pre {
   scrollbar-width: thin;
 }
 .sw-docs__main {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  /* At least a screen tall, so the footer sits at the bottom on short pages. */
+  min-height: calc(100vh - var(--sw-header));
+  min-height: calc(100dvh - var(--sw-header));
   padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem) 0;
+}
+.sw-docs__main > .sw-footer {
+  width: 100%;
+  max-width: none;
+  margin: auto 0 0;
 }
 .sw-sidenav__group + .sw-sidenav__group {
   margin-top: 1.5rem;
