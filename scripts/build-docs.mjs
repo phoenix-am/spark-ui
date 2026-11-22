@@ -65,6 +65,7 @@ const parser = docgen.withCustomConfig(path.join(root, 'tsconfig.json'), {
   savePropValueAsString: true,
   shouldExtractLiteralValuesFromEnum: true,
   shouldRemoveUndefinedFromOptional: true,
+  skipChildrenPropWithoutDoc: false,
   // Keep our own props; drop the hundreds inherited from React's HTML types.
   propFilter: (prop) => !prop.parent || !prop.parent.fileName.includes('node_modules') || prop.name.startsWith('aria-label'),
 });
@@ -83,10 +84,10 @@ const buttonDoc = fs.readFileSync(path.join(src, 'Button/Button.tsx'), 'utf8').m
 fs.writeFileSync(
   path.join(shimDir, 'shims.tsx'),
   `import type { ElementType } from 'react';
-import type { ButtonPropsBase } from '../Button/Button.types';
+import type { ButtonTypeMap } from '../Button/Button.types';
 import type { ToastOptions } from '../Toast/Toast';
 ${buttonDoc}
-export function Button(props: ButtonPropsBase & {
+export function Button(props: ButtonTypeMap['props'] & {
   /** Render as another element or component, e.g. \`"a"\` or a router Link. */
   as?: ElementType;
 }) { return null; }
@@ -115,6 +116,11 @@ for (const [name, files, story, only] of ENTRIES) {
         .map((p) => ({
           name: p.name,
           type: clean(p.type?.raw ?? p.type?.name),
+          // Literal options (e.g. 'small' | 'medium'), resolved through type aliases: used for playground controls.
+          values:
+            p.type?.name === 'enum' && Array.isArray(p.type.value)
+              ? p.type.value.map((v) => String(v.value)).filter((v) => /^(["'].*["']|\d+|true|false)$/.test(v)).map((v) => v.replace(/^["']|["']$/g, ''))
+              : undefined,
           required: p.required,
           default: p.defaultValue?.value ?? undefined,
           description: clean(p.description),

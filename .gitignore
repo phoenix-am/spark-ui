@@ -30,3 +30,4 @@ dist-ssr
 
 # Built Storybook (CI and the docs site build their own)
 storybook-static/
+site-dist/

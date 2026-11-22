@@ -43,7 +43,7 @@ Key facts for writing code:
 - [Drawer](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-drawer--docs): A panel that slides in from an edge, with focus trapping. Exports: Drawer.
 - [Tooltip](https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs): A hint that flickers on. Exports: Tooltip.
 - [Toast](https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs): Notifications. Exports: ToastProvider, ToastShowOptions.
-- [Card](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs): Card, CardHeader, CardFooter and Skeleton. Exports: Card, CardHeader, Skeleton.
+- [Card](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs): Card, CardHeader, CardFooter and Skeleton. Exports: Card, CardHeader, CardFooter, Skeleton.
 - [Avatar](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-avatar--docs): Avatar and AvatarGroup. Exports: Avatar, AvatarGroup.
 - [Indicators](https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-badge--docs): Badge, Progress and Spinner. Exports: Badge, Progress, Spinner.
 - [SparkProvider](https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-customization--docs): App-wide default props, slot classes and locale. Exports: SparkProvider.

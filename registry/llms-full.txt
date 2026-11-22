@@ -26,14 +26,20 @@ current flowing along a wire on hover; a disabled button is a dead circuit.
 Built on ButtonBase; forwards `ref` to the rendered element.
 
 - `as?`: `ElementType` Render as another element or component, e.g. `"a"` or a router Link.
+- `children?`: `ReactNode`
 - `className?`: `string`
 - `classNames?`: `Partial<Record<"root" | "icon", string>>` Extra classes for each part: root, icon.
+- `color?`: `ButtonColor` Tone of the current. Default `brand`.
 - `disabled?`: `boolean` Dead circuit: no clicks, no sparks, dashed outline.
+- `disableElevation?`: `boolean` Remove the glow around contained buttons.
 - `endIcon?`: `ReactNode` Icon after the label. Coloured with the text.
 - `fullWidth?`: `boolean` Stretch to the container's width.
+- `href?`: `string` Use with `as="a"` to render a link that looks like a button.
 - `render?`: `RenderProp<{ disabled: boolean; }>` Render a different element with the button's behaviour and look, e.g. `render={<Link href="/pricing" />}`.
+- `size?`: `ButtonSize` Height 36, 44 or 52px. Default `medium`.
 - `spark?`: `boolean` Throw sparks from the press point on click. Default `true`.
 - `startIcon?`: `ReactNode` Icon before the label. Coloured with the text.
+- `variant?`: `ButtonVariant` `contained` (filled, default), `outlined` or `text`.
 - `ripple?`: `boolean` **Deprecated.** Use `spark`. Kept so existing code keeps working.
 
 ## Spark (`spark`)
@@ -303,6 +309,7 @@ items, one Tab stop for the group; selected items have `aria-checked` /
 
 Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]`.
 
+- `children`: `ReactNode`
 - `allowEmpty?`: `boolean` In `single` mode, allow clicking the selected item to clear it. Default `false`.
 - `aria-label?`: `string`
 - `aria-labelledby?`: `string`
@@ -323,6 +330,7 @@ Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]
 
 - `value`: `string`
 - `aria-label?`: `string`
+- `children?`: `ReactNode`
 - `className?`: `string`
 - `disabled?`: `boolean`
 - `icon?`: `ReactNode` Icon before the label. For icon-only items, pass `aria-label`.
@@ -332,6 +340,7 @@ Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]
 
 - `value`: `string`
 - `aria-label?`: `string`
+- `children?`: `ReactNode`
 - `className?`: `string`
 - `disabled?`: `boolean`
 - `icon?`: `ReactNode` Icon before the label. For icon-only items, pass `aria-label`.
@@ -491,6 +500,7 @@ Style hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`
 - `action?`: `ReactNode` Buttons or links on the right (or below on narrow screens).
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `children?`: `ReactNode`
 - `classNames?`: `Partial<Record<"title" | "root" | "icon" | "body" | "action" | "dismiss", string>>`
 - `dismissLabel?`: `string`
 - `icon?`: `ReactNode` Replace the tone icon, or `false` to hide it.
@@ -1129,6 +1139,7 @@ One tab. Use inside <TabList>.
 - `value`: `string` Matches a TabPanel's `value`.
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `children?`: `ReactNode`
 - `disabled?`: `boolean` (default `false`)
 - `icon?`: `ReactNode` Icon shown before the label.
 
@@ -1154,6 +1165,7 @@ wire beside it lights up and current runs down it.
 Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
 `__trigger`, `__chevron`, `__panel`.
 
+- `children`: `ReactNode`
 - `className?`: `string`
 - `defaultOpen?`: `string[]` Sections open at first, by `value`.
 - `multiple?`: `boolean` Allow several sections open at once. Default `false`.
@@ -1161,6 +1173,7 @@ Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
 ### AccordionItem
 
 
+- `children`: `ReactNode`
 - `title`: `ReactNode` Text of the header button.
 - `value`: `string` Unique key for this section.
 - `disabled?`: `boolean`
@@ -1186,6 +1199,7 @@ Style hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,
 - `open`: `boolean` Whether the dialog is shown.
 - `title`: `ReactNode` Dialog heading; also its accessible name.
 - `actions?`: `ReactNode` Buttons, usually. Rendered right-aligned in the footer.
+- `children?`: `ReactNode`
 - `className?`: `string` Class for the dialog panel.
 - `classNames?`: `Partial<Record<"root" | "backdrop" | "panel" | "header" | "title" | "description" | "close" | "body" | "actions", string>>` Extra classes for each part: root, backdrop, panel, header, title, description, close, body, actions.
 - `closeOnBackdrop?`: `boolean` Close when the user clicks outside the dialog. Default `true`.
@@ -1215,6 +1229,7 @@ Variable: `--sp-drawer-size`.
 - `open`: `boolean` Whether the drawer is open.
 - `actions?`: `ReactNode` Footer content, e.g. Cancel and Save buttons.
 - `aria-label?`: `string` Accessible name when there is no visible title.
+- `children?`: `ReactNode`
 - `className?`: `string`
 - `classNames?`: `Partial<Record<"root" | "backdrop" | "panel" | "header" | "title" | "description" | "body" | "actions" | "close", string>>` Extra classes for each part: root, backdrop, panel, header, title, description, body, actions, close.
 - `closeButton?`: `boolean` Show the × button. Default `true`.
@@ -1260,7 +1275,7 @@ discharges as the timer runs and pauses on hover or focus.
 Style hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,
 `__description`, `__action`, `__close`, `__timer`.
 
-No props.
+- `children`: `ReactNode`
 
 ### ToastShowOptions
 Options for `toast.show()`. Wrap your app in `<ToastProvider>`, then
@@ -1276,7 +1291,7 @@ Options for `toast.show()`. Wrap your app in `<ToastProvider>`, then
 Card, CardHeader, CardFooter and Skeleton.
 
 ```tsx
-import { Card, CardHeader, Skeleton } from '@sparkwire/core';
+import { Card, CardHeader, CardFooter, Skeleton } from '@sparkwire/core';
 ```
 Install: `npx sparkwire add card` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs
 
@@ -1299,6 +1314,11 @@ Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
 - `action?`: `ReactNode` Shown on the right, e.g. a Badge or menu button.
 - `media?`: `ReactNode` Shown on the left, e.g. an Avatar or icon.
 - `subtitle?`: `ReactNode`
+
+### CardFooter
+
+
+- `children`: `ReactNode`
 
 ### Skeleton
 Skeleton: a placeholder that shimmers like a line charging up.
@@ -1383,6 +1403,7 @@ SparkProvider: set app-wide defaults and slot class names once, the way
 MUI's `theme.components` works. Nested providers merge with their parent.
 Styling still comes from `styles.css`; this provider only changes props.
 
+- `children`: `ReactNode`
 - `components?`: `SparkComponentsConfig` Defaults for every instance of a component, e.g. `{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`. Props set on an instance always win.
 - `energy?`: `"off" | "calm" | "default" | "electric"` How lively the UI is: `calm` (slow current, soft glow, few sparks), `default`, `electric` (fast current, bloom, big bursts) or `off` (no decorative motion). Reduced-motion users always get `off`. Sets `data-spark-energy` on a wrapper; you can also put that attribute on `<html>` yourself.
 - `haptics?`: `boolean` Short vibrations on Switch, Checkbox and spark bursts (phones that support it). Default `false`.
@@ -1441,6 +1462,7 @@ Escape, and has hidden dismiss buttons for screen readers.
 
 Style hooks: `.sp-popover[data-placement]`.
 
+- `children`: `ReactNode`
 - `state`: `OverlayTriggerState` Open state, from `useOverlayTriggerState` or a component state (select, combobox, menu).
 - `triggerRef`: `RefObject<Element | null>` The element the popover is attached to. Its theme is copied to the popover.
 - `className?`: `string`

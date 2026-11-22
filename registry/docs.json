@@ -18,6 +18,12 @@
               "description": "Render as another element or component, e.g. `\"a\"` or a router Link."
             },
             {
+              "name": "children",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
               "name": "className",
               "type": "string",
               "required": false,
@@ -30,10 +36,28 @@
               "description": "Extra classes for each part: root, icon."
             },
             {
+              "name": "color",
+              "type": "ButtonColor",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
+              "required": false,
+              "description": "Tone of the current. Default `brand`."
+            },
+            {
               "name": "disabled",
               "type": "boolean",
               "required": false,
               "description": "Dead circuit: no clicks, no sparks, dashed outline."
+            },
+            {
+              "name": "disableElevation",
+              "type": "boolean",
+              "required": false,
+              "description": "Remove the glow around contained buttons."
             },
             {
               "name": "endIcon",
@@ -48,10 +72,27 @@
               "description": "Stretch to the container's width."
             },
             {
+              "name": "href",
+              "type": "string",
+              "required": false,
+              "description": "Use with `as=\"a\"` to render a link that looks like a button."
+            },
+            {
               "name": "render",
               "type": "RenderProp<{ disabled: boolean; }>",
               "required": false,
               "description": "Render a different element with the button's behaviour and look, e.g. `render={<Link href=\"/pricing\" />}`."
+            },
+            {
+              "name": "size",
+              "type": "ButtonSize",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
+              "required": false,
+              "description": "Height 36, 44 or 52px. Default `medium`."
             },
             {
               "name": "spark",
@@ -64,6 +105,17 @@
               "type": "ReactNode",
               "required": false,
               "description": "Icon before the label. Coloured with the text."
+            },
+            {
+              "name": "variant",
+              "type": "ButtonVariant",
+              "values": [
+                "text",
+                "outlined",
+                "contained"
+              ],
+              "required": false,
+              "description": "`contained` (filled, default), `outlined` or `text`."
             },
             {
               "name": "ripple",
@@ -168,6 +220,12 @@
             {
               "name": "color",
               "type": "Tone",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Colour of the current when on. Default `brand`."
             },
@@ -204,6 +262,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Default `medium`."
             },
@@ -261,6 +324,12 @@
             {
               "name": "color",
               "type": "Tone",
+              "values": [
+                "error",
+                "brand",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Colour when checked. Default `brand`."
             },
@@ -291,6 +360,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Default `medium`."
             }
@@ -336,6 +410,12 @@
             {
               "name": "color",
               "type": "Tone",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Colour of the chosen contact. Default `brand`."
             },
@@ -378,6 +458,10 @@
             {
               "name": "variant",
               "type": "\"list\" | \"cards\"",
+              "values": [
+                "list",
+                "cards"
+              ],
               "required": false,
               "description": "`list` stacks options; `cards` lays them out as selectable cards."
             }
@@ -423,6 +507,12 @@
             {
               "name": "color",
               "type": "Tone",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Default `brand`."
             },
@@ -606,6 +696,11 @@
             {
               "name": "inputSize",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": ""
             },
@@ -666,6 +761,11 @@
             {
               "name": "variant",
               "type": "\"outlined\" | \"filled\" | \"standard\"",
+              "values": [
+                "outlined",
+                "filled",
+                "standard"
+              ],
               "required": false,
               "description": ""
             }
@@ -870,6 +970,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Default `medium`."
             },
@@ -912,6 +1017,12 @@
           "name": "ToggleGroup",
           "description": "ToggleGroup: a row of related toggle buttons, as a segmented control\n(`single`) or independent toggles (`multiple`). Arrow keys move between\nitems, one Tab stop for the group; selected items have `aria-checked` /\n`aria-pressed`.\n\n```tsx\n<ToggleGroup aria-label=\"View\" defaultValue=\"grid\">\n  <ToggleGroup.Item value=\"list\">List</ToggleGroup.Item>\n  <ToggleGroup.Item value=\"grid\">Grid</ToggleGroup.Item>\n</ToggleGroup>\n```\n\nStyle hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]`.",
           "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            },
             {
               "name": "allowEmpty",
               "type": "boolean",
@@ -969,18 +1080,31 @@
             {
               "name": "orientation",
               "type": "\"horizontal\" | \"vertical\"",
+              "values": [
+                "horizontal",
+                "vertical"
+              ],
               "required": false,
               "description": ""
             },
             {
               "name": "selectionMode",
               "type": "Mode",
+              "values": [
+                "single",
+                "multiple"
+              ],
               "required": false,
               "description": "`single` (default): one at a time, like a segmented control. `multiple`: each toggles on its own (bold / italic / underline)."
             },
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": ""
             },
@@ -993,6 +1117,10 @@
             {
               "name": "variant",
               "type": "\"segmented\" | \"outlined\"",
+              "values": [
+                "segmented",
+                "outlined"
+              ],
               "required": false,
               "description": "`segmented` (default): one track with a sliding fill. `outlined`: separate buttons."
             }
@@ -1011,6 +1139,12 @@
             {
               "name": "aria-label",
               "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "ReactNode",
               "required": false,
               "description": ""
             },
@@ -1047,6 +1181,12 @@
             {
               "name": "aria-label",
               "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "ReactNode",
               "required": false,
               "description": ""
             },
@@ -1122,6 +1262,10 @@
             {
               "name": "clickable",
               "type": "\"completed\" | \"all\"",
+              "values": [
+                "completed",
+                "all"
+              ],
               "required": false,
               "description": "Let people jump back to a step by clicking it. `completed` (default when\n`onStepClick` is set): finished steps only. `all`: any step (non-linear)."
             },
@@ -1134,6 +1278,10 @@
             {
               "name": "orientation",
               "type": "\"horizontal\" | \"vertical\"",
+              "values": [
+                "horizontal",
+                "vertical"
+              ],
               "required": false,
               "description": ""
             },
@@ -1338,6 +1486,11 @@
             {
               "name": "granularity",
               "type": "\"hour\" | \"minute\" | \"second\"",
+              "values": [
+                "hour",
+                "minute",
+                "second"
+              ],
               "required": false,
               "description": "`minute` (default) or `second`."
             },
@@ -1350,6 +1503,10 @@
             {
               "name": "hourCycle",
               "type": "12 | 24",
+              "values": [
+                "12",
+                "24"
+              ],
               "required": false,
               "description": "12 or 24-hour. Default: the locale's."
             },
@@ -1404,6 +1561,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": ""
             },
@@ -1509,6 +1671,11 @@
             {
               "name": "variant",
               "type": "\"outlined\" | \"filled\" | \"standard\"",
+              "values": [
+                "outlined",
+                "filled",
+                "standard"
+              ],
               "required": false,
               "description": "`outlined` (default), `filled` or `standard`."
             }
@@ -1552,6 +1719,12 @@
               "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
             },
             {
+              "name": "children",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
               "name": "classNames",
               "type": "Partial<Record<\"title\" | \"root\" | \"icon\" | \"body\" | \"action\" | \"dismiss\", string>>",
               "required": false,
@@ -1572,6 +1745,11 @@
             {
               "name": "live",
               "type": "\"polite\" | \"assertive\" | \"off\"",
+              "values": [
+                "polite",
+                "assertive",
+                "off"
+              ],
               "required": false,
               "description": "`polite` announces it when it appears, `assertive` interrupts (errors).\nDefault: `assertive` for error, otherwise none (static content)."
             },
@@ -1596,12 +1774,23 @@
             {
               "name": "tone",
               "type": "AlertTone",
+              "values": [
+                "info",
+                "success",
+                "warning",
+                "error"
+              ],
               "required": false,
               "description": "Default `info`. Each tone ships with its own icon, so meaning is never colour alone."
             },
             {
               "name": "variant",
               "type": "\"soft\" | \"outlined\" | \"banner\"",
+              "values": [
+                "soft",
+                "outlined",
+                "banner"
+              ],
               "required": false,
               "description": "`soft` (default), `outlined`, or `banner` (full-width, square, for the top of a page)."
             }
@@ -1749,12 +1938,20 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\"",
+              "values": [
+                "small",
+                "medium"
+              ],
               "required": false,
               "description": ""
             },
             {
               "name": "variant",
               "type": "\"pages\" | \"compact\"",
+              "values": [
+                "pages",
+                "compact"
+              ],
               "required": false,
               "description": "`pages` (default) or `compact` (\"Page 3 of 12\" with arrows, for small screens)."
             }
@@ -2229,6 +2426,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Height 36, 46 or 54px. Default `medium`."
             },
@@ -2426,6 +2628,11 @@
             {
               "name": "menuTrigger",
               "type": "\"input\" | \"focus\" | \"manual\"",
+              "values": [
+                "input",
+                "focus",
+                "manual"
+              ],
               "required": false,
               "description": "When the list opens: on typing (`input`, default), on focus, or only with the button or arrow keys (`manual`)."
             },
@@ -2462,6 +2669,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Height 36, 46 or 54px. Default `medium`."
             },
@@ -2507,6 +2719,20 @@
             {
               "name": "calendar",
               "type": "CalendarSystem",
+              "values": [
+                "gregory",
+                "indian",
+                "islamic-umalqura",
+                "islamic-civil",
+                "islamic-tbla",
+                "buddhist",
+                "persian",
+                "japanese",
+                "hebrew",
+                "ethiopic",
+                "coptic",
+                "roc"
+              ],
               "required": false,
               "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
             },
@@ -2567,6 +2793,15 @@
             {
               "name": "firstDayOfWeek",
               "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "values": [
+                "sun",
+                "mon",
+                "tue",
+                "wed",
+                "thu",
+                "fri",
+                "sat"
+              ],
               "required": false,
               "description": "First day of the week. Defaults to the locale's convention."
             },
@@ -2645,6 +2880,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Default `medium`."
             },
@@ -2683,6 +2923,15 @@
             {
               "name": "weekStartsOn",
               "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "values": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
               "required": false,
               "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
               "deprecated": true
@@ -2726,6 +2975,20 @@
             {
               "name": "calendar",
               "type": "CalendarSystem",
+              "values": [
+                "gregory",
+                "indian",
+                "islamic-umalqura",
+                "islamic-civil",
+                "islamic-tbla",
+                "buddhist",
+                "persian",
+                "japanese",
+                "hebrew",
+                "ethiopic",
+                "coptic",
+                "roc"
+              ],
               "required": false,
               "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
             },
@@ -2792,6 +3055,15 @@
             {
               "name": "firstDayOfWeek",
               "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "values": [
+                "sun",
+                "mon",
+                "tue",
+                "wed",
+                "thu",
+                "fri",
+                "sat"
+              ],
               "required": false,
               "description": "First day of the week. Defaults to the locale's convention."
             },
@@ -2864,6 +3136,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Default `medium`."
             },
@@ -2888,6 +3165,15 @@
             {
               "name": "weekStartsOn",
               "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "values": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
               "required": false,
               "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
               "deprecated": true
@@ -2913,6 +3199,20 @@
             {
               "name": "calendar",
               "type": "CalendarSystem",
+              "values": [
+                "gregory",
+                "indian",
+                "islamic-umalqura",
+                "islamic-civil",
+                "islamic-tbla",
+                "buddhist",
+                "persian",
+                "japanese",
+                "hebrew",
+                "ethiopic",
+                "coptic",
+                "roc"
+              ],
               "required": false,
               "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
             },
@@ -2949,6 +3249,15 @@
             {
               "name": "firstDayOfWeek",
               "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "values": [
+                "sun",
+                "mon",
+                "tue",
+                "wed",
+                "thu",
+                "fri",
+                "sat"
+              ],
               "required": false,
               "description": "First day of the week. Defaults to the locale's convention."
             },
@@ -3027,6 +3336,15 @@
             {
               "name": "weekStartsOn",
               "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "values": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
               "required": false,
               "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
               "deprecated": true
@@ -3058,6 +3376,20 @@
             {
               "name": "calendar",
               "type": "CalendarSystem",
+              "values": [
+                "gregory",
+                "indian",
+                "islamic-umalqura",
+                "islamic-civil",
+                "islamic-tbla",
+                "buddhist",
+                "persian",
+                "japanese",
+                "hebrew",
+                "ethiopic",
+                "coptic",
+                "roc"
+              ],
               "required": false,
               "description": "Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates."
             },
@@ -3094,6 +3426,15 @@
             {
               "name": "firstDayOfWeek",
               "type": "\"sun\" | \"mon\" | \"tue\" | \"wed\" | \"thu\" | \"fri\" | \"sat\"",
+              "values": [
+                "sun",
+                "mon",
+                "tue",
+                "wed",
+                "thu",
+                "fri",
+                "sat"
+              ],
               "required": false,
               "description": "First day of the week. Defaults to the locale's convention."
             },
@@ -3172,6 +3513,15 @@
             {
               "name": "weekStartsOn",
               "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+              "values": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
               "required": false,
               "description": "@deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.",
               "deprecated": true
@@ -3296,6 +3646,11 @@
             {
               "name": "density",
               "type": "\"compact\" | \"normal\" | \"comfortable\"",
+              "values": [
+                "compact",
+                "normal",
+                "comfortable"
+              ],
               "required": false,
               "description": "Row height. Default `normal`."
             },
@@ -3434,6 +3789,10 @@
             {
               "name": "responsive",
               "type": "\"stack\" | \"scroll\"",
+              "values": [
+                "stack",
+                "scroll"
+              ],
               "required": false,
               "description": "In a narrow container: `stack` (default) turns rows into labelled cards;\n`scroll` keeps the grid and scrolls sideways."
             },
@@ -3476,6 +3835,11 @@
             {
               "name": "selectionMode",
               "type": "\"none\" | \"single\" | \"multiple\"",
+              "values": [
+                "none",
+                "single",
+                "multiple"
+              ],
               "required": false,
               "description": "`multiple` adds checkboxes; `single` selects one row. Default `none`."
             },
@@ -3716,6 +4080,12 @@
             {
               "name": "placement",
               "type": "\"bottom start\" | \"bottom end\" | \"top start\" | \"top end\"",
+              "values": [
+                "bottom start",
+                "bottom end",
+                "top start",
+                "top end"
+              ],
               "required": false,
               "description": "Where the menu opens. Default `bottom start`."
             },
@@ -3728,6 +4098,11 @@
             {
               "name": "selectionMode",
               "type": "\"none\" | \"single\" | \"multiple\"",
+              "values": [
+                "none",
+                "single",
+                "multiple"
+              ],
               "required": false,
               "description": "Make items checkable: `single` (like radio) or `multiple` (like checkboxes). Default `none`."
             },
@@ -3884,6 +4259,10 @@
             {
               "name": "activation",
               "type": "\"automatic\" | \"manual\"",
+              "values": [
+                "automatic",
+                "manual"
+              ],
               "required": false,
               "description": "`automatic` (default): arrow keys select as they move.\n`manual`: arrow keys move focus; Enter or Space selects (use for slow panels)."
             },
@@ -3896,6 +4275,12 @@
             {
               "name": "color",
               "type": "Tone",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Colour of the lit segment. Default `brand`."
             },
@@ -3914,6 +4299,10 @@
             {
               "name": "orientation",
               "type": "\"horizontal\" | \"vertical\"",
+              "values": [
+                "horizontal",
+                "vertical"
+              ],
               "required": false,
               "description": "Lay tabs out in a row (default) or a column. Arrow keys follow."
             },
@@ -3970,6 +4359,12 @@
               "type": "string",
               "required": false,
               "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+            },
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
             },
             {
               "name": "disabled",
@@ -4030,6 +4425,12 @@
           "description": "Accordion: a stack of circuits. Opening a section closes its circuit: the\nwire beside it lights up and current runs down it.\n\nStyle hooks: `.sp-accordion`, `__item[data-state=\"open\"|\"closed\"]`, `__wire`,\n`__trigger`, `__chevron`, `__panel`.",
           "props": [
             {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            },
+            {
               "name": "className",
               "type": "string",
               "required": false,
@@ -4053,6 +4454,12 @@
           "name": "AccordionItem",
           "description": "",
           "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            },
             {
               "name": "title",
               "type": "ReactNode",
@@ -4117,6 +4524,12 @@
               "description": "Buttons, usually. Rendered right-aligned in the footer."
             },
             {
+              "name": "children",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
               "name": "className",
               "type": "string",
               "required": false,
@@ -4143,6 +4556,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Max width: small 400px, medium 520px, large 720px."
             }
@@ -4192,6 +4610,12 @@
               "description": "Accessible name when there is no visible title."
             },
             {
+              "name": "children",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
               "name": "className",
               "type": "string",
               "required": false,
@@ -4224,6 +4648,12 @@
             {
               "name": "placement",
               "type": "\"start\" | \"end\" | \"top\" | \"bottom\"",
+              "values": [
+                "start",
+                "end",
+                "top",
+                "bottom"
+              ],
               "required": false,
               "description": "Edge it slides from. `start`/`end` follow reading direction (`end` is the\nright in English, the left in Arabic). Default `end`."
             },
@@ -4287,6 +4717,12 @@
             {
               "name": "placement",
               "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+              "values": [
+                "top",
+                "bottom",
+                "left",
+                "right"
+              ],
               "required": false,
               "description": "Side of the trigger to show on. Default `top`."
             }
@@ -4310,7 +4746,14 @@
         {
           "name": "ToastProvider",
           "description": "Wrap your app once. Toasts stack bottom-right (max 5); the bottom bar\ndischarges as the timer runs and pauses on hover or focus.\n\nStyle hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,\n`__description`, `__action`, `__close`, `__timer`.",
-          "props": []
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            }
+          ]
         },
         {
           "name": "ToastShowOptions",
@@ -4343,6 +4786,12 @@
             {
               "name": "tone",
               "type": "Tone",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Default `brand`. `error` toasts are announced immediately (role=\"alert\")."
             }
@@ -4382,6 +4831,12 @@
             {
               "name": "as",
               "type": "\"div\" | \"article\" | \"section\" | \"li\"",
+              "values": [
+                "div",
+                "article",
+                "section",
+                "li"
+              ],
               "required": false,
               "description": "Render as another element, e.g. `article` or `section`."
             },
@@ -4400,6 +4855,12 @@
             {
               "name": "padding",
               "type": "\"none\" | \"small\" | \"medium\" | \"large\"",
+              "values": [
+                "none",
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Inner spacing. Default `medium`."
             },
@@ -4442,6 +4903,18 @@
           ]
         },
         {
+          "name": "CardFooter",
+          "description": "",
+          "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            }
+          ]
+        },
+        {
           "name": "Skeleton",
           "description": "Skeleton: a placeholder that shimmers like a line charging up.",
           "props": [
@@ -4461,6 +4934,11 @@
             {
               "name": "shape",
               "type": "\"text\" | \"rect\" | \"circle\"",
+              "values": [
+                "text",
+                "rect",
+                "circle"
+              ],
               "required": false,
               "default": "rect",
               "description": "`circle` for avatars, `text` for lines of copy."
@@ -4474,12 +4952,12 @@
           ]
         }
       ],
-      "import": "import { Card, CardHeader, Skeleton } from '@sparkwire/core';",
+      "import": "import { Card, CardHeader, CardFooter, Skeleton } from '@sparkwire/core';",
       "install": {
         "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
         "copy": "npx sparkwire add card",
         "shadcn": "npx shadcn add @sparkwire/card",
-        "copiedImport": "import { Card, CardHeader, Skeleton } from '@/components/spark-ui/Card';"
+        "copiedImport": "import { Card, CardHeader, CardFooter, Skeleton } from '@/components/spark-ui/Card';"
       },
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs"
     },
@@ -4501,6 +4979,12 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+              "values": [
+                "small",
+                "medium",
+                "large",
+                "xlarge"
+              ],
               "required": false,
               "description": "Default `medium` (40px)."
             },
@@ -4513,6 +4997,12 @@
             {
               "name": "status",
               "type": "AvatarStatus",
+              "values": [
+                "online",
+                "busy",
+                "away",
+                "offline"
+              ],
               "required": false,
               "description": "Status LED. `online` pulses."
             }
@@ -4538,6 +5028,12 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\" | \"xlarge\"",
+              "values": [
+                "small",
+                "medium",
+                "large",
+                "xlarge"
+              ],
               "required": false,
               "default": "medium",
               "description": ""
@@ -4602,12 +5098,23 @@
             {
               "name": "tone",
               "type": "Tone | \"neutral\"",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning",
+                "neutral"
+              ],
               "required": false,
               "description": "Default `brand`."
             },
             {
               "name": "variant",
               "type": "\"soft\" | \"solid\"",
+              "values": [
+                "soft",
+                "solid"
+              ],
               "required": false,
               "description": "`soft` tinted background (default) or `solid` fill."
             }
@@ -4632,12 +5139,23 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "Bar thickness: 4, 8 or 12px. Default `medium`."
             },
             {
               "name": "tone",
               "type": "Tone",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Default `brand`."
             },
@@ -4662,12 +5180,23 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "description": "16, 24 or 36px. Default `medium`."
             },
             {
               "name": "tone",
               "type": "Tone",
+              "values": [
+                "brand",
+                "error",
+                "success",
+                "warning"
+              ],
               "required": false,
               "description": "Default `brand`."
             }
@@ -4693,6 +5222,12 @@
           "description": "SparkProvider: set app-wide defaults and slot class names once, the way\nMUI's `theme.components` works. Nested providers merge with their parent.\nStyling still comes from `styles.css`; this provider only changes props.",
           "props": [
             {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            },
+            {
               "name": "components",
               "type": "SparkComponentsConfig",
               "required": false,
@@ -4701,6 +5236,12 @@
             {
               "name": "energy",
               "type": "\"off\" | \"calm\" | \"default\" | \"electric\"",
+              "values": [
+                "off",
+                "calm",
+                "default",
+                "electric"
+              ],
               "required": false,
               "description": "How lively the UI is: `calm` (slow current, soft glow, few sparks),\n`default`, `electric` (fast current, bloom, big bursts) or `off`\n(no decorative motion). Reduced-motion users always get `off`.\nSets `data-spark-energy` on a wrapper; you can also put that\nattribute on `<html>` yourself."
             },
@@ -4852,6 +5393,11 @@
             {
               "name": "size",
               "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
               "required": false,
               "default": "medium",
               "description": "Height 36, 46 or 54px. Default `medium`."
@@ -4865,6 +5411,11 @@
             {
               "name": "variant",
               "type": "\"outlined\" | \"filled\" | \"standard\"",
+              "values": [
+                "outlined",
+                "filled",
+                "standard"
+              ],
               "required": false,
               "default": "outlined",
               "description": "`outlined` (default), `filled` or `standard` (underline only)."
@@ -4875,6 +5426,12 @@
           "name": "Popover",
           "description": "Popover: a floating panel attached to a trigger, under Dropdown, Combobox,\nMenu and DatePicker. Positions itself and flips to stay on screen, renders\nin a portal that keeps the current theme, closes on outside click and\nEscape, and has hidden dismiss buttons for screen readers.\n\nStyle hooks: `.sp-popover[data-placement]`.",
           "props": [
+            {
+              "name": "children",
+              "type": "ReactNode",
+              "required": true,
+              "description": ""
+            },
             {
               "name": "state",
               "type": "OverlayTriggerState",
