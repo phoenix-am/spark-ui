@@ -43,8 +43,9 @@ module.exports = function (plop) {
       },
       {
         type: 'add',
-        path: '../packages/core/src/{{pascalCase componentName}}/{{pascalCase componentName}}.stories.tsx',
-        templateFile: './plop-templates/component.stories.hbs'
+        // Docs demo: shows up on the component's page automatically.
+        path: '../site/src/demos/{{kebabCase componentName}}/01-basic.tsx',
+        templateFile: './plop-templates/component.demo.hbs'
       },
       {
         type: 'add',

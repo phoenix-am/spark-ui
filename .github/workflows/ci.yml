@@ -1,7 +1,7 @@
 name: CI
 
-# Fast checks on every push and pull request. Storybook and the screenshot
-# tests run in the Docs site workflow, which builds Storybook anyway.
+# Fast checks on every push and pull request: types, tests (including axe on
+# every docs demo), the package build, and an up-to-date registry.
 on:
   push:
     branches: [master]

@@ -134,7 +134,9 @@
         "shadcn": "npx shadcn add @sparkwire/button",
         "copiedImport": "import { Button } from '@/components/spark-ui/Button';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/actions-button--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/button",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/button"
     },
     {
       "name": "spark",
@@ -182,7 +184,9 @@
         "shadcn": "npx shadcn add @sparkwire/spark",
         "copiedImport": "import { Spark } from '@/components/spark-ui/Spark';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/effects-spark--docs"
+      "category": "Effects",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/spark",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/spark"
     },
     {
       "name": "switch",
@@ -292,7 +296,9 @@
         "shadcn": "npx shadcn add @sparkwire/switch",
         "copiedImport": "import { Switch } from '@/components/spark-ui/Switch';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-switch--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/switch",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/switch"
     },
     {
       "name": "checkbox",
@@ -378,7 +384,9 @@
         "shadcn": "npx shadcn add @sparkwire/checkbox",
         "copiedImport": "import { Checkbox } from '@/components/spark-ui/Checkbox';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-checkbox--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/checkbox",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/checkbox"
     },
     {
       "name": "radio-group",
@@ -475,7 +483,9 @@
         "shadcn": "npx shadcn add @sparkwire/radio-group",
         "copiedImport": "import { RadioGroup } from '@/components/spark-ui/RadioGroup';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-radiogroup--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/radio-group",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/radio-group"
     },
     {
       "name": "slider",
@@ -604,7 +614,9 @@
         "shadcn": "npx shadcn add @sparkwire/slider",
         "copiedImport": "import { Slider } from '@/components/spark-ui/Slider';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-slider--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/slider",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/slider"
     },
     {
       "name": "textfield",
@@ -779,7 +791,9 @@
         "shadcn": "npx shadcn add @sparkwire/textfield",
         "copiedImport": "import { Textfield } from '@/components/spark-ui/Textfield';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/textfield",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/textfield"
     },
     {
       "name": "field",
@@ -854,7 +868,9 @@
         "shadcn": "npx shadcn add @sparkwire/field",
         "copiedImport": "import { Field } from '@/components/spark-ui/Field';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/field",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/field"
     },
     {
       "name": "number-field",
@@ -1006,7 +1022,9 @@
         "shadcn": "npx shadcn add @sparkwire/number-field",
         "copiedImport": "import { NumberField } from '@/components/spark-ui/NumberField';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/number-field",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/number-field"
     },
     {
       "name": "toggle-group",
@@ -1218,7 +1236,9 @@
         "shadcn": "npx shadcn add @sparkwire/toggle-group",
         "copiedImport": "import { ToggleGroup, ToggleGroup.Item, ToggleGroupItem } from '@/components/spark-ui/ToggleGroup';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-togglegroup--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/toggle-group",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/toggle-group"
     },
     {
       "name": "stepper",
@@ -1301,7 +1321,9 @@
         "shadcn": "npx shadcn add @sparkwire/stepper",
         "copiedImport": "import { Stepper } from '@/components/spark-ui/Stepper';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-stepper--docs"
+      "category": "Navigation",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/stepper",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/stepper"
     },
     {
       "name": "file-upload",
@@ -1430,7 +1452,9 @@
         "shadcn": "npx shadcn add @sparkwire/file-upload",
         "copiedImport": "import { FileUpload } from '@/components/spark-ui/FileUpload';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-fileupload--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/file-upload",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/file-upload"
     },
     {
       "name": "time-picker",
@@ -1591,7 +1615,9 @@
         "shadcn": "npx shadcn add @sparkwire/time-picker",
         "copiedImport": "import { TimePicker } from '@/components/spark-ui/TimePicker';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-timepicker--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/time-picker",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/time-picker"
     },
     {
       "name": "textarea",
@@ -1689,7 +1715,9 @@
         "shadcn": "npx shadcn add @sparkwire/textarea",
         "copiedImport": "import { Textarea } from '@/components/spark-ui/Textarea';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textarea--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/textarea",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/textarea"
     },
     {
       "name": "alert",
@@ -1804,7 +1832,9 @@
         "shadcn": "npx shadcn add @sparkwire/alert",
         "copiedImport": "import { Alert } from '@/components/spark-ui/Alert';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-alert--docs"
+      "category": "Feedback",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/alert",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/alert"
     },
     {
       "name": "navigation",
@@ -1965,7 +1995,9 @@
         "shadcn": "npx shadcn add @sparkwire/navigation",
         "copiedImport": "import { Breadcrumbs, Pagination } from '@/components/spark-ui/Navigation';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-breadcrumbs--docs"
+      "category": "Navigation",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/breadcrumbs",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/breadcrumbs"
     },
     {
       "name": "charts",
@@ -2310,7 +2342,9 @@
         "shadcn": "npx shadcn add @sparkwire/charts",
         "copiedImport": "import { LineChart, BarChart, DonutChart, Sparkline } from '@/components/spark-ui/Charts';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-charts--docs"
+      "category": "Data display",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/line-chart",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/line-chart"
     },
     {
       "name": "dropdown",
@@ -2512,7 +2546,9 @@
         "shadcn": "npx shadcn add @sparkwire/dropdown",
         "copiedImport": "import { Dropdown } from '@/components/spark-ui/Dropdown';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/dropdown",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/dropdown"
     },
     {
       "name": "combobox",
@@ -2699,7 +2735,9 @@
         "shadcn": "npx shadcn add @sparkwire/combobox",
         "copiedImport": "import { Combobox } from '@/components/spark-ui/Combobox';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/combobox",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/combobox"
     },
     {
       "name": "date-picker",
@@ -3536,7 +3574,9 @@
         "shadcn": "npx shadcn add @sparkwire/date-picker",
         "copiedImport": "import { DatePicker, Segment, DateRangePicker, Calendar, RangeCalendar } from '@/components/spark-ui/DatePicker';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs"
+      "category": "Inputs",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/date-picker",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/date-picker"
     },
     {
       "name": "data-table",
@@ -3883,7 +3923,9 @@
         "shadcn": "npx shadcn add @sparkwire/data-table",
         "copiedImport": "import { DataTable } from '@/components/spark-ui/DataTable';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs"
+      "category": "Data display",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/data-table",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/data-table"
     },
     {
       "name": "command-palette",
@@ -4000,7 +4042,9 @@
         "shadcn": "npx shadcn add @sparkwire/command-palette",
         "copiedImport": "import { CommandPalette } from '@/components/spark-ui/CommandPalette';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-commandpalette--docs"
+      "category": "Navigation",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/command-palette",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/command-palette"
     },
     {
       "name": "menu",
@@ -4122,7 +4166,9 @@
         "shadcn": "npx shadcn add @sparkwire/menu",
         "copiedImport": "import { Menu } from '@/components/spark-ui/Menu';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs"
+      "category": "Navigation",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/menu",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/menu"
     },
     {
       "name": "sidebar",
@@ -4239,7 +4285,9 @@
         "shadcn": "npx shadcn add @sparkwire/sidebar",
         "copiedImport": "import { Sidebar } from '@/components/spark-ui/Sidebar';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-sidebar--docs"
+      "category": "Navigation",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/sidebar",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/sidebar"
     },
     {
       "name": "tabs",
@@ -4413,7 +4461,9 @@
         "shadcn": "npx shadcn add @sparkwire/tabs",
         "copiedImport": "import { Tabs, TabList, Tab, TabPanel } from '@/components/spark-ui/Tabs';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs"
+      "category": "Navigation",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/tabs",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/tabs"
     },
     {
       "name": "accordion",
@@ -4488,7 +4538,9 @@
         "shadcn": "npx shadcn add @sparkwire/accordion",
         "copiedImport": "import { Accordion, AccordionItem } from '@/components/spark-ui/Accordion';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs"
+      "category": "Navigation",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/accordion",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/accordion"
     },
     {
       "name": "modal",
@@ -4574,7 +4626,9 @@
         "shadcn": "npx shadcn add @sparkwire/modal",
         "copiedImport": "import { Modal } from '@/components/spark-ui/Modal';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs"
+      "category": "Overlays",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/modal",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/modal"
     },
     {
       "name": "drawer",
@@ -4679,7 +4733,9 @@
         "shadcn": "npx shadcn add @sparkwire/drawer",
         "copiedImport": "import { Drawer } from '@/components/spark-ui/Drawer';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-drawer--docs"
+      "category": "Overlays",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/drawer",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/drawer"
     },
     {
       "name": "tooltip",
@@ -4736,7 +4792,9 @@
         "shadcn": "npx shadcn add @sparkwire/tooltip",
         "copiedImport": "import { Tooltip } from '@/components/spark-ui/Tooltip';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs"
+      "category": "Overlays",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/tooltip",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/tooltip"
     },
     {
       "name": "toast",
@@ -4805,7 +4863,9 @@
         "shadcn": "npx shadcn add @sparkwire/toast",
         "copiedImport": "import { ToastProvider, useToast } from '@/components/spark-ui/Toast';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs"
+      "category": "Feedback",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/toast",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/toast"
     },
     {
       "name": "card",
@@ -4959,7 +5019,9 @@
         "shadcn": "npx shadcn add @sparkwire/card",
         "copiedImport": "import { Card, CardHeader, CardFooter, Skeleton } from '@/components/spark-ui/Card';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs"
+      "category": "Data display",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/card",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/card"
     },
     {
       "name": "avatar",
@@ -5048,7 +5110,9 @@
         "shadcn": "npx shadcn add @sparkwire/avatar",
         "copiedImport": "import { Avatar, AvatarGroup } from '@/components/spark-ui/Avatar';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-avatar--docs"
+      "category": "Data display",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/avatar",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/avatar"
     },
     {
       "name": "indicators",
@@ -5210,7 +5274,9 @@
         "shadcn": "npx shadcn add @sparkwire/indicators",
         "copiedImport": "import { Badge, Progress, Spinner } from '@/components/spark-ui/Indicators';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-badge--docs"
+      "category": "Feedback",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/badge",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/badge"
     },
     {
       "name": "provider",
@@ -5273,7 +5339,9 @@
         "shadcn": "npx shadcn add @sparkwire/provider",
         "copiedImport": "import { SparkProvider } from '@/components/spark-ui/Provider';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-customization--docs"
+      "category": "Foundations",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/provider",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/provider"
     },
     {
       "name": "base",
@@ -5610,7 +5678,9 @@
         "shadcn": "npx shadcn add @sparkwire/base",
         "copiedImport": "import { ButtonBase, InputBase, Popover, ListItemContent, ListBox, Overlay } from '@/components/spark-ui/base';"
       },
-      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-base-components--docs"
+      "category": "Foundations",
+      "docs": "https://phoenix-am.github.io/spark-ui/components/base",
+      "storybook": "https://phoenix-am.github.io/spark-ui/components/base"
     }
   ]
 }

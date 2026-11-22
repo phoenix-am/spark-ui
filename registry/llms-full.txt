@@ -18,7 +18,7 @@ Throws sparks from the press point; current runs along outlined buttons on hover
 ```tsx
 import { Button } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add button` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/actions-button--docs
+Install: `npx sparkwire add button` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/button
 
 ### Button
 The button you'll reach for most. It handles clicks, keyboard presses and
@@ -54,7 +54,7 @@ A burst of sparks from a point; used by Button and Calendar.
 ```tsx
 import { Spark } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add spark` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/effects-spark--docs
+Install: `npx sparkwire add spark` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/spark
 
 ### Spark
 The burst of sparks behind Sparkwire's buttons, available on its own. Drop
@@ -77,7 +77,7 @@ A lever switch that lights a bulb.
 ```tsx
 import { Switch } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add switch` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-switch--docs
+Install: `npx sparkwire add switch` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/switch
 
 ### Switch
 An on/off control for settings that take effect straight away, like
@@ -110,7 +110,7 @@ A checkbox that closes a circuit.
 ```tsx
 import { Checkbox } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add checkbox` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-checkbox--docs
+Install: `npx sparkwire add checkbox` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/checkbox
 
 ### Checkbox
 For yes-or-no choices and for picking several items from a list. It supports
@@ -139,7 +139,7 @@ One live wire at a time.
 ```tsx
 import { RadioGroup } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add radio-group` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-radiogroup--docs
+Install: `npx sparkwire add radio-group` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/radio-group
 
 ### RadioGroup
 Pick exactly one option from a short list where it helps to see every choice
@@ -170,7 +170,7 @@ A dimmer, with two-knob ranges.
 ```tsx
 import { Slider } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add slider` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-slider--docs
+Install: `npx sparkwire add slider` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/slider
 
 ### Slider
 Choose a number by dragging, or a range with two thumbs. Values are
@@ -212,7 +212,7 @@ A field that charges as you type.
 ```tsx
 import { Textfield } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add textfield` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs
+Install: `npx sparkwire add textfield` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/textfield
 
 ### Textfield
 A text input with a label, helper text and error state built in. It also has
@@ -257,7 +257,7 @@ Label, help text and error wiring for any control.
 ```tsx
 import { Field } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add field` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs
+Install: `npx sparkwire add field` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/field
 
 ### Field
 Turns any control into a proper form field. Give it a label, a description
@@ -287,7 +287,7 @@ Locale-formatted numbers (₹1,00,000, %, units) with steppers.
 ```tsx
 import { NumberField } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add number-field` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs
+Install: `npx sparkwire add number-field` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/number-field
 
 ### NumberField
 For numbers people type rather than drag: quantities, budgets, percentages.
@@ -332,7 +332,7 @@ Segmented control or a row of independent toggles, with arrow-key navigation.
 ```tsx
 import { ToggleGroup, ToggleGroup.Item, ToggleGroupItem } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add toggle-group` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-togglegroup--docs
+Install: `npx sparkwire add toggle-group` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/toggle-group
 
 ### ToggleGroup
 A row of buttons that act as one control. Use it as a segmented switch
@@ -397,7 +397,7 @@ Progress through a multi-step flow; clickable steps, errors, vertical, compact o
 ```tsx
 import { Stepper } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add stepper` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-stepper--docs
+Install: `npx sparkwire add stepper` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/stepper
 
 ### Stepper
 Stepper: progress through a multi-step flow (checkout, onboarding,
@@ -424,7 +424,7 @@ Drop zone and file list with type/size/count checks, thumbnails, progress and er
 ```tsx
 import { FileUpload } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add file-upload` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-fileupload--docs
+Install: `npx sparkwire add file-upload` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/file-upload
 
 ### FileUpload
 Drag and drop or browse for files, with type and size limits checked as
@@ -466,7 +466,7 @@ Type a time segment by segment or pick from suggestions every N minutes; min/max
 ```tsx
 import { TimePicker } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add time-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-timepicker--docs
+Install: `npx sparkwire add time-picker` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/time-picker
 
 ### TimePicker
 Enter a time by typing, using the arrow keys on each part, or picking from a
@@ -512,7 +512,7 @@ Multi-line text that grows with its content, with a character count.
 ```tsx
 import { Textarea } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add textarea` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textarea--docs
+Install: `npx sparkwire add textarea` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/textarea
 
 ### Textarea
 Multi-line text with the niceties built in: it can grow with its content,
@@ -544,7 +544,7 @@ Info, success, warning and error messages, with actions, dismiss and a banner va
 ```tsx
 import { Alert } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add alert` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-alert--docs
+Install: `npx sparkwire add alert` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/alert
 
 ### Alert
 A message that sits in the page: a heads-up, a success, a warning or an
@@ -578,7 +578,7 @@ Breadcrumbs and Pagination.
 ```tsx
 import { Breadcrumbs, Pagination } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add navigation` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-breadcrumbs--docs
+Install: `npx sparkwire add navigation` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/breadcrumbs
 
 ### Breadcrumbs
 A trail that shows where a page sits in your app and offers a quick way back
@@ -631,7 +631,7 @@ Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkl
 ```tsx
 import { LineChart, BarChart, DonutChart, Sparkline } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add charts` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-charts--docs
+Install: `npx sparkwire add charts` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/line-chart
 
 ### LineChart
 Show how something changes over time. Hover, or focus the chart and use the
@@ -740,7 +740,7 @@ Pick one value from a list.
 ```tsx
 import { Dropdown } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add dropdown` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs
+Install: `npx sparkwire add dropdown` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/dropdown
 
 ### Dropdown
 A select menu that looks the part. Type to jump to an option, group long
@@ -792,7 +792,7 @@ Type to search, then pick.
 ```tsx
 import { Combobox } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add combobox` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs
+Install: `npx sparkwire add combobox` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/combobox
 
 ### Combobox
 A text input with suggestions, for when the list is too long to scroll.
@@ -843,7 +843,7 @@ DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, d
 ```tsx
 import { DatePicker, Segment, DateRangePicker, Calendar, RangeCalendar } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add date-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs
+Install: `npx sparkwire add date-picker` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/date-picker
 
 ### DatePicker
 Pick a date by typing it, stepping through each part with the arrow keys, or
@@ -1021,7 +1021,7 @@ Sort, search, filter, page and select rows; responsive div grid, no table librar
 ```tsx
 import { DataTable } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add data-table` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs
+Install: `npx sparkwire add data-table` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/data-table
 
 ### DataTable
 A full data grid without a table library. Sort, search, filter, page and
@@ -1105,7 +1105,7 @@ A ⌘K launcher: search commands and pages, run with the keyboard.
 ```tsx
 import { CommandPalette } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add command-palette` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-commandpalette--docs
+Install: `npx sparkwire add command-palette` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/command-palette
 
 ### CommandPalette
 One keyboard shortcut (⌘K or Ctrl+K) to reach anything in your app: pages,
@@ -1145,7 +1145,7 @@ Actions behind a button, with submenus.
 ```tsx
 import { Menu } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add menu` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs
+Install: `npx sparkwire add menu` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/menu
 
 ### Menu
 A list of actions behind a button, like “Rename” and “Delete”. Supports
@@ -1184,7 +1184,7 @@ App navigation: sections, nested groups, collapsed rail, drawer on small screens
 ```tsx
 import { Sidebar } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add sidebar` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-sidebar--docs
+Install: `npx sparkwire add sidebar` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/sidebar
 
 ### Sidebar
 Your app's main navigation. Group links into sections, collapse it to icons
@@ -1223,7 +1223,7 @@ Tabs on one wire; the active tab is lit.
 ```tsx
 import { Tabs, TabList, Tab, TabPanel } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add tabs` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs
+Install: `npx sparkwire add tabs` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/tabs
 
 ### Tabs
 Switch between views of the same thing without leaving the page. Horizontal
@@ -1283,7 +1283,7 @@ Sections that power on as they open.
 ```tsx
 import { Accordion, AccordionItem } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add accordion` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs
+Install: `npx sparkwire add accordion` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/accordion
 
 ### Accordion
 Stacked sections that open and close, so people see only what they need.
@@ -1316,7 +1316,7 @@ A dialog that powers on, with focus trapping.
 ```tsx
 import { Modal } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add modal` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs
+Install: `npx sparkwire add modal` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/modal
 
 ### Modal
 A dialog for decisions that need full attention, like confirming a delete.
@@ -1348,7 +1348,7 @@ A panel that slides in from an edge, with focus trapping.
 ```tsx
 import { Drawer } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add drawer` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-drawer--docs
+Install: `npx sparkwire add drawer` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/drawer
 
 ### Drawer
 A panel that slides in from any edge, for filters, details or a quick form,
@@ -1385,7 +1385,7 @@ A hint that flickers on.
 ```tsx
 import { Tooltip } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add tooltip` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs
+Install: `npx sparkwire add tooltip` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/tooltip
 
 ### Tooltip
 A short hint on hover or keyboard focus. Keep it to a few words and never
@@ -1409,7 +1409,7 @@ Notifications.
 ```tsx
 import { ToastProvider, useToast } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add toast` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs
+Install: `npx sparkwire add toast` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/toast
 
 ### ToastProvider
 Brief notifications that confirm something happened and then get out of the
@@ -1443,7 +1443,7 @@ Card, CardHeader, CardFooter and Skeleton.
 ```tsx
 import { Card, CardHeader, CardFooter, Skeleton } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add card` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs
+Install: `npx sparkwire add card` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/card
 
 ### Card
 A surface for grouping related content. Make it interactive when the whole
@@ -1492,7 +1492,7 @@ Avatar and AvatarGroup.
 ```tsx
 import { Avatar, AvatarGroup } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add avatar` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-avatar--docs
+Install: `npx sparkwire add avatar` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/avatar
 
 ### Avatar
 A picture of a person, or their initials when there's no photo. The colour
@@ -1523,7 +1523,7 @@ Badge, Progress and Spinner.
 ```tsx
 import { Badge, Progress, Spinner } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add indicators` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-badge--docs
+Install: `npx sparkwire add indicators` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/badge
 
 ### Badge
 A small label for status, counts or categories. The LED dot makes state easy
@@ -1569,7 +1569,7 @@ App-wide default props, slot classes and locale.
 ```tsx
 import { SparkProvider } from '@sparkwire/core';
 ```
-Install: `npx sparkwire add provider` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-customization--docs
+Install: `npx sparkwire add provider` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/provider
 
 ### SparkProvider
 Wrap your app once to set things for every component: the energy level, the
@@ -1593,7 +1593,7 @@ ButtonBase, InputBase, Popover, ListBox and Overlay: the building blocks under t
 ```tsx
 import { ButtonBase, InputBase, Popover, ListItemContent, ListBox, Overlay } from '@sparkwire/core/base';
 ```
-Install: `npx sparkwire add base` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-base-components--docs
+Install: `npx sparkwire add base` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/base
 
 ### ButtonBase
 The unstyled foundation of every button. It handles presses, focus rings,

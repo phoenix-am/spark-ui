@@ -23,11 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-*storybook.log
 # Visual test output
 /test-results/
 /playwright-report/
 
-# Built Storybook (CI and the docs site build their own)
-storybook-static/
 site-dist/

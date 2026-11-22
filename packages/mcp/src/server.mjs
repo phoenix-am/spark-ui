@@ -77,7 +77,7 @@ function formatEntry(e, opts) {
     `- With shadcn: \`${e.install.shadcn}\` (needs the @sparkwire registry in components.json)`,
     '',
     ...e.components.flatMap((c) => [`## ${c.name}`, c.description, '', '### Props', formatProps(c, opts), '']),
-    `Examples: ${e.storybook}`,
+    `Examples and props: ${e.docs ?? e.storybook}`,
   ].join('\n');
 }
 

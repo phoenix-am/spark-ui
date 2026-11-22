@@ -27,27 +27,7 @@ export interface Entry {
   category: string;
 }
 
-const CATEGORY: Record<string, string> = {
-  actions: 'Inputs',
-  inputs: 'Inputs',
-  navigation: 'Navigation',
-  overlays: 'Overlays',
-  feedback: 'Feedback',
-  data: 'Data display',
-  'data-display': 'Data display',
-  effects: 'Effects',
-  foundations: 'Foundations',
-};
 export const CATEGORY_ORDER = ['Inputs', 'Data display', 'Navigation', 'Overlays', 'Feedback', 'Effects', 'Foundations'];
-
-const categoryOf = (e: { name: string; storybook?: string }) => {
-  if (e.name === 'base' || e.name === 'provider') return 'Foundations';
-  const path = e.storybook?.match(/path=\/docs\/([a-z-]+)--/)?.[1] ?? '';
-  const prefix = Object.keys(CATEGORY)
-    .sort((a, b) => b.length - a.length)
-    .find((k) => path.startsWith(k + '-'));
-  return prefix ? CATEGORY[prefix] : 'Inputs';
-};
 
 /**
  * Some registry items hold several independent components (they share a file
@@ -88,7 +68,7 @@ export const REDIRECT: Record<string, string> = Object.fromEntries(
 );
 
 export const entries: Entry[] = (docs.components as any[]).flatMap((e) => {
-  const base = { ...e, category: categoryOf(e) } as Entry;
+  const base = { ...e } as Entry;
   const pages = SPLIT[e.name];
   if (!pages) return [base];
   return pages.map(({ name, parts }) => {

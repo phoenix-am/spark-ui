@@ -22,7 +22,7 @@ const out = path.join(root, 'registry');
 const SITE = process.env.SPARKWIRE_SITE ?? 'https://phoenix-am.github.io/spark-ui';
 const VERSION = JSON.parse(fs.readFileSync(path.join(root, 'packages/core/package.json'), 'utf8')).version;
 
-/** Registry item → files holding its public components, and its Storybook path. */
+/** Registry item → files holding its public components, and its category id (category-name). */
 const ENTRIES = [
   ['button', ['__docgen__/shims.tsx'], 'actions-button', ['Button']],
   ['spark', ['Spark/Spark.tsx'], 'effects-spark'],
@@ -71,6 +71,15 @@ const parser = docgen.withCustomConfig(path.join(root, 'tsconfig.json'), {
 });
 
 const clean = (s = '') => s.replace(/\r/g, '').trim();
+
+/** Docs-site page for registry items split into several pages. */
+const FIRST_PAGE = { navigation: 'breadcrumbs', indicators: 'badge', charts: 'line-chart' };
+const CATEGORY = { actions: 'Inputs', inputs: 'Inputs', navigation: 'Navigation', overlays: 'Overlays', feedback: 'Feedback', data: 'Data display', 'data-display': 'Data display', effects: 'Effects', foundations: 'Foundations' };
+const categoryOf = (name, id) => {
+  if (name === 'base' || name === 'provider') return 'Foundations';
+  const prefix = Object.keys(CATEGORY).sort((a, b) => b.length - a.length).find((k) => id.startsWith(k + '-'));
+  return prefix ? CATEGORY[prefix] : 'Inputs';
+};
 
 /** Descriptions for props declared in third-party types (React, React Aria), which have no comment of ours. */
 const PROP_FALLBACK = {
@@ -159,7 +168,10 @@ for (const [name, files, story, only] of ENTRIES) {
       shadcn: `npx shadcn add @sparkwire/${name}`,
       copiedImport: `import { ${exported.join(', ')} } from '@/components/spark-ui/${folder}';`,
     },
-    storybook: `${SITE}/?path=/docs/${story}--docs`,
+    category: categoryOf(name, story),
+    docs: `${SITE}/components/${FIRST_PAGE[name] ?? name}`,
+    /** @deprecated Same as `docs`; kept for MCP servers before 0.3.1. */
+    storybook: `${SITE}/components/${FIRST_PAGE[name] ?? name}`,
   });
 }
 
@@ -185,7 +197,7 @@ Key facts for writing code:
 const index = [
   intro,
   '## Components',
-  ...docs.map((d) => `- [${d.title}](${d.storybook}): ${d.summary} Exports: ${d.components.map((c) => c.name).join(', ')}.`),
+  ...docs.map((d) => `- [${d.title}](${d.docs}): ${d.summary} Exports: ${d.components.map((c) => c.name).join(', ')}.`),
   '',
   '## Docs',
   `- [Full reference with every prop](${SITE}/llms-full.txt)`,
@@ -207,7 +219,7 @@ const full = [
     '```tsx',
     d.import,
     '```',
-    `Install: \`${d.install.copy}\` (copy source) or use the npm package. Examples: ${d.storybook}`,
+    `Install: \`${d.install.copy}\` (copy source) or use the npm package. Examples and props: ${d.docs}`,
     '',
     ...d.components.flatMap((c) => [`### ${c.name}`, c.description, '', ...(c.props.length ? c.props.map(propLine) : ['No props.']), '']),
   ]),
