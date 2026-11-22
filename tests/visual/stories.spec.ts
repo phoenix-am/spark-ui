@@ -13,6 +13,15 @@ for (const story of stories) {
   test(`${story.title} › ${story.name}`, async ({ page }) => {
     // Stories tagged `slow-visual` mount heavy demos (e.g. 10,000 table rows); give them triple time on busy CI runners.
     if (story.tags?.includes('slow-visual')) test.slow();
+    if (story.tags?.includes('slow-visual')) {
+      // Diagnostics for heavy stories: what keeps the page from going idle.
+      const t0 = Date.now();
+      page.on('request', (r) => console.log(`[${story.id}] +${Date.now() - t0}ms request ${r.method()} ${r.url().slice(0, 140)}`));
+      page.on('requestfailed', (r) => console.log(`[${story.id}] request failed ${r.url().slice(0, 140)} ${r.failure()?.errorText}`));
+      page.on('pageerror', (e) => console.log(`[${story.id}] pageerror ${e.message}`));
+      page.on('console', (m) => m.type() !== 'debug' && console.log(`[${story.id}] console.${m.type()} ${m.text().slice(0, 200)}`));
+      page.on('crash', () => console.log(`[${story.id}] page crashed`));
+    }
     await page.clock.setFixedTime(NOW);
     await page.goto(`/iframe.html?id=${story.id}&viewMode=story&globals=mode:dark;energy:off`);
     await page.waitForSelector('#storybook-root > *, #storybook-root:empty', { state: 'attached' });
