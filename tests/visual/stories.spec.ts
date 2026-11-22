@@ -11,36 +11,19 @@ const NOW = new Date('2026-06-15T10:30:00+05:30');
 
 for (const story of stories) {
   test(`${story.title} › ${story.name}`, async ({ page }) => {
-    // Stories tagged `slow-visual` mount heavy demos (e.g. 10,000 table rows); give them triple time on busy CI runners.
+    // Stories tagged `slow-visual` mount heavy demos; give them triple time on busy CI runners.
     if (story.tags?.includes('slow-visual')) test.slow();
-    if (story.tags?.includes('slow-visual')) {
-      // Diagnostics for heavy stories: what keeps the page from going idle.
-      const t0 = Date.now();
-      page.on('request', (r) => console.log(`[${story.id}] +${Date.now() - t0}ms request ${r.method()} ${r.url().slice(0, 140)}`));
-      page.on('requestfailed', (r) => console.log(`[${story.id}] request failed ${r.url().slice(0, 140)} ${r.failure()?.errorText}`));
-      page.on('pageerror', (e) => console.log(`[${story.id}] pageerror ${e.message}`));
-      page.on('console', (m) => m.type() !== 'debug' && console.log(`[${story.id}] console.${m.type()} ${m.text().slice(0, 200)}`));
-      page.on('crash', () => console.log(`[${story.id}] page crashed`));
-    }
     await page.clock.setFixedTime(NOW);
     await page.goto(`/iframe.html?id=${story.id}&viewMode=story&globals=mode:dark;energy:off`);
     await page.waitForSelector('#storybook-root > *, #storybook-root:empty', { state: 'attached' });
+    // Heavy stories (e.g. 10,000 table rows) render fine but Chrome never reports network idle for them,
+    // so wait for the load event and the first table row instead.
     if (story.tags?.includes('slow-visual')) {
-      // Probe: is the page responsive, and is it still changing?
-      for (let i = 0; i < 8; i++) {
-        const t = Date.now();
-        const state = await Promise.race([
-          page.evaluate(() => {
-            const g = document.querySelector('[role=grid]') as HTMLElement | null;
-            return { rows: document.querySelectorAll('[role=row]').length, top: g?.scrollTop, h: g?.clientHeight, sh: g?.scrollHeight, fonts: document.fonts.status };
-          }),
-          new Promise((r) => setTimeout(() => r('NO RESPONSE in 5s'), 5000)),
-        ]);
-        console.log(`[${story.id}] probe ${i} (${Date.now() - t}ms)`, JSON.stringify(state));
-        await new Promise((r) => setTimeout(r, 1000));
-      }
+      await page.waitForLoadState('load');
+      await page.waitForSelector('[role=row] + [role=row], [role=row]', { state: 'attached' });
+    } else {
+      await page.waitForLoadState('networkidle');
     }
-    await page.waitForLoadState('networkidle');
     await page.evaluate(() => document.fonts.ready);
 
     const root = page.locator('#storybook-root');
