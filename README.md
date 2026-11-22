@@ -608,6 +608,10 @@ We welcome contributions from the community! To contribute:
 - **Documentation**: Ensure that any new components or utilities are well-documented.
 - **Testing**: Write unit tests for new features or changes.
 
+## Releasing
+
+Releases use [changesets](https://github.com/changesets/changesets). In a pull request that changes a package, run `npx changeset`, pick patch, minor or major, and write one line for the changelog. After merging, the **Publish to npm** workflow opens a **Version packages** pull request; merging that one publishes every package to npm (one shared version) and creates the GitHub release.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
