@@ -18,7 +18,11 @@ export interface AccordionProps {
 }
 
 /**
- * Accordion: a stack of circuits. Opening a section closes its circuit: the
+ * Stacked sections that open and close, so people see only what they need.
+ * Perfect for FAQs and long settings pages. Allow one open at a time, or
+ * several.
+ *
+ * A stack of circuits. Opening a section closes its circuit: the
  * wire beside it lights up and current runs down it.
  *
  * Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
@@ -46,6 +50,10 @@ export interface AccordionItemProps {
   disabled?: boolean;
 }
 
+/**
+ * One section of an accordion: a title people click and the content it
+ * reveals.
+ */
 export function AccordionItem({ value, title, children, disabled }: AccordionItemProps) {
   const ctx = useContext(Ctx);
   if (!ctx) throw new Error('AccordionItem must be used inside <Accordion>');

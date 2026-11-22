@@ -55,7 +55,11 @@ const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : 0
 /* ------------------------------------------------------------ LineChart */
 
 /**
- * LineChart (and AreaChart with `area` / `stacked`): change over time or an
+ * Show how something changes over time. Hover, or focus the chart and use the
+ * arrow keys, to read exact values. Fill the area underneath, stack series,
+ * and switch to a data table view for screen readers.
+ *
+ * Change over time or an
  * ordered axis. Thin 2px lines that draw in like current, a crosshair and
  * tooltip that follow the pointer, keyboard stepping (focus the chart, then
  * ← →), legend toggles, and a data-table view. One y axis only.
@@ -193,7 +197,11 @@ export function LineChart<Row>(inProps: LineChartProps<Row>) {
 /* ------------------------------------------------------------- BarChart */
 
 /**
- * BarChart: compare amounts across categories. Grouped or `stacked`,
+ * Compare amounts side by side, stacked or horizontally. Bars are rounded only
+ * at their ends with a little gap between them, so they stay easy to read even
+ * with several series.
+ *
+ * Compare amounts across categories. Grouped or `stacked`,
  * vertical or `horizontal`. Thin bars with 4px rounded data ends, square to
  * the baseline, a 2px gap between neighbours; a per-group tooltip on hover
  * or keyboard (focus the chart, then arrow keys), legend toggles and a

@@ -18,7 +18,10 @@ export interface TooltipProps {
 }
 
 /**
- * Tooltip: a short charged label that arcs out from its trigger on hover or
+ * A short hint on hover or keyboard focus. Keep it to a few words and never
+ * hide anything essential in one, since touch users may never see it.
+ *
+ * A short charged label that arcs out from its trigger on hover or
  * keyboard focus. Behaviour comes from React Aria: hover delay with warm-up
  * across nearby tooltips, instant on keyboard focus, Escape dismisses.
  *

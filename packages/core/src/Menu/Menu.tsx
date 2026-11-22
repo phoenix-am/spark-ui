@@ -75,7 +75,11 @@ export interface MenuProps {
 }
 
 /**
- * Menu: a list of actions behind a button (Edit, Duplicate, Delete). Not for
+ * A list of actions behind a button, like “Rename” and “Delete”. Supports
+ * sections, icons, descriptions, nested submenus, and single or multiple
+ * selection for things like sort order.
+ *
+ * A list of actions behind a button (Edit, Duplicate, Delete). Not for
  * picking a value: use Dropdown for that. Built on the Popover base and the
  * shared list-item look, with React Aria's menu behaviour: arrow keys,
  * typeahead, Enter/Space to run, Escape to close, submenus that open with

@@ -141,12 +141,12 @@ export function Home() {
               <div>
                 <span>Requests</span>
                 <strong>16.7k</strong>
-                <Sparkline data={traffic.map((t) => t.requests)} area height={32} width={120} />
+                <Sparkline aria-label="Requests this week, trending up" data={traffic.map((t) => t.requests)} area height={32} width={120} />
               </div>
               <div>
                 <span>Error rate</span>
                 <strong>1.4%</strong>
-                <Sparkline data={traffic.map((t) => t.errors)} height={32} width={120} />
+                <Sparkline aria-label="Errors this week, trending down" data={traffic.map((t) => t.errors)} height={32} width={120} />
               </div>
             </div>
             <Slider label="Capacity" value={load} onChange={(v) => setLoad(v as number)} formatOptions={{ style: 'unit', unit: 'percent' }} />

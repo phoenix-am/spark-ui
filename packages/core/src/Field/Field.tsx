@@ -43,7 +43,11 @@ export interface FieldProps {
 }
 
 /**
- * Field: label, help text and error for any control, wired for screen readers.
+ * Turns any control into a proper form field. Give it a label, a description
+ * and an error, wrap your input, and Field connects them all for screen
+ * readers so you don't have to juggle ids.
+ *
+ * Label, help text and error for any control, wired for screen readers.
  * Use it to give your own inputs (a textarea, a third-party editor) the same
  * labelling and error handling as Spark UI's built-in fields.
  *

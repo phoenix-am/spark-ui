@@ -38,6 +38,10 @@ export const useToast = (): ToastApi => {
 let seq = 0;
 
 /**
+ * Brief notifications that confirm something happened and then get out of the
+ * way. Wrap your app once, then call `toast()` from anywhere. Toasts stack,
+ * pause while hovered, and can carry an action like Undo.
+ *
  * Wrap your app once. Toasts stack bottom-right (max 5); the bottom bar
  * discharges as the timer runs and pauses on hover or focus.
  *

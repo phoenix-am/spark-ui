@@ -75,7 +75,10 @@ function useNarrow(px: number) {
 const contains = (item: SidebarItem, id?: string): boolean => !!id && (item.id === id || !!item.items?.some((c) => contains(c, id)));
 
 /**
- * Sidebar: app navigation. Items sit on a wire down the side; the active
+ * Your app's main navigation. Group links into sections, collapse it to icons
+ * when space is tight, and on phones it becomes a drawer that slides in.
+ *
+ * App navigation. Items sit on a wire down the side; the active
  * item is lit. Sections with headings, nested groups that open and close,
  * badges, links (with `aria-current="page"`), a collapsed icon-only rail
  * with tooltips, and a drawer on small screens. A real `<nav>` with lists,

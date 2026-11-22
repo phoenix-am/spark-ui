@@ -84,7 +84,11 @@ function matchesHotkey(e: KeyboardEvent, hotkey: string) {
 }
 
 /**
- * CommandPalette: a ⌘K launcher. Type to find a command or page; arrows move
+ * One keyboard shortcut (⌘K or Ctrl+K) to reach anything in your app: pages,
+ * actions, settings. It searches as you type, groups results, and shows
+ * shortcuts. This site's search is built with it.
+ *
+ * A ⌘K launcher. Type to find a command or page; arrows move
  * the lit node, Enter runs it, Escape closes. Focus stays in the search box
  * (ARIA combobox with an active option), the dialog traps focus and returns
  * it when closed. Groups, keywords, icons, shortcuts, links and async

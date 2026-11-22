@@ -95,7 +95,11 @@ function Thumb({ file }: { file: File }) {
 }
 
 /**
- * FileUpload: drop files on the zone or browse. Checks type, size and count
+ * Drag and drop or browse for files, with type and size limits checked as
+ * files arrive. Rejected files come with a clear reason, images can show
+ * previews, and everything works from the keyboard.
+ *
+ * Drop files on the zone or browse. Checks type, size and count
  * before accepting, lists files with thumbnails, progress and errors, and
  * lets people remove them. Uploading is yours: start it in `onAdd`, then
  * feed `progress` / `status` back through `files`.

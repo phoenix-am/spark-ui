@@ -22,7 +22,12 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   render?: RenderProp<{ tone: string }>;
 }
 
-/** Badge: a status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`. */
+/**
+ * A small label for status, counts or categories. The LED dot makes state easy
+ * to read at a glance, and it can pulse for things that are in progress.
+ *
+ * A status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`.
+ */
 export function Badge(inProps: BadgeProps) {
   const { tone = 'brand', led = true, pulse = false, variant = 'soft', render, className, classNames, children, ...rest } = useDefaults('Badge', inProps);
   return renderElement('span', render, {
@@ -56,7 +61,10 @@ export interface ProgressProps {
 }
 
 /**
- * Progress: a charge bar. At 100% the bar is fully charged and current flows.
+ * Shows how far along a task is when you know the total, with an optional
+ * label and percentage.
+ *
+ * A charge bar. At 100% the bar is fully charged and current flows.
  * Style hooks: `.sp-progress[data-state="charging"|"charged"|"indeterminate"]`, `__track`, `__fill`.
  */
 export function Progress(inProps: ProgressProps) {
@@ -104,7 +112,12 @@ export interface SpinnerProps {
 
 const spinners = { small: 16, medium: 24, large: 36 };
 
-/** Spinner: an arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`. */
+/**
+ * For waits of unknown length. Always give it a label so screen readers know
+ * something is loading.
+ *
+ * An arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`.
+ */
 export function Spinner(inProps: SpinnerProps) {
   const m = useMessages();
   const { size = 'medium', tone = 'brand', label = m.loading } = useDefaults('Spinner', inProps);

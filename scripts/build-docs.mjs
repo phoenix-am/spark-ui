@@ -75,7 +75,7 @@ const INTERNAL = new Set(['CalendarSystem', 'CalendarCore', 'RangeCalendarCore',
 
 /*
  * Shims for APIs docgen can't read directly: Button's polymorphic forwardRef
- * cast, and the options object passed to toast.show(). Written next to the
+ * cast, and the options object passed to toast(). Written next to the
  * source so types resolve, removed after parsing.
  */
 const shimDir = path.join(src, '__docgen__');
@@ -92,8 +92,11 @@ export function Button(props: ButtonTypeMap['props'] & {
   as?: ElementType;
 }) { return null; }
 /**
- * Options for \`toast.show()\`. Wrap your app in \`<ToastProvider>\`, then
- * \`const toast = useToast(); toast.show({ title: 'Saved', tone: 'success' })\`.
+ * The options you pass to \`toast()\`: a title, an optional description, a
+ * tone, an action and how long it stays.
+ *
+ * Wrap your app in \`<ToastProvider>\`, then
+ * \`const { toast } = useToast(); toast({ title: 'Saved', tone: 'success' })\`.
  */
 export function ToastShowOptions(props: ToastOptions) { return null; }
 `,

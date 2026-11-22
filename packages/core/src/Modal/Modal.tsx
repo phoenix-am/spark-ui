@@ -27,7 +27,11 @@ export interface ModalProps {
 }
 
 /**
- * Modal: a power cut. The page dims with a flicker and the dialog is the only
+ * A dialog for decisions that need full attention, like confirming a delete.
+ * Focus stays inside while it's open, Escape closes it, and focus returns to
+ * where it came from.
+ *
+ * A power cut. The page dims with a flicker and the dialog is the only
  * thing left lit. Behaviour comes from React Aria: focus is contained and
  * restored, the page behind is hidden from screen readers and can't scroll,
  * and Escape or an outside click closes it. Built on the Overlay base.

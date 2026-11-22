@@ -31,7 +31,12 @@ let nextId = 0;
 const themeSparks = ['var(--spark-energy-spark-1)', 'var(--spark-energy-spark-2)', 'var(--spark-energy-spark-3)'];
 
 /**
- * Spark: the signature Live Wire effect. Place it inside a `position: relative`
+ * The burst of sparks behind Sparkwire's buttons, available on its own. Drop
+ * it inside anything clickable and fire it from the pointer for a moment of
+ * delight on the actions that matter. It quietly does nothing for people who
+ * prefer reduced motion.
+ *
+ * The signature Live Wire effect. Place it inside a `position: relative`
  * element and call `burst()` from its click handler. Renders nothing for users
  * who prefer reduced motion.
  */

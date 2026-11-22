@@ -31,7 +31,10 @@ const Chevron = () => (
 );
 
 /**
- * Breadcrumbs: where this page sits. The last item is the current page
+ * A trail that shows where a page sits in your app and offers a quick way back
+ * up. Long trails collapse in the middle so they never wrap awkwardly.
+ *
+ * Where this page sits. The last item is the current page
  * (`aria-current="page"`); long trails collapse in the middle with
  * `maxItems`. Works with any router through `renderLink`.
  *
@@ -126,7 +129,11 @@ const Arrow = ({ dir }: { dir: 'left' | 'right' }) => (
 );
 
 /**
- * Pagination: move between pages of results. Previous/next, page numbers
+ * Page numbers with sensible gaps, so twelve pages or twelve hundred both fit.
+ * There's a compact version for tight spots like table footers, and it can
+ * render real links for server-rendered pages.
+ *
+ * Move between pages of results. Previous/next, page numbers
  * with ellipses (1 … 4 5 6 … 20), the current page marked
  * `aria-current="page"`, and real links when `getHref` is given.
  * `variant="compact"` shows "Page 3 of 12" for tight spaces.

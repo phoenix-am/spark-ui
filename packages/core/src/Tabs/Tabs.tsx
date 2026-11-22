@@ -57,7 +57,11 @@ export interface TabsProps {
 }
 
 /**
- * Tabs: every tab sits on one wire. The active tab is the lit segment, and the
+ * Switch between views of the same thing without leaving the page. Horizontal
+ * or vertical, with arrow-key navigation and a lit underline that follows the
+ * active tab.
+ *
+ * Every tab sits on one wire. The active tab is the lit segment, and the
  * current slides along the wire when you switch. Behaviour comes from React
  * Aria: arrow keys (mirrored in right-to-left languages), Home/End, vertical
  * orientation, and automatic or manual activation.
@@ -112,6 +116,10 @@ export interface TabListProps {
   className?: string;
 }
 
+/**
+ * Holds the tabs. Give it an `aria-label` so screen readers know what the tabs
+ * are for.
+ */
 export function TabList({ className, children, ...rest }: TabListProps) {
   const { state, orientation, activation } = useTabs();
   const listRef = useRef<HTMLDivElement>(null);
@@ -149,7 +157,11 @@ export interface TabProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'ch
   children?: React.ReactNode;
 }
 
-/** One tab. Use inside <TabList>. */
+/**
+ * One tab. Its `value` matches the panel it shows.
+ *
+ * One tab. Use inside <TabList>.
+ */
 export function Tab({ value, icon, children, disabled = false, className, ...rest }: TabProps) {
   const { state, register } = useTabs();
   const ref = useRef<HTMLDivElement>(null);
@@ -177,6 +189,9 @@ export interface TabPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
 }
 
+/**
+ * The content for one tab, shown when its tab is active.
+ */
 export function TabPanel({ value, children, className, ...rest }: TabPanelProps) {
   const { state } = useTabs();
   if (state.selectedKey == null || String(state.selectedKey) !== value) return null;

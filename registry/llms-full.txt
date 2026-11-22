@@ -21,7 +21,13 @@ import { Button } from '@sparkwire/core';
 Install: `npx sparkwire add button` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/actions-button--docs
 
 ### Button
-Button: throws sparks from the press point. Outlined and text buttons show
+The button you'll reach for most. It handles clicks, keyboard presses and
+focus the way people expect, comes in three weights (contained, outlined,
+text) and four colours, and throws a little burst of sparks from wherever
+it's pressed. Need a link that looks like a button? Render it as one with
+`as` or `render`.
+
+Throws sparks from the press point. Outlined and text buttons show
 current flowing along a wire on hover; a disabled button is a dead circuit.
 Built on ButtonBase; forwards `ref` to the rendered element.
 
@@ -51,7 +57,12 @@ import { Spark } from '@sparkwire/core';
 Install: `npx sparkwire add spark` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/effects-spark--docs
 
 ### Spark
-Spark: the signature Live Wire effect. Place it inside a `position: relative`
+The burst of sparks behind Sparkwire's buttons, available on its own. Drop
+it inside anything clickable and fire it from the pointer for a moment of
+delight on the actions that matter. It quietly does nothing for people who
+prefer reduced motion.
+
+The signature Live Wire effect. Place it inside a `position: relative`
 element and call `burst()` from its click handler. Renders nothing for users
 who prefer reduced motion.
 
@@ -69,7 +80,11 @@ import { Switch } from '@sparkwire/core';
 Install: `npx sparkwire add switch` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-switch--docs
 
 ### Switch
-Switch: a lever that closes a circuit. When on, current lights the wire and
+An on/off control for settings that take effect straight away, like
+notifications or dark mode. It reads as a real switch to screen readers,
+flips with Space, and can show a small bulb that lights up when it's on.
+
+A lever that closes a circuit. When on, current lights the wire and
 the bulb; when off, the lever lifts and the circuit goes dark.
 
 Style hooks: `.sp-switch`, `[data-state="on"|"off"]`, and the parts
@@ -98,7 +113,11 @@ import { Checkbox } from '@sparkwire/core';
 Install: `npx sparkwire add checkbox` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-checkbox--docs
 
 ### Checkbox
-Checkbox: a terminal. Checking it powers the terminal: it fills with current
+For yes-or-no choices and for picking several items from a list. It supports
+an indeterminate state for “some selected”, sits nicely in forms, and shows
+errors with a message rather than colour alone.
+
+A terminal. Checking it powers the terminal: it fills with current
 and the tick is drawn in. Built on a native checkbox, so forms and keyboards work.
 
 Style hooks: `.sp-checkbox`, `__box`, `__label`, `__helper`; the native input
@@ -123,7 +142,11 @@ import { RadioGroup } from '@sparkwire/core';
 Install: `npx sparkwire add radio-group` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-radiogroup--docs
 
 ### RadioGroup
-RadioGroup: a selector switch. Every option is a contact; only the chosen one
+Pick exactly one option from a short list where it helps to see every choice
+at once. Show options as a simple list, or as cards with room for a
+description, which works well for plans and regions.
+
+A selector switch. Every option is a contact; only the chosen one
 carries current, so its core lights up. Native radios underneath, so arrow
 keys and forms work as expected.
 
@@ -150,7 +173,11 @@ import { Slider } from '@sparkwire/core';
 Install: `npx sparkwire add slider` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-slider--docs
 
 ### Slider
-Slider: a dimmer. The wire is lit up to the knob, and the glow gets stronger
+Choose a number by dragging, or a range with two thumbs. Values are
+formatted with Intl, so prices, percentages and units read naturally, and
+the arrow keys give precise control.
+
+A dimmer. The wire is lit up to the knob, and the glow gets stronger
 the higher you turn it. Pass a `[start, end]` value for a range: current
 flows between two knobs. Behaviour comes from React Aria: arrows, Page
 Up/Down, Home/End, dragging, clicking the track, right-to-left, and
@@ -188,7 +215,11 @@ import { Textfield } from '@sparkwire/core';
 Install: `npx sparkwire add textfield` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs
 
 ### Textfield
-Textfield: in Live Wire, a field can "charge up" as its value becomes valid.
+A text input with a label, helper text and error state built in. It also has
+a party trick: a charge meter that fills up as the value gets more complete,
+handy for password strength or profile progress.
+
+In Live Wire, a field can "charge up" as its value becomes valid.
 Pass `charge` (0..1, or a function of the value) to show the meter.
 
 Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
@@ -229,7 +260,11 @@ import { Field } from '@sparkwire/core';
 Install: `npx sparkwire add field` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs
 
 ### Field
-Field: label, help text and error for any control, wired for screen readers.
+Turns any control into a proper form field. Give it a label, a description
+and an error, wrap your input, and Field connects them all for screen
+readers so you don't have to juggle ids.
+
+Label, help text and error for any control, wired for screen readers.
 Use it to give your own inputs (a textarea, a third-party editor) the same
 labelling and error handling as Spark UI's built-in fields.
 
@@ -255,8 +290,13 @@ import { NumberField } from '@sparkwire/core';
 Install: `npx sparkwire add number-field` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs
 
 ### NumberField
-NumberField: a number input that formats as you'd write it in your
-language (₹1,00,000 in India, $100,000 in the US, 15 %, 2.5 kg). Up/Down
+For numbers people type rather than drag: quantities, budgets, percentages.
+It formats as you go (₹25,000, 15%), keeps values inside min and max, and
+steps with buttons, arrow keys or the scroll wheel.
+
+A number input that formats as you'd write it in your
+language (₹1,00,000 in India, 
+00,000 in the US, 15 %, 2.5 kg). Up/Down
 and the − / + buttons step; Page Up/Down step by tens; Home/End jump to
 min/max; values are clamped and snapped to `step` on blur. Built on React
 Aria's number field and the InputBase base component.
@@ -295,7 +335,11 @@ import { ToggleGroup, ToggleGroup.Item, ToggleGroupItem } from '@sparkwire/core'
 Install: `npx sparkwire add toggle-group` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-togglegroup--docs
 
 ### ToggleGroup
-ToggleGroup: a row of related toggle buttons, as a segmented control
+A row of buttons that act as one control. Use it as a segmented switch
+between views, or let several be on at once, like bold and italic in a
+toolbar. Arrow keys move between options.
+
+A row of related toggle buttons, as a segmented control
 (`single`) or independent toggles (`multiple`). Arrow keys move between
 items, one Tab stop for the group; selected items have `aria-checked` /
 `aria-pressed`.
@@ -326,7 +370,8 @@ Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]
 - `variant?`: `"segmented" | "outlined"` `segmented` (default): one track with a sliding fill. `outlined`: separate buttons.
 
 ### ToggleGroup.Item
-
+One option inside a ToggleGroup. Give it a value and a label, or an icon
+with an `aria-label`.
 
 - `value`: `string`
 - `aria-label?`: `string`
@@ -336,7 +381,8 @@ Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]
 - `icon?`: `ReactNode` Icon before the label. For icon-only items, pass `aria-label`.
 
 ### ToggleGroupItem
-
+One option inside a ToggleGroup. Give it a value and a label, or an icon
+with an `aria-label`.
 
 - `value`: `string`
 - `aria-label?`: `string`
@@ -381,7 +427,11 @@ import { FileUpload } from '@sparkwire/core';
 Install: `npx sparkwire add file-upload` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-fileupload--docs
 
 ### FileUpload
-FileUpload: drop files on the zone or browse. Checks type, size and count
+Drag and drop or browse for files, with type and size limits checked as
+files arrive. Rejected files come with a clear reason, images can show
+previews, and everything works from the keyboard.
+
+Drop files on the zone or browse. Checks type, size and count
 before accepting, lists files with thumbnails, progress and errors, and
 lets people remove them. Uploading is yours: start it in `onAdd`, then
 feed `progress` / `status` back through `files`.
@@ -419,7 +469,11 @@ import { TimePicker } from '@sparkwire/core';
 Install: `npx sparkwire add time-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-timepicker--docs
 
 ### TimePicker
-TimePicker: type a time segment by segment (hours, minutes, AM/PM), or
+Enter a time by typing, using the arrow keys on each part, or picking from a
+list. It respects 12 and 24-hour clocks for the locale and can limit choices
+to business hours or fixed steps.
+
+Type a time segment by segment (hours, minutes, AM/PM), or
 pick from a list of suggestions every `step` minutes. Values are plain
 24-hour strings ("14:30"), so they store and submit cleanly; the field
 shows the locale's format. `min`, `max` and `isTimeDisabled` limit both
@@ -461,7 +515,10 @@ import { Textarea } from '@sparkwire/core';
 Install: `npx sparkwire add textarea` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textarea--docs
 
 ### Textarea
-Textarea: multi-line text on the same shell as every other field
+Multi-line text with the niceties built in: it can grow with its content,
+show a live character count, and display errors next to the field.
+
+Multi-line text on the same shell as every other field
 (`.sp-input-base`). Grows with its content (`autoResize`), can show a
 character count, and links its label, help text and error for screen
 readers.
@@ -490,7 +547,11 @@ import { Alert } from '@sparkwire/core';
 Install: `npx sparkwire add alert` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-alert--docs
 
 ### Alert
-Alert: a message about the page or a task — info, success, warning or
+A message that sits in the page: a heads-up, a success, a warning or an
+error. Errors are announced to screen readers immediately; the rest wait
+politely. Add an action or let people dismiss it.
+
+A message about the page or a task — info, success, warning or
 error — with an icon, optional title, actions and a dismiss button. Use
 `variant="banner"` for a site-wide strip. Errors are announced at once;
 others are static unless you set `live`.
@@ -520,7 +581,10 @@ import { Breadcrumbs, Pagination } from '@sparkwire/core';
 Install: `npx sparkwire add navigation` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-breadcrumbs--docs
 
 ### Breadcrumbs
-Breadcrumbs: where this page sits. The last item is the current page
+A trail that shows where a page sits in your app and offers a quick way back
+up. Long trails collapse in the middle so they never wrap awkwardly.
+
+Where this page sits. The last item is the current page
 (`aria-current="page"`); long trails collapse in the middle with
 `maxItems`. Works with any router through `renderLink`.
 
@@ -535,7 +599,11 @@ Style hooks: `.sp-breadcrumbs`, `__item`, `__link`, `__current`, `__separator`, 
 - `separator?`: `ReactNode` Default "/"-style chevron.
 
 ### Pagination
-Pagination: move between pages of results. Previous/next, page numbers
+Page numbers with sensible gaps, so twelve pages or twelve hundred both fit.
+There's a compact version for tight spots like table footers, and it can
+render real links for server-rendered pages.
+
+Move between pages of results. Previous/next, page numbers
 with ellipses (1 … 4 5 6 … 20), the current page marked
 `aria-current="page"`, and real links when `getHref` is given.
 `variant="compact"` shows "Page 3 of 12" for tight spaces.
@@ -566,7 +634,11 @@ import { LineChart, BarChart, DonutChart, Sparkline } from '@sparkwire/core';
 Install: `npx sparkwire add charts` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-charts--docs
 
 ### LineChart
-LineChart (and AreaChart with `area` / `stacked`): change over time or an
+Show how something changes over time. Hover, or focus the chart and use the
+arrow keys, to read exact values. Fill the area underneath, stack series,
+and switch to a data table view for screen readers.
+
+Change over time or an
 ordered axis. Thin 2px lines that draw in like current, a crosshair and
 tooltip that follow the pointer, keyboard stepping (focus the chart, then
 ← →), legend toggles, and a data-table view. One y axis only.
@@ -594,7 +666,11 @@ Style hooks: `.sp-chart[data-kind="line"|"area"]`, `__line`, `__area`,
 - `zeroBaseline?`: `boolean` Start the y axis at zero. Default `true` for areas, `false` for lines.
 
 ### BarChart
-BarChart: compare amounts across categories. Grouped or `stacked`,
+Compare amounts side by side, stacked or horizontally. Bars are rounded only
+at their ends with a little gap between them, so they stay easy to read even
+with several series.
+
+Compare amounts across categories. Grouped or `stacked`,
 vertical or `horizontal`. Thin bars with 4px rounded data ends, square to
 the baseline, a 2px gap between neighbours; a per-group tooltip on hover
 or keyboard (focus the chart, then arrow keys), legend toggles and a
@@ -619,7 +695,11 @@ Style hooks: `.sp-chart[data-kind="bar"]`, `__bar[data-active]`, `__band`.
 - `valueFormat?`: `NumberFormatOptions` Intl options for values, e.g. `{ style: 'currency', currency: 'INR', notation: 'compact' }`.
 
 ### DonutChart
-DonutChart: share of a whole. Slices start at 12 o'clock in data order,
+Parts of a whole, with room for a headline number in the middle. Best with a
+handful of slices; the legend shows values and percentages so nothing
+depends on colour alone.
+
+Share of a whole. Slices start at 12 o'clock in data order,
 separated by a 2px surface gap; the legend lists every slice with its
 value and percentage so identity never depends on colour alone. Hover or
 focus a slice (Tab, then ← →) for its tooltip.
@@ -638,7 +718,10 @@ Style hooks: `.sp-chart[data-kind="donut"]`, `__slice[data-active]`, `__center`.
 - `valueFormat?`: `NumberFormatOptions`
 
 ### Sparkline
-Sparkline: a word-sized trend for tables, stat tiles and cards. No axes;
+A tiny trend line that fits in a table cell or beside a number. No axes, no
+fuss, just the shape of the data and, optionally, its latest value.
+
+A word-sized trend for tables, stat tiles and cards. No axes;
 the last point is marked so the current value is easy to find. Its
 accessible name states the first, last and range.
 
@@ -660,7 +743,11 @@ import { Dropdown } from '@sparkwire/core';
 Install: `npx sparkwire add dropdown` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs
 
 ### Dropdown
-Dropdown: pick one value from a list. The chosen option's node lights up.
+A select menu that looks the part. Type to jump to an option, group long
+lists under headings, and add an icon or helper text. It submits with forms
+like a native select.
+
+Pick one value from a list. The chosen option's node lights up.
 Built on the Popover and ListBox base components with React Aria:
 typeahead on the closed and open list, arrow keys, Home/End, Escape,
 groups with headings, screen-reader announcements, and a hidden native
@@ -708,7 +795,11 @@ import { Combobox } from '@sparkwire/core';
 Install: `npx sparkwire add combobox` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs
 
 ### Combobox
-Combobox: type to search a list, then pick. The field charges as you type
+A text input with suggestions, for when the list is too long to scroll.
+Matching ignores case and accents, results can come from your server, and
+you can allow values that aren't in the list.
+
+Type to search a list, then pick. The field charges as you type
 and the matching option lights up. Built on the InputBase, Popover and
 ListBox base components with React Aria: filtering that ignores case and
 accents, arrow keys, Enter to pick, Escape to close or clear, groups,
@@ -755,7 +846,11 @@ import { DatePicker, Segment, DateRangePicker, Calendar, RangeCalendar } from '@
 Install: `npx sparkwire add date-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs
 
 ### DatePicker
-DatePicker: type a date or pick it from a calendar. The field lights up
+Pick a date by typing it, stepping through each part with the arrow keys, or
+choosing from a calendar. Add presets like “Tomorrow” or “+1 week”, block
+weekends or past dates, and it formats for the user's locale.
+
+Type a date or pick it from a calendar. The field lights up
 while the calendar is open, and the picked day is a lit node with a spark.
 Behaviour comes from React Aria: segment-by-segment typing in the
 locale's order (DD/MM/YYYY in India, MM/DD/YYYY in the US), arrow keys to
@@ -799,13 +894,17 @@ Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
 - `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ### Segment
-
+One editable part of a date or time field, such as the day or the hour. You
+won't usually use it directly.
 
 - `segment`: `DateSegment`
 - `state`: `DateFieldState`
 
 ### DateRangePicker
-DateRangePicker: type or pick a start and an end date; current flows
+Choose a start and an end date in one go, with two months side by side and
+presets like “This month” or “Last 30 days”.
+
+Type or pick a start and an end date; current flows
 between them in the calendar. Two months side by side, shortcut buttons
 (`presets`) under the calendar, and full control over which days can be
 picked. Behaviour comes from React Aria: typed entry in the locale's order,
@@ -846,7 +945,10 @@ Style hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,
 - `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ### Calendar
-Calendar: a month grid. The selected day is a lit node, today is a ring,
+The month grid on its own, for when you want a calendar on the page rather
+than in a popover.
+
+A month grid. The selected day is a lit node, today is a ring,
 and picking a day throws a spark. Shortcut buttons (`presets`) sit under
 the grid. Behaviour comes from React Aria: arrows, Page Up/Down (Shift for
 years), Home/End, right-to-left mirroring, localized names and digits,
@@ -881,7 +983,9 @@ Style hooks: `.sp-calendar`, `__header`, `__title`, `__nav`, `__months`,
 - `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ### RangeCalendar
-RangeCalendar: pick a start and an end day; current flows between them.
+A calendar for picking a range of dates, without the input field around it.
+
+Pick a start and an end day; current flows between them.
 Hovering after the first click previews the range. Shows two months with
 `visibleMonths={2}`. Shortcut buttons (`presets`) sit under the grid.
 
@@ -920,7 +1024,12 @@ import { DataTable } from '@sparkwire/core';
 Install: `npx sparkwire add data-table` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs
 
 ### DataTable
-DataTable: sort, search, filter, page and select rows; resize and pin
+A full data grid without a table library. Sort, search, filter, page and
+select rows; resize and pin columns; expand rows for details; edit cells in
+place; and scroll through thousands of rows smoothly. On narrow screens rows
+turn into readable cards.
+
+Sort, search, filter, page and select rows; resize and pin
 columns, expand rows, edit cells in place, and virtualise thousands of
 rows. Built from divs on a CSS grid (like MUI's Data Grid), so it adapts
 to its container: in narrow spaces rows become labelled cards. The table
@@ -999,7 +1108,11 @@ import { CommandPalette } from '@sparkwire/core';
 Install: `npx sparkwire add command-palette` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-commandpalette--docs
 
 ### CommandPalette
-CommandPalette: a ⌘K launcher. Type to find a command or page; arrows move
+One keyboard shortcut (⌘K or Ctrl+K) to reach anything in your app: pages,
+actions, settings. It searches as you type, groups results, and shows
+shortcuts. This site's search is built with it.
+
+A ⌘K launcher. Type to find a command or page; arrows move
 the lit node, Enter runs it, Escape closes. Focus stays in the search box
 (ARIA combobox with an active option), the dialog traps focus and returns
 it when closed. Groups, keywords, icons, shortcuts, links and async
@@ -1035,7 +1148,11 @@ import { Menu } from '@sparkwire/core';
 Install: `npx sparkwire add menu` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs
 
 ### Menu
-Menu: a list of actions behind a button (Edit, Duplicate, Delete). Not for
+A list of actions behind a button, like “Rename” and “Delete”. Supports
+sections, icons, descriptions, nested submenus, and single or multiple
+selection for things like sort order.
+
+A list of actions behind a button (Edit, Duplicate, Delete). Not for
 picking a value: use Dropdown for that. Built on the Popover base and the
 shared list-item look, with React Aria's menu behaviour: arrow keys,
 typeahead, Enter/Space to run, Escape to close, submenus that open with
@@ -1070,7 +1187,10 @@ import { Sidebar } from '@sparkwire/core';
 Install: `npx sparkwire add sidebar` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-sidebar--docs
 
 ### Sidebar
-Sidebar: app navigation. Items sit on a wire down the side; the active
+Your app's main navigation. Group links into sections, collapse it to icons
+when space is tight, and on phones it becomes a drawer that slides in.
+
+App navigation. Items sit on a wire down the side; the active
 item is lit. Sections with headings, nested groups that open and close,
 badges, links (with `aria-current="page"`), a collapsed icon-only rail
 with tooltips, and a drawer on small screens. A real `<nav>` with lists,
@@ -1106,7 +1226,11 @@ import { Tabs, TabList, Tab, TabPanel } from '@sparkwire/core';
 Install: `npx sparkwire add tabs` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-tabs--docs
 
 ### Tabs
-Tabs: every tab sits on one wire. The active tab is the lit segment, and the
+Switch between views of the same thing without leaving the page. Horizontal
+or vertical, with arrow-key navigation and a lit underline that follows the
+active tab.
+
+Every tab sits on one wire. The active tab is the lit segment, and the
 current slides along the wire when you switch. Behaviour comes from React
 Aria: arrow keys (mirrored in right-to-left languages), Home/End, vertical
 orientation, and automatic or manual activation.
@@ -1127,13 +1251,16 @@ Style hooks: `.sp-tabs[data-orientation]`, `.sp-tab-list`,
 - `value?`: `string` Controlled active tab.
 
 ### TabList
-
+Holds the tabs. Give it an `aria-label` so screen readers know what the tabs
+are for.
 
 - `children`: `ReactNode` <Tab> elements.
 - `aria-label?`: `string` Describe the set of tabs for screen readers.
 - `className?`: `string`
 
 ### Tab
+One tab. Its `value` matches the panel it shows.
+
 One tab. Use inside <TabList>.
 
 - `value`: `string` Matches a TabPanel's `value`.
@@ -1144,7 +1271,7 @@ One tab. Use inside <TabList>.
 - `icon?`: `ReactNode` Icon shown before the label.
 
 ### TabPanel
-
+The content for one tab, shown when its tab is active.
 
 - `value`: `string` Matches a Tab's `value`.
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
@@ -1159,7 +1286,11 @@ import { Accordion, AccordionItem } from '@sparkwire/core';
 Install: `npx sparkwire add accordion` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-accordion--docs
 
 ### Accordion
-Accordion: a stack of circuits. Opening a section closes its circuit: the
+Stacked sections that open and close, so people see only what they need.
+Perfect for FAQs and long settings pages. Allow one open at a time, or
+several.
+
+A stack of circuits. Opening a section closes its circuit: the
 wire beside it lights up and current runs down it.
 
 Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
@@ -1171,7 +1302,8 @@ Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
 - `multiple?`: `boolean` Allow several sections open at once. Default `false`.
 
 ### AccordionItem
-
+One section of an accordion: a title people click and the content it
+reveals.
 
 - `children`: `ReactNode`
 - `title`: `ReactNode` Text of the header button.
@@ -1187,7 +1319,11 @@ import { Modal } from '@sparkwire/core';
 Install: `npx sparkwire add modal` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-modal--docs
 
 ### Modal
-Modal: a power cut. The page dims with a flicker and the dialog is the only
+A dialog for decisions that need full attention, like confirming a delete.
+Focus stays inside while it's open, Escape closes it, and focus returns to
+where it came from.
+
+A power cut. The page dims with a flicker and the dialog is the only
 thing left lit. Behaviour comes from React Aria: focus is contained and
 restored, the page behind is hidden from screen readers and can't scroll,
 and Escape or an outside click closes it. Built on the Overlay base.
@@ -1215,7 +1351,11 @@ import { Drawer } from '@sparkwire/core';
 Install: `npx sparkwire add drawer` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-drawer--docs
 
 ### Drawer
-Drawer: a panel that slides in from an edge, for filters, details, forms
+A panel that slides in from any edge, for filters, details or a quick form,
+without losing the page behind it. On phones a bottom drawer feels right at
+home.
+
+A panel that slides in from an edge, for filters, details, forms
 or navigation on small screens. Current runs along its inner edge as it
 powers on. Built on the Overlay base: focus is trapped and returned,
 the page behind is hidden from screen readers and doesn't scroll, and
@@ -1248,7 +1388,10 @@ import { Tooltip } from '@sparkwire/core';
 Install: `npx sparkwire add tooltip` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/overlays-tooltip--docs
 
 ### Tooltip
-Tooltip: a short charged label that arcs out from its trigger on hover or
+A short hint on hover or keyboard focus. Keep it to a few words and never
+hide anything essential in one, since touch users may never see it.
+
+A short charged label that arcs out from its trigger on hover or
 keyboard focus. Behaviour comes from React Aria: hover delay with warm-up
 across nearby tooltips, instant on keyboard focus, Escape dismisses.
 
@@ -1269,6 +1412,10 @@ import { ToastProvider, useToast } from '@sparkwire/core';
 Install: `npx sparkwire add toast` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-toast--docs
 
 ### ToastProvider
+Brief notifications that confirm something happened and then get out of the
+way. Wrap your app once, then call `toast()` from anywhere. Toasts stack,
+pause while hovered, and can carry an action like Undo.
+
 Wrap your app once. Toasts stack bottom-right (max 5); the bottom bar
 discharges as the timer runs and pauses on hover or focus.
 
@@ -1278,8 +1425,11 @@ Style hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,
 - `children`: `ReactNode`
 
 ### ToastShowOptions
-Options for `toast.show()`. Wrap your app in `<ToastProvider>`, then
-`const toast = useToast(); toast.show({ title: 'Saved', tone: 'success' })`.
+The options you pass to `toast()`: a title, an optional description, a
+tone, an action and how long it stays.
+
+Wrap your app in `<ToastProvider>`, then
+`const { toast } = useToast(); toast({ title: 'Saved', tone: 'success' })`.
 
 - `title`: `ReactNode` Bold first line.
 - `action?`: `{ label: string; onClick: () => void; }` One action button, e.g. Undo. The toast closes after it runs.
@@ -1296,7 +1446,11 @@ import { Card, CardHeader, CardFooter, Skeleton } from '@sparkwire/core';
 Install: `npx sparkwire add card` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-card--docs
 
 ### Card
-Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover.
+A surface for grouping related content. Make it interactive when the whole
+card is clickable, or live when you want current running around its edge to
+draw the eye.
+
+A raised panel. `live` cards carry current; `interactive` cards glow on hover.
 Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
 
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
@@ -1308,7 +1462,8 @@ Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
 - `render?`: `RenderProp<{ live: boolean; interactive: boolean; }>` Render any element instead, e.g. `<Link href="/p/1" />` or a motion component.
 
 ### CardHeader
-
+The top of a card: a title, an optional subtitle, media like an avatar, and
+room for an action.
 
 - `title`: `ReactNode`
 - `action?`: `ReactNode` Shown on the right, e.g. a Badge or menu button.
@@ -1316,12 +1471,15 @@ Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
 - `subtitle?`: `ReactNode`
 
 ### CardFooter
-
+The bottom of a card, usually for actions.
 
 - `children`: `ReactNode`
 
 ### Skeleton
-Skeleton: a placeholder that shimmers like a line charging up.
+Placeholder shapes that show where content will appear while it loads, so
+the page doesn't jump when it arrives.
+
+A placeholder that shimmers like a line charging up.
 
 - `height?`: `string | number` Number (px) or any CSS length.
 - `lines?`: `number` (default `1`) For `text`: number of lines. The last line is shorter.
@@ -1337,7 +1495,11 @@ import { Avatar, AvatarGroup } from '@sparkwire/core';
 Install: `npx sparkwire add avatar` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-avatar--docs
 
 ### Avatar
-Avatar: a photo or initials, with an optional status LED. An online user's
+A picture of a person, or their initials when there's no photo. The colour
+comes from the name, so the same person always looks the same. Add a dot to
+show if they're online.
+
+A photo or initials, with an optional status LED. An online user's
 LED pulses with current.
 Style hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.
 
@@ -1347,7 +1509,9 @@ Style hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.
 - `status?`: `AvatarStatus` Status LED. `online` pulses.
 
 ### AvatarGroup
-AvatarGroup: overlapping avatars wired together, with a "+N" overflow.
+A row of overlapping avatars for a team, with the rest folded into a “+3”.
+
+Overlapping avatars wired together, with a "+N" overflow.
 
 - `people`: `AvatarProps[]`
 - `max?`: `number` (default `4`) Show at most this many; the rest become a "+N" chip. Default 4.
@@ -1362,7 +1526,10 @@ import { Badge, Progress, Spinner } from '@sparkwire/core';
 Install: `npx sparkwire add indicators` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-badge--docs
 
 ### Badge
-Badge: a status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`.
+A small label for status, counts or categories. The LED dot makes state easy
+to read at a glance, and it can pulse for things that are in progress.
+
+A status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`.
 
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
@@ -1374,7 +1541,10 @@ Badge: a status label with an LED. Pulsing means "live". Style hooks: `.sp-badge
 - `variant?`: `"soft" | "solid"` `soft` tinted background (default) or `solid` fill.
 
 ### Progress
-Progress: a charge bar. At 100% the bar is fully charged and current flows.
+Shows how far along a task is when you know the total, with an optional
+label and percentage.
+
+A charge bar. At 100% the bar is fully charged and current flows.
 Style hooks: `.sp-progress[data-state="charging"|"charged"|"indeterminate"]`, `__track`, `__fill`.
 
 - `label?`: `ReactNode` Text above the bar; also its accessible name when a string.
@@ -1384,7 +1554,10 @@ Style hooks: `.sp-progress[data-state="charging"|"charged"|"indeterminate"]`, `_
 - `value?`: `number` 0–100. Leave undefined for an indeterminate bar.
 
 ### Spinner
-Spinner: an arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`.
+For waits of unknown length. Always give it a label so screen readers know
+something is loading.
+
+An arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`.
 
 - `label?`: `string` Accessible label. Default "Loading".
 - `size?`: `"small" | "medium" | "large"` 16, 24 or 36px. Default `medium`.
@@ -1399,7 +1572,11 @@ import { SparkProvider } from '@sparkwire/core';
 Install: `npx sparkwire add provider` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-customization--docs
 
 ### SparkProvider
-SparkProvider: set app-wide defaults and slot class names once, the way
+Wrap your app once to set things for every component: the energy level, the
+language, and default props or styles, so you're not repeating
+`size="small"` on every button.
+
+Set app-wide defaults and slot class names once, the way
 MUI's `theme.components` works. Nested providers merge with their parent.
 Styling still comes from `styles.css`; this provider only changes props.
 
@@ -1419,7 +1596,11 @@ import { ButtonBase, InputBase, Popover, ListItemContent, ListBox, Overlay } fro
 Install: `npx sparkwire add base` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/foundations-base-components--docs
 
 ### ButtonBase
-ButtonBase: the pressable foundation under Button, IconButton and menu
+The unstyled foundation of every button. It handles presses, focus rings,
+disabled states and sparks; you bring the look. Use it to build your own
+buttons that behave like the rest of Sparkwire.
+
+The pressable foundation under Button, IconButton and menu
 triggers. Handles disabled state for any element, `type="button"` by
 default, and the spark burst. No visual style of its own beyond
 `.sp-button-base`; build your own buttons on it.
@@ -1434,7 +1615,10 @@ default, and the spark burst. No visual style of its own beyond
 - `sparkColors?`: `string[]` Spark colours. Default: the theme's spark colours.
 
 ### InputBase
-InputBase: the field shell under Textfield and Combobox. One bordered box
+The bare text input under Textfield and friends, with adornment slots. Use
+it when you want Sparkwire's input behaviour in your own field.
+
+The field shell under Textfield and Combobox. One bordered box
 holds the input and its adornments, lights up on focus, dashes when
 disabled, and focuses the input when you click anywhere in it. Build your
 own fields on it; label and help text are up to you (see Field).
@@ -1455,7 +1639,10 @@ Style hooks: `.sp-input-base[data-variant][data-size][data-invalid][data-disable
 - `variant?`: `"outlined" | "filled" | "standard"` (default `outlined`) `outlined` (default), `filled` or `standard` (underline only).
 
 ### Popover
-Popover: a floating panel attached to a trigger, under Dropdown, Combobox,
+A floating panel anchored to a trigger, with focus management and dismissal
+handled. The building block under Dropdown, Menu and the date pickers.
+
+A floating panel attached to a trigger, under Dropdown, Combobox,
 Menu and DatePicker. Positions itself and flips to stay on screen, renders
 in a portal that keeps the current theme, closes on outside click and
 Escape, and has hidden dismiss buttons for screen readers.
@@ -1471,6 +1658,9 @@ Style hooks: `.sp-popover[data-placement]`.
 - `style?`: `CSSProperties`
 
 ### ListItemContent
+The standard layout for an item in a list: an icon, a label, a description
+and something at the end.
+
 The inside of a list row: icon, label, description and an end slot. Shared by options and menu items.
 
 - `label`: `ReactNode`
@@ -1479,7 +1669,10 @@ The inside of a list row: icon, label, description and an end slot. Shared by op
 - `icon?`: `ReactNode`
 
 ### ListBox
-ListBox: a list of options to choose from, under Dropdown and Combobox.
+An accessible list of options with keyboard navigation and selection, the
+engine behind Dropdown and Combobox.
+
+A list of options to choose from, under Dropdown and Combobox.
 Each option is a node on a wire: the selected one lights up. Supports
 groups with headings, icons, descriptions, disabled options and
 screen-reader announcements.
@@ -1498,7 +1691,10 @@ Style hooks: `.sp-listbox`, `.sp-list-section`, `__heading`,
 - `optionStyle?`: `CSSProperties` Inline style for every option row.
 
 ### Overlay
-Overlay: the full-screen layer under Modal (and future Drawer and
+The layer behind modals and drawers: a backdrop, focus containment and
+scroll locking, ready for your own dialogs.
+
+The full-screen layer under Modal (and future Drawer and
 Sheet). Renders in a portal that keeps the current theme, dims the page,
 traps and restores focus, hides the page from screen readers, blocks
 scrolling, and closes on Escape or an outside click.

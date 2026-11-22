@@ -63,8 +63,8 @@ export type PolymorphicButtonProps<
   D extends ElementType = ButtonTypeMap['defaultComponent'],
   P = {}
 > = OverrideProps<ButtonTypeMap<P, D>, D> & {
-  /** Render as another element or component, e.g. `as="a"`. */
-  as?: ElementType;
+  /** Render as another element or component, e.g. `as="a"` or a router `Link`; its props are then accepted too. */
+  as?: D;
 };
 
 // Slot props for Button (if applicable)

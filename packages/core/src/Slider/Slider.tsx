@@ -39,7 +39,11 @@ export interface SliderProps<T extends SliderValue = SliderValue>
 }
 
 /**
- * Slider: a dimmer. The wire is lit up to the knob, and the glow gets stronger
+ * Choose a number by dragging, or a range with two thumbs. Values are
+ * formatted with Intl, so prices, percentages and units read naturally, and
+ * the arrow keys give precise control.
+ *
+ * A dimmer. The wire is lit up to the knob, and the glow gets stronger
  * the higher you turn it. Pass a `[start, end]` value for a range: current
  * flows between two knobs. Behaviour comes from React Aria: arrows, Page
  * Up/Down, Home/End, dragging, clicking the track, right-to-left, and

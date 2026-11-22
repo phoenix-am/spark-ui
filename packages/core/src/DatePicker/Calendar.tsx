@@ -117,7 +117,10 @@ export function makeUnavailable({ disabledDates, enabledDates, isDateDisabled }:
 /* ------------------------------------------------------------ Calendar */
 
 /**
- * Calendar: a month grid. The selected day is a lit node, today is a ring,
+ * The month grid on its own, for when you want a calendar on the page rather
+ * than in a popover.
+ *
+ * A month grid. The selected day is a lit node, today is a ring,
  * and picking a day throws a spark. Shortcut buttons (`presets`) sit under
  * the grid. Behaviour comes from React Aria: arrows, Page Up/Down (Shift for
  * years), Home/End, right-to-left mirroring, localized names and digits,
@@ -210,7 +213,9 @@ export function CalendarCore({ presets, todayLabel, visibleMonths = 1, renderDay
 /* ------------------------------------------------------- RangeCalendar */
 
 /**
- * RangeCalendar: pick a start and an end day; current flows between them.
+ * A calendar for picking a range of dates, without the input field around it.
+ *
+ * Pick a start and an end day; current flows between them.
  * Hovering after the first click previews the range. Shows two months with
  * `visibleMonths={2}`. Shortcut buttons (`presets`) sit under the grid.
  *

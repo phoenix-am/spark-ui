@@ -344,6 +344,8 @@ pre {
   text-decoration-color: color-mix(in srgb, var(--spark-energy-ink) 40%, transparent);
   text-underline-offset: 3px;
 }
+.sw-lead code,
+.sw-api > p code,
 .sw-prose :not(pre) > code,
 .sw-api__details code,
 .sw-props td code {
@@ -489,6 +491,10 @@ pre {
 }
 .sw-canvas > * {
   max-width: 100%;
+}
+/* Components that fill their container (tables, sidebars) take the full demo width. */
+.sw-canvas > :is(.sp-data-table, .sp-tabs, .sp-accordion) {
+  flex: 1 1 100%;
 }
 
 /* ----------------------------------------------------------- playground */

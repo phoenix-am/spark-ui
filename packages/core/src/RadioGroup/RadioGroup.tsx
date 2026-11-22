@@ -36,7 +36,11 @@ export interface RadioGroupProps {
 }
 
 /**
- * RadioGroup: a selector switch. Every option is a contact; only the chosen one
+ * Pick exactly one option from a short list where it helps to see every choice
+ * at once. Show options as a simple list, or as cards with room for a
+ * description, which works well for plans and regions.
+ *
+ * A selector switch. Every option is a contact; only the chosen one
  * carries current, so its core lights up. Native radios underneath, so arrow
  * keys and forms work as expected.
  *

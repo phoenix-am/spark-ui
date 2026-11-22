@@ -54,8 +54,8 @@ entries.push({
   name: 'blocks',
   title: 'Blocks',
   summary: 'Whole screens built from Sparkwire: a dashboard, a sign-in page and a settings page. Copy one and make it yours.',
-  import: "import { Dashboard, SignIn, Settings } from '@sparkwire/core/blocks';",
-  install: { package: 'npm install @sparkwire/core', copy: 'npx sparkwire add dashboard', shadcn: 'npx shadcn add @sparkwire/dashboard', copiedImport: '' },
+  import: "import { Dashboard } from '@/components/spark-ui/blocks/Dashboard';",
+  install: { package: '', copy: 'npx sparkwire add dashboard sign-in settings', shadcn: 'npx shadcn add @sparkwire/dashboard', copiedImport: "import { Dashboard } from '@/components/spark-ui/blocks/Dashboard';" },
   components: [],
   category: 'Data display',
 });

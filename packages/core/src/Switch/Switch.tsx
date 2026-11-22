@@ -31,7 +31,11 @@ export interface SwitchProps
 }
 
 /**
- * Switch: a lever that closes a circuit. When on, current lights the wire and
+ * An on/off control for settings that take effect straight away, like
+ * notifications or dark mode. It reads as a real switch to screen readers,
+ * flips with Space, and can show a small bulb that lights up when it's on.
+ *
+ * A lever that closes a circuit. When on, current lights the wire and
  * the bulb; when off, the lever lifts and the circuit goes dark.
  *
  * Style hooks: `.sp-switch`, `[data-state="on"|"off"]`, and the parts

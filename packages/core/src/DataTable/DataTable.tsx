@@ -107,7 +107,12 @@ function useControlled<T>(value: T | undefined, initial: () => T, onChange?: (v:
 }
 
 /**
- * DataTable: sort, search, filter, page and select rows; resize and pin
+ * A full data grid without a table library. Sort, search, filter, page and
+ * select rows; resize and pin columns; expand rows for details; edit cells in
+ * place; and scroll through thousands of rows smoothly. On narrow screens rows
+ * turn into readable cards.
+ *
+ * Sort, search, filter, page and select rows; resize and pin
  * columns, expand rows, edit cells in place, and virtualise thousands of
  * rows. Built from divs on a CSS grid (like MUI's Data Grid), so it adapts
  * to its container: in narrow spaces rows become labelled cards. The table

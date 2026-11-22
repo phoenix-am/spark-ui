@@ -37,7 +37,11 @@ export interface DrawerProps {
 const SIZES: Record<string, string> = { small: '20rem', medium: '28rem', large: '40rem', full: '100%' };
 
 /**
- * Drawer: a panel that slides in from an edge, for filters, details, forms
+ * A panel that slides in from any edge, for filters, details or a quick form,
+ * without losing the page behind it. On phones a bottom drawer feels right at
+ * home.
+ *
+ * A panel that slides in from an edge, for filters, details, forms
  * or navigation on small screens. Current runs along its inner edge as it
  * powers on. Built on the Overlay base: focus is trapped and returned,
  * the page behind is hidden from screen readers and doesn't scroll, and

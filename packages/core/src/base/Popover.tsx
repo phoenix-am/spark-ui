@@ -20,7 +20,10 @@ export interface PopoverProps extends Omit<AriaPopoverProps, 'popoverRef' | 'tri
 }
 
 /**
- * Popover: a floating panel attached to a trigger, under Dropdown, Combobox,
+ * A floating panel anchored to a trigger, with focus management and dismissal
+ * handled. The building block under Dropdown, Menu and the date pickers.
+ *
+ * A floating panel attached to a trigger, under Dropdown, Combobox,
  * Menu and DatePicker. Positions itself and flips to stay on screen, renders
  * in a portal that keeps the current theme, closes on outside click and
  * Escape, and has hidden dismiss buttons for screen readers.

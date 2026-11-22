@@ -51,7 +51,10 @@ export interface DateRangePickerProps
 }
 
 /**
- * DateRangePicker: type or pick a start and an end date; current flows
+ * Choose a start and an end date in one go, with two months side by side and
+ * presets like “This month” or “Last 30 days”.
+ *
+ * Type or pick a start and an end date; current flows
  * between them in the calendar. Two months side by side, shortcut buttons
  * (`presets`) under the calendar, and full control over which days can be
  * picked. Behaviour comes from React Aria: typed entry in the locale's order,

@@ -23,7 +23,11 @@ const initials = (name: string) =>
     .join('');
 
 /**
- * Avatar: a photo or initials, with an optional status LED. An online user's
+ * A picture of a person, or their initials when there's no photo. The colour
+ * comes from the name, so the same person always looks the same. Add a dot to
+ * show if they're online.
+ *
+ * A photo or initials, with an optional status LED. An online user's
  * LED pulses with current.
  * Style hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.
  */
@@ -47,7 +51,11 @@ export interface AvatarGroupProps {
   size?: AvatarProps['size'];
 }
 
-/** AvatarGroup: overlapping avatars wired together, with a "+N" overflow. */
+/**
+ * A row of overlapping avatars for a team, with the rest folded into a “+3”.
+ *
+ * Overlapping avatars wired together, with a "+N" overflow.
+ */
 export function AvatarGroup({ people, max = 4, size = 'medium' }: AvatarGroupProps) {
   const shown = people.slice(0, max);
   const extra = people.length - shown.length;

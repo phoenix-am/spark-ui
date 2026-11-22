@@ -59,7 +59,11 @@ export function formatTime(t: TimeValue | null | undefined, seconds = false): st
 const toMinutes = (t: Time) => t.hour * 60 + t.minute;
 
 /**
- * TimePicker: type a time segment by segment (hours, minutes, AM/PM), or
+ * Enter a time by typing, using the arrow keys on each part, or picking from a
+ * list. It respects 12 and 24-hour clocks for the locale and can limit choices
+ * to business hours or fixed steps.
+ *
+ * Type a time segment by segment (hours, minutes, AM/PM), or
  * pick from a list of suggestions every `step` minutes. Values are plain
  * 24-hour strings ("14:30"), so they store and submit cleanly; the field
  * shows the locale's format. `min`, `max` and `isTimeDisabled` limit both

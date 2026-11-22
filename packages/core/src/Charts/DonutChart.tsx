@@ -36,7 +36,11 @@ function arc(cx: number, cy: number, r0: number, r1: number, a0: number, a1: num
 }
 
 /**
- * DonutChart: share of a whole. Slices start at 12 o'clock in data order,
+ * Parts of a whole, with room for a headline number in the middle. Best with a
+ * handful of slices; the legend shows values and percentages so nothing
+ * depends on colour alone.
+ *
+ * Share of a whole. Slices start at 12 o'clock in data order,
  * separated by a 2px surface gap; the legend lists every slice with its
  * value and percentage so identity never depends on colour alone. Hover or
  * focus a slice (Tab, then ← →) for its tooltip.
@@ -150,7 +154,10 @@ export interface SparklineProps {
 }
 
 /**
- * Sparkline: a word-sized trend for tables, stat tiles and cards. No axes;
+ * A tiny trend line that fits in a table cell or beside a number. No axes, no
+ * fuss, just the shape of the data and, optionally, its latest value.
+ *
+ * A word-sized trend for tables, stat tiles and cards. No axes;
  * the last point is marked so the current value is easy to find. Its
  * accessible name states the first, last and range.
  */

@@ -73,7 +73,11 @@ export interface DropdownProps<V extends string | number = string | number> {
 }
 
 /**
- * Dropdown: pick one value from a list. The chosen option's node lights up.
+ * A select menu that looks the part. Type to jump to an option, group long
+ * lists under headings, and add an icon or helper text. It submits with forms
+ * like a native select.
+ *
+ * Pick one value from a list. The chosen option's node lights up.
  * Built on the Popover and ListBox base components with React Aria:
  * typeahead on the closed and open list, arrow keys, Home/End, Escape,
  * groups with headings, screen-reader announcements, and a hidden native

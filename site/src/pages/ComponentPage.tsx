@@ -10,6 +10,9 @@ import { CodeBlock } from '../components/CodeBlock';
 import { Prose } from '../components/Prose';
 import { NotFound } from './NotFound';
 import { usePageTitle } from '../lib/usePageTitle';
+import { renderMarkdown } from '../lib/markdown';
+
+const inline = (md: string) => renderMarkdown(md).replace(/^<p>|<\/p>\s*$/g, '');
 
 /** First paragraph of a doc comment is the friendly intro; the rest is reference detail. */
 const split = (text = '') => {
@@ -48,7 +51,7 @@ export function ComponentPage() {
       <article className="sw-page">
         <p className="sw-eyebrow">{entry.category}</p>
         <h1>{entry.title}</h1>
-        <p className="sw-lead">{intro || entry.summary}</p>
+        <p className="sw-lead" dangerouslySetInnerHTML={{ __html: inline(intro || entry.summary) }} />
         {entry.components.length > 1 && (
           <p className="sw-parts">
             {entry.components.map((c) => (
@@ -72,16 +75,18 @@ export function ComponentPage() {
           <h2 id="install" className="sw-section-title">
             Install
           </h2>
-          <Tabs defaultValue="npm">
+          <Tabs defaultValue={entry.install.package ? 'npm' : 'copy'}>
             <TabList aria-label="How to install">
-              <Tab value="npm">npm</Tab>
+              {entry.install.package && <Tab value="npm">npm</Tab>}
               <Tab value="copy">Copy the source</Tab>
               <Tab value="shadcn">shadcn</Tab>
             </TabList>
+            {entry.install.package && (
             <TabPanel value="npm">
               <CodeBlock lang="bash" code={`npm install @sparkwire/core`} />
               <CodeBlock code={`import '@sparkwire/core/styles.css'; // once, at your app's root\n${entry.import}`} />
             </TabPanel>
+            )}
             <TabPanel value="copy">
               <CodeBlock lang="bash" code={entry.install.copy} />
               {entry.install.copiedImport && <CodeBlock code={entry.install.copiedImport} />}
@@ -124,7 +129,7 @@ export function ComponentPage() {
                   <h3 id={`api-${c.name.toLowerCase().replace(/\./g, '-')}`}>
                     <code>{c.name}</code>
                   </h3>
-                  {entry.components.length > 1 && cIntro && <p>{cIntro}</p>}
+                  {entry.components.length > 1 && cIntro && <p dangerouslySetInnerHTML={{ __html: inline(cIntro) }} />}
                   {details && <Prose markdown={details} className="sw-api__details" />}
                   <PropsTable props={c.props} />
                 </div>

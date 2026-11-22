@@ -20,7 +20,11 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /**
- * Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover.
+ * A surface for grouping related content. Make it interactive when the whole
+ * card is clickable, or live when you want current running around its edge to
+ * draw the eye.
+ *
+ * A raised panel. `live` cards carry current; `interactive` cards glow on hover.
  * Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
  */
 export function Card(inProps: CardProps) {
@@ -49,6 +53,10 @@ export interface CardHeaderProps {
   action?: React.ReactNode;
 }
 
+/**
+ * The top of a card: a title, an optional subtitle, media like an avatar, and
+ * room for an action.
+ */
 export function CardHeader({ title, subtitle, media, action }: CardHeaderProps) {
   return (
     <div className="sp-card__header">
@@ -62,6 +70,9 @@ export function CardHeader({ title, subtitle, media, action }: CardHeaderProps) 
   );
 }
 
+/**
+ * The bottom of a card, usually for actions.
+ */
 export function CardFooter({ children }: { children: React.ReactNode }) {
   return <div className="sp-card__footer">{children}</div>;
 }
@@ -81,7 +92,12 @@ export interface SkeletonProps {
 
 const len = (v: number | string | undefined, fallback: string) => (typeof v === 'number' ? `${v}px` : v ?? fallback);
 
-/** Skeleton: a placeholder that shimmers like a line charging up. */
+/**
+ * Placeholder shapes that show where content will appear while it loads, so
+ * the page doesn't jump when it arrives.
+ *
+ * A placeholder that shimmers like a line charging up.
+ */
 export function Skeleton({ width, height, shape = 'rect', lines = 1 }: SkeletonProps) {
   const m = useMessages();
   if (shape === 'text') {

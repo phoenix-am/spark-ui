@@ -24,7 +24,10 @@ export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTex
 }
 
 /**
- * Textarea: multi-line text on the same shell as every other field
+ * Multi-line text with the niceties built in: it can grow with its content,
+ * show a live character count, and display errors next to the field.
+ *
+ * Multi-line text on the same shell as every other field
  * (`.sp-input-base`). Grows with its content (`autoResize`), can show a
  * character count, and links its label, help text and error for screen
  * readers.

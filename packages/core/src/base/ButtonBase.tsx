@@ -20,7 +20,11 @@ export interface ButtonBaseProps extends React.ButtonHTMLAttributes<HTMLElement>
 }
 
 /**
- * ButtonBase: the pressable foundation under Button, IconButton and menu
+ * The unstyled foundation of every button. It handles presses, focus rings,
+ * disabled states and sparks; you bring the look. Use it to build your own
+ * buttons that behave like the rest of Sparkwire.
+ *
+ * The pressable foundation under Button, IconButton and menu
  * triggers. Handles disabled state for any element, `type="button"` by
  * default, and the spark burst. No visual style of its own beyond
  * `.sp-button-base`; build your own buttons on it.

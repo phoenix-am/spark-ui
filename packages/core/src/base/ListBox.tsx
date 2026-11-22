@@ -74,7 +74,12 @@ export interface ListItemContentProps {
   end?: React.ReactNode;
 }
 
-/** The inside of a list row: icon, label, description and an end slot. Shared by options and menu items. */
+/**
+ * The standard layout for an item in a list: an icon, a label, a description
+ * and something at the end.
+ *
+ * The inside of a list row: icon, label, description and an end slot. Shared by options and menu items.
+ */
 export function ListItemContent({ icon, label, description, end }: ListItemContentProps) {
   return (
     <>
@@ -108,7 +113,10 @@ export interface ListBoxProps<T> extends AriaListBoxOptions<T> {
 }
 
 /**
- * ListBox: a list of options to choose from, under Dropdown and Combobox.
+ * An accessible list of options with keyboard navigation and selection, the
+ * engine behind Dropdown and Combobox.
+ *
+ * A list of options to choose from, under Dropdown and Combobox.
  * Each option is a node on a wire: the selected one lights up. Supports
  * groups with headings, icons, descriptions, disabled options and
  * screen-reader announcements.

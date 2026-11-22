@@ -12,7 +12,11 @@ const defaultChargeLabel = (percent: number) =>
   percent >= 100 ? 'Fully charged' : percent === 0 ? 'No charge' : `${percent}% charged`;
 
 /**
- * Textfield: in Live Wire, a field can "charge up" as its value becomes valid.
+ * A text input with a label, helper text and error state built in. It also has
+ * a party trick: a charge meter that fills up as the value gets more complete,
+ * handy for password strength or profile progress.
+ *
+ * In Live Wire, a field can "charge up" as its value becomes valid.
  * Pass `charge` (0..1, or a function of the value) to show the meter.
  *
  * Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,

@@ -23,7 +23,10 @@ export interface InputBaseProps extends Omit<React.InputHTMLAttributes<HTMLInput
 }
 
 /**
- * InputBase: the field shell under Textfield and Combobox. One bordered box
+ * The bare text input under Textfield and friends, with adornment slots. Use
+ * it when you want Sparkwire's input behaviour in your own field.
+ *
+ * The field shell under Textfield and Combobox. One bordered box
  * holds the input and its adornments, lights up on focus, dashes when
  * disabled, and focuses the input when you click anywhere in it. Build your
  * own fields on it; label and help text are up to you (see Field).

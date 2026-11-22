@@ -44,8 +44,13 @@ export interface NumberFieldProps {
 }
 
 /**
- * NumberField: a number input that formats as you'd write it in your
- * language (₹1,00,000 in India, $100,000 in the US, 15 %, 2.5 kg). Up/Down
+ * For numbers people type rather than drag: quantities, budgets, percentages.
+ * It formats as you go (₹25,000, 15%), keeps values inside min and max, and
+ * steps with buttons, arrow keys or the scroll wheel.
+ *
+ * A number input that formats as you'd write it in your
+ * language (₹1,00,000 in India, 
+00,000 in the US, 15 %, 2.5 kg). Up/Down
  * and the − / + buttons step; Page Up/Down step by tens; Home/End jump to
  * min/max; values are clamped and snapped to `step` on blur. Built on React
  * Aria's number field and the InputBase base component.
@@ -161,6 +166,11 @@ export function NumberField(inProps: NumberFieldProps) {
   );
 }
 
+/**
+ * Shows where someone is in a multi-step task, like checkout or onboarding.
+ * Finished steps get a check, the current one lights up with current flowing
+ * towards it, and steps can be clickable so people can jump back.
+ */
 function Stepper({ kind, className, ...props }: AriaButtonProps & { kind: 'increment' | 'decrement'; className?: string }) {
   const ref = useRef<HTMLButtonElement>(null);
   const { buttonProps } = useButton(props, ref);

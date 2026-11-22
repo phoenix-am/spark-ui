@@ -9,7 +9,7 @@
       "components": [
         {
           "name": "Button",
-          "description": "Button: throws sparks from the press point. Outlined and text buttons show\ncurrent flowing along a wire on hover; a disabled button is a dead circuit.\nBuilt on ButtonBase; forwards `ref` to the rendered element.",
+          "description": "The button you'll reach for most. It handles clicks, keyboard presses and\nfocus the way people expect, comes in three weights (contained, outlined,\ntext) and four colours, and throws a little burst of sparks from wherever\nit's pressed. Need a link that looks like a button? Render it as one with\n`as` or `render`.\n\nThrows sparks from the press point. Outlined and text buttons show\ncurrent flowing along a wire on hover; a disabled button is a dead circuit.\nBuilt on ButtonBase; forwards `ref` to the rendered element.",
           "props": [
             {
               "name": "as",
@@ -143,7 +143,7 @@
       "components": [
         {
           "name": "Spark",
-          "description": "Spark: the signature Live Wire effect. Place it inside a `position: relative`\nelement and call `burst()` from its click handler. Renders nothing for users\nwho prefer reduced motion.",
+          "description": "The burst of sparks behind Sparkwire's buttons, available on its own. Drop\nit inside anything clickable and fire it from the pointer for a moment of\ndelight on the actions that matter. It quietly does nothing for people who\nprefer reduced motion.\n\nThe signature Live Wire effect. Place it inside a `position: relative`\nelement and call `burst()` from its click handler. Renders nothing for users\nwho prefer reduced motion.",
           "props": [
             {
               "name": "colors",
@@ -191,7 +191,7 @@
       "components": [
         {
           "name": "Switch",
-          "description": "Switch: a lever that closes a circuit. When on, current lights the wire and\nthe bulb; when off, the lever lifts and the circuit goes dark.\n\nStyle hooks: `.sp-switch`, `[data-state=\"on\"|\"off\"]`, and the parts\n`.sp-switch__node`, `__wire`, `__lever`, `__bulb`, `__label`.",
+          "description": "An on/off control for settings that take effect straight away, like\nnotifications or dark mode. It reads as a real switch to screen readers,\nflips with Space, and can show a small bulb that lights up when it's on.\n\nA lever that closes a circuit. When on, current lights the wire and\nthe bulb; when off, the lever lifts and the circuit goes dark.\n\nStyle hooks: `.sp-switch`, `[data-state=\"on\"|\"off\"]`, and the parts\n`.sp-switch__node`, `__wire`, `__lever`, `__bulb`, `__label`.",
           "props": [
             {
               "name": "aria-label",
@@ -301,7 +301,7 @@
       "components": [
         {
           "name": "Checkbox",
-          "description": "Checkbox: a terminal. Checking it powers the terminal: it fills with current\nand the tick is drawn in. Built on a native checkbox, so forms and keyboards work.\n\nStyle hooks: `.sp-checkbox`, `__box`, `__label`, `__helper`; the native input\ndrives `:checked`, `:indeterminate` and `:disabled`.",
+          "description": "For yes-or-no choices and for picking several items from a list. It supports\nan indeterminate state for “some selected”, sits nicely in forms, and shows\nerrors with a message rather than colour alone.\n\nA terminal. Checking it powers the terminal: it fills with current\nand the tick is drawn in. Built on a native checkbox, so forms and keyboards work.\n\nStyle hooks: `.sp-checkbox`, `__box`, `__label`, `__helper`; the native input\ndrives `:checked`, `:indeterminate` and `:disabled`.",
           "props": [
             {
               "name": "aria-label",
@@ -387,7 +387,7 @@
       "components": [
         {
           "name": "RadioGroup",
-          "description": "RadioGroup: a selector switch. Every option is a contact; only the chosen one\ncarries current, so its core lights up. Native radios underneath, so arrow\nkeys and forms work as expected.\n\nStyle hooks: `.sp-radio-group`, `__option[data-checked]`, `__dot`, `__text`.",
+          "description": "Pick exactly one option from a short list where it helps to see every choice\nat once. Show options as a simple list, or as cards with room for a\ndescription, which works well for plans and regions.\n\nA selector switch. Every option is a contact; only the chosen one\ncarries current, so its core lights up. Native radios underneath, so arrow\nkeys and forms work as expected.\n\nStyle hooks: `.sp-radio-group`, `__option[data-checked]`, `__dot`, `__text`.",
           "props": [
             {
               "name": "label",
@@ -484,7 +484,7 @@
       "components": [
         {
           "name": "Slider",
-          "description": "Slider: a dimmer. The wire is lit up to the knob, and the glow gets stronger\nthe higher you turn it. Pass a `[start, end]` value for a range: current\nflows between two knobs. Behaviour comes from React Aria: arrows, Page\nUp/Down, Home/End, dragging, clicking the track, right-to-left, and\nlocalized numbers. Each knob holds a native range input, so forms and\nReact Hook Form's `register` work.\n\nStyle hooks: `.sp-slider[data-range][data-disabled]`, `__header`, `__value`,\n`__track`, `__fill`, `__thumb[data-dragging][data-focus-visible]`.\nVariables: `--sp-start`, `--sp-end` and `--sp-pct` (0–100).",
+          "description": "Choose a number by dragging, or a range with two thumbs. Values are\nformatted with Intl, so prices, percentages and units read naturally, and\nthe arrow keys give precise control.\n\nA dimmer. The wire is lit up to the knob, and the glow gets stronger\nthe higher you turn it. Pass a `[start, end]` value for a range: current\nflows between two knobs. Behaviour comes from React Aria: arrows, Page\nUp/Down, Home/End, dragging, clicking the track, right-to-left, and\nlocalized numbers. Each knob holds a native range input, so forms and\nReact Hook Form's `register` work.\n\nStyle hooks: `.sp-slider[data-range][data-disabled]`, `__header`, `__value`,\n`__track`, `__fill`, `__thumb[data-dragging][data-focus-visible]`.\nVariables: `--sp-start`, `--sp-end` and `--sp-pct` (0–100).",
           "props": [
             {
               "name": "aria-label",
@@ -613,7 +613,7 @@
       "components": [
         {
           "name": "Textfield",
-          "description": "Textfield: in Live Wire, a field can \"charge up\" as its value becomes valid.\nPass `charge` (0..1, or a function of the value) to show the meter.\n\nStyle hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,\n`[data-charged]`, `[data-disabled]`; parts `__label`, `__control`, `__input`,\n`__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).",
+          "description": "A text input with a label, helper text and error state built in. It also has\na party trick: a charge meter that fills up as the value gets more complete,\nhandy for password strength or profile progress.\n\nIn Live Wire, a field can \"charge up\" as its value becomes valid.\nPass `charge` (0..1, or a function of the value) to show the meter.\n\nStyle hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,\n`[data-charged]`, `[data-disabled]`; parts `__label`, `__control`, `__input`,\n`__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).",
           "props": [
             {
               "name": "append",
@@ -788,7 +788,7 @@
       "components": [
         {
           "name": "Field",
-          "description": "Field: label, help text and error for any control, wired for screen readers.\nUse it to give your own inputs (a textarea, a third-party editor) the same\nlabelling and error handling as Spark UI's built-in fields.\n\nStyle hooks: `.sp-field[data-invalid][data-disabled]`, `__label`,\n`__required`, `__description`, `__error`.",
+          "description": "Turns any control into a proper form field. Give it a label, a description\nand an error, wrap your input, and Field connects them all for screen\nreaders so you don't have to juggle ids.\n\nLabel, help text and error for any control, wired for screen readers.\nUse it to give your own inputs (a textarea, a third-party editor) the same\nlabelling and error handling as Spark UI's built-in fields.\n\nStyle hooks: `.sp-field[data-invalid][data-disabled]`, `__label`,\n`__required`, `__description`, `__error`.",
           "props": [
             {
               "name": "children",
@@ -863,7 +863,7 @@
       "components": [
         {
           "name": "NumberField",
-          "description": "NumberField: a number input that formats as you'd write it in your\nlanguage (₹1,00,000 in India, $100,000 in the US, 15 %, 2.5 kg). Up/Down\nand the − / + buttons step; Page Up/Down step by tens; Home/End jump to\nmin/max; values are clamped and snapped to `step` on blur. Built on React\nAria's number field and the InputBase base component.\n\nStyle hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,\n`__stepper`, `__helper`; the field is `.sp-input-base`.",
+          "description": "For numbers people type rather than drag: quantities, budgets, percentages.\nIt formats as you go (₹25,000, 15%), keeps values inside min and max, and\nsteps with buttons, arrow keys or the scroll wheel.\n\nA number input that formats as you'd write it in your\nlanguage (₹1,00,000 in India, \n00,000 in the US, 15 %, 2.5 kg). Up/Down\nand the − / + buttons step; Page Up/Down step by tens; Home/End jump to\nmin/max; values are clamped and snapped to `step` on blur. Built on React\nAria's number field and the InputBase base component.\n\nStyle hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,\n`__stepper`, `__helper`; the field is `.sp-input-base`.",
           "props": [
             {
               "name": "aria-label",
@@ -1015,7 +1015,7 @@
       "components": [
         {
           "name": "ToggleGroup",
-          "description": "ToggleGroup: a row of related toggle buttons, as a segmented control\n(`single`) or independent toggles (`multiple`). Arrow keys move between\nitems, one Tab stop for the group; selected items have `aria-checked` /\n`aria-pressed`.\n\n```tsx\n<ToggleGroup aria-label=\"View\" defaultValue=\"grid\">\n  <ToggleGroup.Item value=\"list\">List</ToggleGroup.Item>\n  <ToggleGroup.Item value=\"grid\">Grid</ToggleGroup.Item>\n</ToggleGroup>\n```\n\nStyle hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]`.",
+          "description": "A row of buttons that act as one control. Use it as a segmented switch\nbetween views, or let several be on at once, like bold and italic in a\ntoolbar. Arrow keys move between options.\n\nA row of related toggle buttons, as a segmented control\n(`single`) or independent toggles (`multiple`). Arrow keys move between\nitems, one Tab stop for the group; selected items have `aria-checked` /\n`aria-pressed`.\n\n```tsx\n<ToggleGroup aria-label=\"View\" defaultValue=\"grid\">\n  <ToggleGroup.Item value=\"list\">List</ToggleGroup.Item>\n  <ToggleGroup.Item value=\"grid\">Grid</ToggleGroup.Item>\n</ToggleGroup>\n```\n\nStyle hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]`.",
           "props": [
             {
               "name": "children",
@@ -1128,7 +1128,7 @@
         },
         {
           "name": "ToggleGroup.Item",
-          "description": "",
+          "description": "One option inside a ToggleGroup. Give it a value and a label, or an icon\nwith an `aria-label`.",
           "props": [
             {
               "name": "value",
@@ -1170,7 +1170,7 @@
         },
         {
           "name": "ToggleGroupItem",
-          "description": "",
+          "description": "One option inside a ToggleGroup. Give it a value and a label, or an icon\nwith an `aria-label`.",
           "props": [
             {
               "name": "value",
@@ -1310,7 +1310,7 @@
       "components": [
         {
           "name": "FileUpload",
-          "description": "FileUpload: drop files on the zone or browse. Checks type, size and count\nbefore accepting, lists files with thumbnails, progress and errors, and\nlets people remove them. Uploading is yours: start it in `onAdd`, then\nfeed `progress` / `status` back through `files`.\n\nThe zone is a real button (keyboard and screen readers), and drag-and-drop\nuses React Aria's `useDrop`, which also accepts keyboard and screen-reader drops.\n\nStyle hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__item[data-status]`, `__progress`.",
+          "description": "Drag and drop or browse for files, with type and size limits checked as\nfiles arrive. Rejected files come with a clear reason, images can show\npreviews, and everything works from the keyboard.\n\nDrop files on the zone or browse. Checks type, size and count\nbefore accepting, lists files with thumbnails, progress and errors, and\nlets people remove them. Uploading is yours: start it in `onAdd`, then\nfeed `progress` / `status` back through `files`.\n\nThe zone is a real button (keyboard and screen readers), and drag-and-drop\nuses React Aria's `useDrop`, which also accepts keyboard and screen-reader drops.\n\nStyle hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__item[data-status]`, `__progress`.",
           "props": [
             {
               "name": "accept",
@@ -1439,7 +1439,7 @@
       "components": [
         {
           "name": "TimePicker",
-          "description": "TimePicker: type a time segment by segment (hours, minutes, AM/PM), or\npick from a list of suggestions every `step` minutes. Values are plain\n24-hour strings (\"14:30\"), so they store and submit cleanly; the field\nshows the locale's format. `min`, `max` and `isTimeDisabled` limit both\ntyping and the list.\n\nBuilt on React Aria's `useTimeField` with the same segments as DatePicker,\nand the Popover and ListBox base components.\n\nStyle hooks: shares `.sp-date-picker` styles; `.sp-time-picker`, `__list`, `__option[data-disabled]`.",
+          "description": "Enter a time by typing, using the arrow keys on each part, or picking from a\nlist. It respects 12 and 24-hour clocks for the locale and can limit choices\nto business hours or fixed steps.\n\nType a time segment by segment (hours, minutes, AM/PM), or\npick from a list of suggestions every `step` minutes. Values are plain\n24-hour strings (\"14:30\"), so they store and submit cleanly; the field\nshows the locale's format. `min`, `max` and `isTimeDisabled` limit both\ntyping and the list.\n\nBuilt on React Aria's `useTimeField` with the same segments as DatePicker,\nand the Popover and ListBox base components.\n\nStyle hooks: shares `.sp-date-picker` styles; `.sp-time-picker`, `__list`, `__option[data-disabled]`.",
           "props": [
             {
               "name": "aria-label",
@@ -1600,7 +1600,7 @@
       "components": [
         {
           "name": "Textarea",
-          "description": "Textarea: multi-line text on the same shell as every other field\n(`.sp-input-base`). Grows with its content (`autoResize`), can show a\ncharacter count, and links its label, help text and error for screen\nreaders.\n\nStyle hooks: `.sp-textarea[data-invalid]`, `__label`, `__input`, `__helper`, `__count[data-over]`.",
+          "description": "Multi-line text with the niceties built in: it can grow with its content,\nshow a live character count, and display errors next to the field.\n\nMulti-line text on the same shell as every other field\n(`.sp-input-base`). Grows with its content (`autoResize`), can show a\ncharacter count, and links its label, help text and error for screen\nreaders.\n\nStyle hooks: `.sp-textarea[data-invalid]`, `__label`, `__input`, `__helper`, `__count[data-over]`.",
           "props": [
             {
               "name": "aria-label",
@@ -1698,7 +1698,7 @@
       "components": [
         {
           "name": "Alert",
-          "description": "Alert: a message about the page or a task — info, success, warning or\nerror — with an icon, optional title, actions and a dismiss button. Use\n`variant=\"banner\"` for a site-wide strip. Errors are announced at once;\nothers are static unless you set `live`.\n\nStyle hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`, `__action`, `__dismiss`.",
+          "description": "A message that sits in the page: a heads-up, a success, a warning or an\nerror. Errors are announced to screen readers immediately; the rest wait\npolitely. Add an action or let people dismiss it.\n\nA message about the page or a task — info, success, warning or\nerror — with an icon, optional title, actions and a dismiss button. Use\n`variant=\"banner\"` for a site-wide strip. Errors are announced at once;\nothers are static unless you set `live`.\n\nStyle hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`, `__action`, `__dismiss`.",
           "props": [
             {
               "name": "action",
@@ -1813,7 +1813,7 @@
       "components": [
         {
           "name": "Breadcrumbs",
-          "description": "Breadcrumbs: where this page sits. The last item is the current page\n(`aria-current=\"page\"`); long trails collapse in the middle with\n`maxItems`. Works with any router through `renderLink`.\n\nStyle hooks: `.sp-breadcrumbs`, `__item`, `__link`, `__current`, `__separator`, `__ellipsis`.",
+          "description": "A trail that shows where a page sits in your app and offers a quick way back\nup. Long trails collapse in the middle so they never wrap awkwardly.\n\nWhere this page sits. The last item is the current page\n(`aria-current=\"page\"`); long trails collapse in the middle with\n`maxItems`. Works with any router through `renderLink`.\n\nStyle hooks: `.sp-breadcrumbs`, `__item`, `__link`, `__current`, `__separator`, `__ellipsis`.",
           "props": [
             {
               "name": "items",
@@ -1861,7 +1861,7 @@
         },
         {
           "name": "Pagination",
-          "description": "Pagination: move between pages of results. Previous/next, page numbers\nwith ellipses (1 … 4 5 6 … 20), the current page marked\n`aria-current=\"page\"`, and real links when `getHref` is given.\n`variant=\"compact\"` shows \"Page 3 of 12\" for tight spaces.\n\nStyle hooks: `.sp-pagination[data-size]`, `__item[aria-current]`, `__ellipsis`, `__summary`.",
+          "description": "Page numbers with sensible gaps, so twelve pages or twelve hundred both fit.\nThere's a compact version for tight spots like table footers, and it can\nrender real links for server-rendered pages.\n\nMove between pages of results. Previous/next, page numbers\nwith ellipses (1 … 4 5 6 … 20), the current page marked\n`aria-current=\"page\"`, and real links when `getHref` is given.\n`variant=\"compact\"` shows \"Page 3 of 12\" for tight spaces.\n\nStyle hooks: `.sp-pagination[data-size]`, `__item[aria-current]`, `__ellipsis`, `__summary`.",
           "props": [
             {
               "name": "count",
@@ -1974,7 +1974,7 @@
       "components": [
         {
           "name": "LineChart",
-          "description": "LineChart (and AreaChart with `area` / `stacked`): change over time or an\nordered axis. Thin 2px lines that draw in like current, a crosshair and\ntooltip that follow the pointer, keyboard stepping (focus the chart, then\n← →), legend toggles, and a data-table view. One y axis only.\n\nStyle hooks: `.sp-chart[data-kind=\"line\"|\"area\"]`, `__line`, `__area`,\n`__crosshair`, `__point`, `__grid`, `__axis`. Colours: `--spark-chart-1…8`.",
+          "description": "Show how something changes over time. Hover, or focus the chart and use the\narrow keys, to read exact values. Fill the area underneath, stack series,\nand switch to a data table view for screen readers.\n\nChange over time or an\nordered axis. Thin 2px lines that draw in like current, a crosshair and\ntooltip that follow the pointer, keyboard stepping (focus the chart, then\n← →), legend toggles, and a data-table view. One y axis only.\n\nStyle hooks: `.sp-chart[data-kind=\"line\"|\"area\"]`, `__line`, `__area`,\n`__crosshair`, `__point`, `__grid`, `__axis`. Colours: `--spark-chart-1…8`.",
           "props": [
             {
               "name": "data",
@@ -2088,7 +2088,7 @@
         },
         {
           "name": "BarChart",
-          "description": "BarChart: compare amounts across categories. Grouped or `stacked`,\nvertical or `horizontal`. Thin bars with 4px rounded data ends, square to\nthe baseline, a 2px gap between neighbours; a per-group tooltip on hover\nor keyboard (focus the chart, then arrow keys), legend toggles and a\ndata-table view.\n\nStyle hooks: `.sp-chart[data-kind=\"bar\"]`, `__bar[data-active]`, `__band`.",
+          "description": "Compare amounts side by side, stacked or horizontally. Bars are rounded only\nat their ends with a little gap between them, so they stay easy to read even\nwith several series.\n\nCompare amounts across categories. Grouped or `stacked`,\nvertical or `horizontal`. Thin bars with 4px rounded data ends, square to\nthe baseline, a 2px gap between neighbours; a per-group tooltip on hover\nor keyboard (focus the chart, then arrow keys), legend toggles and a\ndata-table view.\n\nStyle hooks: `.sp-chart[data-kind=\"bar\"]`, `__bar[data-active]`, `__band`.",
           "props": [
             {
               "name": "data",
@@ -2184,7 +2184,7 @@
         },
         {
           "name": "DonutChart",
-          "description": "DonutChart: share of a whole. Slices start at 12 o'clock in data order,\nseparated by a 2px surface gap; the legend lists every slice with its\nvalue and percentage so identity never depends on colour alone. Hover or\nfocus a slice (Tab, then ← →) for its tooltip.\n\nStyle hooks: `.sp-chart[data-kind=\"donut\"]`, `__slice[data-active]`, `__center`.",
+          "description": "Parts of a whole, with room for a headline number in the middle. Best with a\nhandful of slices; the legend shows values and percentages so nothing\ndepends on colour alone.\n\nShare of a whole. Slices start at 12 o'clock in data order,\nseparated by a 2px surface gap; the legend lists every slice with its\nvalue and percentage so identity never depends on colour alone. Hover or\nfocus a slice (Tab, then ← →) for its tooltip.\n\nStyle hooks: `.sp-chart[data-kind=\"donut\"]`, `__slice[data-active]`, `__center`.",
           "props": [
             {
               "name": "data",
@@ -2250,7 +2250,7 @@
         },
         {
           "name": "Sparkline",
-          "description": "Sparkline: a word-sized trend for tables, stat tiles and cards. No axes;\nthe last point is marked so the current value is easy to find. Its\naccessible name states the first, last and range.",
+          "description": "A tiny trend line that fits in a table cell or beside a number. No axes, no\nfuss, just the shape of the data and, optionally, its latest value.\n\nA word-sized trend for tables, stat tiles and cards. No axes;\nthe last point is marked so the current value is easy to find. Its\naccessible name states the first, last and range.",
           "props": [
             {
               "name": "aria-label",
@@ -2319,7 +2319,7 @@
       "components": [
         {
           "name": "Dropdown",
-          "description": "Dropdown: pick one value from a list. The chosen option's node lights up.\nBuilt on the Popover and ListBox base components with React Aria:\ntypeahead on the closed and open list, arrow keys, Home/End, Escape,\ngroups with headings, screen-reader announcements, and a hidden native\nselect so plain forms and autofill work. `Select` is the same component.\n\nStyle hooks: `.sp-dropdown[data-open][data-invalid][data-disabled]`,\n`__label`, `__trigger`, `__value[data-placeholder]`, `__chevron`,\n`__helper`; the list uses `.sp-popover`, `.sp-listbox` and `.sp-list-item`.",
+          "description": "A select menu that looks the part. Type to jump to an option, group long\nlists under headings, and add an icon or helper text. It submits with forms\nlike a native select.\n\nPick one value from a list. The chosen option's node lights up.\nBuilt on the Popover and ListBox base components with React Aria:\ntypeahead on the closed and open list, arrow keys, Home/End, Escape,\ngroups with headings, screen-reader announcements, and a hidden native\nselect so plain forms and autofill work. `Select` is the same component.\n\nStyle hooks: `.sp-dropdown[data-open][data-invalid][data-disabled]`,\n`__label`, `__trigger`, `__value[data-placeholder]`, `__chevron`,\n`__helper`; the list uses `.sp-popover`, `.sp-listbox` and `.sp-list-item`.",
           "props": [
             {
               "name": "options",
@@ -2521,7 +2521,7 @@
       "components": [
         {
           "name": "Combobox",
-          "description": "Combobox: type to search a list, then pick. The field charges as you type\nand the matching option lights up. Built on the InputBase, Popover and\nListBox base components with React Aria: filtering that ignores case and\naccents, arrow keys, Enter to pick, Escape to close or clear, groups,\nfree entry, server-side search, and screen-reader announcements of\nresult counts.\n\nStyle hooks: `.sp-combobox[data-open][data-invalid][data-disabled][data-loading]`,\n`__label`, `__helper`, `__spinner`; the field is `.sp-input-base`, the\nlist `.sp-popover`, `.sp-listbox` and `.sp-list-item`.",
+          "description": "A text input with suggestions, for when the list is too long to scroll.\nMatching ignores case and accents, results can come from your server, and\nyou can allow values that aren't in the list.\n\nType to search a list, then pick. The field charges as you type\nand the matching option lights up. Built on the InputBase, Popover and\nListBox base components with React Aria: filtering that ignores case and\naccents, arrow keys, Enter to pick, Escape to close or clear, groups,\nfree entry, server-side search, and screen-reader announcements of\nresult counts.\n\nStyle hooks: `.sp-combobox[data-open][data-invalid][data-disabled][data-loading]`,\n`__label`, `__helper`, `__spinner`; the field is `.sp-input-base`, the\nlist `.sp-popover`, `.sp-listbox` and `.sp-list-item`.",
           "props": [
             {
               "name": "options",
@@ -2708,7 +2708,7 @@
       "components": [
         {
           "name": "DatePicker",
-          "description": "DatePicker: type a date or pick it from a calendar. The field lights up\nwhile the calendar is open, and the picked day is a lit node with a spark.\nBehaviour comes from React Aria: segment-by-segment typing in the\nlocale's order (DD/MM/YYYY in India, MM/DD/YYYY in the US), arrow keys to\nadjust a segment, right-to-left layouts, other calendar systems, and a\ndialog popover that restores focus.\n\nStyle hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,\n`__label`, `__control`, `.sp-date-field`, `__segment[data-placeholder]`,\n`__trigger`, `__clear`, `__helper`, `__popover`.",
+          "description": "Pick a date by typing it, stepping through each part with the arrow keys, or\nchoosing from a calendar. Add presets like “Tomorrow” or “+1 week”, block\nweekends or past dates, and it formats for the user's locale.\n\nType a date or pick it from a calendar. The field lights up\nwhile the calendar is open, and the picked day is a lit node with a spark.\nBehaviour comes from React Aria: segment-by-segment typing in the\nlocale's order (DD/MM/YYYY in India, MM/DD/YYYY in the US), arrow keys to\nadjust a segment, right-to-left layouts, other calendar systems, and a\ndialog popover that restores focus.\n\nStyle hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,\n`__label`, `__control`, `.sp-date-field`, `__segment[data-placeholder]`,\n`__trigger`, `__clear`, `__helper`, `__popover`.",
           "props": [
             {
               "name": "aria-label",
@@ -2940,7 +2940,7 @@
         },
         {
           "name": "Segment",
-          "description": "",
+          "description": "One editable part of a date or time field, such as the day or the hour. You\nwon't usually use it directly.",
           "props": [
             {
               "name": "segment",
@@ -2958,7 +2958,7 @@
         },
         {
           "name": "DateRangePicker",
-          "description": "DateRangePicker: type or pick a start and an end date; current flows\nbetween them in the calendar. Two months side by side, shortcut buttons\n(`presets`) under the calendar, and full control over which days can be\npicked. Behaviour comes from React Aria: typed entry in the locale's order,\nhover preview of the range, right-to-left, calendar systems.\n\nStyle hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,\n`__control`, `.sp-date-field`, `__dash`, `__trigger`, `__clear`, `__popover`.",
+          "description": "Choose a start and an end date in one go, with two months side by side and\npresets like “This month” or “Last 30 days”.\n\nType or pick a start and an end date; current flows\nbetween them in the calendar. Two months side by side, shortcut buttons\n(`presets`) under the calendar, and full control over which days can be\npicked. Behaviour comes from React Aria: typed entry in the locale's order,\nhover preview of the range, right-to-left, calendar systems.\n\nStyle hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,\n`__control`, `.sp-date-field`, `__dash`, `__trigger`, `__clear`, `__popover`.",
           "props": [
             {
               "name": "allowsNonContiguousRanges",
@@ -3182,7 +3182,7 @@
         },
         {
           "name": "Calendar",
-          "description": "Calendar: a month grid. The selected day is a lit node, today is a ring,\nand picking a day throws a spark. Shortcut buttons (`presets`) sit under\nthe grid. Behaviour comes from React Aria: arrows, Page Up/Down (Shift for\nyears), Home/End, right-to-left mirroring, localized names and digits,\nother calendar systems, and announcements when the month changes.\n\nStyle hooks: `.sp-calendar`, `__header`, `__title`, `__nav`, `__months`,\n`__grid`, `__weekday`, `__day` with `[data-selected]`, `[data-today]`,\n`[data-unavailable]`, `[data-outside]`, `[data-focus-visible]`,\n`__footer`, `__preset[data-active]`. Add classes with `classNames`.",
+          "description": "The month grid on its own, for when you want a calendar on the page rather\nthan in a popover.\n\nA month grid. The selected day is a lit node, today is a ring,\nand picking a day throws a spark. Shortcut buttons (`presets`) sit under\nthe grid. Behaviour comes from React Aria: arrows, Page Up/Down (Shift for\nyears), Home/End, right-to-left mirroring, localized names and digits,\nother calendar systems, and announcements when the month changes.\n\nStyle hooks: `.sp-calendar`, `__header`, `__title`, `__nav`, `__months`,\n`__grid`, `__weekday`, `__day` with `[data-selected]`, `[data-today]`,\n`[data-unavailable]`, `[data-outside]`, `[data-focus-visible]`,\n`__footer`, `__preset[data-active]`. Add classes with `classNames`.",
           "props": [
             {
               "name": "aria-label",
@@ -3353,7 +3353,7 @@
         },
         {
           "name": "RangeCalendar",
-          "description": "RangeCalendar: pick a start and an end day; current flows between them.\nHovering after the first click previews the range. Shows two months with\n`visibleMonths={2}`. Shortcut buttons (`presets`) sit under the grid.\n\nStyle hooks: as Calendar, plus `__day[data-range-start][data-range-end][data-in-range]`.",
+          "description": "A calendar for picking a range of dates, without the input field around it.\n\nPick a start and an end day; current flows between them.\nHovering after the first click previews the range. Shows two months with\n`visibleMonths={2}`. Shortcut buttons (`presets`) sit under the grid.\n\nStyle hooks: as Calendar, plus `__day[data-range-start][data-range-end][data-in-range]`.",
           "props": [
             {
               "name": "allowsNonContiguousRanges",
@@ -3545,7 +3545,7 @@
       "components": [
         {
           "name": "DataTable",
-          "description": "DataTable: sort, search, filter, page and select rows; resize and pin\ncolumns, expand rows, edit cells in place, and virtualise thousands of\nrows. Built from divs on a CSS grid (like MUI's Data Grid), so it adapts\nto its container: in narrow spaces rows become labelled cards. The table\nlogic is Sparkwire's own (`useDataTable`); React Aria supplies grid\nkeyboard navigation and screen-reader semantics.\n\nKeyboard: arrows move between cells, Home/End and Page Up/Down jump,\nSpace selects a row, Enter activates it (or edits an editable cell; F2\ntoo), Shift+click sorts by more than one column. Tab from a resizable\ncolumn header reaches its resize handle, which takes the arrow keys.\n\nStyle hooks: `.sp-data-table[data-density][data-striped][data-responsive][data-virtual]`,\n`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable][data-pinned]`,\n`__resizer`, `__row[data-selected][data-expanded]`, `__cell[data-align][data-pinned][data-editing]`,\n`__expander`, `__detail`, `__editor`, `__footer`.",
+          "description": "A full data grid without a table library. Sort, search, filter, page and\nselect rows; resize and pin columns; expand rows for details; edit cells in\nplace; and scroll through thousands of rows smoothly. On narrow screens rows\nturn into readable cards.\n\nSort, search, filter, page and select rows; resize and pin\ncolumns, expand rows, edit cells in place, and virtualise thousands of\nrows. Built from divs on a CSS grid (like MUI's Data Grid), so it adapts\nto its container: in narrow spaces rows become labelled cards. The table\nlogic is Sparkwire's own (`useDataTable`); React Aria supplies grid\nkeyboard navigation and screen-reader semantics.\n\nKeyboard: arrows move between cells, Home/End and Page Up/Down jump,\nSpace selects a row, Enter activates it (or edits an editable cell; F2\ntoo), Shift+click sorts by more than one column. Tab from a resizable\ncolumn header reaches its resize handle, which takes the arrow keys.\n\nStyle hooks: `.sp-data-table[data-density][data-striped][data-responsive][data-virtual]`,\n`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable][data-pinned]`,\n`__resizer`, `__row[data-selected][data-expanded]`, `__cell[data-align][data-pinned][data-editing]`,\n`__expander`, `__detail`, `__editor`, `__footer`.",
           "props": [
             {
               "name": "columns",
@@ -3892,7 +3892,7 @@
       "components": [
         {
           "name": "CommandPalette",
-          "description": "CommandPalette: a ⌘K launcher. Type to find a command or page; arrows move\nthe lit node, Enter runs it, Escape closes. Focus stays in the search box\n(ARIA combobox with an active option), the dialog traps focus and returns\nit when closed. Groups, keywords, icons, shortcuts, links and async\nresults. Built on the Overlay and InputBase base components and the\nshared list-item look.\n\nStyle hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,\n`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__footer`.",
+          "description": "One keyboard shortcut (⌘K or Ctrl+K) to reach anything in your app: pages,\nactions, settings. It searches as you type, groups results, and shows\nshortcuts. This site's search is built with it.\n\nA ⌘K launcher. Type to find a command or page; arrows move\nthe lit node, Enter runs it, Escape closes. Focus stays in the search box\n(ARIA combobox with an active option), the dialog traps focus and returns\nit when closed. Groups, keywords, icons, shortcuts, links and async\nresults. Built on the Overlay and InputBase base components and the\nshared list-item look.\n\nStyle hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,\n`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__footer`.",
           "props": [
             {
               "name": "items",
@@ -4009,7 +4009,7 @@
       "components": [
         {
           "name": "Menu",
-          "description": "Menu: a list of actions behind a button (Edit, Duplicate, Delete). Not for\npicking a value: use Dropdown for that. Built on the Popover base and the\nshared list-item look, with React Aria's menu behaviour: arrow keys,\ntypeahead, Enter/Space to run, Escape to close, submenus that open with\nthe right arrow (left in right-to-left), sections, links, checkable items,\nand focus returning to the trigger.\n\nStyle hooks: `.sp-menu`, `.sp-list-item[data-focused][data-danger][data-disabled][data-open]`,\n`__end` (shortcut), `__chevron`, `__check`; trigger `.sp-menu-trigger`.",
+          "description": "A list of actions behind a button, like “Rename” and “Delete”. Supports\nsections, icons, descriptions, nested submenus, and single or multiple\nselection for things like sort order.\n\nA list of actions behind a button (Edit, Duplicate, Delete). Not for\npicking a value: use Dropdown for that. Built on the Popover base and the\nshared list-item look, with React Aria's menu behaviour: arrow keys,\ntypeahead, Enter/Space to run, Escape to close, submenus that open with\nthe right arrow (left in right-to-left), sections, links, checkable items,\nand focus returning to the trigger.\n\nStyle hooks: `.sp-menu`, `.sp-list-item[data-focused][data-danger][data-disabled][data-open]`,\n`__end` (shortcut), `__chevron`, `__check`; trigger `.sp-menu-trigger`.",
           "props": [
             {
               "name": "items",
@@ -4131,7 +4131,7 @@
       "components": [
         {
           "name": "Sidebar",
-          "description": "Sidebar: app navigation. Items sit on a wire down the side; the active\nitem is lit. Sections with headings, nested groups that open and close,\nbadges, links (with `aria-current=\"page\"`), a collapsed icon-only rail\nwith tooltips, and a drawer on small screens. A real `<nav>` with lists,\nso the browser's Tab order and screen-reader navigation just work.\n\nStyle hooks: `.sp-sidebar[data-collapsed]`, `__header`, `__nav`,\n`__section`, `__heading`, `__item[data-active][data-open]`, `__badge`,\n`__toggle`, `__footer`. Widths: `--sp-sidebar-width`, `--sp-sidebar-rail`.",
+          "description": "Your app's main navigation. Group links into sections, collapse it to icons\nwhen space is tight, and on phones it becomes a drawer that slides in.\n\nApp navigation. Items sit on a wire down the side; the active\nitem is lit. Sections with headings, nested groups that open and close,\nbadges, links (with `aria-current=\"page\"`), a collapsed icon-only rail\nwith tooltips, and a drawer on small screens. A real `<nav>` with lists,\nso the browser's Tab order and screen-reader navigation just work.\n\nStyle hooks: `.sp-sidebar[data-collapsed]`, `__header`, `__nav`,\n`__section`, `__heading`, `__item[data-active][data-open]`, `__badge`,\n`__toggle`, `__footer`. Widths: `--sp-sidebar-width`, `--sp-sidebar-rail`.",
           "props": [
             {
               "name": "items",
@@ -4248,7 +4248,7 @@
       "components": [
         {
           "name": "Tabs",
-          "description": "Tabs: every tab sits on one wire. The active tab is the lit segment, and the\ncurrent slides along the wire when you switch. Behaviour comes from React\nAria: arrow keys (mirrored in right-to-left languages), Home/End, vertical\norientation, and automatic or manual activation.\n\nWorks when rendered from a React Server Component: tabs register\nthemselves instead of being read out of `children`.\n\nStyle hooks: `.sp-tabs[data-orientation]`, `.sp-tab-list`,\n`.sp-tab[aria-selected][data-focus-visible]`, `.sp-tab-list__current`, `.sp-tab-panel`.",
+          "description": "Switch between views of the same thing without leaving the page. Horizontal\nor vertical, with arrow-key navigation and a lit underline that follows the\nactive tab.\n\nEvery tab sits on one wire. The active tab is the lit segment, and the\ncurrent slides along the wire when you switch. Behaviour comes from React\nAria: arrow keys (mirrored in right-to-left languages), Home/End, vertical\norientation, and automatic or manual activation.\n\nWorks when rendered from a React Server Component: tabs register\nthemselves instead of being read out of `children`.\n\nStyle hooks: `.sp-tabs[data-orientation]`, `.sp-tab-list`,\n`.sp-tab[aria-selected][data-focus-visible]`, `.sp-tab-list__current`, `.sp-tab-panel`.",
           "props": [
             {
               "name": "children",
@@ -4316,7 +4316,7 @@
         },
         {
           "name": "TabList",
-          "description": "",
+          "description": "Holds the tabs. Give it an `aria-label` so screen readers know what the tabs\nare for.",
           "props": [
             {
               "name": "children",
@@ -4340,7 +4340,7 @@
         },
         {
           "name": "Tab",
-          "description": "One tab. Use inside <TabList>.",
+          "description": "One tab. Its `value` matches the panel it shows.\n\nOne tab. Use inside <TabList>.",
           "props": [
             {
               "name": "value",
@@ -4383,7 +4383,7 @@
         },
         {
           "name": "TabPanel",
-          "description": "",
+          "description": "The content for one tab, shown when its tab is active.",
           "props": [
             {
               "name": "value",
@@ -4422,7 +4422,7 @@
       "components": [
         {
           "name": "Accordion",
-          "description": "Accordion: a stack of circuits. Opening a section closes its circuit: the\nwire beside it lights up and current runs down it.\n\nStyle hooks: `.sp-accordion`, `__item[data-state=\"open\"|\"closed\"]`, `__wire`,\n`__trigger`, `__chevron`, `__panel`.",
+          "description": "Stacked sections that open and close, so people see only what they need.\nPerfect for FAQs and long settings pages. Allow one open at a time, or\nseveral.\n\nA stack of circuits. Opening a section closes its circuit: the\nwire beside it lights up and current runs down it.\n\nStyle hooks: `.sp-accordion`, `__item[data-state=\"open\"|\"closed\"]`, `__wire`,\n`__trigger`, `__chevron`, `__panel`.",
           "props": [
             {
               "name": "children",
@@ -4452,7 +4452,7 @@
         },
         {
           "name": "AccordionItem",
-          "description": "",
+          "description": "One section of an accordion: a title people click and the content it\nreveals.",
           "props": [
             {
               "name": "children",
@@ -4497,7 +4497,7 @@
       "components": [
         {
           "name": "Modal",
-          "description": "Modal: a power cut. The page dims with a flicker and the dialog is the only\nthing left lit. Behaviour comes from React Aria: focus is contained and\nrestored, the page behind is hidden from screen readers and can't scroll,\nand Escape or an outside click closes it. Built on the Overlay base.\n\nStyle hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,\n`__header`, `__title`, `__description`, `__close`, `__body`, `__actions`.",
+          "description": "A dialog for decisions that need full attention, like confirming a delete.\nFocus stays inside while it's open, Escape closes it, and focus returns to\nwhere it came from.\n\nA power cut. The page dims with a flicker and the dialog is the only\nthing left lit. Behaviour comes from React Aria: focus is contained and\nrestored, the page behind is hidden from screen readers and can't scroll,\nand Escape or an outside click closes it. Built on the Overlay base.\n\nStyle hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,\n`__header`, `__title`, `__description`, `__close`, `__body`, `__actions`.",
           "props": [
             {
               "name": "onClose",
@@ -4583,7 +4583,7 @@
       "components": [
         {
           "name": "Drawer",
-          "description": "Drawer: a panel that slides in from an edge, for filters, details, forms\nor navigation on small screens. Current runs along its inner edge as it\npowers on. Built on the Overlay base: focus is trapped and returned,\nthe page behind is hidden from screen readers and doesn't scroll, and\nEscape or a backdrop click closes it.\n\nStyle hooks: `.sp-drawer[data-placement]`, `__backdrop`, `__panel`,\n`__header`, `__title`, `__description`, `__body`, `__actions`, `__close`.\nVariable: `--sp-drawer-size`.",
+          "description": "A panel that slides in from any edge, for filters, details or a quick form,\nwithout losing the page behind it. On phones a bottom drawer feels right at\nhome.\n\nA panel that slides in from an edge, for filters, details, forms\nor navigation on small screens. Current runs along its inner edge as it\npowers on. Built on the Overlay base: focus is trapped and returned,\nthe page behind is hidden from screen readers and doesn't scroll, and\nEscape or a backdrop click closes it.\n\nStyle hooks: `.sp-drawer[data-placement]`, `__backdrop`, `__panel`,\n`__header`, `__title`, `__description`, `__body`, `__actions`, `__close`.\nVariable: `--sp-drawer-size`.",
           "props": [
             {
               "name": "onClose",
@@ -4688,7 +4688,7 @@
       "components": [
         {
           "name": "Tooltip",
-          "description": "Tooltip: a short charged label that arcs out from its trigger on hover or\nkeyboard focus. Behaviour comes from React Aria: hover delay with warm-up\nacross nearby tooltips, instant on keyboard focus, Escape dismisses.\n\nStyle hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.",
+          "description": "A short hint on hover or keyboard focus. Keep it to a few words and never\nhide anything essential in one, since touch users may never see it.\n\nA short charged label that arcs out from its trigger on hover or\nkeyboard focus. Behaviour comes from React Aria: hover delay with warm-up\nacross nearby tooltips, instant on keyboard focus, Escape dismisses.\n\nStyle hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.",
           "props": [
             {
               "name": "children",
@@ -4745,7 +4745,7 @@
       "components": [
         {
           "name": "ToastProvider",
-          "description": "Wrap your app once. Toasts stack bottom-right (max 5); the bottom bar\ndischarges as the timer runs and pauses on hover or focus.\n\nStyle hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,\n`__description`, `__action`, `__close`, `__timer`.",
+          "description": "Brief notifications that confirm something happened and then get out of the\nway. Wrap your app once, then call `toast()` from anywhere. Toasts stack,\npause while hovered, and can carry an action like Undo.\n\nWrap your app once. Toasts stack bottom-right (max 5); the bottom bar\ndischarges as the timer runs and pauses on hover or focus.\n\nStyle hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,\n`__description`, `__action`, `__close`, `__timer`.",
           "props": [
             {
               "name": "children",
@@ -4757,7 +4757,7 @@
         },
         {
           "name": "ToastShowOptions",
-          "description": "Options for `toast.show()`. Wrap your app in `<ToastProvider>`, then\n`const toast = useToast(); toast.show({ title: 'Saved', tone: 'success' })`.",
+          "description": "The options you pass to `toast()`: a title, an optional description, a\ntone, an action and how long it stays.\n\nWrap your app in `<ToastProvider>`, then\n`const { toast } = useToast(); toast({ title: 'Saved', tone: 'success' })`.",
           "props": [
             {
               "name": "title",
@@ -4814,7 +4814,7 @@
       "components": [
         {
           "name": "Card",
-          "description": "Card: a raised panel. `live` cards carry current; `interactive` cards glow on hover.\nStyle hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.",
+          "description": "A surface for grouping related content. Make it interactive when the whole\ncard is clickable, or live when you want current running around its edge to\ndraw the eye.\n\nA raised panel. `live` cards carry current; `interactive` cards glow on hover.\nStyle hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.",
           "props": [
             {
               "name": "aria-label",
@@ -4874,7 +4874,7 @@
         },
         {
           "name": "CardHeader",
-          "description": "",
+          "description": "The top of a card: a title, an optional subtitle, media like an avatar, and\nroom for an action.",
           "props": [
             {
               "name": "title",
@@ -4904,7 +4904,7 @@
         },
         {
           "name": "CardFooter",
-          "description": "",
+          "description": "The bottom of a card, usually for actions.",
           "props": [
             {
               "name": "children",
@@ -4916,7 +4916,7 @@
         },
         {
           "name": "Skeleton",
-          "description": "Skeleton: a placeholder that shimmers like a line charging up.",
+          "description": "Placeholder shapes that show where content will appear while it loads, so\nthe page doesn't jump when it arrives.\n\nA placeholder that shimmers like a line charging up.",
           "props": [
             {
               "name": "height",
@@ -4968,7 +4968,7 @@
       "components": [
         {
           "name": "Avatar",
-          "description": "Avatar: a photo or initials, with an optional status LED. An online user's\nLED pulses with current.\nStyle hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.",
+          "description": "A picture of a person, or their initials when there's no photo. The colour\ncomes from the name, so the same person always looks the same. Add a dot to\nshow if they're online.\n\nA photo or initials, with an optional status LED. An online user's\nLED pulses with current.\nStyle hooks: `.sp-avatar[data-size][data-status]`, `__face`, `__led`.",
           "props": [
             {
               "name": "name",
@@ -5010,7 +5010,7 @@
         },
         {
           "name": "AvatarGroup",
-          "description": "AvatarGroup: overlapping avatars wired together, with a \"+N\" overflow.",
+          "description": "A row of overlapping avatars for a team, with the rest folded into a “+3”.\n\nOverlapping avatars wired together, with a \"+N\" overflow.",
           "props": [
             {
               "name": "people",
@@ -5057,7 +5057,7 @@
       "components": [
         {
           "name": "Badge",
-          "description": "Badge: a status label with an LED. Pulsing means \"live\". Style hooks: `.sp-badge`, `__led`.",
+          "description": "A small label for status, counts or categories. The LED dot makes state easy\nto read at a glance, and it can pulse for things that are in progress.\n\nA status label with an LED. Pulsing means \"live\". Style hooks: `.sp-badge`, `__led`.",
           "props": [
             {
               "name": "aria-label",
@@ -5122,7 +5122,7 @@
         },
         {
           "name": "Progress",
-          "description": "Progress: a charge bar. At 100% the bar is fully charged and current flows.\nStyle hooks: `.sp-progress[data-state=\"charging\"|\"charged\"|\"indeterminate\"]`, `__track`, `__fill`.",
+          "description": "Shows how far along a task is when you know the total, with an optional\nlabel and percentage.\n\nA charge bar. At 100% the bar is fully charged and current flows.\nStyle hooks: `.sp-progress[data-state=\"charging\"|\"charged\"|\"indeterminate\"]`, `__track`, `__fill`.",
           "props": [
             {
               "name": "label",
@@ -5169,7 +5169,7 @@
         },
         {
           "name": "Spinner",
-          "description": "Spinner: an arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`.",
+          "description": "For waits of unknown length. Always give it a label so screen readers know\nsomething is loading.\n\nAn arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`.",
           "props": [
             {
               "name": "label",
@@ -5219,7 +5219,7 @@
       "components": [
         {
           "name": "SparkProvider",
-          "description": "SparkProvider: set app-wide defaults and slot class names once, the way\nMUI's `theme.components` works. Nested providers merge with their parent.\nStyling still comes from `styles.css`; this provider only changes props.",
+          "description": "Wrap your app once to set things for every component: the energy level, the\nlanguage, and default props or styles, so you're not repeating\n`size=\"small\"` on every button.\n\nSet app-wide defaults and slot class names once, the way\nMUI's `theme.components` works. Nested providers merge with their parent.\nStyling still comes from `styles.css`; this provider only changes props.",
           "props": [
             {
               "name": "children",
@@ -5282,7 +5282,7 @@
       "components": [
         {
           "name": "ButtonBase",
-          "description": "ButtonBase: the pressable foundation under Button, IconButton and menu\ntriggers. Handles disabled state for any element, `type=\"button\"` by\ndefault, and the spark burst. No visual style of its own beyond\n`.sp-button-base`; build your own buttons on it.",
+          "description": "The unstyled foundation of every button. It handles presses, focus rings,\ndisabled states and sparks; you bring the look. Use it to build your own\nbuttons that behave like the rest of Sparkwire.\n\nThe pressable foundation under Button, IconButton and menu\ntriggers. Handles disabled state for any element, `type=\"button\"` by\ndefault, and the spark burst. No visual style of its own beyond\n`.sp-button-base`; build your own buttons on it.",
           "props": [
             {
               "name": "aria-label",
@@ -5338,7 +5338,7 @@
         },
         {
           "name": "InputBase",
-          "description": "InputBase: the field shell under Textfield and Combobox. One bordered box\nholds the input and its adornments, lights up on focus, dashes when\ndisabled, and focuses the input when you click anywhere in it. Build your\nown fields on it; label and help text are up to you (see Field).\n\nStyle hooks: `.sp-input-base[data-variant][data-size][data-invalid][data-disabled]`,\n`__input`, `__adornment`. Focus uses `:focus-within`.",
+          "description": "The bare text input under Textfield and friends, with adornment slots. Use\nit when you want Sparkwire's input behaviour in your own field.\n\nThe field shell under Textfield and Combobox. One bordered box\nholds the input and its adornments, lights up on focus, dashes when\ndisabled, and focuses the input when you click anywhere in it. Build your\nown fields on it; label and help text are up to you (see Field).\n\nStyle hooks: `.sp-input-base[data-variant][data-size][data-invalid][data-disabled]`,\n`__input`, `__adornment`. Focus uses `:focus-within`.",
           "props": [
             {
               "name": "aria-label",
@@ -5424,7 +5424,7 @@
         },
         {
           "name": "Popover",
-          "description": "Popover: a floating panel attached to a trigger, under Dropdown, Combobox,\nMenu and DatePicker. Positions itself and flips to stay on screen, renders\nin a portal that keeps the current theme, closes on outside click and\nEscape, and has hidden dismiss buttons for screen readers.\n\nStyle hooks: `.sp-popover[data-placement]`.",
+          "description": "A floating panel anchored to a trigger, with focus management and dismissal\nhandled. The building block under Dropdown, Menu and the date pickers.\n\nA floating panel attached to a trigger, under Dropdown, Combobox,\nMenu and DatePicker. Positions itself and flips to stay on screen, renders\nin a portal that keeps the current theme, closes on outside click and\nEscape, and has hidden dismiss buttons for screen readers.\n\nStyle hooks: `.sp-popover[data-placement]`.",
           "props": [
             {
               "name": "children",
@@ -5472,7 +5472,7 @@
         },
         {
           "name": "ListItemContent",
-          "description": "The inside of a list row: icon, label, description and an end slot. Shared by options and menu items.",
+          "description": "The standard layout for an item in a list: an icon, a label, a description\nand something at the end.\n\nThe inside of a list row: icon, label, description and an end slot. Shared by options and menu items.",
           "props": [
             {
               "name": "label",
@@ -5502,7 +5502,7 @@
         },
         {
           "name": "ListBox",
-          "description": "ListBox: a list of options to choose from, under Dropdown and Combobox.\nEach option is a node on a wire: the selected one lights up. Supports\ngroups with headings, icons, descriptions, disabled options and\nscreen-reader announcements.\n\nStyle hooks: `.sp-listbox`, `.sp-list-section`, `__heading`,\n`.sp-list-item[data-focused][data-selected][data-disabled]`, `__icon`,\n`__label`, `__description`, `__check`, `.sp-listbox__empty`.",
+          "description": "An accessible list of options with keyboard navigation and selection, the\nengine behind Dropdown and Combobox.\n\nA list of options to choose from, under Dropdown and Combobox.\nEach option is a node on a wire: the selected one lights up. Supports\ngroups with headings, icons, descriptions, disabled options and\nscreen-reader announcements.\n\nStyle hooks: `.sp-listbox`, `.sp-list-section`, `__heading`,\n`.sp-list-item[data-focused][data-selected][data-disabled]`, `__icon`,\n`__label`, `__description`, `__check`, `.sp-listbox__empty`.",
           "props": [
             {
               "name": "state",
@@ -5556,7 +5556,7 @@
         },
         {
           "name": "Overlay",
-          "description": "Overlay: the full-screen layer under Modal (and future Drawer and\nSheet). Renders in a portal that keeps the current theme, dims the page,\ntraps and restores focus, hides the page from screen readers, blocks\nscrolling, and closes on Escape or an outside click.\n\nStyle hooks: `.sp-overlay`, `.sp-overlay__backdrop`.",
+          "description": "The layer behind modals and drawers: a backdrop, focus containment and\nscroll locking, ready for your own dialogs.\n\nThe full-screen layer under Modal (and future Drawer and\nSheet). Renders in a portal that keeps the current theme, dims the page,\ntraps and restores focus, hides the page from screen readers, blocks\nscrolling, and closes on Escape or an outside click.\n\nStyle hooks: `.sp-overlay`, `.sp-overlay__backdrop`.",
           "props": [
             {
               "name": "children",

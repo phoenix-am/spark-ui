@@ -4,7 +4,13 @@ import { ButtonBase } from '../base/ButtonBase';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 /**
- * Button: throws sparks from the press point. Outlined and text buttons show
+ * The button you'll reach for most. It handles clicks, keyboard presses and
+ * focus the way people expect, comes in three weights (contained, outlined,
+ * text) and four colours, and throws a little burst of sparks from wherever
+ * it's pressed. Need a link that looks like a button? Render it as one with
+ * `as` or `render`.
+ *
+ * Throws sparks from the press point. Outlined and text buttons show
  * current flowing along a wire on hover; a disabled button is a dead circuit.
  * Built on ButtonBase; forwards `ref` to the rendered element.
  */

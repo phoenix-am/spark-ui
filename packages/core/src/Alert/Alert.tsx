@@ -46,7 +46,11 @@ function ToneIcon({ tone }: { tone: AlertTone }) {
 }
 
 /**
- * Alert: a message about the page or a task — info, success, warning or
+ * A message that sits in the page: a heads-up, a success, a warning or an
+ * error. Errors are announced to screen readers immediately; the rest wait
+ * politely. Add an action or let people dismiss it.
+ *
+ * A message about the page or a task — info, success, warning or
  * error — with an icon, optional title, actions and a dismiss button. Use
  * `variant="banner"` for a site-wide strip. Errors are announced at once;
  * others are static unless you set `live`.

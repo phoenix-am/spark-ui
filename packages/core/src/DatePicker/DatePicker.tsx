@@ -51,7 +51,11 @@ export interface DatePickerProps
 }
 
 /**
- * DatePicker: type a date or pick it from a calendar. The field lights up
+ * Pick a date by typing it, stepping through each part with the arrow keys, or
+ * choosing from a calendar. Add presets like “Tomorrow” or “+1 week”, block
+ * weekends or past dates, and it formats for the user's locale.
+ *
+ * Type a date or pick it from a calendar. The field lights up
  * while the calendar is open, and the picked day is a lit node with a spark.
  * Behaviour comes from React Aria: segment-by-segment typing in the
  * locale's order (DD/MM/YYYY in India, MM/DD/YYYY in the US), arrow keys to
@@ -208,6 +212,10 @@ export function DateField({ className, ...props }: AriaDateFieldProps<DateValue>
   );
 }
 
+/**
+ * One editable part of a date or time field, such as the day or the hour. You
+ * won't usually use it directly.
+ */
 export function Segment({ segment, state }: { segment: DateSegment; state: DateFieldState }) {
   const ref = useRef<HTMLSpanElement>(null);
   const { segmentProps } = useDateSegment(segment, state, ref);

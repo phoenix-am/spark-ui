@@ -41,7 +41,11 @@ export interface ToggleGroupItemProps {
 const Ctx = createContext<{ state: ToggleGroupState; itemClass?: string } | null>(null);
 
 /**
- * ToggleGroup: a row of related toggle buttons, as a segmented control
+ * A row of buttons that act as one control. Use it as a segmented switch
+ * between views, or let several be on at once, like bold and italic in a
+ * toolbar. Arrow keys move between options.
+ *
+ * A row of related toggle buttons, as a segmented control
  * (`single`) or independent toggles (`multiple`). Arrow keys move between
  * items, one Tab stop for the group; selected items have `aria-checked` /
  * `aria-pressed`.
@@ -88,6 +92,10 @@ export function ToggleGroup<M extends Mode = 'single'>(inProps: ToggleGroupProps
   );
 }
 
+/**
+ * One option inside a ToggleGroup. Give it a value and a label, or an icon
+ * with an `aria-label`.
+ */
 function ToggleGroupItem({ value, children, icon, disabled, className, ...rest }: ToggleGroupItemProps) {
   const ctx = useContext(Ctx);
   if (!ctx) throw new Error('ToggleGroup.Item must be inside a ToggleGroup');

@@ -100,7 +100,11 @@ export interface SparkProviderProps {
 }
 
 /**
- * SparkProvider: set app-wide defaults and slot class names once, the way
+ * Wrap your app once to set things for every component: the energy level, the
+ * language, and default props or styles, so you're not repeating
+ * `size="small"` on every button.
+ *
+ * Set app-wide defaults and slot class names once, the way
  * MUI's `theme.components` works. Nested providers merge with their parent.
  * Styling still comes from `styles.css`; this provider only changes props.
  */

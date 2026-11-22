@@ -67,7 +67,11 @@ export interface ComboboxProps<V extends string | number = string | number> {
 }
 
 /**
- * Combobox: type to search a list, then pick. The field charges as you type
+ * A text input with suggestions, for when the list is too long to scroll.
+ * Matching ignores case and accents, results can come from your server, and
+ * you can allow values that aren't in the list.
+ *
+ * Type to search a list, then pick. The field charges as you type
  * and the matching option lights up. Built on the InputBase, Popover and
  * ListBox base components with React Aria: filtering that ignores case and
  * accents, arrow keys, Enter to pick, Escape to close or clear, groups,

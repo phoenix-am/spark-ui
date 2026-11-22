@@ -23,7 +23,11 @@ export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputE
 }
 
 /**
- * Checkbox: a terminal. Checking it powers the terminal: it fills with current
+ * For yes-or-no choices and for picking several items from a list. It supports
+ * an indeterminate state for “some selected”, sits nicely in forms, and shows
+ * errors with a message rather than colour alone.
+ *
+ * A terminal. Checking it powers the terminal: it fills with current
  * and the tick is drawn in. Built on a native checkbox, so forms and keyboards work.
  *
  * Style hooks: `.sp-checkbox`, `__box`, `__label`, `__helper`; the native input

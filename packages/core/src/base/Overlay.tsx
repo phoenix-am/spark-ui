@@ -26,7 +26,10 @@ export interface OverlayProps {
 }
 
 /**
- * Overlay: the full-screen layer under Modal (and future Drawer and
+ * The layer behind modals and drawers: a backdrop, focus containment and
+ * scroll locking, ready for your own dialogs.
+ *
+ * The full-screen layer under Modal (and future Drawer and
  * Sheet). Renders in a portal that keeps the current theme, dims the page,
  * traps and restores focus, hides the page from screen readers, blocks
  * scrolling, and closes on Escape or an outside click.
