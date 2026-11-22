@@ -1,5 +1,16 @@
 # @sparkwire/core
 
+## 0.3.0
+
+### Minor Changes
+
+- a81499f: DataTable: virtual scrolling (`virtualize`, `rowHeight`) for thousands of rows; resizable columns (`resizableColumns`, `columnWidths`, `onColumnResize`) with mouse and keyboard; pinned columns (`pin: 'start' | 'end'`); expandable rows (`renderExpanded`, `expandedKeys`); and inline cell editing (`editable`, `validate`, `editor`, `onCellEdit`). Table labels ("selected", page range, page size) are now translated.
+
+### Patch Changes
+
+- @sparkwire/icons@0.3.0
+  - @sparkwire/utils@0.3.0
+
 ## 0.2.2
 
 ### Patch Changes
