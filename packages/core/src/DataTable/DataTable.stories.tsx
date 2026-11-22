@@ -148,8 +148,10 @@ export const ServerSide: Story = {
 
 /** 10,000 rows, rendering only the ones in view. Arrow keys scroll focus into view. */
 const many: Deploy[] = Array.from({ length: 10000 }, (_, i) => ({ ...data[i % data.length], id: `v${i + 1}`, service: `${services[i % services.length]}-${i + 1}` }));
+// Rows are built in render, not passed as args: Storybook serialises args for its controls panel.
 export const Virtualized: Story = {
-  args: { data: many, virtualize: true, maxHeight: 420, searchable: true, selectionMode: 'multiple', defaultSort: [] },
+  args: { virtualize: true, maxHeight: 420, searchable: true, selectionMode: 'multiple', defaultSort: [] },
+  render: (args) => <DataTable {...args} data={many} />,
 };
 
 /** Drag a column edge (or Tab to it and use the arrow keys). Service stays pinned at the start, cost at the end. */
