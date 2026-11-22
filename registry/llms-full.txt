@@ -1607,7 +1607,7 @@ default, and the spark burst. No visual style of its own beyond
 
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
-- `as?`: `ElementType` Render as another element or component, e.g. `"a"` or a router Link.
+- `as?`: `ElementType` (default `button`) Render as another element or component, e.g. `"a"` or a router Link.
 - `disabled?`: `boolean` (default `false`) Dead circuit: no clicks, no sparks. Uses `disabled` on buttons, `aria-disabled` otherwise.
 - `href?`: `string` Link target when rendered as an anchor.
 - `render?`: `RenderProp<{ disabled: boolean; }>` Render a different element (e.g. a router link) with the button's behaviour and styling.

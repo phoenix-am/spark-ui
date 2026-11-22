@@ -5368,6 +5368,7 @@
               "name": "as",
               "type": "ElementType",
               "required": false,
+              "default": "button",
               "description": "Render as another element or component, e.g. `\"a\"` or a router Link."
             },
             {
