@@ -205,18 +205,19 @@ pre {
   scrollbar-width: thin;
 }
 .sw-docs__main {
-  display: flex;
-  flex-direction: column;
   min-width: 0;
-  /* At least a screen tall, so the footer sits at the bottom on short pages. */
-  min-height: calc(100vh - var(--sw-header));
-  min-height: calc(100dvh - var(--sw-header));
   padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem) 0;
 }
-.sw-docs__main > .sw-footer {
+/* At least a screen tall, so the footer sits at the bottom on short pages. */
+.sw-docs-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--sw-header));
+  min-height: calc(100dvh - var(--sw-header));
+}
+.sw-docs-shell > .sw-docs {
+  flex: 1;
   width: 100%;
-  max-width: none;
-  margin: auto 0 0;
 }
 .sw-sidenav__group + .sw-sidenav__group {
   margin-top: 1.5rem;
@@ -980,20 +981,20 @@ pre {
 
 /* -------------------------------------------------------------- footer */
 .sw-footer {
+  width: 100%;
+  border-top: 1px solid var(--sw-line);
+  color: var(--spark-text-secondary);
+  font-size: 0.875rem;
+}
+.sw-footer__inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  max-width: var(--sw-max);
+  max-width: 1440px;
   margin: 0 auto;
   padding: 2rem 1.5rem 2.5rem;
-  border-top: 1px solid var(--sw-line);
-  color: var(--spark-text-secondary);
-  font-size: 0.875rem;
-}
-.sw-docs__main .sw-footer {
-  padding-inline: 0;
 }
 .sw-footer p {
   margin: 0;

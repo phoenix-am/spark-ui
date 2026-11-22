@@ -181,14 +181,16 @@ export function SideNav() {
 /** Sidebar + content, for guide and component pages. */
 export function DocsLayout() {
   return (
-    <div className="sw-docs">
-      <aside className="sw-docs__aside sw-hide-mobile">
-        <SideNav />
-      </aside>
-      <main className="sw-docs__main" id="main">
-        <Outlet />
-        <Footer />
-      </main>
+    <div className="sw-docs-shell">
+      <div className="sw-docs">
+        <aside className="sw-docs__aside sw-hide-mobile">
+          <SideNav />
+        </aside>
+        <main className="sw-docs__main" id="main">
+          <Outlet />
+        </main>
+      </div>
+      <Footer />
     </div>
   );
 }
@@ -196,6 +198,7 @@ export function DocsLayout() {
 export function Footer() {
   return (
     <footer className="sw-footer">
+      <div className="sw-footer__inner">
       <p>
         Made with <span aria-label="love" role="img">❤️</span> by Anmol Mehta
       </p>
@@ -204,6 +207,7 @@ export function Footer() {
         <a href={NPM} target="_blank" rel="noreferrer">npm</a>
         <a href={`${GITHUB}/blob/master/LICENSE`} target="_blank" rel="noreferrer">MIT licence</a>
       </nav>
+      </div>
     </footer>
   );
 }
