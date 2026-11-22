@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings",
+  "type": "registry:block",
+  "title": "Settings",
+  "description": "Profile, notifications and appearance tabs with an unsaved-changes save bar.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@sparkwire/avatar",
+    "@sparkwire/button",
+    "@sparkwire/card",
+    "@sparkwire/dropdown",
+    "@sparkwire/file-upload",
+    "@sparkwire/styles",
+    "@sparkwire/switch",
+    "@sparkwire/tabs",
+    "@sparkwire/textarea",
+    "@sparkwire/textfield",
+    "@sparkwire/toast",
+    "@sparkwire/toggle-group",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/blocks/Settings/Settings.tsx",
+      "type": "registry:component",
+      "target": "components/spark-ui/blocks/Settings/Settings.tsx",
+      "content": "import React, { useState } from 'react';\nimport { Tabs, TabList, Tab, TabPanel } from '../../Tabs';\nimport { Card } from '../../Card';\nimport { Textfield } from '../../Textfield';\nimport { Textarea } from '../../Textarea';\nimport { Dropdown } from '../../Dropdown';\nimport { Switch } from '../../Switch';\nimport { Button } from '../../Button';\nimport { Avatar } from '../../Avatar';\nimport { FileUpload } from '../../FileUpload';\nimport { ToggleGroup } from '../../ToggleGroup';\nimport { useToast } from '../../Toast';\n\n/**\n * Settings block: profile, notifications and appearance tabs with a save\n * bar that appears when something changed. Copy with\n * `npx sparkwire add settings` and wire `onSave` to your API.\n */\nexport function Settings({ onSave }: { onSave?: (values: Record<string, unknown>) => void }) {\n  const toast = useToast();\n  const initial = { name: 'Anmol Mehta', email: 'anmol@example.com', bio: 'Frontend engineer. Building Sparkwire.', language: 'en', email_digest: true, mentions: true, product: false, theme: 'system', energy: 'default' };\n  const [v, setV] = useState(initial);\n  const set = <K extends keyof typeof initial>(k: K, value: (typeof initial)[K]) => setV((p) => ({ ...p, [k]: value }));\n  const dirty = JSON.stringify(v) !== JSON.stringify(initial);\n\n  return (\n    <div className=\"sp-block-settings\">\n      <header className=\"sp-block-header\">\n        <div>\n          <h1>Settings</h1>\n          <p>Manage your profile and how Sparkwire behaves.</p>\n        </div>\n      </header>\n      <Tabs defaultValue=\"profile\">\n        <TabList aria-label=\"Settings sections\">\n          <Tab value=\"profile\">Profile</Tab>\n          <Tab value=\"notifications\">Notifications</Tab>\n          <Tab value=\"appearance\">Appearance</Tab>\n        </TabList>\n\n        <TabPanel value=\"profile\">\n          <Card padding=\"large\">\n            <div className=\"sp-block-settings__grid\">\n              <div className=\"sp-block-settings__avatar\">\n                <Avatar name={v.name} size=\"xlarge\" />\n                <FileUpload accept=\"image/*\" multiple={false} maxSize={2 * 1024 * 1024} previews={false} prompt=\"Change photo\" />\n              </div>\n              <div className=\"sp-block-settings__fields\">\n                <Textfield label=\"Full name\" name=\"name\" value={v.name} onChange={(e) => set('name', e.target.value)} />\n                <Textfield label=\"Email\" name=\"email\" type=\"email\" value={v.email} onChange={(e) => set('email', e.target.value)} />\n                <Textarea label=\"Bio\" name=\"bio\" maxLength={160} showCount value={v.bio} onChange={(text) => set('bio', text)} minRows={2} />\n                <Dropdown\n                  label=\"Language\"\n                  value={v.language}\n                  onChange={(lang) => set('language', lang)}\n                  options={[\n                    { value: 'en', label: 'English' },\n                    { value: 'hi', label: 'हिन्दी' },\n                    { value: 'gu', label: 'ગુજરાતી' },\n                    { value: 'ta', label: 'தமிழ்' },\n                  ]}\n                />\n              </div>\n            </div>\n          </Card>\n        </TabPanel>\n\n        <TabPanel value=\"notifications\">\n          <Card padding=\"large\">\n            <div className=\"sp-block-settings__list\">\n              <Switch label=\"Weekly email digest\" checked={v.email_digest} onChange={(on) => set('email_digest', on)} />\n              <Switch label=\"Mentions and replies\" checked={v.mentions} onChange={(on) => set('mentions', on)} />\n              <Switch label=\"Product updates\" checked={v.product} onChange={(on) => set('product', on)} />\n            </div>\n          </Card>\n        </TabPanel>\n\n        <TabPanel value=\"appearance\">\n          <Card padding=\"large\">\n            <div className=\"sp-block-settings__list\">\n              <div className=\"sp-block-settings__setting\">\n                <span id=\"theme-label\">Theme</span>\n                <ToggleGroup aria-labelledby=\"theme-label\" value={v.theme} onChange={(t) => t && set('theme', t)}>\n                  <ToggleGroup.Item value=\"light\">Light</ToggleGroup.Item>\n                  <ToggleGroup.Item value=\"dark\">Dark</ToggleGroup.Item>\n                  <ToggleGroup.Item value=\"system\">System</ToggleGroup.Item>\n                </ToggleGroup>\n              </div>\n              <div className=\"sp-block-settings__setting\">\n                <span id=\"energy-label\">Motion</span>\n                <ToggleGroup aria-labelledby=\"energy-label\" value={v.energy} onChange={(t) => t && set('energy', t)}>\n                  <ToggleGroup.Item value=\"off\">Off</ToggleGroup.Item>\n                  <ToggleGroup.Item value=\"calm\">Calm</ToggleGroup.Item>\n                  <ToggleGroup.Item value=\"default\">Default</ToggleGroup.Item>\n                  <ToggleGroup.Item value=\"electric\">Electric</ToggleGroup.Item>\n                </ToggleGroup>\n              </div>\n            </div>\n          </Card>\n        </TabPanel>\n      </Tabs>\n\n      {dirty && (\n        <div className=\"sp-block-savebar\" role=\"region\" aria-label=\"Unsaved changes\">\n          <span>You have unsaved changes.</span>\n          <Button variant=\"text\" size=\"small\" onClick={() => setV(initial)}>\n            Discard\n          </Button>\n          <Button\n            size=\"small\"\n            onClick={() => {\n              onSave?.(v);\n              toast.toast({ title: 'Settings saved', tone: 'success' });\n            }}\n          >\n            Save changes\n          </Button>\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "components/spark-ui/blocks/Settings/index.ts",
+      "type": "registry:component",
+      "target": "components/spark-ui/blocks/Settings/index.ts",
+      "content": "export { Settings } from './Settings';\n"
+    }
+  ]
+}

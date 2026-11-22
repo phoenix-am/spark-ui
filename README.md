@@ -151,6 +151,15 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### Blocks
+
+Whole pages built from the components, to copy and adapt: **dashboard** (sidebar, KPI tiles, charts, orders table), **sign-in** (validated form with progress and error states) and **settings** (tabs, save bar). They aren't in the npm package; copy one:
+
+```bash
+npx sparkwire add dashboard          # also copies every component it uses
+npx shadcn add @sparkwire/sign-in
+```
+
 ### Languages
 
 Every piece of text Spark UI writes itself (button labels, screen-reader names, empty states, upload errors, date presets) follows `SparkProvider locale`. English, Hindi, Gujarati and Tamil are built in; relative presets like "Tomorrow" or "Last 30 days" use the browser's `Intl` data, so they read naturally in any language. Add `-u-nu-deva` / `-u-nu-gujr` to the locale for native digits.

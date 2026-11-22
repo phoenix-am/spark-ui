@@ -197,7 +197,8 @@ async function add(args) {
     console.log(`  import '${path.relative(cwd, path.join(cwd, cssPath)).startsWith('src/') ? '@/' + cssPath.replace(/^src\//, '') : './' + cssPath}';`);
   }
   const first = items.find((i) => names.includes(i.name));
-  const folder = first?.files?.[0]?.target?.split('/')[2];
+  // Folder of the item's first file, relative to the install dir (e.g. Button, blocks/Dashboard).
+  const folder = first?.files?.[0]?.target?.split('/').slice(2, -1).join('/');
   if (folder) console.log(`\n${c.bold('Use it:')} import { ... } from '${dir.replace(/^src\//, '@/')}/${folder}';\n`);
 }
 

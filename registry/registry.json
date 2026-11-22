@@ -750,6 +750,99 @@
       ]
     },
     {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "Sidebar, KPI tiles with sparklines, revenue and channel charts, and a recent-orders table.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/avatar",
+        "@sparkwire/button",
+        "@sparkwire/card",
+        "@sparkwire/charts",
+        "@sparkwire/data-table",
+        "@sparkwire/indicators",
+        "@sparkwire/sidebar",
+        "@sparkwire/styles",
+        "@sparkwire/toggle-group",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/blocks/Dashboard/Dashboard.tsx",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Dashboard/Dashboard.tsx"
+        },
+        {
+          "path": "components/spark-ui/blocks/Dashboard/index.ts",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Dashboard/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "sign-in",
+      "type": "registry:block",
+      "title": "Sign in",
+      "description": "Email and password sign-in with validation, remember me, progress and error states.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/alert",
+        "@sparkwire/button",
+        "@sparkwire/card",
+        "@sparkwire/checkbox",
+        "@sparkwire/styles",
+        "@sparkwire/textfield",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/blocks/SignIn/SignIn.tsx",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/SignIn/SignIn.tsx"
+        },
+        {
+          "path": "components/spark-ui/blocks/SignIn/index.ts",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/SignIn/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "type": "registry:block",
+      "title": "Settings",
+      "description": "Profile, notifications and appearance tabs with an unsaved-changes save bar.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/avatar",
+        "@sparkwire/button",
+        "@sparkwire/card",
+        "@sparkwire/dropdown",
+        "@sparkwire/file-upload",
+        "@sparkwire/styles",
+        "@sparkwire/switch",
+        "@sparkwire/tabs",
+        "@sparkwire/textarea",
+        "@sparkwire/textfield",
+        "@sparkwire/toast",
+        "@sparkwire/toggle-group",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/blocks/Settings/Settings.tsx",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Settings/Settings.tsx"
+        },
+        {
+          "path": "components/spark-ui/blocks/Settings/index.ts",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Settings/index.ts"
+        }
+      ]
+    },
+    {
       "name": "charts",
       "type": "registry:ui",
       "title": "Charts",

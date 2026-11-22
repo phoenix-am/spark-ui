@@ -52,6 +52,10 @@ const ITEMS = {
   Textarea: { description: 'Multi-line text that grows with its content, with a character count.' },
   Alert: { description: 'Info, success, warning and error messages, with actions, dismiss and a banner variant.' },
   Navigation: { name: 'navigation', description: 'Breadcrumbs and Pagination.' },
+  // Blocks: whole pages to copy and adapt (not in the npm package).
+  'blocks/Dashboard': { name: 'dashboard', title: 'Dashboard', block: true, description: 'Sidebar, KPI tiles with sparklines, revenue and channel charts, and a recent-orders table.' },
+  'blocks/SignIn': { name: 'sign-in', title: 'Sign in', block: true, description: 'Email and password sign-in with validation, remember me, progress and error states.' },
+  'blocks/Settings': { name: 'settings', title: 'Settings', block: true, description: 'Profile, notifications and appearance tabs with an unsaved-changes save bar.' },
   Charts: { name: 'charts', description: 'Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.' },
   NumberField: { name: 'number-field', description: 'Locale-formatted numbers (₹1,00,000, %, units) with steppers.' },
   Tabs: { description: 'Tabs on one wire; the active tab is lit.' },
@@ -122,7 +126,9 @@ function buildItem(folder) {
       const rel = path.relative(src, file).split(path.sep).join('/');
       for (const [, spec] of content.matchAll(/from\s+'([^']+)'/g)) {
         if (spec.startsWith('.')) {
-          const targetFolder = path.relative(src, path.resolve(path.dirname(file), spec)).split(path.sep)[0];
+          const resolved = path.relative(src, path.resolve(path.dirname(file), spec)).split(path.sep).join('/');
+          if (meta.block && resolved.startsWith(folder)) continue; // inside the block itself
+          const targetFolder = resolved.split('/')[0];
           if (targetFolder && targetFolder !== folder) regDeps.add(itemName(targetFolder));
         } else if (spec === '@sparkwire/utils') {
           const depth = rel.split('/').length - 1;
@@ -132,7 +138,7 @@ function buildItem(folder) {
           deps.add(versionOf(packageName(spec)));
         }
       }
-      files.push({ path: `${TARGET}/${rel}`, type: folder === 'internal' ? 'registry:lib' : 'registry:ui', target: `${TARGET}/${rel}`, content });
+      files.push({ path: `${TARGET}/${rel}`, type: folder === 'internal' ? 'registry:lib' : meta.block ? 'registry:component' : 'registry:ui', target: `${TARGET}/${rel}`, content });
     }
     if (folder === 'internal') {
       files.push({ path: `${TARGET}/internal/spark-utils.ts`, type: 'registry:lib', target: `${TARGET}/internal/spark-utils.ts`, content: VENDORED_UTILS });
@@ -145,7 +151,7 @@ function buildItem(folder) {
   return {
     $schema: 'https://ui.shadcn.com/schema/registry-item.json',
     name: itemName(folder),
-    type: folder === 'internal' ? 'registry:lib' : 'registry:ui',
+    type: folder === 'internal' ? 'registry:lib' : meta.block ? 'registry:block' : 'registry:ui',
     title: meta.title ?? folder,
     description: meta.description ?? '',
     dependencies: [...deps].sort(),

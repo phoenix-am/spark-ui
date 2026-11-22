@@ -88,7 +88,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Introduction', 'Foundations', 'Actions', 'Inputs', 'Navigation', 'Overlays', 'Data display', 'Feedback', 'Effects'],
+        order: ['Introduction', 'Foundations', 'Blocks', 'Actions', 'Inputs', 'Navigation', 'Overlays', 'Data display', 'Feedback', 'Effects'],
       },
     },
   },
