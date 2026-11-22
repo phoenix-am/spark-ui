@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 
+const defaultRowKey = (row: unknown, i: number) => String((row as { id?: unknown })?.id ?? i);
+
 export type SortDirection = 'ascending' | 'descending';
 export interface SortRule {
   /** Column key. */
@@ -130,8 +132,8 @@ export function defaultFilter(value: unknown, filterValue: unknown): boolean {
  */
 export function useDataTable<Row>(options: UseDataTableOptions<Row>) {
   const { data, columns, manual = false } = options;
-  const getRowKey =
-    options.getRowKey ?? ((row: Row, i: number) => String((row as { id?: unknown })?.id ?? i));
+  // A stable default, so derived rows stay memoised between renders.
+  const getRowKey = (options.getRowKey ?? defaultRowKey) as (row: Row, i: number) => string;
 
   const [sort, setSort] = useControllable(options.sort, options.defaultSort ?? [], options.onSortChange);
   const [search, setSearchRaw] = useControllable(options.search, options.defaultSearch ?? '', options.onSearchChange);
@@ -187,7 +189,11 @@ export function useDataTable<Row>(options: UseDataTableOptions<Row>) {
   const total = manual ? options.rowCount ?? data.length : sorted.length;
   const pageCount = pageSize > 0 ? Math.max(1, Math.ceil(total / pageSize)) : 1;
   const safePage = Math.min(page, pageCount - 1);
-  const rows = manual || pageSize <= 0 ? sorted : sorted.slice(safePage * pageSize, safePage * pageSize + pageSize);
+  const rows = useMemo(
+    () => (manual || pageSize <= 0 ? sorted : sorted.slice(safePage * pageSize, safePage * pageSize + pageSize)),
+    [manual, pageSize, sorted, safePage],
+  );
+  const visibleColumns = useMemo(() => columns.filter((c) => !c.hidden), [columns]);
 
   /** Click a header: ascending → descending → off. With `multi` (Shift+click), add to the existing rules. */
   const toggleSort = (column: string, multi = false) => {
@@ -219,7 +225,7 @@ export function useDataTable<Row>(options: UseDataTableOptions<Row>) {
     /** Rows to show now: filtered, sorted and paged, each with its key. */
     rows,
     /** Visible columns. */
-    columns: columns.filter((c) => !c.hidden),
+    columns: visibleColumns,
     valueOf,
     /** Rows after filtering (all pages). */
     filteredCount: manual ? total : filtered.length,

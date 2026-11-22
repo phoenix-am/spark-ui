@@ -232,6 +232,7 @@
 }
 
 /* ---- Virtual scrolling: fixed row heights so the window math is exact. */
+.sp-data-table[data-virtual] .sp-data-table__grid { overflow-anchor: none; }
 .sp-data-table[data-virtual] .sp-data-table__body .sp-data-table__row { height: var(--sp-row-h); box-sizing: border-box; }
 .sp-data-table[data-virtual] .sp-data-table__cell { padding-block: 0; height: 100%; }
 

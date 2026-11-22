@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useMessages } from '../internal/messages';
 import {
   useLocale,
@@ -162,7 +162,10 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
   const expandable = Boolean(renderExpanded) && !virtualize;
 
   // Pinned columns sit at the start or end; their widths are fixed so offsets are exact.
-  const ordered = [...table.columns.filter((c) => c.pin === 'start'), ...table.columns.filter((c) => !c.pin), ...table.columns.filter((c) => c.pin === 'end')];
+  const ordered = useMemo(
+    () => [...table.columns.filter((c) => c.pin === 'start'), ...table.columns.filter((c) => !c.pin), ...table.columns.filter((c) => c.pin === 'end')],
+    [table.columns],
+  );
   const pxOf = (c: DataTableColumn<RowT>) => widths[c.key] ?? (typeof c.width === 'number' ? c.width : c.pin ? PIN_W : undefined);
   const trackOf = (c: DataTableColumn<RowT>) => {
     const px = pxOf(c);
@@ -357,8 +360,41 @@ function Grid<RowT>(p: GridProps<RowT>) {
   const pageKeys = table.rows.map((r) => r.key);
   const first = table.sort[0];
   const [editing, setEditing] = useState<{ row: string; col: string } | null>(null);
-  const colByKey = new Map(columns.map((c) => [c.key, c]));
+  const colByKey = useMemo(() => new Map(columns.map((c) => [c.key, c])), [columns]);
+  const { locale } = useLocale();
 
+  // Cells read `display` through a ref, so the collection is rebuilt only when rows or columns change, not on every scroll.
+  const displayRef = useRef(display);
+  displayRef.current = display;
+  const children = useMemo(
+    () => [
+      <TableHeader key="header" columns={columns}>
+        {(col: DataTableColumn<RowT>) => (
+          <Column key={col.key} allowsSorting={col.sortable} textValue={textOf(col.header) || col['aria-label'] || col.key}>
+            {col.header}
+          </Column>
+        )}
+      </TableHeader>,
+      <TableBody key="body" items={table.rows}>
+        {(item: { row: RowT; key: string }) => (
+          <Row key={item.key}>
+            {(columnKey) => {
+              const col = colByKey.get(String(columnKey))!;
+              // Cell content renders only when the row is on screen; building the collection stays cheap for 10,000 rows.
+              const raw = col.cell ? undefined : table.valueOf(item.row, col);
+              return (
+                <Cell textValue={typeof raw === 'string' ? raw : undefined}>
+                  <CellContent display={displayRef} row={item.row} col={col} />
+                </Cell>
+              );
+            }}
+          </Row>
+        )}
+      </TableBody>,
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [columns, table.rows, locale],
+  );
   const ariaProps = {
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledby,
@@ -380,31 +416,7 @@ function Grid<RowT>(p: GridProps<RowT>) {
       multiSort.current = false;
     },
     onRowAction: onRowAction ? (key: Key) => onRowAction(rowsByKey.get(String(key)) as RowT, String(key)) : undefined,
-    children: [
-      <TableHeader key="header" columns={columns}>
-        {(col: DataTableColumn<RowT>) => (
-          <Column key={col.key} allowsSorting={col.sortable} textValue={textOf(col.header) || col['aria-label'] || col.key}>
-            {col.header}
-          </Column>
-        )}
-      </TableHeader>,
-      <TableBody key="body" items={table.rows}>
-        {(item: { row: RowT; key: string }) => (
-          <Row key={item.key}>
-            {(columnKey) => {
-              const col = colByKey.get(String(columnKey))!;
-              // Cell content renders only when the row is on screen; building the collection stays cheap for 10,000 rows.
-              const raw = col.cell ? undefined : table.valueOf(item.row, col);
-              return (
-                <Cell textValue={typeof raw === 'string' ? raw : undefined}>
-                  <CellContent display={display} row={item.row} col={col} />
-                </Cell>
-              );
-            }}
-          </Row>
-        )}
-      </TableBody>,
-    ],
+    children,
   };
   const state = useTableState<object>(ariaProps as never);
   const { gridProps } = useTable(ariaProps, state, ref);
@@ -446,7 +458,15 @@ function Grid<RowT>(p: GridProps<RowT>) {
       aria-busy={loading || undefined}
       style={maxHeight !== undefined ? { maxHeight, overflow: 'auto' } : undefined}
       data-scroll={maxHeight !== undefined || undefined}
-      onScroll={p.virtualize ? (e) => setScroll({ top: e.currentTarget.scrollTop, height: e.currentTarget.clientHeight }) : undefined}
+      onScroll={
+        p.virtualize
+          ? (e) => {
+              const top = e.currentTarget.scrollTop;
+              const height = e.currentTarget.clientHeight;
+              setScroll((prev) => (prev.top === top && prev.height === height ? prev : { top, height }));
+            }
+          : undefined
+      }
     >
       <RowGroup className={slot('sp-data-table__header', classNames, 'header')} type="thead">
         {headerRows.map((headerRow) => (
@@ -583,8 +603,8 @@ function Grid<RowT>(p: GridProps<RowT>) {
   );
 }
 
-function CellContent<RowT>({ display, row, col }: { display: (row: RowT, col: DataTableColumn<RowT>) => React.ReactNode; row: RowT; col: DataTableColumn<RowT> }) {
-  return <>{display(row, col)}</>;
+function CellContent<RowT>({ display, row, col }: { display: React.MutableRefObject<(row: RowT, col: DataTableColumn<RowT>) => React.ReactNode>; row: RowT; col: DataTableColumn<RowT> }) {
+  return <>{display.current(row, col)}</>;
 }
 
 function RowGroup({ type, className, children }: { type: 'thead' | 'tbody'; className: string; children: React.ReactNode }) {
