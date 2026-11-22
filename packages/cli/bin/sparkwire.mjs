@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
-const DEFAULT_REGISTRY = 'https://raw.githubusercontent.com/phoenix-am/spark-ui/main/registry/r/{name}.json';
+const DEFAULT_REGISTRY = 'https://raw.githubusercontent.com/phoenix-am/spark-ui/master/registry/r/{name}.json';
 const TARGET_PREFIX = 'components/spark-ui';
 const CONFIG = 'sparkwire.json';
 
@@ -221,7 +221,7 @@ function init(args) {
   const { cwd, dir, registry } = settings(args);
   const file = path.join(cwd, CONFIG);
   if (fs.existsSync(file) && !args.overwrite) fail(`${CONFIG} already exists (use --overwrite to replace it).`);
-  const config = { $schema: 'https://raw.githubusercontent.com/phoenix-am/spark-ui/main/registry/sparkwire.schema.json', dir };
+  const config = { $schema: 'https://raw.githubusercontent.com/phoenix-am/spark-ui/master/registry/sparkwire.schema.json', dir };
   if (registry !== DEFAULT_REGISTRY) config.registry = registry;
   if (!args.dryRun) fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');
   console.log(`${c.green('✔')} ${args.dryRun ? 'Would write' : 'Wrote'} ${CONFIG}: components go to ${c.bold(dir)}`);

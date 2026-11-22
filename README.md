@@ -108,7 +108,7 @@ Components land in `src/components/spark-ui/` (or `components/spark-ui/`); impor
 Already using shadcn/ui? Add the registry to `components.json` and use the CLI you know:
 
 ```json
-"registries": { "@sparkwire": "https://raw.githubusercontent.com/phoenix-am/spark-ui/main/registry/r/{name}.json" }
+"registries": { "@sparkwire": "https://raw.githubusercontent.com/phoenix-am/spark-ui/master/registry/r/{name}.json" }
 ```
 
 ```bash
