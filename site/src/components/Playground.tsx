@@ -14,7 +14,7 @@ type Control =
   | { kind: 'number'; prop: PropDoc };
 
 /** Props that make no sense as a control: styling hooks, escape hatches, controlled state, legacy. */
-const SKIP = new Set(['className', 'classNames', 'style', 'render', 'as', 'id', 'name', 'value', 'checked', 'open', 'ripple', 'href', 'containerStyle', 'inputStyle', 'itemStyle', 'listContainerStyle', 'appendIcon', 'prependIcon', 'wrapperClassName', 'forTeams', 'showBorder']);
+const SKIP = new Set(['className', 'classNames', 'style', 'render', 'as', 'id', 'name', 'value', 'checked', 'open', 'page', 'selectedKeys', 'expandedKeys', 'inputValue', 'collapsed', 'mobileOpen', 'files', 'columnWidths', 'ripple', 'href', 'containerStyle', 'inputStyle', 'itemStyle', 'listContainerStyle', 'appendIcon', 'prependIcon', 'wrapperClassName', 'forTeams', 'showBorder']);
 const TEXTY = new Set(['children', 'label', 'title', 'placeholder', 'helperText', 'description', 'error', 'emptyState', 'searchPlaceholder']);
 
 function controlFor(p: PropDoc, initial: unknown): Control | null {

@@ -49,7 +49,61 @@ const categoryOf = (e: { name: string; storybook?: string }) => {
   return prefix ? CATEGORY[prefix] : 'Inputs';
 };
 
-export const entries: Entry[] = (docs.components as any[]).map((e) => ({ ...e, category: categoryOf(e) }));
+/**
+ * Some registry items hold several independent components (they share a file
+ * and install together). Each gets its own page; parts that only make sense
+ * together (Tabs + Tab, Card + CardHeader) stay on one.
+ */
+export const SPLIT: Record<string, { name: string; parts: string[] }[]> = {
+  navigation: [
+    { name: 'breadcrumbs', parts: ['Breadcrumbs'] },
+    { name: 'pagination', parts: ['Pagination'] },
+  ],
+  indicators: [
+    { name: 'badge', parts: ['Badge'] },
+    { name: 'progress', parts: ['Progress'] },
+    { name: 'spinner', parts: ['Spinner'] },
+  ],
+  card: [
+    { name: 'card', parts: ['Card', 'CardHeader', 'CardFooter'] },
+    { name: 'skeleton', parts: ['Skeleton'] },
+  ],
+  charts: [
+    { name: 'line-chart', parts: ['LineChart'] },
+    { name: 'bar-chart', parts: ['BarChart'] },
+    { name: 'donut-chart', parts: ['DonutChart'] },
+    { name: 'sparkline', parts: ['Sparkline'] },
+  ],
+  'date-picker': [
+    { name: 'date-picker', parts: ['DatePicker'] },
+    { name: 'date-range-picker', parts: ['DateRangePicker'] },
+    { name: 'calendar', parts: ['Calendar', 'RangeCalendar'] },
+  ],
+};
+/** Old page names that now redirect to their first split page. */
+export const REDIRECT: Record<string, string> = Object.fromEntries(
+  Object.entries(SPLIT)
+    .filter(([from, pages]) => !pages.some((p) => p.name === from))
+    .map(([from, pages]) => [from, pages[0].name]),
+);
+
+export const entries: Entry[] = (docs.components as any[]).flatMap((e) => {
+  const base = { ...e, category: categoryOf(e) } as Entry;
+  const pages = SPLIT[e.name];
+  if (!pages) return [base];
+  return pages.map(({ name, parts }) => {
+    const components = base.components.filter((c) => parts.includes(c.name));
+    const main = components[0];
+    return {
+      ...base,
+      name,
+      title: main.name,
+      summary: main.description.split(/\n\s*\n/)[0],
+      import: `import { ${components.map((c) => c.name).join(', ')} } from '@sparkwire/core';`,
+      components,
+    };
+  });
+});
 entries.push({
   name: 'blocks',
   title: 'Blocks',
@@ -114,16 +168,22 @@ const NOTES: Record<string, string[]> = {
   combobox: ['Dropdown, Combobox and Menu'],
   menu: ['Dropdown, Combobox and Menu'],
   'date-picker': ['Dates: presets, rules and ranges'],
+  'date-range-picker': ['Dates: presets, rules and ranges'],
+  calendar: ['Dates: presets, rules and ranges'],
   'time-picker': ['TimePicker'],
   'number-field': ['NumberField'],
   textarea: ['Textarea, Alert, Breadcrumbs, Pagination'],
   alert: ['Textarea, Alert, Breadcrumbs, Pagination'],
-  navigation: ['Textarea, Alert, Breadcrumbs, Pagination'],
+  breadcrumbs: ['Textarea, Alert, Breadcrumbs, Pagination'],
+  pagination: ['Textarea, Alert, Breadcrumbs, Pagination'],
   'toggle-group': ['ToggleGroup, Stepper, FileUpload'],
   stepper: ['ToggleGroup, Stepper, FileUpload'],
   'file-upload': ['ToggleGroup, Stepper, FileUpload'],
   'data-table': ['DataTable'],
-  charts: ['Charts'],
+  'line-chart': ['Charts'],
+  'bar-chart': ['Charts'],
+  'donut-chart': ['Charts'],
+  sparkline: ['Charts'],
   sidebar: ['Sidebar'],
   drawer: ['Drawer'],
   'command-palette': ['CommandPalette'],

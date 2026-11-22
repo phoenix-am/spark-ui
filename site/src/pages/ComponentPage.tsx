@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import { Tabs, TabList, Tab, TabPanel, Badge } from '@sparkwire/core';
-import { entryByName, notesFor } from '../lib/catalog';
+import { entryByName, notesFor, REDIRECT } from '../lib/catalog';
 import { loadDemos, loadPlayground, type Demo, type PlaygroundConfig } from '../lib/demos';
 import { Playground } from '../components/Playground';
 import { PropsTable } from '../components/PropsTable';
@@ -32,6 +32,7 @@ export function ComponentPage() {
     loadDemos(name).then(setDemos);
     loadPlayground(name).then(setPlayground);
   }, [name]);
+  if (REDIRECT[name]) return <Navigate to={`/components/${REDIRECT[name]}`} replace />;
   if (!entry) return <NotFound />;
 
   const main = entry.components[0];
