@@ -29,5 +29,5 @@ Spark UI is a React component library with a "Live Wire" look (sparks, flowing c
 ## Adding components
 
 - `npx sparkwire add <name>` copies a component and its dependencies; `npx sparkwire list` shows names.
-- With shadcn: add `"@sparkwire": "https://raw.githubusercontent.com/phoenix-am/spark-ui/main/registry/r/{name}.json"` under `registries` in components.json, then `npx shadcn add @sparkwire/<name>`.
+- With shadcn: add `"@sparkwire": "https://raw.githubusercontent.com/phoenix-am/spark-ui/master/registry/r/{name}.json"` under `registries` in components.json, then `npx shadcn add @sparkwire/<name>`.
 - Need something Spark UI doesn't ship? Build it from the base components (`ButtonBase`, `InputBase`, `Popover`, `ListBox`, `Overlay` in `@sparkwire/core/base`) so it matches.
