@@ -1,6 +1,6 @@
 {
   "name": "@sparkwire/mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server for Spark UI: lets AI coding agents look up components, props, install commands and source.",
   "type": "module",
   "bin": {
