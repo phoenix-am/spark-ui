@@ -1,7 +1,17 @@
 {
   "name": "@sparkwire/mcp",
   "version": "0.2.1",
-  "description": "MCP server for Spark UI: lets AI coding agents look up components, props, install commands and source.",
+  "description": "Sparkwire MCP server: lets AI coding tools look up Sparkwire components, props, examples, install commands and source.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "llm",
+    "react",
+    "components",
+    "design-system",
+    "sparkwire"
+  ],
   "type": "module",
   "bin": {
     "sparkwire-mcp": "./src/server.mjs"
@@ -16,14 +26,6 @@
   "scripts": {
     "prepack": "node ./scripts/bundle-data.mjs"
   },
-  "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "react",
-    "components",
-    "spark-ui",
-    "sparkwire"
-  ],
   "license": "MIT",
   "repository": {
     "type": "git",

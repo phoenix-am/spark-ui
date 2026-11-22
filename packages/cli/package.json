@@ -1,7 +1,18 @@
 {
   "name": "sparkwire",
   "version": "0.2.1",
-  "description": "Add Spark UI (Live Wire) components to your project as source you own: npx sparkwire add switch",
+  "description": "Sparkwire CLI: copy Sparkwire React components into your app as source you own, with everything they depend on.",
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "cli",
+    "registry",
+    "shadcn",
+    "copy-paste",
+    "design-system",
+    "sparkwire"
+  ],
   "type": "module",
   "bin": {
     "sparkwire": "./bin/sparkwire.mjs"
@@ -12,15 +23,6 @@
   "engines": {
     "node": ">=18"
   },
-  "keywords": [
-    "react",
-    "components",
-    "ui",
-    "spark-ui",
-    "sparkwire",
-    "cli",
-    "registry"
-  ],
   "license": "MIT",
   "repository": {
     "type": "git",
