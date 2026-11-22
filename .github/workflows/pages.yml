@@ -1,7 +1,13 @@
-# Publishes the docs site to GitHub Pages on every push to main:
+# Publishes the docs site to GitHub Pages on every push to master:
 #   /                      Storybook (component docs and examples)
 #   /registry/             component registry (sparkwire CLI, shadcn) and docs.json
 #   /llms.txt, /llms-full.txt  docs for AI agents
+#
+# Before deploying, it screenshots every story and compares with
+# tests/visual/__screenshots__. A story without a baseline gets one (committed
+# back to master); a changed story fails the run and the site isn't deployed.
+# To accept intended visual changes: Actions → Docs site → Run workflow →
+# tick "update screenshots".
 #
 # One-time setup: repo Settings → Pages → Source: "GitHub Actions".
 name: Docs site
@@ -10,9 +16,14 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      update_screenshots:
+        description: 'Accept visual changes: update the screenshot baselines and commit them'
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write # commit new or updated screenshot baselines
   pages: write
   id-token: write
 
@@ -25,6 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }} # the branch, so new baselines can be pushed back
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -33,9 +46,33 @@ jobs:
       - run: npm run build
         env:
           SPARKWIRE_SITE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
-      - run: npx storybook build --quiet --disable-telemetry -o site
-      - name: Add registry and llms.txt
+      - name: Build Storybook
+        run: npx storybook build --quiet --disable-telemetry
+
+      - name: Install Chromium for the visual tests
+        run: npx playwright install --with-deps chromium
+      - name: Visual regression (every story)
+        run: npx playwright test ${{ inputs.update_screenshots && '--update-snapshots' || '' }}
+      - name: Commit new or updated screenshots
+        if: always()
         run: |
+          git add tests/visual/__screenshots__
+          if git diff --cached --quiet; then echo "No new screenshots."; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test: update visual baselines'
+          git push
+      - name: Upload the visual diff report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-report
+          path: playwright-report
+          retention-days: 14
+
+      - name: Assemble the site
+        run: |
+          cp -r storybook-static site
           cp -r registry site/registry
           cp registry/llms.txt registry/llms-full.txt site/
           touch site/.nojekyll
