@@ -21,13 +21,13 @@
               "name": "children",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "The label. Keep it short and say what happens: “Save changes”, not “OK”."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -399,13 +399,13 @@
               "name": "options",
               "type": "RadioOption[]",
               "required": true,
-              "description": ""
+              "description": "The choices, each `{ value, label, description?, disabled? }`."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "color",
@@ -447,7 +447,7 @@
               "name": "onChange",
               "type": "((value: string) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the newly selected option's `value`."
             },
             {
               "name": "value",
@@ -574,7 +574,7 @@
               "name": "ref",
               "type": "Ref<HTMLInputElement>",
               "required": false,
-              "description": ""
+              "description": "Ref to the hidden range input, for form libraries that need direct access."
             },
             {
               "name": "step",
@@ -619,7 +619,7 @@
               "name": "append",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Content at the end of the input, like a unit (“kg”) or an icon button."
             },
             {
               "name": "aria-label",
@@ -637,7 +637,7 @@
               "name": "cardDetection",
               "type": "((value: string) => string)",
               "required": false,
-              "description": ""
+              "description": "Function that names the card network from the number typed, e.g. returns “Visa”; shown inside the field."
             },
             {
               "name": "charge",
@@ -661,7 +661,7 @@
               "name": "containerStyle",
               "type": "CSSProperties",
               "required": false,
-              "description": ""
+              "description": "Inline styles for the wrapper around the label, input and helper text."
             },
             {
               "name": "defaultValue",
@@ -673,25 +673,25 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "error",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Shows the field in its error state. Pair it with `helperText` explaining what to fix."
             },
             {
               "name": "formatPhoneNumber",
               "type": "((value: string) => string)",
               "required": false,
-              "description": ""
+              "description": "Function that formats the value as it's typed, e.g. `98765 43210`."
             },
             {
               "name": "helperText",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Short guidance under the field. Shown in red with an error."
             },
             {
               "name": "inputSize",
@@ -702,13 +702,13 @@
                 "large"
               ],
               "required": false,
-              "description": ""
+              "description": "Height and text size of the input. Default `medium`."
             },
             {
               "name": "isCurrency",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Formats the value as money while typing (thousand separators, two decimals)."
             },
             {
               "name": "label",
@@ -720,43 +720,43 @@
               "name": "onBlur",
               "type": "((event: FocusEvent<HTMLInputElement, Element>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called when the field loses focus. Handy for validating on blur."
             },
             {
               "name": "onChange",
               "type": "((event: ChangeEvent<HTMLInputElement>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called on every keystroke with the change event; read `event.target.value`."
             },
             {
               "name": "onFocus",
               "type": "((event: FocusEvent<HTMLInputElement, Element>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called when the field gains focus."
             },
             {
               "name": "placeholder",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Hint shown while the field is empty. Don't use it instead of a label; it disappears as soon as someone types."
             },
             {
               "name": "prepend",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Content at the start of the input, like a currency symbol or a search icon."
             },
             {
               "name": "type",
               "type": "\"hidden\" | \"color\" | \"button\" | \"checkbox\" | \"date\" | \"datetime-local\" | \"email\" | \"file\" | \"image\" | \"month\" | \"password\" | \"radio\" | \"range\" | \"reset\" | \"search\" | \"submit\" | ... 8 more ...",
               "required": false,
-              "description": ""
+              "description": "The kind of input, like `email`, `password` or `tel`. It sets the mobile keyboard and browser autofill. Default `text`."
             },
             {
               "name": "value",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "The current text, when you control the field yourself. Use `defaultValue` to let it manage its own state."
             },
             {
               "name": "variant",
@@ -767,7 +767,7 @@
                 "standard"
               ],
               "required": false,
-              "description": ""
+              "description": "`outlined` (default) draws a full border, `filled` a tinted background, `standard` just an underline."
             }
           ]
         }
@@ -806,7 +806,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the field wrapper."
             },
             {
               "name": "classNames",
@@ -824,7 +824,7 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Dims the label and passes `disabled` to the input inside."
             },
             {
               "name": "error",
@@ -869,13 +869,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name, read by screen readers. Use it when there's no visible label."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -887,13 +887,13 @@
               "name": "defaultValue",
               "type": "number | null",
               "required": false,
-              "description": ""
+              "description": "Starting value when the field manages its own state. Use `null` to start empty."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "error",
@@ -929,13 +929,13 @@
               "name": "max",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Largest allowed value. Typing more snaps back to it, and the + button stops."
             },
             {
               "name": "min",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Smallest allowed value. Typing less snaps back to it, and the − button stops."
             },
             {
               "name": "name",
@@ -953,19 +953,19 @@
               "name": "placeholder",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Hint shown while the field is empty."
             },
             {
               "name": "readOnly",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Shows the value but doesn't allow changes. Unlike `disabled`, it can still be focused and copied."
             },
             {
               "name": "required",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Marks the field as required: screen readers announce it and the form won't submit while it's empty."
             },
             {
               "name": "size",
@@ -982,7 +982,7 @@
               "name": "startIcon",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Icon shown at the start of the field."
             },
             {
               "name": "step",
@@ -1021,7 +1021,7 @@
               "name": "children",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "The options: one `ToggleGroupItem` each."
             },
             {
               "name": "allowEmpty",
@@ -1033,37 +1033,37 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name, read by screen readers. Use it when there's no visible label."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Id of an element whose text names this component, instead of `aria-label`."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"item\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "defaultValue",
               "type": "string | string[] | null",
               "required": false,
-              "description": ""
+              "description": "Starting selection when the group manages its own state: one value, or an array with `selectionMode=\"multiple\"`."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "fullWidth",
@@ -1075,7 +1075,7 @@
               "name": "onChange",
               "type": "((value: M extends \"multiple\" ? string[] : string | null) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the new selection: a value (or `null`), or an array of values in multiple mode."
             },
             {
               "name": "orientation",
@@ -1085,7 +1085,7 @@
                 "vertical"
               ],
               "required": false,
-              "description": ""
+              "description": "Lay the options out in a row (`horizontal`, default) or a column. Arrow keys follow the direction."
             },
             {
               "name": "selectionMode",
@@ -1106,7 +1106,7 @@
                 "large"
               ],
               "required": false,
-              "description": ""
+              "description": "Height and text size. Default `medium`."
             },
             {
               "name": "value",
@@ -1134,31 +1134,31 @@
               "name": "value",
               "type": "string",
               "required": true,
-              "description": ""
+              "description": "Identifies this option in the group's `value` and `onChange`."
             },
             {
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name for an option that shows only an icon."
             },
             {
               "name": "children",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "The option's label."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for this option's button."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Makes just this option unavailable."
             },
             {
               "name": "icon",
@@ -1176,31 +1176,31 @@
               "name": "value",
               "type": "string",
               "required": true,
-              "description": ""
+              "description": "Identifies this option in the group's `value` and `onChange`."
             },
             {
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name for an option that shows only an icon."
             },
             {
               "name": "children",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "The option's label."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for this option's button."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Makes just this option unavailable."
             },
             {
               "name": "icon",
@@ -1239,25 +1239,25 @@
               "name": "steps",
               "type": "StepItem[]",
               "required": true,
-              "description": ""
+              "description": "The steps in order, each `{ label, description?, error?, icon? }`."
             },
             {
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name, read by screen readers. Use it when there's no visible label."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"step\" | \"indicator\" | \"label\" | \"description\" | \"connector\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "clickable",
@@ -1273,7 +1273,7 @@
               "name": "onStepClick",
               "type": "((index: number) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with a step's index when it's clicked. Setting it makes steps clickable (see `clickable`)."
             },
             {
               "name": "orientation",
@@ -1283,7 +1283,7 @@
                 "vertical"
               ],
               "required": false,
-              "description": ""
+              "description": "Steps in a row (`horizontal`, default) or a column, which leaves room for descriptions."
             },
             {
               "name": "responsive",
@@ -1322,25 +1322,25 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"label\" | \"zone\" | \"list\" | \"item\" | \"errors\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "defaultFiles",
               "type": "UploadFile[]",
               "required": false,
-              "description": ""
+              "description": "Files to show at the start, like ones already uploaded."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "files",
@@ -1358,13 +1358,13 @@
               "name": "label",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Label above the drop zone."
             },
             {
               "name": "maxFiles",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Most files allowed. Extra files are turned away with a message."
             },
             {
               "name": "maxSize",
@@ -1376,7 +1376,7 @@
               "name": "multiple",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Allow choosing more than one file."
             },
             {
               "name": "name",
@@ -1406,7 +1406,7 @@
               "name": "onRemove",
               "type": "((file: UploadFile) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with a file when someone removes it from the list."
             },
             {
               "name": "previews",
@@ -1445,43 +1445,43 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name, read by screen readers. Use it when there's no visible label."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"label\" | \"control\" | \"field\" | \"trigger\" | \"helper\" | \"popover\" | \"list\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "clearable",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Show a button that empties the field."
             },
             {
               "name": "defaultValue",
               "type": "string | null",
               "required": false,
-              "description": ""
+              "description": "Starting time when the picker manages its own state, as `\"HH:mm\"` (24-hour), e.g. `\"09:30\"`."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "error",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Shows the field in its error state. Pair it with `helperText` explaining what to fix."
             },
             {
               "name": "granularity",
@@ -1498,7 +1498,7 @@
               "name": "helperText",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Short guidance under the field. Shown in red with an error."
             },
             {
               "name": "hourCycle",
@@ -1520,7 +1520,7 @@
               "name": "label",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Visible label above the field."
             },
             {
               "name": "max",
@@ -1544,13 +1544,13 @@
               "name": "onChange",
               "type": "((value: string | null) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the new time as `\"HH:mm\"`, or `null` when cleared."
             },
             {
               "name": "required",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Marks the field as required: screen readers announce it and the form won't submit while it's empty."
             },
             {
               "name": "showList",
@@ -1567,7 +1567,7 @@
                 "large"
               ],
               "required": false,
-              "description": ""
+              "description": "Height and text size. Default `medium`."
             },
             {
               "name": "step",
@@ -1624,7 +1624,7 @@
               "name": "classNames",
               "type": "Partial<Record<\"label\" | \"root\" | \"field\" | \"input\" | \"helper\" | \"count\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "error",
@@ -1642,7 +1642,7 @@
               "name": "label",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Visible label above the text area."
             },
             {
               "name": "maxRows",
@@ -1660,7 +1660,7 @@
               "name": "onChange",
               "type": "((value: string, event: ChangeEvent<HTMLTextAreaElement>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the new text and the change event on every keystroke."
             },
             {
               "name": "showCount",
@@ -1722,19 +1722,19 @@
               "name": "children",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "The message itself. One or two sentences works best."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"title\" | \"root\" | \"icon\" | \"body\" | \"action\" | \"dismiss\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "dismissLabel",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name for the close button. Default “Dismiss”, translated with the locale."
             },
             {
               "name": "icon",
@@ -1769,7 +1769,7 @@
               "name": "title",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Bold headline above the message."
             },
             {
               "name": "tone",
@@ -1819,25 +1819,25 @@
               "name": "items",
               "type": "BreadcrumbItem[]",
               "required": true,
-              "description": ""
+              "description": "The trail from the top level down, each `{ label, href?, icon? }`. Leave `href` off the last item, the current page."
             },
             {
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name, read by screen readers. Use it when there's no visible label."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"item\" | \"link\" | \"current\" | \"separator\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "maxItems",
@@ -1873,7 +1873,7 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name, read by screen readers. Use it when there's no visible label."
             },
             {
               "name": "boundaries",
@@ -1885,25 +1885,25 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"item\" | \"ellipsis\" | \"summary\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "defaultPage",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Starting page (1-based) when the component manages its own state."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "getHref",
@@ -1921,7 +1921,7 @@
               "name": "onChange",
               "type": "((page: number) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the newly chosen page number."
             },
             {
               "name": "page",
@@ -1943,7 +1943,7 @@
                 "medium"
               ],
               "required": false,
-              "description": ""
+              "description": "Height and text size. Default `medium`."
             },
             {
               "name": "variant",
@@ -1980,7 +1980,7 @@
               "name": "data",
               "type": "Row[]",
               "required": true,
-              "description": ""
+              "description": "One object per point on the x axis, with a field for `x` and one for each series, e.g. `{ month: 'Jan', sales: 420 }`."
             },
             {
               "name": "series",
@@ -2010,13 +2010,13 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"title\" | \"legend\" | \"plot\" | \"tooltip\" | \"table\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "curved",
@@ -2094,7 +2094,7 @@
               "name": "data",
               "type": "Row[]",
               "required": true,
-              "description": ""
+              "description": "One object per point on the x axis, with a field for `x` and one for each series, e.g. `{ month: 'Jan', sales: 420 }`."
             },
             {
               "name": "series",
@@ -2118,13 +2118,13 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"title\" | \"legend\" | \"plot\" | \"tooltip\" | \"table\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "description",
@@ -2196,7 +2196,7 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Accessible name, read by screen readers. Use it when there's no visible label."
             },
             {
               "name": "centerCaption",
@@ -2214,13 +2214,13 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
               "type": "Partial<Record<\"root\" | \"title\" | \"legend\" | \"plot\", string>>",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind."
             },
             {
               "name": "size",
@@ -2238,13 +2238,13 @@
               "name": "title",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Heading shown above the chart, also used as its accessible name."
             },
             {
               "name": "valueFormat",
               "type": "NumberFormatOptions",
               "required": false,
-              "description": ""
+              "description": "Intl number format for values in the legend and tooltip, e.g. `{ style: 'currency', currency: 'INR' }`."
             }
           ]
         },
@@ -2274,7 +2274,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "color",
@@ -2286,7 +2286,7 @@
               "name": "height",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Height in pixels. Default 32."
             },
             {
               "name": "showLast",
@@ -2298,7 +2298,7 @@
               "name": "width",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Width in pixels. Default 120."
             }
           ]
         }
@@ -2337,7 +2337,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -2355,7 +2355,7 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "emptyState",
@@ -2391,7 +2391,7 @@
               "name": "onBlur",
               "type": "((event: FocusEvent<Element, Element>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called when the field loses focus. Handy for validating on blur."
             },
             {
               "name": "onChange",
@@ -2403,7 +2403,7 @@
               "name": "onFocus",
               "type": "((event: FocusEvent<Element, Element>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called when the field gains focus."
             },
             {
               "name": "onOpenChange",
@@ -2421,7 +2421,7 @@
               "name": "required",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Marks the field as required: screen readers announce it and the form won't submit while it's empty."
             },
             {
               "name": "size",
@@ -2545,7 +2545,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -2575,7 +2575,7 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "emptyState",
@@ -2664,7 +2664,7 @@
               "name": "required",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Marks the field as required: screen readers announce it and the form won't submit while it's empty."
             },
             {
               "name": "size",
@@ -2746,7 +2746,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -2770,7 +2770,7 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "disabledDates",
@@ -2869,7 +2869,7 @@
               "name": "required",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Marks the date as required for form submission."
             },
             {
               "name": "showToday",
@@ -2946,13 +2946,13 @@
               "name": "segment",
               "type": "DateSegment",
               "required": true,
-              "description": ""
+              "description": "The date part this segment edits (day, month, year, hour…). Supplied by React Aria."
             },
             {
               "name": "state",
               "type": "DateFieldState",
               "required": true,
-              "description": ""
+              "description": "The date field's state. Supplied by the parent field."
             }
           ]
         },
@@ -3002,7 +3002,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -3026,7 +3026,7 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "disabledDates",
@@ -3050,7 +3050,7 @@
               "name": "error",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Shows the field in its error state. Pair it with `helperText`."
             },
             {
               "name": "firstDayOfWeek",
@@ -3131,7 +3131,7 @@
               "name": "required",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Marks the field as required: screen readers announce it and the form won't submit while it's empty."
             },
             {
               "name": "size",
@@ -3220,7 +3220,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -3397,7 +3397,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -3551,13 +3551,13 @@
               "name": "columns",
               "type": "DataTableColumn<RowT>[]",
               "required": true,
-              "description": ""
+              "description": "What to show, in order. Each column has a `key` (the field to read), a `header`, and options like `sortable`, `width`, `cell`, `editable` or `pin`."
             },
             {
               "name": "data",
               "type": "RowT[]",
               "required": true,
-              "description": ""
+              "description": "The rows: an array of objects. Each needs a unique `id`, or pass `getRowKey`."
             },
             {
               "name": "aria-label",
@@ -3569,7 +3569,7 @@
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Id of an element whose text names this component, instead of `aria-label`."
             },
             {
               "name": "bulkActions",
@@ -3581,7 +3581,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -3599,49 +3599,49 @@
               "name": "defaultColumnWidths",
               "type": "Record<string, number>",
               "required": false,
-              "description": ""
+              "description": "Starting widths in pixels, by column key, when the table manages resizing itself."
             },
             {
               "name": "defaultExpandedKeys",
               "type": "Iterable<string>",
               "required": false,
-              "description": ""
+              "description": "Rows that start expanded, by key."
             },
             {
               "name": "defaultFilters",
               "type": "Record<string, unknown>",
               "required": false,
-              "description": ""
+              "description": "Starting filter values, by column key."
             },
             {
               "name": "defaultPage",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Starting page (0-based) when the table manages paging itself."
             },
             {
               "name": "defaultPageSize",
               "type": "number",
               "required": false,
-              "description": ""
+              "description": "Starting rows per page. Default 10, or all rows with `virtualize`."
             },
             {
               "name": "defaultSearch",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Starting text in the search box."
             },
             {
               "name": "defaultSelectedKeys",
               "type": "Iterable<string>",
               "required": false,
-              "description": ""
+              "description": "Rows that start selected, by key."
             },
             {
               "name": "defaultSort",
               "type": "SortRule[]",
               "required": false,
-              "description": ""
+              "description": "Starting sort, e.g. `[{ column: 'updated', direction: 'descending' }]`. Add more entries to sort by several columns."
             },
             {
               "name": "density",
@@ -3712,25 +3712,25 @@
               "name": "onExpandedChange",
               "type": "((keys: Set<string>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the set of expanded row keys whenever a row opens or closes."
             },
             {
               "name": "onFiltersChange",
               "type": "((filters: Record<string, unknown>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with all filter values whenever one changes. Use it to filter on your server."
             },
             {
               "name": "onPageChange",
               "type": "((page: number) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the new page index (0-based)."
             },
             {
               "name": "onPageSizeChange",
               "type": "((size: number) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the new number of rows per page."
             },
             {
               "name": "onRowAction",
@@ -3742,19 +3742,19 @@
               "name": "onSearchChange",
               "type": "((search: string) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the search text as it's typed. Use it to search on your server."
             },
             {
               "name": "onSelectionChange",
               "type": "((keys: Set<string>) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the set of selected row keys, across all pages."
             },
             {
               "name": "onSortChange",
               "type": "((sort: SortRule[]) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with the new sort rules when a header is clicked."
             },
             {
               "name": "page",
@@ -3910,7 +3910,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -3928,7 +3928,7 @@
               "name": "defaultOpen",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Start open, when the palette manages its own state."
             },
             {
               "name": "emptyState",
@@ -3964,7 +3964,7 @@
               "name": "onOpenChange",
               "type": "((open: boolean) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with `true` or `false` when the palette opens or closes, including from the hotkey."
             },
             {
               "name": "onSearchChange",
@@ -3988,7 +3988,7 @@
               "name": "placeholder",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Hint in the search box. Default “Type a command or search…”."
             }
           ]
         }
@@ -4027,7 +4027,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -4051,7 +4051,7 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Disables the trigger so the menu can't open."
             },
             {
               "name": "label",
@@ -4069,7 +4069,7 @@
               "name": "onOpenChange",
               "type": "((open: boolean) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with `true` or `false` when the menu opens or closes."
             },
             {
               "name": "onSelectionChange",
@@ -4149,7 +4149,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -4173,13 +4173,13 @@
               "name": "defaultCollapsed",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Start collapsed to icons, when the sidebar manages its own state."
             },
             {
               "name": "defaultValue",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Id of the item that starts active."
             },
             {
               "name": "footer",
@@ -4209,19 +4209,19 @@
               "name": "onChange",
               "type": "((id: string) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with an item's id when it's chosen."
             },
             {
               "name": "onCollapsedChange",
               "type": "((collapsed: boolean) => void)",
               "required": false,
-              "description": ""
+              "description": "Called with `true` or `false` when the sidebar collapses or expands."
             },
             {
               "name": "onMobileOpenChange",
               "type": "((open: boolean) => void)",
               "required": false,
-              "description": ""
+              "description": "Called when the mobile drawer opens or closes."
             },
             {
               "name": "value",
@@ -4270,7 +4270,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "color",
@@ -4334,7 +4334,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             }
           ]
         },
@@ -4364,14 +4364,14 @@
               "name": "children",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "The tab's label."
             },
             {
               "name": "disabled",
               "type": "boolean",
               "required": false,
               "default": "false",
-              "description": ""
+              "description": "Makes this tab unavailable. Arrow keys skip over it."
             },
             {
               "name": "icon",
@@ -4428,13 +4428,13 @@
               "name": "children",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "The sections: one `AccordionItem` each."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "defaultOpen",
@@ -4458,7 +4458,7 @@
               "name": "children",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "The content revealed when the section opens."
             },
             {
               "name": "title",
@@ -4476,7 +4476,7 @@
               "name": "disabled",
               "type": "boolean",
               "required": false,
-              "description": ""
+              "description": "Stops this section from opening or closing."
             }
           ]
         }
@@ -4527,7 +4527,7 @@
               "name": "children",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "The dialog's body content, between the title and the actions."
             },
             {
               "name": "className",
@@ -4613,13 +4613,13 @@
               "name": "children",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "The drawer's main content."
             },
             {
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "classNames",
@@ -4751,7 +4751,7 @@
               "name": "children",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "Your app. Any component inside can call `useToast()`."
             }
           ]
         },
@@ -4880,7 +4880,7 @@
               "name": "title",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "The card's heading."
             },
             {
               "name": "action",
@@ -4898,7 +4898,7 @@
               "name": "subtitle",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "A quieter line under the title, like a date or a status."
             }
           ]
         },
@@ -4910,7 +4910,7 @@
               "name": "children",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "Content for the bottom of the card, usually actions."
             }
           ]
         },
@@ -5016,7 +5016,7 @@
               "name": "people",
               "type": "AvatarProps[]",
               "required": true,
-              "description": ""
+              "description": "The people to show, each with the same props as `Avatar` (`name`, `src`, `status`)."
             },
             {
               "name": "max",
@@ -5036,7 +5036,7 @@
               ],
               "required": false,
               "default": "medium",
-              "description": ""
+              "description": "Size of every avatar in the group. Default `medium`."
             }
           ]
         }
@@ -5225,7 +5225,7 @@
               "name": "children",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "Your app, or the part of it these settings apply to."
             },
             {
               "name": "components",
@@ -5363,7 +5363,7 @@
               "type": "boolean",
               "required": false,
               "default": "false",
-              "description": ""
+              "description": "Turns the control off: it can't be focused or changed, and it's announced as disabled."
             },
             {
               "name": "endAdornment",
@@ -5430,7 +5430,7 @@
               "name": "children",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "The popover's content."
             },
             {
               "name": "state",
@@ -5448,7 +5448,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "disableFocusManagement",
@@ -5466,7 +5466,7 @@
               "name": "style",
               "type": "CSSProperties",
               "required": false,
-              "description": ""
+              "description": "Inline styles for the outermost element."
             }
           ]
         },
@@ -5478,13 +5478,13 @@
               "name": "label",
               "type": "ReactNode",
               "required": true,
-              "description": ""
+              "description": "Main text of the item."
             },
             {
               "name": "description",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Secondary line under the label."
             },
             {
               "name": "end",
@@ -5496,7 +5496,7 @@
               "name": "icon",
               "type": "ReactNode",
               "required": false,
-              "description": ""
+              "description": "Icon before the label."
             }
           ]
         },
@@ -5526,7 +5526,7 @@
               "name": "className",
               "type": "string",
               "required": false,
-              "description": ""
+              "description": "Extra class names for the outermost element."
             },
             {
               "name": "emptyState",
@@ -5538,7 +5538,7 @@
               "name": "listBoxRef",
               "type": "Ref<HTMLUListElement>",
               "required": false,
-              "description": ""
+              "description": "Ref to the list element, for scrolling an option into view or measuring."
             },
             {
               "name": "optionClassName",

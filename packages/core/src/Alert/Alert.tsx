@@ -8,7 +8,9 @@ export type AlertTone = 'info' | 'success' | 'warning' | 'error';
 export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Default `info`. Each tone ships with its own icon, so meaning is never colour alone. */
   tone?: AlertTone;
+  /** Bold headline above the message. */
   title?: React.ReactNode;
+  /** The message itself. One or two sentences works best. */
   children?: React.ReactNode;
   /** Replace the tone icon, or `false` to hide it. */
   icon?: React.ReactNode | false;
@@ -23,9 +25,11 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
    * Default: `assertive` for error, otherwise none (static content).
    */
   live?: 'polite' | 'assertive' | 'off';
+  /** Accessible name for the close button. Default “Dismiss”, translated with the locale. */
   dismissLabel?: string;
   /** Render any element as the root, e.g. a `section` with your own landmark. */
   render?: RenderProp<{ tone: AlertTone }>;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'icon' | 'title' | 'body' | 'action' | 'dismiss'>;
 }
 

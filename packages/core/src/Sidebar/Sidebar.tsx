@@ -32,11 +32,15 @@ export interface SidebarProps {
   items: Array<SidebarItem | SidebarSection>;
   /** Active item id (controlled). */
   value?: string;
+  /** Id of the item that starts active. */
   defaultValue?: string;
+  /** Called with an item's id when it's chosen. */
   onChange?: (id: string) => void;
   /** Icon-only rail (desktop). Controlled. */
   collapsed?: boolean;
+  /** Start collapsed to icons, when the sidebar manages its own state. */
   defaultCollapsed?: boolean;
+  /** Called with `true` or `false` when the sidebar collapses or expands. */
   onCollapsedChange?: (collapsed: boolean) => void;
   /** Show the collapse button. Default `true`. */
   collapsible?: boolean;
@@ -48,9 +52,11 @@ export interface SidebarProps {
   mobileBreakpoint?: number;
   /** Drawer open state on small screens (controlled). Open it from your own menu button. */
   mobileOpen?: boolean;
+  /** Called when the mobile drawer opens or closes. */
   onMobileOpenChange?: (open: boolean) => void;
   /** Accessible name of the navigation. Default "Main". */
   'aria-label'?: string;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, header, nav, section, heading, item, footer, toggle. */
   classNames?: ClassNames<'root' | 'header' | 'nav' | 'section' | 'heading' | 'item' | 'footer' | 'toggle'>;

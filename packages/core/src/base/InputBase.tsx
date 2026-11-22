@@ -7,6 +7,7 @@ export interface InputBaseProps extends Omit<React.InputHTMLAttributes<HTMLInput
   variant?: 'outlined' | 'filled' | 'standard';
   /** Marks the field invalid. */
   error?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
   /** Height 36, 46 or 54px. Default `medium`. */
   size?: 'small' | 'medium' | 'large';

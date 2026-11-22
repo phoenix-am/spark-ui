@@ -30,8 +30,11 @@ export interface DateRangePickerProps
   visibleMonths?: number;
   /** Help text under the field (or the error message when `error` is set). */
   helperText?: React.ReactNode;
+  /** Shows the field in its error state. Pair it with `helperText`. */
   error?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
+  /** Marks the field as required: screen readers announce it and the form won't submit while it's empty. */
   required?: boolean;
   /** Show a clear button when a range is set. Default `true`. */
   clearable?: boolean;
@@ -43,6 +46,7 @@ export interface DateRangePickerProps
   endName?: string;
   /** Default `medium`. */
   size?: 'small' | 'medium' | 'large';
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, label, control, field, trigger, popover, helper. */
   classNames?: ClassNames<'root' | 'label' | 'control' | 'field' | 'trigger' | 'popover' | 'helper'>;

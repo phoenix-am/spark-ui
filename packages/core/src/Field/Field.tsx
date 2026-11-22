@@ -29,6 +29,7 @@ export interface FieldProps {
   error?: React.ReactNode;
   /** Adds a required marker and `required` on the control. */
   required?: boolean;
+  /** Dims the label and passes `disabled` to the input inside. */
   disabled?: boolean;
   /** Control id. Generated when omitted. */
   id?: string;
@@ -37,6 +38,7 @@ export interface FieldProps {
    * receives the props to spread: `{(p) => <textarea {...p} />}`.
    */
   children: React.ReactElement | ((props: FieldControlProps) => React.ReactNode);
+  /** Extra class names for the field wrapper. */
   className?: string;
   /** Extra classes for each part: root, label, description, error. */
   classNames?: ClassNames<'root' | 'label' | 'description' | 'error'>;

@@ -16,6 +16,7 @@ export interface StepItem {
 }
 
 export interface StepperProps {
+  /** The steps in order, each `{ label, description?, error?, icon? }`. */
   steps: StepItem[];
   /** Index of the current step (0-based). Steps before it are complete. */
   active: number;
@@ -24,12 +25,17 @@ export interface StepperProps {
    * `onStepClick` is set): finished steps only. `all`: any step (non-linear).
    */
   clickable?: 'completed' | 'all';
+  /** Called with a step's index when it's clicked. Setting it makes steps clickable (see `clickable`). */
   onStepClick?: (index: number) => void;
+  /** Steps in a row (`horizontal`, default) or a column, which leaves room for descriptions. */
   orientation?: 'horizontal' | 'vertical';
   /** Under ~480px a horizontal stepper shows "Step 2 of 4 · Label". Default `true`. */
   responsive?: boolean;
+  /** Accessible name, read by screen readers. Use it when there's no visible label. */
   'aria-label'?: string;
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'step' | 'indicator' | 'label' | 'description' | 'connector'>;
 }
 

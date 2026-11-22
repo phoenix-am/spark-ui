@@ -45,7 +45,9 @@ export function Card(inProps: CardProps) {
 }
 
 export interface CardHeaderProps {
+  /** The card's heading. */
   title: React.ReactNode;
+  /** A quieter line under the title, like a date or a status. */
   subtitle?: React.ReactNode;
   /** Shown on the left, e.g. an Avatar or icon. */
   media?: React.ReactNode;

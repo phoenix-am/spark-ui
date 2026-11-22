@@ -49,7 +49,9 @@ export interface ComboboxProps<V extends string | number = string | number> {
   helperText?: React.ReactNode;
   /** An error message, or `true` to mark the field invalid and show `helperText` as the error. */
   error?: React.ReactNode | boolean;
+  /** Marks the field as required: screen readers announce it and the form won't submit while it's empty. */
   required?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
   /** Form field name. Submits the selected value (or the typed text with `allowsCustomValue`). */
   name?: string;
@@ -61,6 +63,7 @@ export interface ComboboxProps<V extends string | number = string | number> {
   emptyState?: React.ReactNode;
   /** Text shown in the list while `loading`. Default "Loading…". */
   loadingText?: React.ReactNode;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, label, field, input, popover, option, helper. */
   classNames?: ClassNames<'root' | 'label' | 'field' | 'input' | 'popover' | 'option' | 'helper'>;

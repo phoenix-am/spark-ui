@@ -25,6 +25,7 @@ import { DataTableColumn, UseDataTableOptions, useDataTable, DataTableModel } fr
 export interface DataTableProps<RowT> extends UseDataTableOptions<RowT> {
   /** Accessible name; describe what the table lists. */
   'aria-label'?: string;
+  /** Id of an element whose text names this component, instead of `aria-label`. */
   'aria-labelledby'?: string;
   /** `multiple` adds checkboxes; `single` selects one row. Default `none`. */
   selectionMode?: 'none' | 'single' | 'multiple';
@@ -62,6 +63,7 @@ export interface DataTableProps<RowT> extends UseDataTableOptions<RowT> {
   resizableColumns?: boolean;
   /** Column widths in px by column key (controlled). */
   columnWidths?: Record<string, number>;
+  /** Starting widths in pixels, by column key, when the table manages resizing itself. */
   defaultColumnWidths?: Record<string, number>;
   /** Called when a resize ends, with the column key and its new width. */
   onColumnResize?: (key: string, width: number) => void;
@@ -70,7 +72,9 @@ export interface DataTableProps<RowT> extends UseDataTableOptions<RowT> {
   renderExpanded?: (row: RowT) => React.ReactNode;
   /** Expanded row keys (controlled). */
   expandedKeys?: Set<string>;
+  /** Rows that start expanded, by key. */
   defaultExpandedKeys?: Iterable<string>;
+  /** Called with the set of expanded row keys whenever a row opens or closes. */
   onExpandedChange?: (keys: Set<string>) => void;
 
   /** Save an edited cell (columns with `editable`). Update your data here; the table shows what `data` holds. */
@@ -85,6 +89,7 @@ export interface DataTableProps<RowT> extends UseDataTableOptions<RowT> {
   /** Row height in px for `virtualize`. Default from `density`: 36, 44 or 52. */
   rowHeight?: number;
 
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part. */
   classNames?: ClassNames<'root' | 'toolbar' | 'grid' | 'header' | 'columnHeader' | 'row' | 'cell' | 'footer'>;

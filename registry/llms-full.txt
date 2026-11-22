@@ -32,8 +32,8 @@ current flowing along a wire on hover; a disabled button is a dead circuit.
 Built on ButtonBase; forwards `ref` to the rendered element.
 
 - `as?`: `ElementType` Render as another element or component, e.g. `"a"` or a router Link.
-- `children?`: `ReactNode`
-- `className?`: `string`
+- `children?`: `ReactNode` The label. Keep it short and say what happens: “Save changes”, not “OK”.
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "icon", string>>` Extra classes for each part: root, icon.
 - `color?`: `ButtonColor` Tone of the current. Default `brand`.
 - `disabled?`: `boolean` Dead circuit: no clicks, no sparks, dashed outline.
@@ -153,14 +153,14 @@ keys and forms work as expected.
 Style hooks: `.sp-radio-group`, `__option[data-checked]`, `__dot`, `__text`.
 
 - `label`: `ReactNode` The group's legend. Required for accessibility.
-- `options`: `RadioOption[]`
-- `className?`: `string`
+- `options`: `RadioOption[]` The choices, each `{ value, label, description?, disabled? }`.
+- `className?`: `string` Extra class names for the outermost element.
 - `color?`: `Tone` Colour of the chosen contact. Default `brand`.
 - `defaultValue?`: `string` Initial value when uncontrolled.
 - `error?`: `boolean` Marks the group invalid.
 - `helperText?`: `ReactNode` Help or error text under the group.
 - `name?`: `string` Form field name. Generated when omitted.
-- `onChange?`: `((value: string) => void)`
+- `onChange?`: `((value: string) => void)` Called with the newly selected option's `value`.
 - `value?`: `string` Controlled value.
 - `variant?`: `"list" | "cards"` `list` stacks options; `cards` lays them out as selectable cards.
 
@@ -201,7 +201,7 @@ Variables: `--sp-start`, `--sp-end` and `--sp-pct` (0–100).
 - `name?`: `string | [string, string]` Form field name. For a range, one name (sent twice) or `[startName, endName]`.
 - `onChange?`: `((value: T) => void)` Called on every move with the new value (a number, or `[start, end]`).
 - `onChangeEnd?`: `((value: T) => void)` Called once when the user lets go, e.g. to save or fetch.
-- `ref?`: `Ref<HTMLInputElement>`
+- `ref?`: `Ref<HTMLInputElement>` Ref to the hidden range input, for form libraries that need direct access.
 - `step?`: `number` Default 1.
 - `thumbLabels?`: `[string, string]` Screen-reader names for the two knobs of a range. Default `['Minimum', 'Maximum']`.
 - `value?`: `SliderValue` Controlled value: a number, or `[start, end]` for a range with two knobs.
@@ -226,30 +226,30 @@ Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
 `[data-charged]`, `[data-disabled]`; parts `__label`, `__control`, `__input`,
 `__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).
 
-- `append?`: `ReactNode`
+- `append?`: `ReactNode` Content at the end of the input, like a unit (“kg”) or an icon button.
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
-- `cardDetection?`: `((value: string) => string)`
+- `cardDetection?`: `((value: string) => string)` Function that names the card network from the number typed, e.g. returns “Visa”; shown inside the field.
 - `charge?`: `number | ((value: string) => number)` Live Wire charge meter. A number from 0 to 1, or a function that maps the current value to 0..1 (e.g. password strength). At 1 the field is fully charged and current runs along the meter.
 - `chargeLabel?`: `((percent: number) => ReactNode)` Text announced next to the meter. Receives the charge as 0..100.
 - `classNames?`: `Partial<Record<"label" | "root" | "control" | "input" | "adornment" | "meter" | "helper", string>>` Extra classes for each part: root, label, control, input, adornment, meter, helper.
-- `containerStyle?`: `CSSProperties`
+- `containerStyle?`: `CSSProperties` Inline styles for the wrapper around the label, input and helper text.
 - `defaultValue?`: `string` Initial value when uncontrolled (no `value`). Works with React Hook Form's `register`.
-- `disabled?`: `boolean`
-- `error?`: `boolean`
-- `formatPhoneNumber?`: `((value: string) => string)`
-- `helperText?`: `string`
-- `inputSize?`: `"small" | "medium" | "large"`
-- `isCurrency?`: `boolean`
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
+- `error?`: `boolean` Shows the field in its error state. Pair it with `helperText` explaining what to fix.
+- `formatPhoneNumber?`: `((value: string) => string)` Function that formats the value as it's typed, e.g. `98765 43210`.
+- `helperText?`: `string` Short guidance under the field. Shown in red with an error.
+- `inputSize?`: `"small" | "medium" | "large"` Height and text size of the input. Default `medium`.
+- `isCurrency?`: `boolean` Formats the value as money while typing (thousand separators, two decimals).
 - `label?`: `string` Visible label, linked to the input.
-- `onBlur?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)`
-- `onChange?`: `((event: ChangeEvent<HTMLInputElement>) => void)`
-- `onFocus?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)`
-- `placeholder?`: `string`
-- `prepend?`: `ReactNode`
-- `type?`: `"hidden" | "color" | "button" | "checkbox" | "date" | "datetime-local" | "email" | "file" | "image" | "month" | "password" | "radio" | "range" | "reset" | "search" | "submit" | ... 8 more ...`
-- `value?`: `string`
-- `variant?`: `"outlined" | "filled" | "standard"`
+- `onBlur?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)` Called when the field loses focus. Handy for validating on blur.
+- `onChange?`: `((event: ChangeEvent<HTMLInputElement>) => void)` Called on every keystroke with the change event; read `event.target.value`.
+- `onFocus?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)` Called when the field gains focus.
+- `placeholder?`: `string` Hint shown while the field is empty. Don't use it instead of a label; it disappears as soon as someone types.
+- `prepend?`: `ReactNode` Content at the start of the input, like a currency symbol or a search icon.
+- `type?`: `"hidden" | "color" | "button" | "checkbox" | "date" | "datetime-local" | "email" | "file" | "image" | "month" | "password" | "radio" | "range" | "reset" | "search" | "submit" | ... 8 more ...` The kind of input, like `email`, `password` or `tel`. It sets the mobile keyboard and browser autofill. Default `text`.
+- `value?`: `string` The current text, when you control the field yourself. Use `defaultValue` to let it manage its own state.
+- `variant?`: `"outlined" | "filled" | "standard"` `outlined` (default) draws a full border, `filled` a tinted background, `standard` just an underline.
 
 ## Field (`field`)
 Label, help text and error wiring for any control.
@@ -273,10 +273,10 @@ Style hooks: `.sp-field[data-invalid][data-disabled]`, `__label`,
 
 - `children`: `ReactElement<any, string | JSXElementConstructor<any>> | ((props: FieldControlProps) => ReactNode)` One element (ids and aria props are added to it), or a function that receives the props to spread: `{(p) => <textarea {...p} />}`.
 - `label`: `ReactNode` Visible label, linked to the control.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the field wrapper.
 - `classNames?`: `Partial<Record<"root" | "label" | "description" | "error", string>>` Extra classes for each part: root, label, description, error.
 - `description?`: `ReactNode` Help text under the control.
-- `disabled?`: `boolean`
+- `disabled?`: `boolean` Dims the label and passes `disabled` to the input inside.
 - `error?`: `ReactNode` Error message. Replaces the description and marks the control invalid.
 - `id?`: `string` Control id. Generated when omitted.
 - `required?`: `boolean` Adds a required marker and `required` on the control.
@@ -304,25 +304,25 @@ Aria's number field and the InputBase base component.
 Style hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,
 `__stepper`, `__helper`; the field is `.sp-input-base`.
 
-- `aria-label?`: `string`
-- `className?`: `string`
+- `aria-label?`: `string` Accessible name, read by screen readers. Use it when there's no visible label.
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "label" | "field" | "input" | "stepper" | "helper", string>>` Extra classes for each part: root, label, field, input, stepper, helper.
-- `defaultValue?`: `number | null`
-- `disabled?`: `boolean`
+- `defaultValue?`: `number | null` Starting value when the field manages its own state. Use `null` to start empty.
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `error?`: `ReactNode` An error message, or `true` to mark the field invalid and show `helperText` as the error.
 - `formatOptions?`: `NumberFormatOptions` How the number looks, in the user's locale: `{ style: 'currency', currency: 'INR' }`, `{ style: 'percent' }`, `{ style: 'unit', unit: 'kilogram' }`, `{ maximumFractionDigits: 2 }`…
 - `helperText?`: `ReactNode` Help text under the field (shown in the error colour when `error` is `true`).
 - `hideSteppers?`: `boolean` Hide the − / + buttons.
 - `label?`: `string` Visible label. Use `aria-label` instead if there is no visible label.
-- `max?`: `number`
-- `min?`: `number`
+- `max?`: `number` Largest allowed value. Typing more snaps back to it, and the + button stops.
+- `min?`: `number` Smallest allowed value. Typing less snaps back to it, and the − button stops.
 - `name?`: `string` Form field name; submits the plain number (e.g. 100000, not "₹1,00,000").
 - `onChange?`: `((value: number) => void)` Called with the parsed number (or NaN when cleared) as the value commits.
-- `placeholder?`: `string`
-- `readOnly?`: `boolean`
-- `required?`: `boolean`
+- `placeholder?`: `string` Hint shown while the field is empty.
+- `readOnly?`: `boolean` Shows the value but doesn't allow changes. Unlike `disabled`, it can still be focused and copied.
+- `required?`: `boolean` Marks the field as required: screen readers announce it and the form won't submit while it's empty.
 - `size?`: `"small" | "medium" | "large"` Default `medium`.
-- `startIcon?`: `ReactNode`
+- `startIcon?`: `ReactNode` Icon shown at the start of the field.
 - `step?`: `number` Step for the buttons and arrow keys. Default 1.
 - `value?`: `number | null` Controlled value; `null` when empty.
 
@@ -353,19 +353,19 @@ items, one Tab stop for the group; selected items have `aria-checked` /
 
 Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]`.
 
-- `children`: `ReactNode`
+- `children`: `ReactNode` The options: one `ToggleGroupItem` each.
 - `allowEmpty?`: `boolean` In `single` mode, allow clicking the selected item to clear it. Default `false`.
-- `aria-label?`: `string`
-- `aria-labelledby?`: `string`
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "item", string>>`
-- `defaultValue?`: `string | string[] | null`
-- `disabled?`: `boolean`
+- `aria-label?`: `string` Accessible name, read by screen readers. Use it when there's no visible label.
+- `aria-labelledby?`: `string` Id of an element whose text names this component, instead of `aria-label`.
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "item", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
+- `defaultValue?`: `string | string[] | null` Starting selection when the group manages its own state: one value, or an array with `selectionMode="multiple"`.
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `fullWidth?`: `boolean` Stretch to fill the width.
-- `onChange?`: `((value: M extends "multiple" ? string[] : string | null) => void)`
-- `orientation?`: `"horizontal" | "vertical"`
+- `onChange?`: `((value: M extends "multiple" ? string[] : string | null) => void)` Called with the new selection: a value (or `null`), or an array of values in multiple mode.
+- `orientation?`: `"horizontal" | "vertical"` Lay the options out in a row (`horizontal`, default) or a column. Arrow keys follow the direction.
 - `selectionMode?`: `Mode` `single` (default): one at a time, like a segmented control. `multiple`: each toggles on its own (bold / italic / underline).
-- `size?`: `"small" | "medium" | "large"`
+- `size?`: `"small" | "medium" | "large"` Height and text size. Default `medium`.
 - `value?`: `string | string[] | null` Selected value(s): a string for `single`, a string[] for `multiple`.
 - `variant?`: `"segmented" | "outlined"` `segmented` (default): one track with a sliding fill. `outlined`: separate buttons.
 
@@ -373,22 +373,22 @@ Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]
 One option inside a ToggleGroup. Give it a value and a label, or an icon
 with an `aria-label`.
 
-- `value`: `string`
-- `aria-label?`: `string`
-- `children?`: `ReactNode`
-- `className?`: `string`
-- `disabled?`: `boolean`
+- `value`: `string` Identifies this option in the group's `value` and `onChange`.
+- `aria-label?`: `string` Accessible name for an option that shows only an icon.
+- `children?`: `ReactNode` The option's label.
+- `className?`: `string` Extra class names for this option's button.
+- `disabled?`: `boolean` Makes just this option unavailable.
 - `icon?`: `ReactNode` Icon before the label. For icon-only items, pass `aria-label`.
 
 ### ToggleGroupItem
 One option inside a ToggleGroup. Give it a value and a label, or an icon
 with an `aria-label`.
 
-- `value`: `string`
-- `aria-label?`: `string`
-- `children?`: `ReactNode`
-- `className?`: `string`
-- `disabled?`: `boolean`
+- `value`: `string` Identifies this option in the group's `value` and `onChange`.
+- `aria-label?`: `string` Accessible name for an option that shows only an icon.
+- `children?`: `ReactNode` The option's label.
+- `className?`: `string` Extra class names for this option's button.
+- `disabled?`: `boolean` Makes just this option unavailable.
 - `icon?`: `ReactNode` Icon before the label. For icon-only items, pass `aria-label`.
 
 ## Stepper (`stepper`)
@@ -409,13 +409,13 @@ is spelled out for screen readers, never colour alone.
 Style hooks: `.sp-stepper[data-orientation]`, `__step[data-status]`, `__indicator`, `__connector[data-done]`.
 
 - `active`: `number` Index of the current step (0-based). Steps before it are complete.
-- `steps`: `StepItem[]`
-- `aria-label?`: `string`
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "step" | "indicator" | "label" | "description" | "connector", string>>`
+- `steps`: `StepItem[]` The steps in order, each `{ label, description?, error?, icon? }`.
+- `aria-label?`: `string` Accessible name, read by screen readers. Use it when there's no visible label.
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "step" | "indicator" | "label" | "description" | "connector", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `clickable?`: `"completed" | "all"` Let people jump back to a step by clicking it. `completed` (default when `onStepClick` is set): finished steps only. `all`: any step (non-linear).
-- `onStepClick?`: `((index: number) => void)`
-- `orientation?`: `"horizontal" | "vertical"`
+- `onStepClick?`: `((index: number) => void)` Called with a step's index when it's clicked. Setting it makes steps clickable (see `clickable`).
+- `orientation?`: `"horizontal" | "vertical"` Steps in a row (`horizontal`, default) or a column, which leaves room for descriptions.
 - `responsive?`: `boolean` Under ~480px a horizontal stepper shows "Step 2 of 4 · Label". Default `true`.
 
 ## FileUpload (`file-upload`)
@@ -442,21 +442,21 @@ uses React Aria's `useDrop`, which also accepts keyboard and screen-reader drops
 Style hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__item[data-status]`, `__progress`.
 
 - `accept?`: `string` Like the input attribute: "image/*,.pdf".
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "label" | "zone" | "list" | "item" | "errors", string>>`
-- `defaultFiles?`: `UploadFile[]`
-- `disabled?`: `boolean`
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "label" | "zone" | "list" | "item" | "errors", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
+- `defaultFiles?`: `UploadFile[]` Files to show at the start, like ones already uploaded.
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `files?`: `UploadFile[]` Files in the list (controlled). Update `progress` / `status` as uploads run.
 - `hint?`: `ReactNode` Line under the main prompt. Default lists accepted types and size.
-- `label?`: `ReactNode`
-- `maxFiles?`: `number`
+- `label?`: `ReactNode` Label above the drop zone.
+- `maxFiles?`: `number` Most files allowed. Extra files are turned away with a message.
 - `maxSize?`: `number` Bytes.
-- `multiple?`: `boolean`
+- `multiple?`: `boolean` Allow choosing more than one file.
 - `name?`: `string` Submit the files with a regular form.
 - `onAdd?`: `((added: UploadFile[]) => void)` Just the newly accepted files: start uploads here.
 - `onChange?`: `((files: UploadFile[]) => void)` Whole list after adding or removing.
 - `onReject?`: `((rejected: FileRejection[]) => void)` Files that failed `accept`, `maxSize` or `maxFiles`. Default messages are shown under the zone.
-- `onRemove?`: `((file: UploadFile) => void)`
+- `onRemove?`: `((file: UploadFile) => void)` Called with a file when someone removes it from the list.
 - `previews?`: `boolean` Image thumbnails in the list. Default `true`.
 - `prompt?`: `ReactNode` Main prompt. Default "Drop files here or browse".
 
@@ -484,25 +484,25 @@ and the Popover and ListBox base components.
 
 Style hooks: shares `.sp-date-picker` styles; `.sp-time-picker`, `__list`, `__option[data-disabled]`.
 
-- `aria-label?`: `string`
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "helper" | "popover" | "list", string>>`
-- `clearable?`: `boolean`
-- `defaultValue?`: `string | null`
-- `disabled?`: `boolean`
-- `error?`: `boolean`
+- `aria-label?`: `string` Accessible name, read by screen readers. Use it when there's no visible label.
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "helper" | "popover" | "list", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
+- `clearable?`: `boolean` Show a button that empties the field.
+- `defaultValue?`: `string | null` Starting time when the picker manages its own state, as `"HH:mm"` (24-hour), e.g. `"09:30"`.
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
+- `error?`: `boolean` Shows the field in its error state. Pair it with `helperText` explaining what to fix.
 - `granularity?`: `"hour" | "minute" | "second"` `minute` (default) or `second`.
-- `helperText?`: `ReactNode`
+- `helperText?`: `ReactNode` Short guidance under the field. Shown in red with an error.
 - `hourCycle?`: `12 | 24` 12 or 24-hour. Default: the locale's.
 - `isTimeDisabled?`: `((time: string) => boolean)` Grey out suggestions, e.g. booked slots: `(t) => booked.includes(t)`.
-- `label?`: `ReactNode`
+- `label?`: `ReactNode` Visible label above the field.
 - `max?`: `string` Latest time, "HH:mm".
 - `min?`: `string` Earliest time, "HH:mm".
 - `name?`: `string` Submits "HH:mm" with forms.
-- `onChange?`: `((value: string | null) => void)`
-- `required?`: `boolean`
+- `onChange?`: `((value: string | null) => void)` Called with the new time as `"HH:mm"`, or `null` when cleared.
+- `required?`: `boolean` Marks the field as required: screen readers announce it and the form won't submit while it's empty.
 - `showList?`: `boolean` Turn off the suggestion list (typing only).
-- `size?`: `"small" | "medium" | "large"`
+- `size?`: `"small" | "medium" | "large"` Height and text size. Default `medium`.
 - `step?`: `number` Minutes between suggestions in the list. Default 30.
 - `value?`: `string | null` "HH:mm" or "HH:mm:ss", 24-hour. `null` when empty.
 
@@ -528,13 +528,13 @@ Style hooks: `.sp-textarea[data-invalid]`, `__label`, `__input`, `__helper`, `__
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
 - `autoResize?`: `boolean` Grow with the content between `minRows` and `maxRows`. Default `true`.
-- `classNames?`: `Partial<Record<"label" | "root" | "field" | "input" | "helper" | "count", string>>`
+- `classNames?`: `Partial<Record<"label" | "root" | "field" | "input" | "helper" | "count", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `error?`: `string | boolean` `true` marks it invalid; a string also replaces the helper text.
 - `helperText?`: `ReactNode` Help text under the field.
-- `label?`: `ReactNode`
+- `label?`: `ReactNode` Visible label above the text area.
 - `maxRows?`: `number` Default 10; beyond this it scrolls.
 - `minRows?`: `number` Default 3.
-- `onChange?`: `((value: string, event: ChangeEvent<HTMLTextAreaElement>) => void)`
+- `onChange?`: `((value: string, event: ChangeEvent<HTMLTextAreaElement>) => void)` Called with the new text and the change event on every keystroke.
 - `showCount?`: `boolean` Show "12 / 280" under the field. Uses `maxLength` when set.
 - `variant?`: `"outlined" | "filled" | "standard"` `outlined` (default), `filled` or `standard`.
 
@@ -561,14 +561,14 @@ Style hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`
 - `action?`: `ReactNode` Buttons or links on the right (or below on narrow screens).
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
-- `children?`: `ReactNode`
-- `classNames?`: `Partial<Record<"title" | "root" | "icon" | "body" | "action" | "dismiss", string>>`
-- `dismissLabel?`: `string`
+- `children?`: `ReactNode` The message itself. One or two sentences works best.
+- `classNames?`: `Partial<Record<"title" | "root" | "icon" | "body" | "action" | "dismiss", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
+- `dismissLabel?`: `string` Accessible name for the close button. Default “Dismiss”, translated with the locale.
 - `icon?`: `ReactNode` Replace the tone icon, or `false` to hide it.
 - `live?`: `"polite" | "assertive" | "off"` `polite` announces it when it appears, `assertive` interrupts (errors). Default: `assertive` for error, otherwise none (static content).
 - `onDismiss?`: `(() => void)` Show a close button. Called after it hides.
 - `render?`: `RenderProp<{ tone: AlertTone; }>` Render any element as the root, e.g. a `section` with your own landmark.
-- `title?`: `ReactNode`
+- `title?`: `ReactNode` Bold headline above the message.
 - `tone?`: `AlertTone` Default `info`. Each tone ships with its own icon, so meaning is never colour alone.
 - `variant?`: `"soft" | "outlined" | "banner"` `soft` (default), `outlined`, or `banner` (full-width, square, for the top of a page).
 
@@ -590,10 +590,10 @@ Where this page sits. The last item is the current page
 
 Style hooks: `.sp-breadcrumbs`, `__item`, `__link`, `__current`, `__separator`, `__ellipsis`.
 
-- `items`: `BreadcrumbItem[]`
-- `aria-label?`: `string`
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "item" | "link" | "current" | "separator", string>>`
+- `items`: `BreadcrumbItem[]` The trail from the top level down, each `{ label, href?, icon? }`. Leave `href` off the last item, the current page.
+- `aria-label?`: `string` Accessible name, read by screen readers. Use it when there's no visible label.
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "item" | "link" | "current" | "separator", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `maxItems?`: `number` Show at most this many; the middle collapses to "…". Default: all.
 - `renderLink?`: `((props: { href: string; className: string; children: ReactNode; }) => ReactNode)` Render links with your router, e.g. `({ href, ...p }) => <Link href={href} {...p} />`.
 - `separator?`: `ReactNode` Default "/"-style chevron.
@@ -611,18 +611,18 @@ with ellipses (1 … 4 5 6 … 20), the current page marked
 Style hooks: `.sp-pagination[data-size]`, `__item[aria-current]`, `__ellipsis`, `__summary`.
 
 - `count`: `number` Total pages.
-- `aria-label?`: `string`
+- `aria-label?`: `string` Accessible name, read by screen readers. Use it when there's no visible label.
 - `boundaries?`: `number` Pages always shown at each end. Default 1.
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "item" | "ellipsis" | "summary", string>>`
-- `defaultPage?`: `number`
-- `disabled?`: `boolean`
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "item" | "ellipsis" | "summary", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
+- `defaultPage?`: `number` Starting page (1-based) when the component manages its own state.
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `getHref?`: `((page: number) => string)` Build an href per page to render real links (good for SEO and new tabs).
 - `labels?`: `{ previous?: string; next?: string; page?: ((n: number) => string) | undefined; of?: ((page: number, count: number) => string) | undefined; } | undefined` Labels for translation.
-- `onChange?`: `((page: number) => void)`
+- `onChange?`: `((page: number) => void)` Called with the newly chosen page number.
 - `page?`: `number` Current page, 1-based.
 - `siblings?`: `number` Pages shown on each side of the current one. Default 1.
-- `size?`: `"small" | "medium"`
+- `size?`: `"small" | "medium"` Height and text size. Default `medium`.
 - `variant?`: `"pages" | "compact"` `pages` (default) or `compact` ("Page 3 of 12" with arrows, for small screens).
 
 ## Charts (`charts`)
@@ -646,13 +646,13 @@ tooltip that follow the pointer, keyboard stepping (focus the chart, then
 Style hooks: `.sp-chart[data-kind="line"|"area"]`, `__line`, `__area`,
 `__crosshair`, `__point`, `__grid`, `__axis`. Colours: `--spark-chart-1…8`.
 
-- `data`: `Row[]`
+- `data`: `Row[]` One object per point on the x axis, with a field for `x` and one for each series, e.g. `{ month: 'Jan', sales: 420 }`.
 - `series`: `ChartSeries<Row>[]` One or more series (up to 8; fold the rest into "Other").
 - `x`: `string` Field used for the category / x axis.
 - `area?`: `boolean` Fill under each line.
 - `aria-label?`: `string` Accessible name when there is no visible title.
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot" | "tooltip" | "table", string>>`
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot" | "tooltip" | "table", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `curved?`: `boolean` Smooth the lines. Default `true`.
 - `description?`: `string` One-line summary for screen readers, e.g. "Revenue rose 40% in Q3".
 - `formatX?`: `((value: unknown) => string)` Format x values for axis, tooltip and table. Default: dates by locale, others as text.
@@ -678,12 +678,12 @@ data-table view.
 
 Style hooks: `.sp-chart[data-kind="bar"]`, `__bar[data-active]`, `__band`.
 
-- `data`: `Row[]`
+- `data`: `Row[]` One object per point on the x axis, with a field for `x` and one for each series, e.g. `{ month: 'Jan', sales: 420 }`.
 - `series`: `ChartSeries<Row>[]` One or more series (up to 8; fold the rest into "Other").
 - `x`: `string` Field used for the category / x axis.
 - `aria-label?`: `string` Accessible name when there is no visible title.
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot" | "tooltip" | "table", string>>`
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot" | "tooltip" | "table", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `description?`: `string` One-line summary for screen readers, e.g. "Revenue rose 40% in Q3".
 - `formatX?`: `((value: unknown) => string)` Format x values for axis, tooltip and table. Default: dates by locale, others as text.
 - `height?`: `number` Height in px. Width follows the container. Default 280.
@@ -707,15 +707,15 @@ focus a slice (Tab, then ← →) for its tooltip.
 Style hooks: `.sp-chart[data-kind="donut"]`, `__slice[data-active]`, `__center`.
 
 - `data`: `DonutSlice[]` Parts of one whole. Keep it to 6 or fewer; fold the rest into "Other".
-- `aria-label?`: `string`
+- `aria-label?`: `string` Accessible name, read by screen readers. Use it when there's no visible label.
 - `centerCaption?`: `ReactNode` Small caption under the headline. Default "Total".
 - `centerLabel?`: `ReactNode` Headline in the hole. Default: the total.
-- `className?`: `string`
-- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot", string>>`
+- `className?`: `string` Extra class names for the outermost element.
+- `classNames?`: `Partial<Record<"root" | "title" | "legend" | "plot", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `size?`: `number` Diameter in px. Default 200.
 - `thickness?`: `number` Ring thickness in px. Default 28.
-- `title?`: `ReactNode`
-- `valueFormat?`: `NumberFormatOptions`
+- `title?`: `ReactNode` Heading shown above the chart, also used as its accessible name.
+- `valueFormat?`: `NumberFormatOptions` Intl number format for values in the legend and tooltip, e.g. `{ style: 'currency', currency: 'INR' }`.
 
 ### Sparkline
 A tiny trend line that fits in a table cell or beside a number. No axes, no
@@ -728,11 +728,11 @@ accessible name states the first, last and range.
 - `aria-label`: `string` What the line shows, for screen readers, e.g. "Sign-ups, last 30 days".
 - `data`: `number[]` Values in order (oldest first).
 - `area?`: `boolean` Fill under the line.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `color?`: `string` Line colour. Default `--spark-chart-1`.
-- `height?`: `number`
+- `height?`: `number` Height in pixels. Default 32.
 - `showLast?`: `boolean` Mark the last value with a dot. Default `true`.
-- `width?`: `number`
+- `width?`: `number` Width in pixels. Default 120.
 
 ## Dropdown (`dropdown`)
 Pick one value from a list.
@@ -759,21 +759,21 @@ Style hooks: `.sp-dropdown[data-open][data-invalid][data-disabled]`,
 
 - `options`: `(DropdownOption<V> | DropdownOptionGroup<V>)[]` Options, or groups of options with a heading: `{ label: 'Asia', options: [...] }`.
 - `aria-label?`: `string` Accessible name when there is no visible label.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "label" | "trigger" | "value" | "popover" | "option" | "helper", string>>` Extra classes for each part: root, label, trigger, value, popover, option, helper.
 - `defaultValue?`: `string | number` Initial value when uncontrolled.
-- `disabled?`: `boolean`
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `emptyState?`: `ReactNode` Shown when there are no options. Default "No options".
 - `error?`: `ReactNode` An error message, or `true` to mark the field invalid and show `helperText` as the error.
 - `helperText?`: `ReactNode` Help text under the field (shown in the error colour when `error` is `true`).
 - `label?`: `string` Visible label. Use `aria-label` instead if there is no visible label.
 - `name?`: `string` Form field name; a hidden native select submits the value.
-- `onBlur?`: `((event: FocusEvent<Element, Element>) => void)`
+- `onBlur?`: `((event: FocusEvent<Element, Element>) => void)` Called when the field loses focus. Handy for validating on blur.
 - `onChange?`: `((value: V) => void)` Called with the chosen option's value; its type follows the options (numbers stay numbers).
-- `onFocus?`: `((event: FocusEvent<Element, Element>) => void)`
+- `onFocus?`: `((event: FocusEvent<Element, Element>) => void)` Called when the field gains focus.
 - `onOpenChange?`: `((open: boolean) => void)` Called when the list opens or closes.
 - `placeholder?`: `string` Shown when nothing is selected. Default "Select an option".
-- `required?`: `boolean`
+- `required?`: `boolean` Marks the field as required: screen readers announce it and the form won't submit while it's empty.
 - `size?`: `"small" | "medium" | "large"` Height 36, 46 or 54px. Default `medium`.
 - `startIcon?`: `ReactNode` Icon at the start of the field.
 - `value?`: `string | number | null` Controlled value (`null` for none).
@@ -813,12 +813,12 @@ list `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
 - `options`: `(ComboboxOption<V> | ComboboxOptionGroup<V>)[]` Options, or groups of options with a heading.
 - `allowsCustomValue?`: `boolean` Keep typed text that matches no option (free entry, e.g. tags or a new city).
 - `aria-label?`: `string` Accessible name when there is no visible label.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"input" | "root" | "label" | "field" | "popover" | "option" | "helper", string>>` Extra classes for each part: root, label, field, input, popover, option, helper.
 - `clearable?`: `boolean` Show a clear button when there is text. Default `true`.
 - `defaultInputValue?`: `string` Initial text in the input when uncontrolled.
 - `defaultValue?`: `string | number` Initial selected value when uncontrolled.
-- `disabled?`: `boolean`
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `emptyState?`: `ReactNode` Shown when nothing matches. Default "No results".
 - `error?`: `ReactNode` An error message, or `true` to mark the field invalid and show `helperText` as the error.
 - `filter?`: `false | "contains" | "startsWith"` How options are matched to the typed text: `contains` (default), `startsWith`, or `false` when you filter yourself (e.g. server search). Matching ignores case and accents.
@@ -832,7 +832,7 @@ list `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
 - `onChange?`: `((value: V | null) => void)` Called with the chosen option's value, or `null` when cleared.
 - `onInputChange?`: `((text: string) => void)` Called as the user types; use it to fetch options from a server (with `filter={false}`).
 - `placeholder?`: `string` Placeholder text in the input.
-- `required?`: `boolean`
+- `required?`: `boolean` Marks the field as required: screen readers announce it and the form won't submit while it's empty.
 - `size?`: `"small" | "medium" | "large"` Height 36, 46 or 54px. Default `medium`.
 - `startIcon?`: `ReactNode` Icon at the start of the field, e.g. a search icon.
 - `value?`: `string | number | null` Controlled selected value (`null` for none).
@@ -864,11 +864,11 @@ Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
 - `aria-label?`: `string` Accessible name when there is no visible label.
 - `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
 - `calendarClassNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for the calendar's parts (header, day, preset…).
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "popover" | "helper", string>>` Extra classes for each part: root, label, control, field, trigger, popover, helper.
 - `clearable?`: `boolean` Show a clear button when a date is set. Default `true`.
 - `defaultValue?`: `Date | null` Initial value when uncontrolled.
-- `disabled?`: `boolean`
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
 - `enabledDates?`: `Date[]` If set, only these days can be picked, e.g. open appointment slots.
 - `error?`: `boolean` Marks the field invalid.
@@ -883,7 +883,7 @@ Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
 - `onChange?`: `((date: Date | null) => void)` Called with the picked or typed date, or `null` when cleared.
 - `presets?`: `(DatePreset | DatePresetName)[]` Shortcut buttons under the calendar, replacing the Today button. Short names (`'today'`, `'tomorrow'`, `'+7d'`, `'+1m'`, `'-1y'`) or your own `{ label, value }` where value is a Date or a function returning one.
 - `renderDay?`: `((date: Date, info: DayRenderInfo) => ReactNode)` Custom content for a day cell, e.g. a price or an event dot under the number.
-- `required?`: `boolean`
+- `required?`: `boolean` Marks the date as required for form submission.
 - `showToday?`: `boolean` Show the Today button. Default `true` for Calendar, `false` for RangeCalendar. Ignored when `presets` is set.
 - `size?`: `"small" | "medium" | "large"` Default `medium`.
 - `todayLabel?`: `string` Label for the Today button, for other languages.
@@ -897,8 +897,8 @@ Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
 One editable part of a date or time field, such as the day or the hour. You
 won't usually use it directly.
 
-- `segment`: `DateSegment`
-- `state`: `DateFieldState`
+- `segment`: `DateSegment` The date part this segment edits (day, month, year, hour…). Supplied by React Aria.
+- `state`: `DateFieldState` The date field's state. Supplied by the parent field.
 
 ### DateRangePicker
 Choose a start and an end date in one go, with two months side by side and
@@ -917,15 +917,15 @@ Style hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,
 - `aria-label?`: `string` Accessible name when there is no visible label.
 - `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
 - `calendarClassNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for the calendar's parts.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "popover" | "helper", string>>` Extra classes for each part: root, label, control, field, trigger, popover, helper.
 - `clearable?`: `boolean` Show a clear button when a range is set. Default `true`.
 - `defaultValue?`: `DateRange | null` Initial range when uncontrolled.
-- `disabled?`: `boolean`
+- `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
 - `enabledDates?`: `Date[]` If set, only these days can be picked, e.g. open appointment slots.
 - `endName?`: `string` Hidden input with the end date (ISO), e.g. `checkOut`.
-- `error?`: `boolean`
+- `error?`: `boolean` Shows the field in its error state. Pair it with `helperText`.
 - `firstDayOfWeek?`: `"sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat"` First day of the week. Defaults to the locale's convention.
 - `helperText?`: `ReactNode` Help text under the field (or the error message when `error` is set).
 - `isDateDisabled?`: `((date: Date) => boolean)` Return `true` for days that can't be picked, e.g. weekends. Combines with the lists above.
@@ -937,7 +937,7 @@ Style hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,
 - `onChange?`: `((range: DateRange | null) => void)` Called with the picked or typed range, or `null` when cleared.
 - `presets?`: `(RangePreset | RangePresetName)[]` Shortcut buttons under the calendar. Short names (`'+7d'` next 7 days, `'-30d'` last 30 days, `'thisWeek'`, `'thisMonth'`, `'thisYear'`, `'today'`) or your own `{ label, value }`.
 - `renderDay?`: `((date: Date, info: DayRenderInfo) => ReactNode)` Custom content for a day cell, e.g. a price or an event dot under the number.
-- `required?`: `boolean`
+- `required?`: `boolean` Marks the field as required: screen readers announce it and the form won't submit while it's empty.
 - `size?`: `"small" | "medium" | "large"` Default `medium`.
 - `startName?`: `string` Hidden input with the start date (ISO), e.g. `checkIn`.
 - `value?`: `DateRange | null` Controlled range; `null` for none.
@@ -962,7 +962,7 @@ Style hooks: `.sp-calendar`, `__header`, `__title`, `__nav`, `__months`,
 - `aria-label?`: `string` Accessible name for the calendar.
 - `autoFocus?`: `boolean` Move keyboard focus into the grid when the calendar mounts.
 - `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for each part.
 - `defaultValue?`: `Date | null` Initial selected day when uncontrolled.
 - `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
@@ -995,7 +995,7 @@ Style hooks: as Calendar, plus `__day[data-range-start][data-range-end][data-in-
 - `aria-label?`: `string` Accessible name for the calendar.
 - `autoFocus?`: `boolean` Move keyboard focus into the grid when the calendar mounts.
 - `calendar?`: `CalendarSystem` Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<CalendarSlot, string>>` Extra classes for each part.
 - `defaultValue?`: `DateRange | null` Initial range when uncontrolled.
 - `disabledDates?`: `Date[]` Days that can't be picked, e.g. holidays or booked days.
@@ -1046,22 +1046,22 @@ Style hooks: `.sp-data-table[data-density][data-striped][data-responsive][data-v
 `__resizer`, `__row[data-selected][data-expanded]`, `__cell[data-align][data-pinned][data-editing]`,
 `__expander`, `__detail`, `__editor`, `__footer`.
 
-- `columns`: `DataTableColumn<RowT>[]`
-- `data`: `RowT[]`
+- `columns`: `DataTableColumn<RowT>[]` What to show, in order. Each column has a `key` (the field to read), a `header`, and options like `sortable`, `width`, `cell`, `editable` or `pin`.
+- `data`: `RowT[]` The rows: an array of objects. Each needs a unique `id`, or pass `getRowKey`.
 - `aria-label?`: `string` Accessible name; describe what the table lists.
-- `aria-labelledby?`: `string`
+- `aria-labelledby?`: `string` Id of an element whose text names this component, instead of `aria-label`.
 - `bulkActions?`: `((rows: RowT[]) => ReactNode)` Actions shown when rows are selected, e.g. a delete button. Receives the selected rows.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "toolbar" | "grid" | "header" | "columnHeader" | "row" | "cell" | "footer", string>>` Extra classes for each part.
 - `columnWidths?`: `Record<string, number>` Column widths in px by column key (controlled).
-- `defaultColumnWidths?`: `Record<string, number>`
-- `defaultExpandedKeys?`: `Iterable<string>`
-- `defaultFilters?`: `Record<string, unknown>`
-- `defaultPage?`: `number`
-- `defaultPageSize?`: `number`
-- `defaultSearch?`: `string`
-- `defaultSelectedKeys?`: `Iterable<string>`
-- `defaultSort?`: `SortRule[]`
+- `defaultColumnWidths?`: `Record<string, number>` Starting widths in pixels, by column key, when the table manages resizing itself.
+- `defaultExpandedKeys?`: `Iterable<string>` Rows that start expanded, by key.
+- `defaultFilters?`: `Record<string, unknown>` Starting filter values, by column key.
+- `defaultPage?`: `number` Starting page (0-based) when the table manages paging itself.
+- `defaultPageSize?`: `number` Starting rows per page. Default 10, or all rows with `virtualize`.
+- `defaultSearch?`: `string` Starting text in the search box.
+- `defaultSelectedKeys?`: `Iterable<string>` Rows that start selected, by key.
+- `defaultSort?`: `SortRule[]` Starting sort, e.g. `[{ column: 'updated', direction: 'descending' }]`. Add more entries to sort by several columns.
 - `density?`: `"compact" | "normal" | "comfortable"` Row height. Default `normal`.
 - `emptyState?`: `ReactNode` Shown when there are no rows. Default "No results".
 - `expandedKeys?`: `Set<string>` Expanded row keys (controlled).
@@ -1072,14 +1072,14 @@ Style hooks: `.sp-data-table[data-density][data-striped][data-responsive][data-v
 - `maxHeight?`: `string | number` Fix the height and scroll the body under a sticky header, e.g. `400`.
 - `onCellEdit?`: `((row: RowT, columnKey: string, value: unknown) => void)` Save an edited cell (columns with `editable`). Update your data here; the table shows what `data` holds.
 - `onColumnResize?`: `((key: string, width: number) => void)` Called when a resize ends, with the column key and its new width.
-- `onExpandedChange?`: `((keys: Set<string>) => void)`
-- `onFiltersChange?`: `((filters: Record<string, unknown>) => void)`
-- `onPageChange?`: `((page: number) => void)`
-- `onPageSizeChange?`: `((size: number) => void)`
+- `onExpandedChange?`: `((keys: Set<string>) => void)` Called with the set of expanded row keys whenever a row opens or closes.
+- `onFiltersChange?`: `((filters: Record<string, unknown>) => void)` Called with all filter values whenever one changes. Use it to filter on your server.
+- `onPageChange?`: `((page: number) => void)` Called with the new page index (0-based).
+- `onPageSizeChange?`: `((size: number) => void)` Called with the new number of rows per page.
 - `onRowAction?`: `((row: RowT, key: string) => void)` Called when a row is activated (click, or Enter on the row).
-- `onSearchChange?`: `((search: string) => void)`
-- `onSelectionChange?`: `((keys: Set<string>) => void)`
-- `onSortChange?`: `((sort: SortRule[]) => void)`
+- `onSearchChange?`: `((search: string) => void)` Called with the search text as it's typed. Use it to search on your server.
+- `onSelectionChange?`: `((keys: Set<string>) => void)` Called with the set of selected row keys, across all pages.
+- `onSortChange?`: `((sort: SortRule[]) => void)` Called with the new sort rules when a header is clicked.
 - `page?`: `number` Controlled page (0-based).
 - `pageSize?`: `number` Rows per page; `0` turns paging off. Default 10.
 - `pageSizeOptions?`: `number[]` Page sizes to offer. Default `[10, 25, 50]`. Pass `[]` to hide the picker.
@@ -1124,20 +1124,20 @@ Style hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,
 
 - `items`: `(Command | CommandGroup)[]` Commands, or groups of commands with a heading.
 - `aria-label?`: `string` Accessible name for the dialog. Default "Command palette".
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"panel" | "input" | "list" | "group" | "item" | "footer", string>>` Extra classes for each part: panel, input, list, group, item, footer.
 - `closeOnSelect?`: `boolean` Close after a command runs. Default `true`.
-- `defaultOpen?`: `boolean`
+- `defaultOpen?`: `boolean` Start open, when the palette manages its own state.
 - `emptyState?`: `ReactNode` Shown when nothing matches. Default "No results".
 - `filter?`: `boolean` Match commands to the search yourself. Default `true` (case- and accent-insensitive, best matches first).
 - `hideFooter?`: `boolean` Hide the keyboard hints at the bottom.
 - `hotkey?`: `string | false` Keyboard shortcut that opens and closes the palette. Default `mod+k` (⌘K on Mac, Ctrl+K elsewhere). `false` to turn off.
 - `loading?`: `boolean` Show a loading line, e.g. while fetching.
-- `onOpenChange?`: `((open: boolean) => void)`
+- `onOpenChange?`: `((open: boolean) => void)` Called with `true` or `false` when the palette opens or closes, including from the hotkey.
 - `onSearchChange?`: `((search: string) => void)` Called with the search text, e.g. to fetch results from a server (with `filter={false}`).
 - `onSelect?`: `((command: Command) => void)` Called with the chosen command, after its own `onSelect`.
 - `open?`: `boolean` Controlled open state.
-- `placeholder?`: `string`
+- `placeholder?`: `string` Hint in the search box. Default “Type a command or search…”.
 
 ## Menu (`menu`)
 Actions behind a button, with submenus.
@@ -1164,14 +1164,14 @@ Style hooks: `.sp-menu`, `.sp-list-item[data-focused][data-danger][data-disabled
 
 - `items`: `MenuEntry[]` Items, sections (`{ title, items }`) and submenus (`items` on an item).
 - `aria-label?`: `string` Accessible name for the menu. Defaults to the trigger's text.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"trigger" | "popover" | "menu" | "item", string>>` Extra classes for each part: trigger, popover, menu, item.
 - `closeOnSelect?`: `boolean` Close after an item is chosen. Default `true` (`false` by default with `multiple`).
 - `defaultSelectedKeys?`: `Iterable<string>` Initial checked keys when uncontrolled.
-- `disabled?`: `boolean`
+- `disabled?`: `boolean` Disables the trigger so the menu can't open.
 - `label?`: `ReactNode` Text of the default trigger button. Ignored when `trigger` is set.
 - `onAction?`: `((key: string) => void)` Called with the chosen item's key.
-- `onOpenChange?`: `((open: boolean) => void)`
+- `onOpenChange?`: `((open: boolean) => void)` Called with `true` or `false` when the menu opens or closes.
 - `onSelectionChange?`: `((keys: Set<string>) => void)` Called with the checked keys.
 - `placement?`: `"bottom start" | "bottom end" | "top start" | "top end"` Where the menu opens. Default `bottom start`.
 - `selectedKeys?`: `Iterable<string>` Controlled checked keys.
@@ -1202,19 +1202,19 @@ Style hooks: `.sp-sidebar[data-collapsed]`, `__header`, `__nav`,
 
 - `items`: `(SidebarItem | SidebarSection)[]` Items, or sections of items with a heading.
 - `aria-label?`: `string` Accessible name of the navigation. Default "Main".
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "header" | "nav" | "section" | "heading" | "item" | "footer" | "toggle", string>>` Extra classes for each part: root, header, nav, section, heading, item, footer, toggle.
 - `collapsed?`: `boolean` Icon-only rail (desktop). Controlled.
 - `collapsible?`: `boolean` Show the collapse button. Default `true`.
-- `defaultCollapsed?`: `boolean`
-- `defaultValue?`: `string`
+- `defaultCollapsed?`: `boolean` Start collapsed to icons, when the sidebar manages its own state.
+- `defaultValue?`: `string` Id of the item that starts active.
 - `footer?`: `ReactNode | ((collapsed: boolean) => ReactNode)` Bottom area, e.g. the signed-in user.
 - `header?`: `ReactNode | ((collapsed: boolean) => ReactNode)` Top area, e.g. a logo. Receives whether the sidebar is collapsed.
 - `mobileBreakpoint?`: `number` Viewport width (px) below which the sidebar becomes a drawer. Default 768. `0` turns this off.
 - `mobileOpen?`: `boolean` Drawer open state on small screens (controlled). Open it from your own menu button.
-- `onChange?`: `((id: string) => void)`
-- `onCollapsedChange?`: `((collapsed: boolean) => void)`
-- `onMobileOpenChange?`: `((open: boolean) => void)`
+- `onChange?`: `((id: string) => void)` Called with an item's id when it's chosen.
+- `onCollapsedChange?`: `((collapsed: boolean) => void)` Called with `true` or `false` when the sidebar collapses or expands.
+- `onMobileOpenChange?`: `((open: boolean) => void)` Called when the mobile drawer opens or closes.
 - `value?`: `string` Active item id (controlled).
 
 ## Tabs (`tabs`)
@@ -1243,7 +1243,7 @@ Style hooks: `.sp-tabs[data-orientation]`, `.sp-tab-list`,
 
 - `children`: `ReactNode` A TabList and its TabPanels.
 - `activation?`: `"automatic" | "manual"` `automatic` (default): arrow keys select as they move. `manual`: arrow keys move focus; Enter or Space selects (use for slow panels).
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `color?`: `Tone` Colour of the lit segment. Default `brand`.
 - `defaultValue?`: `string` Initially active tab when uncontrolled. Defaults to the first enabled tab.
 - `onChange?`: `((value: string) => void)` Called with the newly selected tab's value.
@@ -1256,7 +1256,7 @@ are for.
 
 - `children`: `ReactNode` <Tab> elements.
 - `aria-label?`: `string` Describe the set of tabs for screen readers.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 
 ### Tab
 One tab. Its `value` matches the panel it shows.
@@ -1266,8 +1266,8 @@ One tab. Use inside <TabList>.
 - `value`: `string` Matches a TabPanel's `value`.
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
-- `children?`: `ReactNode`
-- `disabled?`: `boolean` (default `false`)
+- `children?`: `ReactNode` The tab's label.
+- `disabled?`: `boolean` (default `false`) Makes this tab unavailable. Arrow keys skip over it.
 - `icon?`: `ReactNode` Icon shown before the label.
 
 ### TabPanel
@@ -1296,8 +1296,8 @@ wire beside it lights up and current runs down it.
 Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
 `__trigger`, `__chevron`, `__panel`.
 
-- `children`: `ReactNode`
-- `className?`: `string`
+- `children`: `ReactNode` The sections: one `AccordionItem` each.
+- `className?`: `string` Extra class names for the outermost element.
 - `defaultOpen?`: `string[]` Sections open at first, by `value`.
 - `multiple?`: `boolean` Allow several sections open at once. Default `false`.
 
@@ -1305,10 +1305,10 @@ Style hooks: `.sp-accordion`, `__item[data-state="open"|"closed"]`, `__wire`,
 One section of an accordion: a title people click and the content it
 reveals.
 
-- `children`: `ReactNode`
+- `children`: `ReactNode` The content revealed when the section opens.
 - `title`: `ReactNode` Text of the header button.
 - `value`: `string` Unique key for this section.
-- `disabled?`: `boolean`
+- `disabled?`: `boolean` Stops this section from opening or closing.
 
 ## Modal (`modal`)
 A dialog that powers on, with focus trapping.
@@ -1335,7 +1335,7 @@ Style hooks: `.sp-modal`, `__backdrop`, `__panel[data-size]`, `__current`,
 - `open`: `boolean` Whether the dialog is shown.
 - `title`: `ReactNode` Dialog heading; also its accessible name.
 - `actions?`: `ReactNode` Buttons, usually. Rendered right-aligned in the footer.
-- `children?`: `ReactNode`
+- `children?`: `ReactNode` The dialog's body content, between the title and the actions.
 - `className?`: `string` Class for the dialog panel.
 - `classNames?`: `Partial<Record<"root" | "backdrop" | "panel" | "header" | "title" | "description" | "close" | "body" | "actions", string>>` Extra classes for each part: root, backdrop, panel, header, title, description, close, body, actions.
 - `closeOnBackdrop?`: `boolean` Close when the user clicks outside the dialog. Default `true`.
@@ -1369,8 +1369,8 @@ Variable: `--sp-drawer-size`.
 - `open`: `boolean` Whether the drawer is open.
 - `actions?`: `ReactNode` Footer content, e.g. Cancel and Save buttons.
 - `aria-label?`: `string` Accessible name when there is no visible title.
-- `children?`: `ReactNode`
-- `className?`: `string`
+- `children?`: `ReactNode` The drawer's main content.
+- `className?`: `string` Extra class names for the outermost element.
 - `classNames?`: `Partial<Record<"root" | "backdrop" | "panel" | "header" | "title" | "description" | "body" | "actions" | "close", string>>` Extra classes for each part: root, backdrop, panel, header, title, description, body, actions, close.
 - `closeButton?`: `boolean` Show the × button. Default `true`.
 - `description?`: `ReactNode` Text under the title.
@@ -1422,7 +1422,7 @@ discharges as the timer runs and pauses on hover or focus.
 Style hooks: `.sp-toast-region`, `.sp-toast[data-tone]`, `__led`, `__title`,
 `__description`, `__action`, `__close`, `__timer`.
 
-- `children`: `ReactNode`
+- `children`: `ReactNode` Your app. Any component inside can call `useToast()`.
 
 ### ToastShowOptions
 The options you pass to `toast()`: a title, an optional description, a
@@ -1465,15 +1465,15 @@ Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
 The top of a card: a title, an optional subtitle, media like an avatar, and
 room for an action.
 
-- `title`: `ReactNode`
+- `title`: `ReactNode` The card's heading.
 - `action?`: `ReactNode` Shown on the right, e.g. a Badge or menu button.
 - `media?`: `ReactNode` Shown on the left, e.g. an Avatar or icon.
-- `subtitle?`: `ReactNode`
+- `subtitle?`: `ReactNode` A quieter line under the title, like a date or a status.
 
 ### CardFooter
 The bottom of a card, usually for actions.
 
-- `children`: `ReactNode`
+- `children`: `ReactNode` Content for the bottom of the card, usually actions.
 
 ### Skeleton
 Placeholder shapes that show where content will appear while it loads, so
@@ -1513,9 +1513,9 @@ A row of overlapping avatars for a team, with the rest folded into a “+3”.
 
 Overlapping avatars wired together, with a "+N" overflow.
 
-- `people`: `AvatarProps[]`
+- `people`: `AvatarProps[]` The people to show, each with the same props as `Avatar` (`name`, `src`, `status`).
 - `max?`: `number` (default `4`) Show at most this many; the rest become a "+N" chip. Default 4.
-- `size?`: `"small" | "medium" | "large" | "xlarge"` (default `medium`)
+- `size?`: `"small" | "medium" | "large" | "xlarge"` (default `medium`) Size of every avatar in the group. Default `medium`.
 
 ## Indicators (`indicators`)
 Badge, Progress and Spinner.
@@ -1580,7 +1580,7 @@ Set app-wide defaults and slot class names once, the way
 MUI's `theme.components` works. Nested providers merge with their parent.
 Styling still comes from `styles.css`; this provider only changes props.
 
-- `children`: `ReactNode`
+- `children`: `ReactNode` Your app, or the part of it these settings apply to.
 - `components?`: `SparkComponentsConfig` Defaults for every instance of a component, e.g. `{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`. Props set on an instance always win.
 - `energy?`: `"off" | "calm" | "default" | "electric"` How lively the UI is: `calm` (slow current, soft glow, few sparks), `default`, `electric` (fast current, bloom, big bursts) or `off` (no decorative motion). Reduced-motion users always get `off`. Sets `data-spark-energy` on a wrapper; you can also put that attribute on `<html>` yourself.
 - `haptics?`: `boolean` Short vibrations on Switch, Checkbox and spark bursts (phones that support it). Default `false`.
@@ -1629,7 +1629,7 @@ Style hooks: `.sp-input-base[data-variant][data-size][data-invalid][data-disable
 - `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
 - `classNames?`: `Partial<Record<"input" | "root" | "adornment", string>>` Extra classes for each part: root, input, adornment.
-- `disabled?`: `boolean` (default `false`)
+- `disabled?`: `boolean` (default `false`) Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `endAdornment?`: `ReactNode` Shown after the input, e.g. a clear button or a chevron.
 - `error?`: `boolean` (default `false`) Marks the field invalid.
 - `rootProps?`: `(HTMLAttributes<HTMLDivElement> & { [key: `data-${string}`]: unknown; })` Props for the outer shell (data attributes, handlers, style).
@@ -1649,13 +1649,13 @@ Escape, and has hidden dismiss buttons for screen readers.
 
 Style hooks: `.sp-popover[data-placement]`.
 
-- `children`: `ReactNode`
+- `children`: `ReactNode` The popover's content.
 - `state`: `OverlayTriggerState` Open state, from `useOverlayTriggerState` or a component state (select, combobox, menu).
 - `triggerRef`: `RefObject<Element | null>` The element the popover is attached to. Its theme is copied to the popover.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `disableFocusManagement?`: `boolean` Leave focus handling to the content (used by submenus).
 - `matchTriggerWidth?`: `boolean` Make the popover at least as wide as the trigger.
-- `style?`: `CSSProperties`
+- `style?`: `CSSProperties` Inline styles for the outermost element.
 
 ### ListItemContent
 The standard layout for an item in a list: an icon, a label, a description
@@ -1663,10 +1663,10 @@ and something at the end.
 
 The inside of a list row: icon, label, description and an end slot. Shared by options and menu items.
 
-- `label`: `ReactNode`
-- `description?`: `ReactNode`
+- `label`: `ReactNode` Main text of the item.
+- `description?`: `ReactNode` Secondary line under the label.
 - `end?`: `ReactNode` Shown at the end, e.g. a keyboard shortcut.
-- `icon?`: `ReactNode`
+- `icon?`: `ReactNode` Icon before the label.
 
 ### ListBox
 An accessible list of options with keyboard navigation and selection, the
@@ -1684,9 +1684,9 @@ Style hooks: `.sp-listbox`, `.sp-list-section`, `__heading`,
 - `state`: `ListState<T>` List state from `useListState`, `useSelectState` or `useComboBoxState`.
 - `aria-label?`: `string` Defines a string value that labels the current element.
 - `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
-- `className?`: `string`
+- `className?`: `string` Extra class names for the outermost element.
 - `emptyState?`: `ReactNode` Shown when there are no options.
-- `listBoxRef?`: `Ref<HTMLUListElement>`
+- `listBoxRef?`: `Ref<HTMLUListElement>` Ref to the list element, for scrolling an option into view or measuring.
 - `optionClassName?`: `string` Extra class for every option row.
 - `optionStyle?`: `CSSProperties` Inline style for every option row.
 

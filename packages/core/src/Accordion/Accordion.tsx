@@ -13,7 +13,9 @@ export interface AccordionProps {
   multiple?: boolean;
   /** Sections open at first, by `value`. */
   defaultOpen?: string[];
+  /** The sections: one `AccordionItem` each. */
   children: React.ReactNode;
+  /** Extra class names for the outermost element. */
   className?: string;
 }
 
@@ -46,7 +48,9 @@ export interface AccordionItemProps {
   value: string;
   /** Text of the header button. */
   title: React.ReactNode;
+  /** The content revealed when the section opens. */
   children: React.ReactNode;
+  /** Stops this section from opening or closing. */
   disabled?: boolean;
 }
 

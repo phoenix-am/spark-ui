@@ -45,9 +45,11 @@ export function Avatar(inProps: AvatarProps) {
 }
 
 export interface AvatarGroupProps {
+  /** The people to show, each with the same props as `Avatar` (`name`, `src`, `status`). */
   people: AvatarProps[];
   /** Show at most this many; the rest become a "+N" chip. Default 4. */
   max?: number;
+  /** Size of every avatar in the group. Default `medium`. */
   size?: AvatarProps['size'];
 }
 

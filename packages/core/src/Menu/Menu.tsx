@@ -67,8 +67,11 @@ export interface MenuProps {
   closeOnSelect?: boolean;
   /** Where the menu opens. Default `bottom start`. */
   placement?: 'bottom start' | 'bottom end' | 'top start' | 'top end';
+  /** Disables the trigger so the menu can't open. */
   disabled?: boolean;
+  /** Called with `true` or `false` when the menu opens or closes. */
   onOpenChange?: (open: boolean) => void;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: trigger, popover, menu, item. */
   classNames?: ClassNames<'trigger' | 'popover' | 'menu' | 'item'>;

@@ -14,8 +14,11 @@ export interface PopoverProps extends Omit<AriaPopoverProps, 'popoverRef' | 'tri
   matchTriggerWidth?: boolean;
   /** Leave focus handling to the content (used by submenus). */
   disableFocusManagement?: boolean;
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Inline styles for the outermost element. */
   style?: React.CSSProperties;
+  /** The popover's content. */
   children: React.ReactNode;
 }
 

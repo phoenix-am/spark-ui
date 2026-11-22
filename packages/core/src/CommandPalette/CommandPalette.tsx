@@ -35,7 +35,9 @@ export interface CommandPaletteProps {
   items: Array<Command | CommandGroup>;
   /** Controlled open state. */
   open?: boolean;
+  /** Start open, when the palette manages its own state. */
   defaultOpen?: boolean;
+  /** Called with `true` or `false` when the palette opens or closes, including from the hotkey. */
   onOpenChange?: (open: boolean) => void;
   /** Keyboard shortcut that opens and closes the palette. Default `mod+k` (⌘K on Mac, Ctrl+K elsewhere). `false` to turn off. */
   hotkey?: string | false;
@@ -47,6 +49,7 @@ export interface CommandPaletteProps {
   onSelect?: (command: Command) => void;
   /** Close after a command runs. Default `true`. */
   closeOnSelect?: boolean;
+  /** Hint in the search box. Default “Type a command or search…”. */
   placeholder?: string;
   /** Shown when nothing matches. Default "No results". */
   emptyState?: React.ReactNode;
@@ -56,6 +59,7 @@ export interface CommandPaletteProps {
   'aria-label'?: string;
   /** Hide the keyboard hints at the bottom. */
   hideFooter?: boolean;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: panel, input, list, group, item, footer. */
   classNames?: ClassNames<'panel' | 'input' | 'list' | 'group' | 'item' | 'footer'>;

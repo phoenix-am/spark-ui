@@ -38,7 +38,9 @@ export interface DropdownProps<V extends string | number = string | number> {
   helperText?: React.ReactNode;
   /** An error message, or `true` to mark the field invalid and show `helperText` as the error. */
   error?: React.ReactNode | boolean;
+  /** Marks the field as required: screen readers announce it and the form won't submit while it's empty. */
   required?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
   /** Form field name; a hidden native select submits the value. */
   name?: string;
@@ -48,8 +50,11 @@ export interface DropdownProps<V extends string | number = string | number> {
   startIcon?: React.ReactNode;
   /** Shown when there are no options. Default "No options". */
   emptyState?: React.ReactNode;
+  /** Called when the field gains focus. */
   onFocus?: (event: React.FocusEvent) => void;
+  /** Called when the field loses focus. Handy for validating on blur. */
   onBlur?: (event: React.FocusEvent) => void;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, label, trigger, value, popover, option, helper. */
   classNames?: ClassNames<'root' | 'label' | 'trigger' | 'value' | 'popover' | 'option' | 'helper'>;

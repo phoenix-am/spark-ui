@@ -10,11 +10,15 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 import { Segment } from '../DatePicker/DatePicker';
 
 export interface TimePickerProps {
+  /** Visible label above the field. */
   label?: React.ReactNode;
+  /** Accessible name, read by screen readers. Use it when there's no visible label. */
   'aria-label'?: string;
   /** "HH:mm" or "HH:mm:ss", 24-hour. `null` when empty. */
   value?: string | null;
+  /** Starting time when the picker manages its own state, as `"HH:mm"` (24-hour), e.g. `"09:30"`. */
   defaultValue?: string | null;
+  /** Called with the new time as `"HH:mm"`, or `null` when cleared. */
   onChange?: (value: string | null) => void;
   /** Earliest time, "HH:mm". */
   min?: string;
@@ -30,15 +34,23 @@ export interface TimePickerProps {
   hourCycle?: 12 | 24;
   /** `minute` (default) or `second`. */
   granularity?: 'hour' | 'minute' | 'second';
+  /** Short guidance under the field. Shown in red with an error. */
   helperText?: React.ReactNode;
+  /** Shows the field in its error state. Pair it with `helperText` explaining what to fix. */
   error?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
+  /** Marks the field as required: screen readers announce it and the form won't submit while it's empty. */
   required?: boolean;
+  /** Show a button that empties the field. */
   clearable?: boolean;
   /** Submits "HH:mm" with forms. */
   name?: string;
+  /** Height and text size. Default `medium`. */
   size?: 'small' | 'medium' | 'large';
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'label' | 'control' | 'field' | 'trigger' | 'helper' | 'popover' | 'list'>;
 }
 

@@ -12,6 +12,7 @@ export interface BreadcrumbItem {
 }
 
 export interface BreadcrumbsProps {
+  /** The trail from the top level down, each `{ label, href?, icon? }`. Leave `href` off the last item, the current page. */
   items: BreadcrumbItem[];
   /** Show at most this many; the middle collapses to "…". Default: all. */
   maxItems?: number;
@@ -19,8 +20,11 @@ export interface BreadcrumbsProps {
   separator?: React.ReactNode;
   /** Render links with your router, e.g. `({ href, ...p }) => <Link href={href} {...p} />`. */
   renderLink?: (props: { href: string; className: string; children: React.ReactNode }) => React.ReactNode;
+  /** Accessible name, read by screen readers. Use it when there's no visible label. */
   'aria-label'?: string;
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'item' | 'link' | 'current' | 'separator'>;
 }
 
@@ -87,9 +91,11 @@ export function Breadcrumbs(inProps: BreadcrumbsProps) {
 export interface PaginationProps {
   /** Current page, 1-based. */
   page?: number;
+  /** Starting page (1-based) when the component manages its own state. */
   defaultPage?: number;
   /** Total pages. */
   count: number;
+  /** Called with the newly chosen page number. */
   onChange?: (page: number) => void;
   /** Pages shown on each side of the current one. Default 1. */
   siblings?: number;
@@ -97,14 +103,19 @@ export interface PaginationProps {
   boundaries?: number;
   /** `pages` (default) or `compact` ("Page 3 of 12" with arrows, for small screens). */
   variant?: 'pages' | 'compact';
+  /** Height and text size. Default `medium`. */
   size?: 'small' | 'medium';
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
   /** Build an href per page to render real links (good for SEO and new tabs). */
   getHref?: (page: number) => string;
+  /** Accessible name, read by screen readers. Use it when there's no visible label. */
   'aria-label'?: string;
   /** Labels for translation. */
   labels?: { previous?: string; next?: string; page?: (n: number) => string; of?: (page: number, count: number) => string };
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'item' | 'ellipsis' | 'summary'>;
 }
 

@@ -16,11 +16,13 @@ export interface RadioOption {
 export interface RadioGroupProps {
   /** The group's legend. Required for accessibility. */
   label: React.ReactNode;
+  /** The choices, each `{ value, label, description?, disabled? }`. */
   options: RadioOption[];
   /** Controlled value. */
   value?: string;
   /** Initial value when uncontrolled. */
   defaultValue?: string;
+  /** Called with the newly selected option's `value`. */
   onChange?: (value: string) => void;
   /** Form field name. Generated when omitted. */
   name?: string;
@@ -32,6 +34,7 @@ export interface RadioGroupProps {
   helperText?: React.ReactNode;
   /** Marks the group invalid. */
   error?: boolean;
+  /** Extra class names for the outermost element. */
   className?: string;
 }
 

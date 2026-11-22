@@ -96,6 +96,7 @@ export interface SparkProviderProps {
   messages?: SparkMessagesOverride;
   /** Short vibrations on Switch, Checkbox and spark bursts (phones that support it). Default `false`. */
   haptics?: boolean;
+  /** Your app, or the part of it these settings apply to. */
   children: React.ReactNode;
 }
 

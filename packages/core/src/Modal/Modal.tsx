@@ -13,6 +13,7 @@ export interface ModalProps {
   title: React.ReactNode;
   /** Supporting text under the title; read as the dialog's description. */
   description?: React.ReactNode;
+  /** The dialog's body content, between the title and the actions. */
   children?: React.ReactNode;
   /** Buttons, usually. Rendered right-aligned in the footer. */
   actions?: React.ReactNode;

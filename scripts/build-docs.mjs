@@ -71,6 +71,17 @@ const parser = docgen.withCustomConfig(path.join(root, 'tsconfig.json'), {
 });
 
 const clean = (s = '') => s.replace(/\r/g, '').trim();
+
+/** Descriptions for props declared in third-party types (React, React Aria), which have no comment of ours. */
+const PROP_FALLBACK = {
+  "Slider.ref": "Ref to the hidden range input, for form libraries that need direct access.",
+  "DateField.className": "Extra class names for the outermost element.",
+  "Segment.segment": "The date part this segment edits (day, month, year, hour…). Supplied by React Aria.",
+  "Segment.state": "The date field's state. Supplied by the parent field.",
+  "ToastProvider.children": "Your app. Any component inside can call `useToast()`.",
+  "CardFooter.children": "Content for the bottom of the card, usually actions."
+};
+
 const INTERNAL = new Set(['CalendarSystem', 'CalendarCore', 'RangeCalendarCore', 'FirstDayOfWeek', 'DateField', 'Dialog']);
 
 /*
@@ -126,7 +137,7 @@ for (const [name, files, story, only] of ENTRIES) {
               : undefined,
           required: p.required,
           default: p.defaultValue?.value ?? undefined,
-          description: clean(p.description),
+          description: clean(p.description) || PROP_FALLBACK[`${c.displayName}.${p.name}`] || '',
           deprecated: /@deprecated/.test(p.description) || 'deprecated' in (p.tags ?? {}) || undefined,
         }))
         .sort((a, b) => Number(b.required) - Number(a.required) || Number(!!a.deprecated) - Number(!!b.deprecated) || a.name.localeCompare(b.name)),

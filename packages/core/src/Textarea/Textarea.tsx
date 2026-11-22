@@ -4,6 +4,7 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 import { useIsoLayoutEffect } from '../internal/useIsoLayoutEffect';
 
 export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+  /** Visible label above the text area. */
   label?: React.ReactNode;
   /** Help text under the field. */
   helperText?: React.ReactNode;
@@ -19,7 +20,9 @@ export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTex
   maxRows?: number;
   /** Show "12 / 280" under the field. Uses `maxLength` when set. */
   showCount?: boolean;
+  /** Called with the new text and the change event on every keystroke. */
   onChange?: (value: string, event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'label' | 'field' | 'input' | 'helper' | 'count'>;
 }
 

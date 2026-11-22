@@ -21,22 +21,27 @@ export interface FileRejection {
 }
 
 export interface FileUploadProps {
+  /** Label above the drop zone. */
   label?: React.ReactNode;
   /** Files in the list (controlled). Update `progress` / `status` as uploads run. */
   files?: UploadFile[];
+  /** Files to show at the start, like ones already uploaded. */
   defaultFiles?: UploadFile[];
   /** Whole list after adding or removing. */
   onChange?: (files: UploadFile[]) => void;
   /** Just the newly accepted files: start uploads here. */
   onAdd?: (added: UploadFile[]) => void;
+  /** Called with a file when someone removes it from the list. */
   onRemove?: (file: UploadFile) => void;
   /** Files that failed `accept`, `maxSize` or `maxFiles`. Default messages are shown under the zone. */
   onReject?: (rejected: FileRejection[]) => void;
   /** Like the input attribute: "image/*,.pdf". */
   accept?: string;
+  /** Allow choosing more than one file. */
   multiple?: boolean;
   /** Bytes. */
   maxSize?: number;
+  /** Most files allowed. Extra files are turned away with a message. */
   maxFiles?: number;
   /** Line under the main prompt. Default lists accepted types and size. */
   hint?: React.ReactNode;
@@ -44,10 +49,13 @@ export interface FileUploadProps {
   prompt?: React.ReactNode;
   /** Image thumbnails in the list. Default `true`. */
   previews?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
   /** Submit the files with a regular form. */
   name?: string;
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'label' | 'zone' | 'list' | 'item' | 'errors'>;
 }
 

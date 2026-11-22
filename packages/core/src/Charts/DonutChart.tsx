@@ -13,7 +13,9 @@ export interface DonutSlice {
 export interface DonutChartProps {
   /** Parts of one whole. Keep it to 6 or fewer; fold the rest into "Other". */
   data: DonutSlice[];
+  /** Heading shown above the chart, also used as its accessible name. */
   title?: React.ReactNode;
+  /** Accessible name, read by screen readers. Use it when there's no visible label. */
   'aria-label'?: string;
   /** Headline in the hole. Default: the total. */
   centerLabel?: React.ReactNode;
@@ -23,8 +25,11 @@ export interface DonutChartProps {
   size?: number;
   /** Ring thickness in px. Default 28. */
   thickness?: number;
+  /** Intl number format for values in the legend and tooltip, e.g. `{ style: 'currency', currency: 'INR' }`. */
   valueFormat?: Intl.NumberFormatOptions;
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'title' | 'legend' | 'plot'>;
 }
 
@@ -142,7 +147,9 @@ export interface SparklineProps {
   data: number[];
   /** What the line shows, for screen readers, e.g. "Sign-ups, last 30 days". */
   'aria-label': string;
+  /** Width in pixels. Default 120. */
   width?: number;
+  /** Height in pixels. Default 32. */
   height?: number;
   /** Fill under the line. */
   area?: boolean;
@@ -150,6 +157,7 @@ export interface SparklineProps {
   color?: string;
   /** Mark the last value with a dot. Default `true`. */
   showLast?: boolean;
+  /** Extra class names for the outermost element. */
   className?: string;
 }
 

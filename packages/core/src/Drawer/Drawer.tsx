@@ -22,6 +22,7 @@ export interface DrawerProps {
   'aria-label'?: string;
   /** Text under the title. */
   description?: React.ReactNode;
+  /** The drawer's main content. */
   children?: React.ReactNode;
   /** Footer content, e.g. Cancel and Save buttons. */
   actions?: React.ReactNode;
@@ -29,6 +30,7 @@ export interface DrawerProps {
   dismissable?: boolean;
   /** Show the × button. Default `true`. */
   closeButton?: boolean;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, backdrop, panel, header, title, description, body, actions, close. */
   classNames?: ClassNames<'root' | 'backdrop' | 'panel' | 'header' | 'title' | 'description' | 'body' | 'actions' | 'close'>;

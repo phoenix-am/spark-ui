@@ -23,6 +23,7 @@ export interface ListOption<V extends string | number = string | number> {
   description?: React.ReactNode;
   /** Icon before the label. */
   icon?: React.ReactNode;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
 }
 
@@ -67,8 +68,11 @@ function renderOne<O extends ListOption>(o: O) {
 }
 
 export interface ListItemContentProps {
+  /** Icon before the label. */
   icon?: React.ReactNode;
+  /** Main text of the item. */
   label: React.ReactNode;
+  /** Secondary line under the label. */
   description?: React.ReactNode;
   /** Shown at the end, e.g. a keyboard shortcut. */
   end?: React.ReactNode;
@@ -102,7 +106,9 @@ export function ListItemContent({ icon, label, description, end }: ListItemConte
 export interface ListBoxProps<T> extends AriaListBoxOptions<T> {
   /** List state from `useListState`, `useSelectState` or `useComboBoxState`. */
   state: ListState<T>;
+  /** Ref to the list element, for scrolling an option into view or measuring. */
   listBoxRef?: React.Ref<HTMLUListElement>;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra class for every option row. */
   optionClassName?: string;

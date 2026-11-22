@@ -61,6 +61,7 @@ export interface CalendarBaseProps {
   onEscape?: () => void;
   /** Accessible name for the calendar. */
   'aria-label'?: string;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part. */
   classNames?: ClassNames<CalendarSlot>;

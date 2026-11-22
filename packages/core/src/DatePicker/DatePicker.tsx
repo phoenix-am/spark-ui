@@ -33,7 +33,9 @@ export interface DatePickerProps
   helperText?: React.ReactNode;
   /** Marks the field invalid. */
   error?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
+  /** Marks the date as required for form submission. */
   required?: boolean;
   /** Show a clear button when a date is set. Default `true`. */
   clearable?: boolean;
@@ -45,6 +47,7 @@ export interface DatePickerProps
   placeholder?: string;
   /** @deprecated The field now shows editable segments in the locale's order. */
   format?: Intl.DateTimeFormatOptions;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, label, control, field, trigger, popover, helper. */
   classNames?: ClassNames<'root' | 'label' | 'control' | 'field' | 'trigger' | 'popover' | 'helper'>;

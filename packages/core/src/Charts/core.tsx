@@ -19,6 +19,7 @@ export interface ChartSeries<Row> {
 }
 
 export interface ChartBaseProps<Row> {
+  /** One object per point on the x axis, with a field for `x` and one for each series, e.g. `{ month: 'Jan', sales: 420 }`. */
   data: Row[];
   /** Field used for the category / x axis. */
   x: keyof Row & string;
@@ -40,7 +41,9 @@ export interface ChartBaseProps<Row> {
   legend?: boolean;
   /** Show a "Data table" toggle under the chart. Default `true`. */
   tableView?: boolean;
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'title' | 'legend' | 'plot' | 'tooltip' | 'table'>;
 }
 

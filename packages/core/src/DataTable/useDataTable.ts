@@ -49,38 +49,52 @@ export interface DataTableColumn<Row> {
 }
 
 export interface UseDataTableOptions<Row> {
+  /** The rows: an array of objects. Each needs a unique `id`, or pass `getRowKey`. */
   data: Row[];
+  /** What to show, in order. Each column has a `key` (the field to read), a `header`, and options like `sortable`, `width`, `cell`, `editable` or `pin`. */
   columns: DataTableColumn<Row>[];
   /** Stable id for each row. Default: `row.id`, then the index. */
   getRowKey?: (row: Row, index: number) => string;
 
   /** Controlled sort rules (first wins). */
   sort?: SortRule[];
+  /** Starting sort, e.g. `[{ column: 'updated', direction: 'descending' }]`. Add more entries to sort by several columns. */
   defaultSort?: SortRule[];
+  /** Called with the new sort rules when a header is clicked. */
   onSortChange?: (sort: SortRule[]) => void;
 
   /** Controlled search text (matches any searchable column). */
   search?: string;
+  /** Starting text in the search box. */
   defaultSearch?: string;
+  /** Called with the search text as it's typed. Use it to search on your server. */
   onSearchChange?: (search: string) => void;
 
   /** Controlled per-column filter values, keyed by column. */
   filters?: Record<string, unknown>;
+  /** Starting filter values, by column key. */
   defaultFilters?: Record<string, unknown>;
+  /** Called with all filter values whenever one changes. Use it to filter on your server. */
   onFiltersChange?: (filters: Record<string, unknown>) => void;
 
   /** Controlled page (0-based). */
   page?: number;
+  /** Starting page (0-based) when the table manages paging itself. */
   defaultPage?: number;
+  /** Called with the new page index (0-based). */
   onPageChange?: (page: number) => void;
   /** Rows per page; `0` turns paging off. Default 10. */
   pageSize?: number;
+  /** Starting rows per page. Default 10, or all rows with `virtualize`. */
   defaultPageSize?: number;
+  /** Called with the new number of rows per page. */
   onPageSizeChange?: (size: number) => void;
 
   /** Controlled selected row keys. */
   selectedKeys?: Set<string>;
+  /** Rows that start selected, by key. */
   defaultSelectedKeys?: Iterable<string>;
+  /** Called with the set of selected row keys, across all pages. */
   onSelectionChange?: (keys: Set<string>) => void;
 
   /**

@@ -20,7 +20,9 @@ export type ButtonColor = 'brand' | 'error' | 'success' | 'warning';
 
 // Base interface for Button props
 export interface ButtonPropsBase {
+  /** The label. Keep it short and say what happens: “Save changes”, not “OK”. */
   children?: ReactNode;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Dead circuit: no clicks, no sparks, dashed outline. */
   disabled?: boolean;

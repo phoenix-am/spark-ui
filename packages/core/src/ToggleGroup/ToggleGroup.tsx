@@ -10,31 +10,46 @@ export interface ToggleGroupProps<M extends Mode = 'single'> {
   selectionMode?: M;
   /** Selected value(s): a string for `single`, a string[] for `multiple`. */
   value?: M extends 'multiple' ? string[] : string | null;
+  /** Starting selection when the group manages its own state: one value, or an array with `selectionMode="multiple"`. */
   defaultValue?: M extends 'multiple' ? string[] : string | null;
+  /** Called with the new selection: a value (or `null`), or an array of values in multiple mode. */
   onChange?: (value: M extends 'multiple' ? string[] : string | null) => void;
   /** In `single` mode, allow clicking the selected item to clear it. Default `false`. */
   allowEmpty?: boolean;
+  /** Lay the options out in a row (`horizontal`, default) or a column. Arrow keys follow the direction. */
   orientation?: 'horizontal' | 'vertical';
+  /** Height and text size. Default `medium`. */
   size?: 'small' | 'medium' | 'large';
   /** `segmented` (default): one track with a sliding fill. `outlined`: separate buttons. */
   variant?: 'segmented' | 'outlined';
   /** Stretch to fill the width. */
   fullWidth?: boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
+  /** Accessible name, read by screen readers. Use it when there's no visible label. */
   'aria-label'?: string;
+  /** Id of an element whose text names this component, instead of `aria-label`. */
   'aria-labelledby'?: string;
+  /** The options: one `ToggleGroupItem` each. */
   children: React.ReactNode;
+  /** Extra class names for the outermost element. */
   className?: string;
+  /** Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind. */
   classNames?: ClassNames<'root' | 'item'>;
 }
 
 export interface ToggleGroupItemProps {
+  /** Identifies this option in the group's `value` and `onChange`. */
   value: string;
+  /** The option's label. */
   children?: React.ReactNode;
   /** Icon before the label. For icon-only items, pass `aria-label`. */
   icon?: React.ReactNode;
+  /** Accessible name for an option that shows only an icon. */
   'aria-label'?: string;
+  /** Makes just this option unavailable. */
   disabled?: boolean;
+  /** Extra class names for this option's button. */
   className?: string;
 }
 

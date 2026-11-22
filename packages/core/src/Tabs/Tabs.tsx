@@ -53,6 +53,7 @@ export interface TabsProps {
   activation?: 'automatic' | 'manual';
   /** A TabList and its TabPanels. */
   children: React.ReactNode;
+  /** Extra class names for the outermost element. */
   className?: string;
 }
 
@@ -113,6 +114,7 @@ export interface TabListProps {
   children: React.ReactNode;
   /** Describe the set of tabs for screen readers. */
   'aria-label'?: string;
+  /** Extra class names for the outermost element. */
   className?: string;
 }
 
@@ -153,7 +155,9 @@ export interface TabProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'ch
   value: string;
   /** Icon shown before the label. */
   icon?: React.ReactNode;
+  /** Makes this tab unavailable. Arrow keys skip over it. */
   disabled?: boolean;
+  /** The tab's label. */
   children?: React.ReactNode;
 }
 

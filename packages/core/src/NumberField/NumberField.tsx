@@ -8,13 +8,17 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 export interface NumberFieldProps {
   /** Visible label. Use `aria-label` instead if there is no visible label. */
   label?: string;
+  /** Accessible name, read by screen readers. Use it when there's no visible label. */
   'aria-label'?: string;
   /** Controlled value; `null` when empty. */
   value?: number | null;
+  /** Starting value when the field manages its own state. Use `null` to start empty. */
   defaultValue?: number | null;
   /** Called with the parsed number (or NaN when cleared) as the value commits. */
   onChange?: (value: number) => void;
+  /** Smallest allowed value. Typing less snaps back to it, and the − button stops. */
   min?: number;
+  /** Largest allowed value. Typing more snaps back to it, and the + button stops. */
   max?: number;
   /** Step for the buttons and arrow keys. Default 1. */
   step?: number;
@@ -23,13 +27,17 @@ export interface NumberFieldProps {
    * `{ style: 'percent' }`, `{ style: 'unit', unit: 'kilogram' }`, `{ maximumFractionDigits: 2 }`…
    */
   formatOptions?: Intl.NumberFormatOptions;
+  /** Hint shown while the field is empty. */
   placeholder?: string;
   /** Help text under the field (shown in the error colour when `error` is `true`). */
   helperText?: React.ReactNode;
   /** An error message, or `true` to mark the field invalid and show `helperText` as the error. */
   error?: React.ReactNode | boolean;
+  /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
+  /** Shows the value but doesn't allow changes. Unlike `disabled`, it can still be focused and copied. */
   readOnly?: boolean;
+  /** Marks the field as required: screen readers announce it and the form won't submit while it's empty. */
   required?: boolean;
   /** Form field name; submits the plain number (e.g. 100000, not "₹1,00,000"). */
   name?: string;
@@ -37,7 +45,9 @@ export interface NumberFieldProps {
   hideSteppers?: boolean;
   /** Default `medium`. */
   size?: 'small' | 'medium' | 'large';
+  /** Icon shown at the start of the field. */
   startIcon?: React.ReactNode;
+  /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, label, field, input, stepper, helper. */
   classNames?: ClassNames<'root' | 'label' | 'field' | 'input' | 'stepper' | 'helper'>;
