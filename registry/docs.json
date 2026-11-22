@@ -48,6 +48,12 @@
               "description": "Stretch to the container's width."
             },
             {
+              "name": "render",
+              "type": "RenderProp<{ disabled: boolean; }>",
+              "required": false,
+              "description": "Render a different element with the button's behaviour and look, e.g. `render={<Link href=\"/pricing\" />}`."
+            },
+            {
               "name": "spark",
               "type": "boolean",
               "required": false,
@@ -1574,6 +1580,12 @@
               "type": "(() => void)",
               "required": false,
               "description": "Show a close button. Called after it hides."
+            },
+            {
+              "name": "render",
+              "type": "RenderProp<{ tone: AlertTone; }>",
+              "required": false,
+              "description": "Render any element as the root, e.g. a `section` with your own landmark."
             },
             {
               "name": "title",
@@ -4324,6 +4336,12 @@
               "type": "\"none\" | \"small\" | \"medium\" | \"large\"",
               "required": false,
               "description": "Inner spacing. Default `medium`."
+            },
+            {
+              "name": "render",
+              "type": "RenderProp<{ live: boolean; interactive: boolean; }>",
+              "required": false,
+              "description": "Render any element instead, e.g. `<Link href=\"/p/1\" />` or a motion component."
             }
           ]
         },
@@ -4510,6 +4528,12 @@
               "description": "Pulse the LED: something is live or in progress."
             },
             {
+              "name": "render",
+              "type": "RenderProp<{ tone: string; }>",
+              "required": false,
+              "description": "Render any element instead, e.g. a link: `render={<a href=\"/inbox\" />}`."
+            },
+            {
               "name": "tone",
               "type": "Tone | \"neutral\"",
               "required": false,
@@ -4683,6 +4707,12 @@
               "type": "string",
               "required": false,
               "description": "Link target when rendered as an anchor."
+            },
+            {
+              "name": "render",
+              "type": "RenderProp<{ disabled: boolean; }>",
+              "required": false,
+              "description": "Render a different element (e.g. a router link) with the button's behaviour and styling."
             },
             {
               "name": "spark",

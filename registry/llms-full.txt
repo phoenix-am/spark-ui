@@ -31,6 +31,7 @@ Built on ButtonBase; forwards `ref` to the rendered element.
 - `disabled?`: `boolean` Dead circuit: no clicks, no sparks, dashed outline.
 - `endIcon?`: `ReactNode` Icon after the label. Coloured with the text.
 - `fullWidth?`: `boolean` Stretch to the container's width.
+- `render?`: `RenderProp<{ disabled: boolean; }>` Render a different element with the button's behaviour and look, e.g. `render={<Link href="/pricing" />}`.
 - `spark?`: `boolean` Throw sparks from the press point on click. Default `true`.
 - `startIcon?`: `ReactNode` Icon before the label. Coloured with the text.
 - `ripple?`: `boolean` **Deprecated.** Use `spark`. Kept so existing code keeps working.
@@ -495,6 +496,7 @@ Style hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`
 - `icon?`: `ReactNode` Replace the tone icon, or `false` to hide it.
 - `live?`: `"polite" | "assertive" | "off"` `polite` announces it when it appears, `assertive` interrupts (errors). Default: `assertive` for error, otherwise none (static content).
 - `onDismiss?`: `(() => void)` Show a close button. Called after it hides.
+- `render?`: `RenderProp<{ tone: AlertTone; }>` Render any element as the root, e.g. a `section` with your own landmark.
 - `title?`: `ReactNode`
 - `tone?`: `AlertTone` Default `info`. Each tone ships with its own icon, so meaning is never colour alone.
 - `variant?`: `"soft" | "outlined" | "banner"` `soft` (default), `outlined`, or `banner` (full-width, square, for the top of a page).
@@ -1274,6 +1276,7 @@ Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
 - `interactive?`: `boolean` Hover lift and glow, for clickable cards. Put the link or button inside.
 - `live?`: `boolean` A live card has current running along its top edge.
 - `padding?`: `"none" | "small" | "medium" | "large"` Inner spacing. Default `medium`.
+- `render?`: `RenderProp<{ live: boolean; interactive: boolean; }>` Render any element instead, e.g. `<Link href="/p/1" />` or a motion component.
 
 ### CardHeader
 
@@ -1332,6 +1335,7 @@ Badge: a status label with an LED. Pulsing means "live". Style hooks: `.sp-badge
 - `classNames?`: `Partial<Record<"root" | "led", string>>` Extra classes for each part: root, led.
 - `led?`: `boolean` Show the status LED. Default `true`.
 - `pulse?`: `boolean` Pulse the LED: something is live or in progress.
+- `render?`: `RenderProp<{ tone: string; }>` Render any element instead, e.g. a link: `render={<a href="/inbox" />}`.
 - `tone?`: `Tone | "neutral"` Default `brand`.
 - `variant?`: `"soft" | "solid"` `soft` tinted background (default) or `solid` fill.
 
@@ -1390,6 +1394,7 @@ default, and the spark burst. No visual style of its own beyond
 - `as?`: `ElementType` Render as another element or component, e.g. `"a"` or a router Link.
 - `disabled?`: `boolean` (default `false`) Dead circuit: no clicks, no sparks. Uses `disabled` on buttons, `aria-disabled` otherwise.
 - `href?`: `string` Link target when rendered as an anchor.
+- `render?`: `RenderProp<{ disabled: boolean; }>` Render a different element (e.g. a router link) with the button's behaviour and styling.
 - `spark?`: `boolean` (default `true`) Throw sparks from the press point on click. Default `true`.
 - `sparkColors?`: `string[]` Spark colours. Default: the theme's spark colours.
 

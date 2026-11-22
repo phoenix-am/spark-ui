@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "node ../../scripts/build-tokens-check.mjs && tsup && tsc -p tsconfig.build.json && node ../../scripts/build-dts.mjs && node ../../scripts/build-css.mjs",
+    "build": "node ../../scripts/build-tokens-check.mjs && tsup && tsc -p tsconfig.build.json && node ../../scripts/build-dts.mjs && node ../../scripts/build-css.mjs && node ../../scripts/build-tailwind.mjs",
     "test": "jest",
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
@@ -38,6 +38,12 @@
       "require": "./dist/index.js"
     },
     "./styles.css": "./dist/styles.css",
+    "./tailwind.css": "./dist/tailwind.css",
+    "./tailwind-preset": {
+      "types": "./dist/tailwind-preset.d.ts",
+      "import": "./dist/tailwind-preset.mjs",
+      "require": "./dist/tailwind-preset.js"
+    },
     "./accordion": {
       "types": "./dist/accordion/index.d.ts",
       "import": "./dist/accordion/index.mjs",

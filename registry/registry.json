@@ -36,6 +36,11 @@
           "target": "components/spark-ui/internal/messages.tsx"
         },
         {
+          "path": "components/spark-ui/internal/render.tsx",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/render.tsx"
+        },
+        {
           "path": "components/spark-ui/internal/tone.ts",
           "type": "registry:lib",
           "target": "components/spark-ui/internal/tone.ts"

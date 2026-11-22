@@ -1,4 +1,5 @@
 import React from 'react';
+import { renderElement, type RenderProp } from '../internal/render';
 import { useMessages } from '../internal/messages';
 import { cx } from '../internal/cx';
 import { useDefaults } from '../internal/defaults';
@@ -12,6 +13,8 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   interactive?: boolean;
   /** Render as another element, e.g. `article` or `section`. */
   as?: 'div' | 'article' | 'section' | 'li';
+  /** Render any element instead, e.g. `<Link href="/p/1" />` or a motion component. */
+  render?: RenderProp<{ live: boolean; interactive: boolean }>;
   /** Inner spacing. Default `medium`. */
   padding?: 'none' | 'small' | 'medium' | 'large';
 }
@@ -21,19 +24,20 @@ export interface CardProps extends React.HTMLAttributes<HTMLElement> {
  * Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
  */
 export function Card(inProps: CardProps) {
-  const { live = false, interactive = false, as: Tag = 'div', padding = 'medium', className, children, ...rest } = useDefaults('Card', inProps);
-  return (
-    <Tag
-      className={cx('sp-card', className)}
-      data-live={live || undefined}
-      data-interactive={interactive || undefined}
-      data-padding={padding}
-      {...rest}
-    >
-      {live && <span aria-hidden="true" className="sp-card__current sp-current" />}
-      {children}
-    </Tag>
-  );
+  const { live = false, interactive = false, as: Tag = 'div', render, padding = 'medium', className, children, ...rest } = useDefaults('Card', inProps);
+  return renderElement(Tag, render, {
+    className: cx('sp-card', className),
+    'data-live': live || undefined,
+    'data-interactive': interactive || undefined,
+    'data-padding': padding,
+    ...rest,
+    children: (
+      <>
+        {live && <span aria-hidden="true" className="sp-card__current sp-current" />}
+        {children}
+      </>
+    ),
+  }, { live, interactive });
 }
 
 export interface CardHeaderProps {

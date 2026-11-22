@@ -1,7 +1,20 @@
 import { ReactNode, ElementType } from 'react';
+import type { RenderProp } from '../internal/render';
 import { OverrideProps } from '@sparkwire/utils';
 
-export type ButtonVariant = 'text' | 'outlined' | 'contained';
+/**
+ * Add your own variants (defined in SparkProvider's `components.Button.variants`)
+ * and get them type-checked:
+ *
+ * ```ts
+ * declare module '@sparkwire/core' {
+ *   interface ButtonVariantOverrides { danger: true }
+ * }
+ * ```
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ButtonVariantOverrides {}
+export type ButtonVariant = 'text' | 'outlined' | 'contained' | keyof ButtonVariantOverrides;
 export type ButtonSize = 'small' | 'medium' | 'large';
 export type ButtonColor = 'brand' | 'error' | 'success' | 'warning';
 
@@ -23,6 +36,8 @@ export interface ButtonPropsBase {
   ripple?: boolean;
   /** Extra classes for each part: root, icon. */
   classNames?: Partial<Record<'root' | 'icon', string>>;
+  /** Render a different element with the button's behaviour and look, e.g. `render={<Link href="/pricing" />}`. */
+  render?: RenderProp<{ disabled: boolean }>;
 }
 
 // Type map for Button with default component and props

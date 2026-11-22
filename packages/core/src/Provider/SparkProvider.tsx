@@ -114,6 +114,8 @@ export function SparkProvider({ components, locale, energy, haptics, messages, c
       next[name] = {
         defaultProps: { ...up?.defaultProps, ...cfg.defaultProps },
         classNames: { ...up?.classNames, ...cfg.classNames },
+        // Parent variants first, so a nested provider's variants apply after (and win).
+        variants: [...(up?.variants ?? []), ...(cfg.variants ?? [])],
       };
     }
     return next;
