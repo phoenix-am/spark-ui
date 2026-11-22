@@ -136,7 +136,7 @@ npm test            # behaviour tests, plus axe on every story
 npm run build
 ```
 
-CI also takes a screenshot of every Storybook story and compares it with `tests/visual/__screenshots__`. New stories get a baseline automatically. If you changed a look on purpose, run the **CI** workflow on your branch from the Actions tab with **Update screenshots** ticked, and the new baselines are committed for you. To run the visual tests locally: `npx storybook build && npx playwright test`.
+CI also takes a screenshot of every Storybook story and compares it with `tests/visual/__screenshots__`. New stories get a baseline automatically, on pull requests and on pushes to `master`. If you changed a look on purpose, run the **CI** workflow on your branch from the Actions tab with **Update screenshots** ticked, and the new baselines are committed for you. To run the visual tests locally: `npx storybook build && npx playwright test`.
 
 Pull requests that change a package include a changeset: run `npx changeset`, pick patch, minor or major, and write one line for the changelog. After merging, a **Version packages** pull request collects the changes; merging it publishes to npm and creates the GitHub release.
 

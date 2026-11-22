@@ -45,7 +45,7 @@ jobs:
       - name: Visual regression (every story)
         run: npx playwright test ${{ inputs.update_screenshots && '--update-snapshots' || '' }}
       - name: Commit new or updated screenshots
-        if: always() && ((github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || inputs.update_screenshots)
+        if: always() && ((github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || (github.event_name == 'push' && github.ref == 'refs/heads/master') || inputs.update_screenshots)
         run: |
           git add tests/visual/__screenshots__
           if git diff --cached --quiet; then echo "No new screenshots."; exit 0; fi
