@@ -124,6 +124,8 @@ All packages share one version and are published with npm provenance.
 
 - **[Docs site](https://phoenix-am.github.io/spark-ui/):** live examples and every prop, in dark and light mode.
 - **[Guide](docs/guide.md):** theming, the energy dial, languages, dates, forms, accessibility, and each component in depth.
+- **[Accessibility](docs/accessibility.md):** what's tested, what isn't yet, and a checklist for screen-reader testing.
+- **[Translations](docs/translations.md):** every built-in label in English, Hindi, Gujarati and Tamil. Native speakers, corrections welcome.
 - **[Changelog](packages/core/CHANGELOG.md):** what changed in each release.
 - **For AI tools:** [`llms.txt`](https://phoenix-am.github.io/spark-ui/llms.txt) and the [`@sparkwire/mcp`](https://www.npmjs.com/package/@sparkwire/mcp) server.
 

@@ -28,7 +28,8 @@
     "generate:icons": "node ./packages/icons/scripts/convert-svg-to-react.js",
     "build:icons": "cd ./packages/icons && npm run build",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "registry": "node scripts/build-registry.mjs && node scripts/build-docs.mjs",
+    "registry": "node scripts/build-registry.mjs && node scripts/build-docs.mjs && node scripts/build-translations.mjs",
+    "translations": "node scripts/build-translations.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version && npm install --package-lock-only --legacy-peer-deps --ignore-scripts && npm run registry",
     "release": "node scripts/publish.mjs"

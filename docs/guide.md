@@ -208,7 +208,7 @@ Set the locale once and every date, weekday name, digit and arrow key follows it
 
 ### Accessibility
 
-Select, Modal, Tooltip, Tabs, DatePicker, Calendar and Slider are built on React Aria hooks: typeahead, focus containment and restoration, screen-reader announcements and dismissal behave the way they do in Adobe's products. Every Storybook story is checked with axe in CI (`npm test`), alongside keyboard behaviour tests and server-rendering tests.
+Select, Modal, Tooltip, Tabs, DatePicker, Calendar and Slider are built on React Aria hooks: typeahead, focus containment and restoration, screen-reader announcements and dismissal behave the way they do in Adobe's products. Every Storybook story is checked with axe in CI (`npm test`), alongside keyboard behaviour tests and server-rendering tests. [Accessibility](./accessibility.md) covers what is and isn't tested yet, with a checklist for screen-reader testing.
 
 ## Components
 
