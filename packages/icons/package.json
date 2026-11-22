@@ -1,6 +1,14 @@
 {
   "name": "@sparkwire/icons",
   "version": "0.2.1",
+  "description": "Icons for Sparkwire, the React component library, as React components.",
+  "keywords": [
+    "icons",
+    "react",
+    "svg",
+    "react-icons",
+    "sparkwire"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

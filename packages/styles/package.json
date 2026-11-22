@@ -1,6 +1,15 @@
 {
   "name": "@sparkwire/styles",
   "version": "0.2.1",
+  "description": "Design tokens and createTheme() for Sparkwire, the React component library.",
+  "keywords": [
+    "design-tokens",
+    "theme",
+    "css-variables",
+    "react",
+    "design-system",
+    "sparkwire"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

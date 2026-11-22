@@ -1,7 +1,14 @@
 {
   "name": "@sparkwire/system",
   "version": "0.2.1",
-  "description": "A styling engine for the Spark UI library.",
+  "description": "Theme provider for Sparkwire, the React component library.",
+  "keywords": [
+    "theme",
+    "theme-provider",
+    "react",
+    "design-system",
+    "sparkwire"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -28,12 +35,6 @@
     "react-dom": "^18.2.0 || ^19.0.0"
   },
   "license": "MIT",
-  "keywords": [
-    "spark-ui",
-    "styling",
-    "theme",
-    "design-system"
-  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

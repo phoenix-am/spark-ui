@@ -1,6 +1,30 @@
 {
   "name": "@sparkwire/core",
   "version": "0.2.1",
+  "description": "Sparkwire: React components that carry current. Accessible (React Aria), restyled in plain CSS or Tailwind, with Hindi, Gujarati and Tamil built in.",
+  "keywords": [
+    "react",
+    "react-components",
+    "component-library",
+    "ui",
+    "ui-components",
+    "design-system",
+    "react-aria",
+    "accessibility",
+    "a11y",
+    "tailwind",
+    "tailwindcss",
+    "nextjs",
+    "server-components",
+    "typescript",
+    "datepicker",
+    "datatable",
+    "charts",
+    "i18n",
+    "hindi",
+    "gujarati",
+    "sparkwire"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -29,7 +53,6 @@
     "rimraf": "latest",
     "typescript": "^5.0.0"
   },
-  "description": "Spark UI · Live Wire: React components that carry current.",
   "module": "dist/index.mjs",
   "exports": {
     ".": {
