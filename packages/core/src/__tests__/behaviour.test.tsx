@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes, Spark, readEnergy, haptic, builtInMessages, Card, Badge } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes, Spark, readEnergy, haptic, builtInMessages, Card, Badge, Checkbox } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -1053,5 +1053,30 @@ describe('render prop and theme variants', () => {
     const both = screen.getByRole('button', { name: 'Both' });
     expect(both).toHaveClass('btn-danger');
     expect(both).toHaveClass('btn-big');
+  });
+});
+
+describe('refs', () => {
+  // Components keep forwardRef so refs work on React 18 as well as 19.
+  it('reach the underlying element', () => {
+    const button = React.createRef<HTMLButtonElement>();
+    const input = React.createRef<HTMLInputElement>();
+    const area = React.createRef<HTMLTextAreaElement>();
+    const check = React.createRef<HTMLInputElement>();
+    const sw = React.createRef<HTMLButtonElement>();
+    render(
+      <>
+        <Button ref={button}>Go</Button>
+        <Textfield ref={input} label="Name" />
+        <Textarea ref={area} label="Bio" />
+        <Checkbox ref={check} label="Agree" />
+        <Switch ref={sw} label="Power" />
+      </>,
+    );
+    expect(button.current).toBe(screen.getByRole('button', { name: 'Go' }));
+    expect(input.current).toBe(screen.getByLabelText('Name'));
+    expect(area.current).toBe(screen.getByLabelText('Bio'));
+    expect(check.current).toBe(screen.getByRole('checkbox', { name: 'Agree' }));
+    expect(sw.current).toBe(screen.getByRole('switch', { name: 'Power' }));
   });
 });
