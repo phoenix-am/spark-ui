@@ -1,0 +1,234 @@
+{
+  "split": {
+    "navigation": [
+      {
+        "name": "breadcrumbs",
+        "parts": [
+          "Breadcrumbs"
+        ]
+      },
+      {
+        "name": "pagination",
+        "parts": [
+          "Pagination"
+        ]
+      }
+    ],
+    "indicators": [
+      {
+        "name": "badge",
+        "parts": [
+          "Badge"
+        ]
+      },
+      {
+        "name": "progress",
+        "parts": [
+          "Progress"
+        ]
+      },
+      {
+        "name": "spinner",
+        "parts": [
+          "Spinner"
+        ]
+      }
+    ],
+    "card": [
+      {
+        "name": "card",
+        "parts": [
+          "Card",
+          "CardHeader",
+          "CardFooter"
+        ]
+      },
+      {
+        "name": "skeleton",
+        "parts": [
+          "Skeleton"
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "name": "line-chart",
+        "parts": [
+          "LineChart"
+        ]
+      },
+      {
+        "name": "bar-chart",
+        "parts": [
+          "BarChart"
+        ]
+      },
+      {
+        "name": "donut-chart",
+        "parts": [
+          "DonutChart"
+        ]
+      },
+      {
+        "name": "sparkline",
+        "parts": [
+          "Sparkline"
+        ]
+      }
+    ],
+    "date-picker": [
+      {
+        "name": "date-picker",
+        "parts": [
+          "DatePicker"
+        ]
+      },
+      {
+        "name": "date-range-picker",
+        "parts": [
+          "DateRangePicker"
+        ]
+      },
+      {
+        "name": "calendar",
+        "parts": [
+          "Calendar",
+          "RangeCalendar"
+        ]
+      }
+    ]
+  },
+  "guides": [
+    {
+      "slug": "getting-started",
+      "title": "Getting started",
+      "group": "Start here",
+      "sections": [
+        "Install",
+        "Live Wire theme"
+      ],
+      "description": "Install Sparkwire, add the stylesheet and render your first component in a couple of minutes. Works with Next.js, Vite and React Server Components."
+    },
+    {
+      "slug": "theming",
+      "title": "Theming",
+      "group": "Start here",
+      "sections": [
+        "Theming"
+      ],
+      "examples": "theming",
+      "description": "Change colours, radius, type and motion with --spark-* CSS variables. Light, dark and system modes, and every token available in Tailwind."
+    },
+    {
+      "slug": "energy",
+      "title": "Energy dial",
+      "group": "Start here",
+      "sections": [
+        "Energy dial, `useSpark()` and haptics"
+      ],
+      "examples": "energy",
+      "description": "Turn the Live Wire effects up, down or off with the energy dial, trigger sparks from your own code with useSpark(), and add haptics on mobile."
+    },
+    {
+      "slug": "languages",
+      "title": "Languages",
+      "group": "Start here",
+      "sections": [
+        "Languages",
+        "Languages, dates and right-to-left"
+      ],
+      "examples": "languages",
+      "description": "Built-in labels in English, Hindi, Gujarati and Tamil, Intl-formatted numbers and dates, other calendar systems, and right-to-left support."
+    },
+    {
+      "slug": "defaults",
+      "title": "App-wide defaults",
+      "group": "Customise",
+      "sections": [
+        "App-wide defaults and slots"
+      ],
+      "examples": "provider",
+      "description": "Set default props and class names once for the whole app with SparkProvider, so every Button or Textfield starts the way you want."
+    },
+    {
+      "slug": "composition",
+      "title": "Render prop and variants",
+      "group": "Customise",
+      "sections": [
+        "`render` prop and theme variants"
+      ],
+      "examples": "composition",
+      "description": "Render Sparkwire behaviour on your own elements with the render prop, and add your own variants that stay type-checked."
+    },
+    {
+      "slug": "tailwind",
+      "title": "Tailwind",
+      "group": "Customise",
+      "sections": [
+        "Tailwind"
+      ],
+      "description": "Use Sparkwire with Tailwind CSS v3 or v4: every design token becomes a utility class, and it follows light and dark mode."
+    },
+    {
+      "slug": "forms",
+      "title": "Forms",
+      "group": "Customise",
+      "sections": [
+        "Forms"
+      ],
+      "examples": "forms",
+      "description": "Use Sparkwire inputs in forms: native FormData, validation and error messages, and React Hook Form integration."
+    },
+    {
+      "slug": "cli",
+      "title": "Own the source",
+      "group": "Ways to use it",
+      "sections": [
+        "Own the source: `npx sparkwire add`"
+      ],
+      "description": "Copy component source into your own repo with npx sparkwire add, or install through the shadcn CLI, and change anything you like."
+    },
+    {
+      "slug": "headless",
+      "title": "Headless hooks",
+      "group": "Ways to use it",
+      "sections": [
+        "Headless hooks"
+      ],
+      "examples": "headless",
+      "description": "Bring your own markup and keep Sparkwire behaviour with headless hooks: useSwitch, useCheckbox, useSlider, useDatePicker and more."
+    },
+    {
+      "slug": "ai",
+      "title": "AI coding agents",
+      "group": "Ways to use it",
+      "sections": [
+        "For AI coding agents"
+      ],
+      "description": "Give your AI coding assistant every Sparkwire prop and example through the MCP server and llms.txt, so it writes correct code first time."
+    },
+    {
+      "slug": "packages",
+      "title": "Packages",
+      "group": "Ways to use it",
+      "sections": [
+        "Packages"
+      ],
+      "description": "What each Sparkwire package does: core components, styles, design tokens, icons, utilities, the CLI and the MCP server."
+    },
+    {
+      "slug": "accessibility",
+      "title": "Accessibility",
+      "group": "Quality",
+      "file": "accessibility",
+      "description": "What Sparkwire handles for keyboard, screen reader and reduced-motion users, what you need to provide, and the known gaps."
+    },
+    {
+      "slug": "translations",
+      "title": "Translations",
+      "group": "Quality",
+      "file": "translations",
+      "description": "Every built-in Sparkwire label in English, Hindi, Gujarati and Tamil. Native speakers: help us check and improve them."
+    }
+  ]
+}

@@ -34,15 +34,15 @@ jobs:
         env:
           SPARKWIRE_SITE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
       - name: Build the docs site
-        run: npx vite build --config site/vite.config.ts
+        # A page per route with its own title and link-preview tags, plus sitemap.xml and 404.html.
+        run: npm run docs:build
         env:
           SITE_BASE: /${{ github.event.repository.name }}/
+          SPARKWIRE_SITE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
       - name: Add registry and llms.txt
         run: |
           cp -r registry site-dist/registry
           cp registry/llms.txt registry/llms-full.txt site-dist/
-          # GitHub Pages has no rewrites: serve the app for any unknown path.
-          cp site-dist/index.html site-dist/404.html
           touch site-dist/.nojekyll
       - uses: actions/upload-pages-artifact@v5
         with:
