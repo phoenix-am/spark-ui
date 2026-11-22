@@ -1,0 +1,67 @@
+name: Publish to npm
+
+# Runs when you publish a GitHub release (tag like v0.1.0), or by hand from
+# the Actions tab ("Run workflow"). By hand, "dry run" is on by default: it
+# builds, tests and shows what would be published without publishing.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (build and pack, but do not publish)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write # npm provenance: a verified "built from this repo" badge
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci --legacy-peer-deps
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Tests (behaviour and axe)
+        run: npm test -- --ci
+      - name: Build packages
+        run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
+
+      # Dependency order. A version that is already on npm is skipped, so
+      # re-running after a partial failure is safe. Bump versions to release again.
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          for dir in utils icons styles system core mcp cli; do
+            name=$(node -p "require('./packages/$dir/package.json').name")
+            version=$(node -p "require('./packages/$dir/package.json').version")
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "::notice::$name@$version is already on npm, skipping"
+              continue
+            fi
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "::group::Would publish $name@$version"
+              (cd "packages/$dir" && npm pack --dry-run)
+              echo "::endgroup::"
+            else
+              echo "Publishing $name@$version"
+              (cd "packages/$dir" && npm publish --access public --provenance)
+            fi
+          done

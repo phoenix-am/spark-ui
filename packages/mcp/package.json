@@ -33,5 +33,10 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",
     "zod": "^4.6.7"
+  },
+  "homepage": "https://github.com/phoenix-am/spark-ui#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

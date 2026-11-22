@@ -29,7 +29,7 @@
     "rimraf": "latest",
     "typescript": "^5.0.0"
   },
-  "description": "Spark UI \u00b7 Live Wire: React components that carry current.",
+  "description": "Spark UI · Live Wire: React components that carry current.",
   "module": "dist/index.mjs",
   "exports": {
     ".": {
@@ -354,5 +354,15 @@
         "./dist/navigation/index.d.ts"
       ]
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phoenix-am/spark-ui.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/phoenix-am/spark-ui#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

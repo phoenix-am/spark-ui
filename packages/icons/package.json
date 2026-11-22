@@ -24,5 +24,15 @@
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phoenix-am/spark-ui.git",
+    "directory": "packages/icons"
+  },
+  "homepage": "https://github.com/phoenix-am/spark-ui#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }
