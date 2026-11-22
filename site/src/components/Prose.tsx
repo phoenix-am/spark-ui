@@ -20,11 +20,13 @@ export function Prose({ markdown, className }: { markdown: string; className?: s
           setTimeout(() => (copy.textContent = 'Copy'), 1500);
           return;
         }
+        // In-site links navigate without a reload (unless opened in a new tab).
         const a = el.closest('a');
         const href = a?.getAttribute('href');
-        if (href?.startsWith('#/')) {
+        const base = import.meta.env.BASE_URL;
+        if (href?.startsWith(base) && !a!.target && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
           e.preventDefault();
-          navigate(href.slice(1));
+          navigate('/' + href.slice(base.length));
         }
       }}
     />

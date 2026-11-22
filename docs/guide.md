@@ -34,7 +34,6 @@ Everything the README skims over, in one place. For live examples and every prop
   - [Headless hooks](#headless-hooks)
   - [Base components](#base-components)
   - [For AI coding agents](#for-ai-coding-agents)
-  - [Docs site](#docs-site)
   - [Packages](#packages)
 
 ## Foundations
@@ -203,12 +202,12 @@ Set the locale once and every date, weekday name, digit and arrow key follows it
 ### Forms
 
 - Every input submits with a plain `<form>`: Select and DatePicker include hidden inputs, Switch submits `value` while on.
-- Works with React Hook Form: `register` for Textfield and Checkbox, `Controller` for Select and DatePicker (see Storybook, Foundations / Forms).
+- Works with React Hook Form: `register` for Textfield and Checkbox, `Controller` for Select and DatePicker. The [Forms](https://phoenix-am.github.io/spark-ui/docs/forms) page has a working example.
 - `Field` gives any control (a textarea, a rich-text editor) a linked label, help text and error: `<Field label="Notes" error={err}><textarea /></Field>`.
 
 ### Accessibility
 
-Select, Modal, Tooltip, Tabs, DatePicker, Calendar and Slider are built on React Aria hooks: typeahead, focus containment and restoration, screen-reader announcements and dismissal behave the way they do in Adobe's products. Every Storybook story is checked with axe in CI (`npm test`), alongside keyboard behaviour tests and server-rendering tests. [Accessibility](./accessibility.md) covers what is and isn't tested yet, with a checklist for screen-reader testing.
+Every component works with a keyboard and a screen reader, and respects reduced motion. The complex ones (menus, selects, tabs, dialogs, date pickers and more) are built on React Aria, so typeahead, focus handling and screen-reader announcements behave the way they do in Adobe's products. [Accessibility](./accessibility.md) covers what you get, what you need to provide, and the known gaps.
 
 ## Components
 
@@ -367,7 +366,7 @@ Spark UI is built in two layers, like MUI:
 - **Base components** (`@sparkwire/core/base`): `ButtonBase`, `InputBase`, `Popover`, `ListBox` (with `ListItemContent`) and `Overlay`. Generic building blocks that already carry the Live Wire look.
 - **Components** built from them: Button on ButtonBase; Textfield and Combobox on InputBase; Dropdown, Combobox, Menu and DatePicker on Popover (+ ListBox); Modal on Overlay.
 
-Use the base layer to build components we don't ship, and they will match the rest. See *Foundations → Base components* in Storybook. The base layer is unstable until 1.0.
+Use the base layer to build components we don't ship, and they will match the rest. The base layer is unstable until 1.0: names and props may still change in minor versions.
 
 ### For AI coding agents
 
@@ -377,9 +376,6 @@ Use the base layer to build components we don't ship, and they will match the re
 
 All of these are generated from the component source by `npm run build`, so they never drift from the code.
 
-### Docs site
-
-`.github/workflows/pages.yml` publishes Storybook, the registry and `llms.txt` to GitHub Pages on every push to `main`. One-time setup: repo **Settings → Pages → Source: GitHub Actions**.
 
 ### Packages
 
