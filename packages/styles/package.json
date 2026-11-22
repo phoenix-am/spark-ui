@@ -37,5 +37,15 @@
     },
     "./package.json": "./package.json"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phoenix-am/spark-ui.git",
+    "directory": "packages/styles"
+  },
+  "homepage": "https://github.com/phoenix-am/spark-ui#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }
