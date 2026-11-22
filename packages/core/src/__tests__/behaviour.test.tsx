@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -829,5 +829,25 @@ describe('Small components', () => {
     await user.click(screen.getByRole('button', { name: 'Next page' }));
     expect(onChange).toHaveBeenCalledWith(2);
     expect(screen.getByRole('button', { name: 'Page 2' })).toHaveAttribute('aria-current', 'page');
+  });
+});
+
+describe('TimePicker', () => {
+  it('parses times', () => {
+    expect(parseTime('9:05')?.toString()).toBe('09:05:00');
+    expect(parseTime('25:00')).toBeNull();
+  });
+  it('picks a suggestion from the list and respects blocked slots', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(<TimePicker label="Start" hourCycle={24} min="09:00" max="11:00" step={30} isTimeDisabled={(t) => t === '10:00'} onChange={onChange} name="start" />);
+    await user.click(screen.getByRole('button', { name: 'Show times' }));
+    const opts = screen.getAllByRole('option');
+    expect(opts.map((o) => o.textContent)).toEqual(['09:00', '09:30', '10:00', '10:30', '11:00']);
+    expect(opts[2]).toHaveAttribute('aria-disabled', 'true');
+    await user.click(opts[3]);
+    expect(onChange).toHaveBeenLastCalledWith('10:30');
+    expect(screen.queryByRole('listbox')).toBeNull();
+    expect(document.querySelector('input[name="start"]')).toHaveValue('10:30');
   });
 });

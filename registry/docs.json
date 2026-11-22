@@ -898,6 +898,153 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs"
     },
     {
+      "name": "time-picker",
+      "title": "TimePicker",
+      "summary": "Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.",
+      "components": [
+        {
+          "name": "TimePicker",
+          "description": "TimePicker: type a time segment by segment (hours, minutes, AM/PM), or\npick from a list of suggestions every `step` minutes. Values are plain\n24-hour strings (\"14:30\"), so they store and submit cleanly; the field\nshows the locale's format. `min`, `max` and `isTimeDisabled` limit both\ntyping and the list.\n\nBuilt on React Aria's `useTimeField` with the same segments as DatePicker,\nand the Popover and ListBox base components.\n\nStyle hooks: shares `.sp-date-picker` styles; `.sp-time-picker`, `__list`, `__option[data-disabled]`.",
+          "props": [
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"label\" | \"control\" | \"field\" | \"trigger\" | \"helper\" | \"popover\" | \"list\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "clearable",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultValue",
+              "type": "string | null",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "error",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "granularity",
+              "type": "\"hour\" | \"minute\" | \"second\"",
+              "required": false,
+              "description": "`minute` (default) or `second`."
+            },
+            {
+              "name": "helperText",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "hourCycle",
+              "type": "12 | 24",
+              "required": false,
+              "description": "12 or 24-hour. Default: the locale's."
+            },
+            {
+              "name": "isTimeDisabled",
+              "type": "((time: string) => boolean)",
+              "required": false,
+              "description": "Grey out suggestions, e.g. booked slots: `(t) => booked.includes(t)`."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "max",
+              "type": "string",
+              "required": false,
+              "description": "Latest time, \"HH:mm\"."
+            },
+            {
+              "name": "min",
+              "type": "string",
+              "required": false,
+              "description": "Earliest time, \"HH:mm\"."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Submits \"HH:mm\" with forms."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: string | null) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "showList",
+              "type": "boolean",
+              "required": false,
+              "description": "Turn off the suggestion list (typing only)."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "step",
+              "type": "number",
+              "required": false,
+              "description": "Minutes between suggestions in the list. Default 30."
+            },
+            {
+              "name": "value",
+              "type": "string | null",
+              "required": false,
+              "description": "\"HH:mm\" or \"HH:mm:ss\", 24-hour. `null` when empty."
+            }
+          ]
+        }
+      ],
+      "import": "import { TimePicker } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add time-picker",
+        "shadcn": "npx shadcn add @sparkwire/time-picker",
+        "copiedImport": "import { TimePicker } from '@/components/spark-ui/TimePicker';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-timepicker--docs"
+    },
+    {
       "name": "textarea",
       "title": "Textarea",
       "summary": "Multi-line text that grows with its content, with a character count.",
@@ -2150,6 +2297,24 @@
           ]
         },
         {
+          "name": "Segment",
+          "description": "",
+          "props": [
+            {
+              "name": "segment",
+              "type": "DateSegment",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "state",
+              "type": "DateFieldState",
+              "required": true,
+              "description": ""
+            }
+          ]
+        },
+        {
           "name": "DateRangePicker",
           "description": "DateRangePicker: type or pick a start and an end date; current flows\nbetween them in the calendar. Two months side by side, shortcut buttons\n(`presets`) under the calendar, and full control over which days can be\npicked. Behaviour comes from React Aria: typed entry in the locale's order,\nhover preview of the range, right-to-left, calendar systems.\n\nStyle hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,\n`__control`, `.sp-date-field`, `__dash`, `__trigger`, `__clear`, `__popover`.",
           "props": [
@@ -2621,12 +2786,12 @@
           ]
         }
       ],
-      "import": "import { DatePicker, DateRangePicker, Calendar, RangeCalendar } from '@sparkwire/core';",
+      "import": "import { DatePicker, Segment, DateRangePicker, Calendar, RangeCalendar } from '@sparkwire/core';",
       "install": {
         "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
         "copy": "npx sparkwire add date-picker",
         "shadcn": "npx shadcn add @sparkwire/date-picker",
-        "copiedImport": "import { DatePicker, DateRangePicker, Calendar, RangeCalendar } from '@/components/spark-ui/DatePicker';"
+        "copiedImport": "import { DatePicker, Segment, DateRangePicker, Calendar, RangeCalendar } from '@/components/spark-ui/DatePicker';"
       },
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs"
     },

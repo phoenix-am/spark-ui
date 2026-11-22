@@ -22,13 +22,14 @@ Key facts for writing code:
 - [Textfield](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs): A field that charges as you type. Exports: Textfield.
 - [Field](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs): Label, help text and error wiring for any control. Exports: Field.
 - [NumberField](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs): Locale-formatted numbers (₹1,00,000, %, units) with steppers. Exports: NumberField.
+- [TimePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-timepicker--docs): Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots. Exports: TimePicker.
 - [Textarea](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textarea--docs): Multi-line text that grows with its content, with a character count. Exports: Textarea.
 - [Alert](https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-alert--docs): Info, success, warning and error messages, with actions, dismiss and a banner variant. Exports: Alert.
 - [Navigation](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-breadcrumbs--docs): Breadcrumbs and Pagination. Exports: Breadcrumbs, Pagination.
 - [Charts](https://phoenix-am.github.io/spark-ui/?path=/docs/data-charts--docs): Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view. Exports: LineChart, BarChart, DonutChart, Sparkline.
 - [Dropdown](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-dropdown--docs): Pick one value from a list. Exports: Dropdown.
 - [Combobox](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-combobox--docs): Type to search, then pick. Exports: Combobox.
-- [DatePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs): DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems. Exports: DatePicker, DateRangePicker, Calendar, RangeCalendar.
+- [DatePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs): DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems. Exports: DatePicker, Segment, DateRangePicker, Calendar, RangeCalendar.
 - [DataTable](https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs): Sort, search, filter, page and select rows; responsive div grid, no table library. Exports: DataTable.
 - [CommandPalette](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-commandpalette--docs): A ⌘K launcher: search commands and pages, run with the keyboard. Exports: CommandPalette.
 - [Menu](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-menu--docs): Actions behind a button, with submenus. Exports: Menu.

@@ -564,6 +564,35 @@
       ]
     },
     {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "TimePicker",
+      "description": "Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.",
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/date-picker",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/TimePicker/TimePicker.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/TimePicker/TimePicker.tsx"
+        },
+        {
+          "path": "components/spark-ui/TimePicker/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/TimePicker/index.ts"
+        }
+      ]
+    },
+    {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",

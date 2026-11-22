@@ -48,6 +48,8 @@ export { CommandPalette } from './CommandPalette';
 export type { CommandPaletteProps, Command, CommandGroup } from './CommandPalette';
 export { Drawer } from './Drawer';
 export type { DrawerProps } from './Drawer';
+export { TimePicker, parseTime, formatTime } from './TimePicker';
+export type { TimePickerProps } from './TimePicker';
 export { Textarea } from './Textarea';
 export type { TextareaProps } from './Textarea';
 export { Alert } from './Alert';

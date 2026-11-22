@@ -194,6 +194,11 @@
       "import": "./dist/charts/index.mjs",
       "require": "./dist/charts/index.js"
     },
+    "./time-picker": {
+      "types": "./dist/time-picker/index.d.ts",
+      "import": "./dist/time-picker/index.mjs",
+      "require": "./dist/time-picker/index.js"
+    },
     "./textarea": {
       "types": "./dist/textarea/index.d.ts",
       "import": "./dist/textarea/index.mjs",
@@ -311,6 +316,9 @@
       ],
       "charts": [
         "./dist/charts/index.d.ts"
+      ],
+      "time-picker": [
+        "./dist/time-picker/index.d.ts"
       ],
       "textarea": [
         "./dist/textarea/index.d.ts"

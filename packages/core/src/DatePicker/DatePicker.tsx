@@ -206,7 +206,7 @@ export function DateField({ className, ...props }: AriaDateFieldProps<DateValue>
   );
 }
 
-function Segment({ segment, state }: { segment: DateSegment; state: DateFieldState }) {
+export function Segment({ segment, state }: { segment: DateSegment; state: DateFieldState }) {
   const ref = useRef<HTMLSpanElement>(null);
   const { segmentProps } = useDateSegment(segment, state, ref);
   return (

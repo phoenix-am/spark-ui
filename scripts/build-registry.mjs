@@ -45,6 +45,7 @@ const ITEMS = {
   CommandPalette: { name: 'command-palette', description: 'A ⌘K launcher: search commands and pages, run with the keyboard.' },
   Drawer: { description: 'A panel that slides in from an edge, with focus trapping.' },
   Sidebar: { description: 'App navigation: sections, nested groups, collapsed rail, drawer on small screens.' },
+  TimePicker: { name: 'time-picker', description: 'Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.' },
   Textarea: { description: 'Multi-line text that grows with its content, with a character count.' },
   Alert: { description: 'Info, success, warning and error messages, with actions, dismiss and a banner variant.' },
   Navigation: { name: 'navigation', description: 'Breadcrumbs and Pagination.' },

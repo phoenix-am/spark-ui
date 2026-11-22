@@ -151,6 +151,14 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### TimePicker
+
+Type a time segment by segment, or pick from suggestions every `step` minutes. Values are plain 24-hour strings (`"14:30"`), shown in the locale's format. `min`, `max` and `isTimeDisabled` (e.g. booked slots) limit both typing and the list; `name` submits the value with forms.
+
+```tsx
+<TimePicker label="Meeting" min="09:00" max="18:00" step={15} isTimeDisabled={(t) => booked.includes(t)} />
+```
+
 ### Textarea, Alert, Breadcrumbs, Pagination
 
 - **Textarea**: multi-line text on the same field shell; grows between `minRows` and `maxRows`, `showCount` with `maxLength` shows "12 / 280".

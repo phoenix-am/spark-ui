@@ -44,6 +44,7 @@ export interface SparkComponentsConfig {
   Alert?: ComponentConfig<Record<string, unknown>>;
   Breadcrumbs?: ComponentConfig<Record<string, unknown>>;
   Pagination?: ComponentConfig<Record<string, unknown>>;
+  TimePicker?: ComponentConfig<Record<string, unknown>>;
   LineChart?: ComponentConfig<Record<string, unknown>>;
   BarChart?: ComponentConfig<Record<string, unknown>>;
   DonutChart?: ComponentConfig<Record<string, unknown>>;

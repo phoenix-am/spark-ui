@@ -279,6 +279,48 @@ Style hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,
 - `step?`: `number` Step for the buttons and arrow keys. Default 1.
 - `value?`: `number | null` Controlled value; `null` when empty.
 
+## TimePicker (`time-picker`)
+Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.
+
+```tsx
+import { TimePicker } from '@sparkwire/core';
+```
+Install: `npx sparkwire add time-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-timepicker--docs
+
+### TimePicker
+TimePicker: type a time segment by segment (hours, minutes, AM/PM), or
+pick from a list of suggestions every `step` minutes. Values are plain
+24-hour strings ("14:30"), so they store and submit cleanly; the field
+shows the locale's format. `min`, `max` and `isTimeDisabled` limit both
+typing and the list.
+
+Built on React Aria's `useTimeField` with the same segments as DatePicker,
+and the Popover and ListBox base components.
+
+Style hooks: shares `.sp-date-picker` styles; `.sp-time-picker`, `__list`, `__option[data-disabled]`.
+
+- `aria-label?`: `string`
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "label" | "control" | "field" | "trigger" | "helper" | "popover" | "list", string>>`
+- `clearable?`: `boolean`
+- `defaultValue?`: `string | null`
+- `disabled?`: `boolean`
+- `error?`: `boolean`
+- `granularity?`: `"hour" | "minute" | "second"` `minute` (default) or `second`.
+- `helperText?`: `ReactNode`
+- `hourCycle?`: `12 | 24` 12 or 24-hour. Default: the locale's.
+- `isTimeDisabled?`: `((time: string) => boolean)` Grey out suggestions, e.g. booked slots: `(t) => booked.includes(t)`.
+- `label?`: `ReactNode`
+- `max?`: `string` Latest time, "HH:mm".
+- `min?`: `string` Earliest time, "HH:mm".
+- `name?`: `string` Submits "HH:mm" with forms.
+- `onChange?`: `((value: string | null) => void)`
+- `required?`: `boolean`
+- `showList?`: `boolean` Turn off the suggestion list (typing only).
+- `size?`: `"small" | "medium" | "large"`
+- `step?`: `number` Minutes between suggestions in the list. Default 30.
+- `value?`: `string | null` "HH:mm" or "HH:mm:ss", 24-hour. `null` when empty.
+
 ## Textarea (`textarea`)
 Multi-line text that grows with its content, with a character count.
 
@@ -575,7 +617,7 @@ list `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
 DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems.
 
 ```tsx
-import { DatePicker, DateRangePicker, Calendar, RangeCalendar } from '@sparkwire/core';
+import { DatePicker, Segment, DateRangePicker, Calendar, RangeCalendar } from '@sparkwire/core';
 ```
 Install: `npx sparkwire add date-picker` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-datepicker--docs
 
@@ -622,6 +664,12 @@ Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
 - `format?`: `DateTimeFormatOptions` **Deprecated.** The field now shows editable segments in the locale's order.
 - `placeholder?`: `string` **Deprecated.** The field now shows editable segments in the locale's order.
 - `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
+
+### Segment
+
+
+- `segment`: `DateSegment`
+- `state`: `DateFieldState`
 
 ### DateRangePicker
 DateRangePicker: type or pick a start and an end date; current flows

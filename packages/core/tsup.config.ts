@@ -9,6 +9,7 @@ export default defineConfig({
     'textarea/index': 'src/Textarea/index.ts',
     'alert/index': 'src/Alert/index.ts',
     'navigation/index': 'src/Navigation/index.ts',
+    'time-picker/index': 'src/TimePicker/index.ts',
     'charts/index': 'src/Charts/index.ts',
     'number-field/index': 'src/NumberField/index.ts',
     'sidebar/index': 'src/Sidebar/index.ts',

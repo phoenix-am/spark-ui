@@ -113,23 +113,6 @@
 .sp-dropdown[data-open] .sp-dropdown__chevron { color: var(--sp-ink); }
 .sp-dropdown__icon svg path,
 .sp-dropdown__chevron svg path { stroke: currentColor; }
-.sp-dropdown__list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: var(--spark-z-dropdown);
-  max-height: 240px;
-  overflow-y: auto;
-  margin: 0.375rem 0 0;
-  padding: 0.25rem;
-  list-style: none;
-  background-color: var(--spark-surface-raised);
-  border: 1px solid var(--spark-surface-border-strong);
-  border-radius: var(--spark-radius-medium);
-  box-shadow: var(--spark-shadow-large);
-  animation: sp-drop var(--spark-motion-normal) var(--spark-motion-easing) both;
-}
 .sp-dropdown__option {
   position: relative;
   display: flex;

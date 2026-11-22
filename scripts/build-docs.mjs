@@ -33,6 +33,7 @@ const ENTRIES = [
   ['textfield', ['Textfield/Textfield.tsx'], 'inputs-textfield'],
   ['field', ['Field/Field.tsx'], 'inputs-field'],
   ['number-field', ['NumberField/NumberField.tsx'], 'inputs-numberfield'],
+  ['time-picker', ['TimePicker/TimePicker.tsx'], 'inputs-timepicker'],
   ['textarea', ['Textarea/Textarea.tsx'], 'inputs-textarea'],
   ['alert', ['Alert/Alert.tsx'], 'feedback-alert'],
   ['navigation', ['Navigation/Navigation.tsx'], 'navigation-breadcrumbs'],
