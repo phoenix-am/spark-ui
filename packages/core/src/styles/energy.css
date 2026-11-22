@@ -1,0 +1,60 @@
+/* The energy dial: data-spark-energy="off | calm | default | electric".
+   Set by <SparkProvider energy>, or put the attribute on <html> yourself.
+   Each level sets a few variables; effects below read them. Selectors also
+   match a themed element inside the dial, so the dial wins over theme tokens. */
+
+.sp-energy { display: contents; }
+
+:root { --spark-flow-duration: 0.6s; --spark-energy-level: 1; }
+
+[data-spark-energy='calm'], [data-spark-energy='calm'] [data-spark-theme] {
+  --spark-flow-duration: 1.4s;
+  --spark-energy-level: 0.4;
+  --spark-brand-glow: color-mix(in srgb, var(--spark-brand-fill) 14%, transparent);
+  --spark-energy-glow: color-mix(in srgb, var(--spark-energy-current) 14%, transparent);
+  --spark-success-glow: color-mix(in srgb, var(--spark-success-fill) 14%, transparent);
+  --spark-warning-glow: color-mix(in srgb, var(--spark-warning-fill) 14%, transparent);
+  --spark-error-glow: color-mix(in srgb, var(--spark-error-fill) 14%, transparent);
+}
+[data-spark-energy='electric'], [data-spark-energy='electric'] [data-spark-theme] {
+  --spark-flow-duration: 0.32s;
+  --spark-energy-level: 1.8;
+  --spark-brand-glow: color-mix(in srgb, var(--spark-brand-fill) 55%, transparent);
+  --spark-energy-glow: color-mix(in srgb, var(--spark-energy-current) 55%, transparent);
+  --spark-success-glow: color-mix(in srgb, var(--spark-success-fill) 55%, transparent);
+  --spark-warning-glow: color-mix(in srgb, var(--spark-warning-fill) 55%, transparent);
+  --spark-error-glow: color-mix(in srgb, var(--spark-error-fill) 55%, transparent);
+}
+[data-spark-energy='off'], [data-spark-energy='off'] [data-spark-theme] {
+  --spark-energy-level: 0;
+  --spark-brand-glow: transparent;
+  --spark-energy-glow: transparent;
+  --spark-success-glow: transparent;
+  --spark-warning-glow: transparent;
+  --spark-error-glow: transparent;
+}
+
+/* Electric: current lines bloom. */
+[data-spark-energy='electric'] .sp-current { box-shadow: 0 0 6px 0 var(--sp-line, var(--spark-energy-current)); }
+
+/* Calm: decorative loops slow down; the power cut becomes a soft fade. */
+[data-spark-energy='calm'] .sp-avatar__led,
+[data-spark-energy='calm'] .sp-badge__led { animation-duration: 3.6s; }
+[data-spark-energy='calm'] .sp-modal__backdrop { animation-name: sp-fade; animation-duration: 200ms; }
+
+/* Off (and reduced motion, always): no decorative motion. Functional motion
+   (menus opening, drawers sliding, spinners) stays, because it explains state. */
+[data-spark-energy='off'] .sp-current,
+[data-spark-energy='off'] .sp-avatar__led,
+[data-spark-energy='off'] .sp-badge__led,
+[data-spark-energy='off'] .sp-skeleton,
+[data-spark-energy='off'] .sp-chart__line { animation: none; }
+[data-spark-energy='off'] .sp-modal__backdrop { animation: none; }
+[data-spark-energy='off'] .sp-spark { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sp-current, .sp-avatar__led, .sp-badge__led, .sp-skeleton, .sp-chart__line, .sp-modal__backdrop { animation: none; }
+  .sp-spark { display: none; }
+}
+
+/* Motion utilities for your own elements (also returned by useSpark()). */
+.sp-glow { box-shadow: 0 0 0 3px var(--spark-brand-glow), 0 0 calc(12px * var(--spark-energy-level)) var(--spark-brand-glow); }

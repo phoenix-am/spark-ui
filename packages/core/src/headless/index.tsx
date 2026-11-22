@@ -8,6 +8,7 @@
  * Unstable until 1.0.
  */
 import React, { useRef } from 'react';
+import { haptic, powerCut, readEnergy, type HapticKind } from '../internal/energy';
 import { useCheckbox as useAriaCheckbox, useDatePicker as useAriaDatePicker, useFocusRing, useNumberFormatter, useSlider as useAriaSlider, useSwitch as useAriaSwitch, mergeProps } from 'react-aria';
 import { useDatePickerState, useSliderState, useToggleState } from 'react-stately';
 import type { DateValue } from '@internationalized/date';
@@ -220,11 +221,50 @@ export function useDatePicker(props: UseDatePickerProps, groupRef: React.RefObje
  * element and call `burst(event)` from a click handler (or with no event to
  * burst from the centre). Respects reduced motion.
  */
-export function useSpark(options: { count?: number; spread?: number; colors?: string[] } = {}) {
+export interface UseSparkOptions {
+  /** Particles per burst at default energy. Default 10. */
+  count?: number;
+  /** Burst radius in px at default energy. Default 70. */
+  spread?: number;
+  colors?: string[];
+}
+
+/**
+ * Spark UI's motion on your own elements. Every effect follows the energy
+ * dial (`SparkProvider energy` / `data-spark-energy`) and switches off for
+ * reduced motion.
+ *
+ * ```tsx
+ * const spark = useSpark();
+ * <button className="sp-spark-host" onClick={spark.burst}>{spark.sparks}Launch</button>
+ * <div {...spark.current()} style={{ height: 2 }} />          // flowing current line
+ * spark.powerCut(panelRef.current);                             // flicker an element
+ * spark.haptic('toggle');                                       // short vibration (if enabled)
+ * ```
+ */
+export function useSpark(options: UseSparkOptions = {}) {
   const ref = useRef<SparkHandle>(null);
   const sparks = <Spark ref={ref} count={options.count} spread={options.spread} colors={options.colors} />;
   return {
+    /** Render inside a `position: relative` element; bursts appear here. */
     sparks,
+    /** Fire a burst from the pointer (or the centre for keyboard clicks). */
     burst: (event?: React.MouseEvent<HTMLElement> | React.PointerEvent<HTMLElement>) => ref.current?.burst(event as React.MouseEvent<HTMLElement> | undefined),
+    /** Props for a flowing current line. Give the element a height (or width when `down`). */
+    current: (opts: { direction?: 'right' | 'down'; color?: string } = {}) => ({
+      className: opts.direction === 'down' ? 'sp-current sp-current--down' : 'sp-current',
+      style: (opts.color ? { '--sp-line': opts.color } : {}) as React.CSSProperties,
+    }),
+    /** Glow ring sized by the energy dial. */
+    glow: () => ({ className: 'sp-glow' }),
+    /** Flicker an element like a power cut. Resolves when it ends. */
+    powerCut,
+    /** Short vibration on supporting phones when haptics are on. */
+    haptic: (kind?: HapticKind, el?: Element | null) => haptic(kind, el),
+    /** Energy in effect at an element (or the page): off, calm, default or electric. */
+    energy: (el?: Element | null) => readEnergy(el),
   };
 }
+
+export { readEnergy, haptic, powerCut, ENERGY_SCALE } from '../internal/energy';
+export type { Energy, HapticKind } from '../internal/energy';

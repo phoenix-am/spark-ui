@@ -80,6 +80,16 @@ export interface SparkProviderProps {
    * Defaults to the parent provider's, then the browser's.
    */
   locale?: string;
+  /**
+   * How lively the UI is: `calm` (slow current, soft glow, few sparks),
+   * `default`, `electric` (fast current, bloom, big bursts) or `off`
+   * (no decorative motion). Reduced-motion users always get `off`.
+   * Sets `data-spark-energy` on a wrapper; you can also put that
+   * attribute on `<html>` yourself.
+   */
+  energy?: 'off' | 'calm' | 'default' | 'electric';
+  /** Short vibrations on Switch, Checkbox and spark bursts (phones that support it). Default `false`. */
+  haptics?: boolean;
   children: React.ReactNode;
 }
 
@@ -88,7 +98,7 @@ export interface SparkProviderProps {
  * MUI's `theme.components` works. Nested providers merge with their parent.
  * Styling still comes from `styles.css`; this provider only changes props.
  */
-export function SparkProvider({ components, locale, children }: SparkProviderProps) {
+export function SparkProvider({ components, locale, energy, haptics, children }: SparkProviderProps) {
   const parent = useContext(DefaultsContext);
   const value = useMemo<DefaultsMap>(() => {
     if (!components) return parent;
@@ -102,7 +112,13 @@ export function SparkProvider({ components, locale, children }: SparkProviderPro
     }
     return next;
   }, [parent, components]);
-  const tree = <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;
+  let tree = <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;
+  if (energy !== undefined || haptics !== undefined)
+    tree = (
+      <div className="sp-energy" data-spark-energy={energy} data-spark-haptics={haptics === undefined ? undefined : haptics ? 'on' : 'off'}>
+        {tree}
+      </div>
+    );
   return locale ? <I18nProvider locale={locale}>{tree}</I18nProvider> : tree;
 }
 

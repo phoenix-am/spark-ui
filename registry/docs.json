@@ -4609,6 +4609,18 @@
               "description": "Defaults for every instance of a component, e.g.\n`{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`.\nProps set on an instance always win."
             },
             {
+              "name": "energy",
+              "type": "\"off\" | \"calm\" | \"default\" | \"electric\"",
+              "required": false,
+              "description": "How lively the UI is: `calm` (slow current, soft glow, few sparks),\n`default`, `electric` (fast current, bloom, big bursts) or `off`\n(no decorative motion). Reduced-motion users always get `off`.\nSets `data-spark-energy` on a wrapper; you can also put that\nattribute on `<html>` yourself."
+            },
+            {
+              "name": "haptics",
+              "type": "boolean",
+              "required": false,
+              "description": "Short vibrations on Switch, Checkbox and spark bursts (phones that support it). Default `false`."
+            },
+            {
               "name": "locale",
               "type": "string",
               "required": false,

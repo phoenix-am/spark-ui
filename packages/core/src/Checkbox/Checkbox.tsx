@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useId, useRef } from 'react';
+import { haptic } from '../internal/energy';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
 import { useForkRef } from '../Textfield/useForkRef';
@@ -50,6 +51,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
     >
       <label htmlFor={inputId} className="sp-checkbox__row">
         <input
+          onChangeCapture={(e) => haptic('toggle', e.currentTarget)}
           ref={handleRef}
           id={inputId}
           type="checkbox"

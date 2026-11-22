@@ -235,7 +235,7 @@
   background: repeating-linear-gradient(90deg, var(--spark-energy-ink) 0 4px, transparent 4px 8px);
   background-size: 16px 100%;
   opacity: 0.55;
-  animation: sp-flow 900ms linear infinite;
+  animation: sp-flow calc(var(--spark-flow-duration, 0.6s) * 1.5) linear infinite;
 }
 @keyframes sp-flow { to { background-position: 16px 0; } }
 .sp-calendar__day[data-in-range]:not([data-range-start]):not([data-range-end]) { color: var(--spark-text-primary); }

@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { prefersReducedMotion } from '@sparkwire/utils';
+import { ENERGY_SCALE, haptic, readEnergy } from '../internal/energy';
 
 export interface SparkProps {
   /** Particle colours. Defaults to the theme's `--spark-energy-spark-1…3`. */
@@ -54,16 +54,20 @@ export const Spark = forwardRef<SparkHandle, SparkProps>(function Spark(
   const burst = useCallback(
     (event?: React.MouseEvent<HTMLElement>) => {
       const layer = layerRef.current;
-      if (!layer || prefersReducedMotion()) return;
+      const scale = ENERGY_SCALE[readEnergy(layer)];
+      if (!layer || !scale) return;
+      haptic('burst', layer);
+      const n = Math.max(2, Math.round(count * scale));
+      const reach = spread * Math.min(scale, 1.4);
       const rect = layer.getBoundingClientRect();
       // Keyboard-triggered clicks report 0,0: fire from the centre instead.
       const fromPointer = event && (event.clientX !== 0 || event.clientY !== 0);
       const x = fromPointer ? event!.clientX - rect.left : rect.width / 2;
       const y = fromPointer ? event!.clientY - rect.top : rect.height / 2;
 
-      const batch: Particle[] = Array.from({ length: count }, (_, i) => {
-        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.6;
-        const dist = spread * (0.55 + Math.random() * 0.6);
+      const batch: Particle[] = Array.from({ length: n }, (_, i) => {
+        const angle = (Math.PI * 2 * i) / n + (Math.random() - 0.5) * 0.6;
+        const dist = reach * (0.55 + Math.random() * 0.6);
         return {
           id: nextId++,
           x,

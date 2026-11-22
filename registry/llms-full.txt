@@ -1366,6 +1366,8 @@ MUI's `theme.components` works. Nested providers merge with their parent.
 Styling still comes from `styles.css`; this provider only changes props.
 
 - `components?`: `SparkComponentsConfig` Defaults for every instance of a component, e.g. `{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`. Props set on an instance always win.
+- `energy?`: `"off" | "calm" | "default" | "electric"` How lively the UI is: `calm` (slow current, soft glow, few sparks), `default`, `electric` (fast current, bloom, big bursts) or `off` (no decorative motion). Reduced-motion users always get `off`. Sets `data-spark-energy` on a wrapper; you can also put that attribute on `<html>` yourself.
+- `haptics?`: `boolean` Short vibrations on Switch, Checkbox and spark bursts (phones that support it). Default `false`.
 - `locale?`: `string` BCP 47 locale for dates, number formats and keyboard direction, e.g. `hi-IN`, `ar-EG`, `en-US`. Right-to-left locales mirror arrow keys. Defaults to the parent provider's, then the browser's.
 
 ## Base components (`base`)

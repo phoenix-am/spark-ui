@@ -9,7 +9,7 @@ import { useIsoLayoutEffect } from './useIsoLayoutEffect';
  */
 export function usePortalTheme(active: boolean, sourceRef?: React.RefObject<Element | null>) {
   const anchorRef = useRef<HTMLSpanElement>(null);
-  const [themeProps, setThemeProps] = useState<{ 'data-spark-theme'?: string; style?: React.CSSProperties }>({});
+  const [themeProps, setThemeProps] = useState<{ 'data-spark-theme'?: string; 'data-spark-energy'?: string; 'data-spark-haptics'?: string; style?: React.CSSProperties }>({});
 
   useIsoLayoutEffect(() => {
     if (!active) return;
@@ -20,7 +20,11 @@ export function usePortalTheme(active: boolean, sourceRef?: React.RefObject<Elem
       const name = host.style[i];
       if (name.startsWith('--')) style[name] = host.style.getPropertyValue(name);
     }
-    setThemeProps({ 'data-spark-theme': host.getAttribute('data-spark-theme') ?? undefined, style: style as React.CSSProperties });
+    // The energy dial and haptics travel with the theme into the portal.
+    const from = sourceRef?.current ?? anchorRef.current;
+    const energy = from?.closest('[data-spark-energy]')?.getAttribute('data-spark-energy') ?? undefined;
+    const haptics = from?.closest('[data-spark-haptics]')?.getAttribute('data-spark-haptics') ?? undefined;
+    setThemeProps({ 'data-spark-theme': host.getAttribute('data-spark-theme') ?? undefined, 'data-spark-energy': energy, 'data-spark-haptics': haptics, style: style as React.CSSProperties });
   }, [active]);
 
   return { anchorRef, themeProps };

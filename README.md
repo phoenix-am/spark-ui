@@ -151,6 +151,20 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### Energy dial, `useSpark()` and haptics
+
+One setting scales all of Spark UI's motion:
+
+```tsx
+<SparkProvider energy="calm">      {/* dashboards: slow current, soft glow, small bursts */}
+<SparkProvider energy="electric">  {/* launches: fast current with bloom, big bursts */}
+<SparkProvider energy="off">       {/* only functional motion (menus, drawers) */}
+```
+
+It sets `data-spark-energy`, so you can also write `<html data-spark-energy="calm">` with no JavaScript. Reduced-motion users always get `off`. Add `haptics` for short vibrations on Switch, Checkbox and spark bursts on phones that support it.
+
+`useSpark()` (from `@sparkwire/core/headless`) puts the same effects on your own elements, all following the dial: `sparks` + `burst()`, `current()` for a flowing line, `glow()`, `powerCut(el)`, `haptic()` and `energy()`.
+
 ### ToggleGroup, Stepper, FileUpload
 
 - **ToggleGroup**: a segmented control (`selectionMode="single"`) or a row of independent toggles (`"multiple"`, e.g. bold/italic). One Tab stop, arrow keys between items; icon-only items take `aria-label`.

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes, Spark, readEnergy, haptic } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -909,5 +909,49 @@ describe('ToggleGroup, Stepper, FileUpload', () => {
     await user.click(screen.getByRole('button', { name: 'Remove a.pdf' }));
     expect(screen.queryByText('a.pdf')).toBeNull();
     expect(formatBytes(1536)).toBe('1.5 KB');
+  });
+});
+
+describe('Energy dial', () => {
+  it('SparkProvider sets the attribute and readEnergy finds it', () => {
+    render(
+      <SparkProvider energy="calm" haptics>
+        <span data-testid="inside">x</span>
+      </SparkProvider>,
+    );
+    const el = screen.getByTestId('inside');
+    expect(el.closest('[data-spark-energy]')).toHaveAttribute('data-spark-energy', 'calm');
+    expect(readEnergy(el)).toBe('calm');
+    expect(readEnergy(document.body)).toBe('default');
+  });
+
+  it('bursts scale with energy and are skipped when off', () => {
+    const counts: Record<string, number> = {};
+    for (const e of ['off', 'calm', 'default', 'electric'] as const) {
+      const ref = React.createRef<{ burst: () => void }>();
+      const { container, unmount } = render(
+        <SparkProvider energy={e}>
+          <Spark ref={ref} count={10} />
+        </SparkProvider>,
+      );
+      act(() => ref.current!.burst());
+      counts[e] = container.querySelectorAll('.sp-spark__particle').length;
+      unmount();
+    }
+    expect(counts).toEqual({ off: 0, calm: 4, default: 10, electric: 18 });
+  });
+
+  it('haptics vibrate only when switched on and energy is not off', () => {
+    const vibrate = jest.fn(() => true);
+    Object.defineProperty(navigator, 'vibrate', { value: vibrate, configurable: true });
+    const { rerender } = render(<SparkProvider energy="default"><i data-testid="t" /></SparkProvider>);
+    expect(haptic('toggle', screen.getByTestId('t'))).toBe(false);
+    rerender(<SparkProvider energy="default" haptics><i data-testid="t" /></SparkProvider>);
+    haptic('toggle', screen.getByTestId('t'));
+    expect(vibrate).toHaveBeenCalledWith(10);
+    vibrate.mockClear();
+    rerender(<SparkProvider energy="off" haptics><i data-testid="t" /></SparkProvider>);
+    expect(haptic('toggle', screen.getByTestId('t'))).toBe(false);
+    expect(vibrate).not.toHaveBeenCalled();
   });
 });

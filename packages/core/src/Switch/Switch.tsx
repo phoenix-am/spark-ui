@@ -1,4 +1,5 @@
 import React, { forwardRef, useId, useState } from 'react';
+import { haptic } from '../internal/energy';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
@@ -65,6 +66,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch
     onClick?.(event);
     if (event.defaultPrevented || disabled) return;
     if (checked === undefined) setInner(!on);
+    haptic('toggle', event.currentTarget);
     onChange?.(!on, event);
   };
 

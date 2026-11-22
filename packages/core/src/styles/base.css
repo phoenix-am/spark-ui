@@ -32,7 +32,7 @@
   background-color: color-mix(in srgb, var(--sp-line, var(--spark-energy-current)) 30%, transparent);
   background-image: repeating-linear-gradient(90deg, var(--sp-line, var(--spark-energy-current)) 0 9px, transparent 9px 18px);
   background-size: 36px 100%;
-  animation: sp-flow 0.6s linear infinite;
+  animation: sp-flow var(--spark-flow-duration, 0.6s) linear infinite;
 }
 .sp-current--down {
   background-image: repeating-linear-gradient(180deg, var(--sp-line, var(--spark-energy-current)) 0 9px, transparent 9px 18px);

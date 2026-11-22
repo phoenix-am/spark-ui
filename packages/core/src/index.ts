@@ -68,3 +68,6 @@ export { Sidebar } from './Sidebar';
 export type { SidebarProps, SidebarItem, SidebarSection } from './Sidebar';
 export { NumberField } from './NumberField';
 export type { NumberFieldProps } from './NumberField';
+
+export { readEnergy, haptic, powerCut } from './internal/energy';
+export type { Energy, HapticKind } from './internal/energy';

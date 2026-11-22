@@ -28,12 +28,27 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    energy: {
+      description: 'Energy dial (data-spark-energy)',
+      toolbar: {
+        title: 'Energy',
+        icon: 'lightning',
+        items: [
+          { value: 'off', title: 'Off' },
+          { value: 'calm', title: 'Calm' },
+          { value: 'default', title: 'Default' },
+          { value: 'electric', title: 'Electric' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
-  initialGlobals: { mode: 'dark' },
+  initialGlobals: { mode: 'dark', energy: 'default' },
   decorators: [
     (Story, context) => (
       <ThemeProvider mode={context.globals.mode ?? 'dark'}>
         <div
+          data-spark-energy={context.globals.energy ?? 'default'}
           style={{
             background: 'var(--spark-surface-base)',
             color: 'var(--spark-text-primary)',

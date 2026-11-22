@@ -94,7 +94,7 @@
   background-color: color-mix(in srgb, var(--sp-ink) 30%, transparent);
   background-image: repeating-linear-gradient(90deg, var(--sp-ink) 0 9px, transparent 9px 18px);
   background-size: 36px 100%;
-  animation: sp-flow 0.6s linear infinite;
+  animation: sp-flow var(--spark-flow-duration, 0.6s) linear infinite;
 }
 
 /* Disabled = no power in the circuit. */
