@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMessages } from '../internal/messages';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 export type StepStatus = 'complete' | 'current' | 'upcoming' | 'error';
@@ -54,17 +55,18 @@ const Bang = () => (
  */
 export function Stepper(inProps: StepperProps) {
   const props = useDefaults('Stepper', inProps) as StepperProps;
+  const m = useMessages();
   const { steps, active, onStepClick, orientation = 'horizontal', responsive = true, className, classNames } = props;
   const clickable = props.clickable ?? (onStepClick ? 'completed' : undefined);
   const statusOf = (i: number, s: StepItem): StepStatus => (s.error ? 'error' : i < active ? 'complete' : i === active ? 'current' : 'upcoming');
-  const words: Record<StepStatus, string> = { complete: 'completed', current: 'current', upcoming: 'not started', error: 'has an error' };
+  const words: Record<StepStatus, string> = m.stepStatus;
   const current = steps[Math.min(Math.max(active, 0), steps.length - 1)];
   return (
-    <nav aria-label={props['aria-label'] ?? 'Progress'} className={slot('sp-stepper', classNames, 'root', className)} data-orientation={orientation} data-responsive={responsive || undefined}>
+    <nav aria-label={props['aria-label'] ?? m.progress} className={slot('sp-stepper', classNames, 'root', className)} data-orientation={orientation} data-responsive={responsive || undefined}>
       {orientation === 'horizontal' && responsive && current && (
         <p className="sp-stepper__compact" aria-hidden="true">
           <span>
-            Step {Math.min(active + 1, steps.length)} of {steps.length}
+            {m.stepOf(m.num(Math.min(active + 1, steps.length)), m.num(steps.length))}
           </span>{' '}
           · <strong>{current.label}</strong>
           <span className="sp-stepper__bar" style={{ '--sp-progress': `${(Math.min(active + 1, steps.length) / steps.length) * 100}%` } as React.CSSProperties} />
@@ -77,7 +79,7 @@ export function Stepper(inProps: StepperProps) {
           const inner = (
             <>
               <span className={slot('sp-stepper__indicator', classNames, 'indicator')} aria-hidden="true">
-                {s.icon ?? (status === 'complete' ? <Check /> : status === 'error' ? <Bang /> : i + 1)}
+                {s.icon ?? (status === 'complete' ? <Check /> : status === 'error' ? <Bang /> : m.num(i + 1))}
               </span>
               <span className="sp-stepper__text">
                 <span className={slot('sp-stepper__label', classNames, 'label')}>{s.label}</span>

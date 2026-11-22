@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from 'react';
+import { MessagesProvider, type SparkMessagesOverride } from '../internal/messages';
 import { I18nProvider } from 'react-aria';
 import { DefaultsContext, DefaultsMap, ComponentConfig } from '../internal/defaults';
 import type { ButtonTypeMap } from '../Button/Button.types';
@@ -88,6 +89,11 @@ export interface SparkProviderProps {
    * attribute on `<html>` yourself.
    */
   energy?: 'off' | 'calm' | 'default' | 'electric';
+  /**
+   * Override any built-in text, or add a language: `{ close: 'Fermer', page: (n) => `Page ${n}` }`.
+   * Hindi, Gujarati and Tamil are built in and follow `locale`.
+   */
+  messages?: SparkMessagesOverride;
   /** Short vibrations on Switch, Checkbox and spark bursts (phones that support it). Default `false`. */
   haptics?: boolean;
   children: React.ReactNode;
@@ -98,7 +104,7 @@ export interface SparkProviderProps {
  * MUI's `theme.components` works. Nested providers merge with their parent.
  * Styling still comes from `styles.css`; this provider only changes props.
  */
-export function SparkProvider({ components, locale, energy, haptics, children }: SparkProviderProps) {
+export function SparkProvider({ components, locale, energy, haptics, messages, children }: SparkProviderProps) {
   const parent = useContext(DefaultsContext);
   const value = useMemo<DefaultsMap>(() => {
     if (!components) return parent;
@@ -113,6 +119,7 @@ export function SparkProvider({ components, locale, energy, haptics, children }:
     return next;
   }, [parent, components]);
   let tree = <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;
+  if (messages) tree = <MessagesProvider value={messages}>{tree}</MessagesProvider>;
   if (energy !== undefined || haptics !== undefined)
     tree = (
       <div className="sp-energy" data-spark-energy={energy} data-spark-haptics={haptics === undefined ? undefined : haptics ? 'on' : 'off'}>

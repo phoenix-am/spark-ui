@@ -1,4 +1,5 @@
 import React, { useId, useRef, useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { useDrop } from 'react-aria';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
@@ -106,6 +107,7 @@ function Thumb({ file }: { file: File }) {
  */
 export function FileUpload(inProps: FileUploadProps) {
   const props = useDefaults('FileUpload', inProps) as FileUploadProps;
+  const m = useMessages();
   const { label, accept, multiple = true, maxSize, maxFiles, previews = true, disabled, name, className, classNames } = props;
   const [inner, setInner] = useState<UploadFile[]>(props.defaultFiles ?? []);
   const files = props.files ?? inner;
@@ -124,9 +126,9 @@ export function FileUpload(inProps: FileUploadProps) {
     const bad: FileRejection[] = [];
     const room = maxFiles !== undefined ? Math.max(0, maxFiles - files.length) : Infinity;
     for (const f of multiple ? list : list.slice(0, 1)) {
-      if (!matchesAccept(f, accept)) bad.push({ file: f, reason: 'type', message: `${f.name}: this file type isn't accepted.` });
-      else if (maxSize !== undefined && f.size > maxSize) bad.push({ file: f, reason: 'size', message: `${f.name}: larger than ${formatBytes(maxSize)}.` });
-      else if (ok.length >= room) bad.push({ file: f, reason: 'count', message: `${f.name}: you can add up to ${maxFiles} files.` });
+      if (!matchesAccept(f, accept)) bad.push({ file: f, reason: 'type', message: m.fileTypeRejected(f.name) });
+      else if (maxSize !== undefined && f.size > maxSize) bad.push({ file: f, reason: 'size', message: m.fileTooLarge(f.name, formatBytes(maxSize)) });
+      else if (ok.length >= room) bad.push({ file: f, reason: 'count', message: m.tooManyFiles(f.name, m.num(maxFiles!)) });
       else ok.push({ id: makeId(), file: f, status: 'queued' });
     }
     setRejected(bad);
@@ -149,7 +151,7 @@ export function FileUpload(inProps: FileUploadProps) {
 
   const hint =
     props.hint ??
-    [accept && accept.split(',').map((a) => a.trim().replace(/^\./, '').replace('/*', '').toUpperCase()).join(', '), maxSize !== undefined && `up to ${formatBytes(maxSize)}`, maxFiles !== undefined && `max ${maxFiles} files`]
+    [accept && accept.split(',').map((a) => a.trim().replace(/^\./, '').replace('/*', '').toUpperCase()).join(', '), maxSize !== undefined && m.upTo(formatBytes(maxSize)), maxFiles !== undefined && m.maxFiles(m.num(maxFiles))]
       .filter(Boolean)
       .join(' · ');
 
@@ -179,7 +181,7 @@ export function FileUpload(inProps: FileUploadProps) {
         <span id={`${id}-prompt`} className="sp-file-upload__prompt">
           {props.prompt ?? (
             <>
-              Drop {multiple ? 'files' : 'a file'} here or <u>browse</u>
+              {m.dropFiles(multiple)} <u>{m.browse}</u>
             </>
           )}
         </span>
@@ -210,7 +212,7 @@ export function FileUpload(inProps: FileUploadProps) {
         </ul>
       )}
       {files.length > 0 && (
-        <ul className={slot('sp-file-upload__list', classNames, 'list')} aria-label="Files">
+        <ul className={slot('sp-file-upload__list', classNames, 'list')} aria-label={m.files}>
           {files.map((f) => (
             <li key={f.id} className={slot('sp-file-upload__item', classNames, 'item')} data-status={f.status}>
               {previews && <Thumb file={f.file} />}
@@ -219,13 +221,13 @@ export function FileUpload(inProps: FileUploadProps) {
                   {f.file.name}
                 </span>
                 <span className="sp-file-upload__detail">
-                  {f.status === 'error' ? f.error ?? 'Upload failed' : f.status === 'uploading' && f.progress !== undefined ? `${Math.round(f.progress)}% · ${formatBytes(f.file.size)}` : formatBytes(f.file.size)}
+                  {f.status === 'error' ? f.error ?? m.uploadFailed : f.status === 'uploading' && f.progress !== undefined ? `${Math.round(f.progress)}% · ${formatBytes(f.file.size)}` : formatBytes(f.file.size)}
                 </span>
                 {f.status === 'uploading' && (
                   <span
                     className="sp-file-upload__progress"
                     role="progressbar"
-                    aria-label={`Uploading ${f.file.name}`}
+                    aria-label={m.uploading(f.file.name)}
                     aria-valuemin={0}
                     aria-valuemax={100}
                     aria-valuenow={f.progress !== undefined ? Math.round(f.progress) : undefined}
@@ -235,14 +237,14 @@ export function FileUpload(inProps: FileUploadProps) {
                 )}
               </div>
               {f.status === 'done' && (
-                <svg className="sp-file-upload__done" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Uploaded" role="img">
+                <svg className="sp-file-upload__done" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-label={m.uploaded} role="img">
                   <path d="M5 12.5l4.5 4.5L19 7.5" />
                 </svg>
               )}
               <button
                 type="button"
                 className="sp-file-upload__remove"
-                aria-label={`Remove ${f.file.name}`}
+                aria-label={m.remove(f.file.name)}
                 disabled={disabled}
                 onClick={() => {
                   setFiles(files.filter((x) => x.id !== f.id));

@@ -4625,6 +4625,12 @@
               "type": "string",
               "required": false,
               "description": "BCP 47 locale for dates, number formats and keyboard direction, e.g.\n`hi-IN`, `ar-EG`, `en-US`. Right-to-left locales mirror arrow keys.\nDefaults to the parent provider's, then the browser's."
+            },
+            {
+              "name": "messages",
+              "type": "SparkMessagesOverride",
+              "required": false,
+              "description": "Override any built-in text, or add a language: `{ close: 'Fermer', page: (n) => `Page ${n}` }`.\nHindi, Gujarati and Tamil are built in and follow `locale`."
             }
           ]
         }

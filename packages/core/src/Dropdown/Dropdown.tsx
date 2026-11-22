@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useMessages } from '../internal/messages';
 import { HiddenSelect, useButton, useSelect } from 'react-aria';
 import { useSelectState } from 'react-stately';
 import { Popover } from '../base/Popover';
@@ -84,6 +85,7 @@ export interface DropdownProps<V extends string | number = string | number> {
  */
 export function Dropdown<V extends string | number = string | number>(inProps: DropdownProps<V>) {
   const props = useDefaults('Dropdown', useDefaults('Select', inProps));
+  const m = useMessages();
   const {
     label,
     'aria-label': ariaLabel,
@@ -92,7 +94,7 @@ export function Dropdown<V extends string | number = string | number>(inProps: D
     defaultValue,
     onChange,
     onOpenChange,
-    placeholder = 'Select an option',
+    placeholder = m.selectPlaceholder,
     helperText,
     error,
     required,
@@ -100,7 +102,7 @@ export function Dropdown<V extends string | number = string | number>(inProps: D
     name,
     size = 'medium',
     startIcon,
-    emptyState = 'No options',
+    emptyState = m.noOptions,
     onFocus,
     onBlur,
     className,

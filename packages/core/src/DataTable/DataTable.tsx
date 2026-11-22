@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useMessages } from '../internal/messages';
 import {
   useLocale,
   useTable,
@@ -82,13 +83,14 @@ const textOf = (node: React.ReactNode): string => (typeof node === 'string' || t
  */
 export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
   const props = useDefaults('DataTable', inProps) as DataTableProps<RowT>;
+  const m = useMessages();
   const {
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledby,
     selectionMode = 'none',
     onRowAction,
     searchable,
-    searchPlaceholder = 'Search…',
+    searchPlaceholder = m.search,
     toolbar,
     bulkActions,
     pageSizeOptions = [10, 25, 50],
@@ -98,7 +100,7 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
     responsive = 'stack',
     stackBelow = 640,
     loading,
-    emptyState = 'No results',
+    emptyState = m.noResults,
     className,
     classNames,
   } = props;
@@ -144,7 +146,7 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
               <InputBase
                 type="search"
                 size="small"
-                aria-label={`Search ${ariaLabel ?? 'table'}`}
+                aria-label={ariaLabel ? m.searchNamed(ariaLabel) : m.search.replace('…', '')}
                 placeholder={searchPlaceholder}
                 value={table.search}
                 onChange={(e) => table.setSearch(e.target.value)}
@@ -184,7 +186,7 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
           </span>
           {pageSizeOptions.length > 0 && (
             <Dropdown
-              aria-label="Rows per page"
+              aria-label={m.rowsPerPage}
               size="small"
               className="sp-data-table__page-size"
               value={table.pageSize}
@@ -193,7 +195,7 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
             />
           )}
           <div className="sp-data-table__pager">
-            <button type="button" className="sp-field-button" aria-label="Previous page" disabled={!table.canPrev} onClick={() => table.setPage(table.page - 1)}>
+            <button type="button" className="sp-field-button" aria-label={m.previousPage} disabled={!table.canPrev} onClick={() => table.setPage(table.page - 1)}>
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -201,7 +203,7 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
             <span className="sp-data-table__page">
               {numberFormat.format(table.page + 1)} / {numberFormat.format(table.pageCount)}
             </span>
-            <button type="button" className="sp-field-button" aria-label="Next page" disabled={!table.canNext} onClick={() => table.setPage(table.page + 1)}>
+            <button type="button" className="sp-field-button" aria-label={m.nextPage} disabled={!table.canNext} onClick={() => table.setPage(table.page + 1)}>
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

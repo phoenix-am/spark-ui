@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { useButton, useLocale, useTimeField } from 'react-aria';
 import { useOverlayTriggerState, useSingleSelectListState, useTimeFieldState } from 'react-stately';
 import { Time } from '@internationalized/date';
@@ -71,6 +72,7 @@ const toMinutes = (t: Time) => t.hour * 60 + t.minute;
  */
 export function TimePicker(inProps: TimePickerProps) {
   const props = useDefaults('TimePicker', inProps) as TimePickerProps;
+  const m = useMessages();
   const {
     label,
     step = 30,
@@ -152,7 +154,7 @@ export function TimePicker(inProps: TimePickerProps) {
     },
   });
   const { buttonProps } = useButton(
-    { 'aria-label': 'Show times', isDisabled: disabled, onPress: () => overlay.toggle(), excludeFromTabOrder: false },
+    { 'aria-label': m.showTimes, isDisabled: disabled, onPress: () => overlay.toggle(), excludeFromTabOrder: false },
     triggerRef,
   );
 
@@ -180,7 +182,7 @@ export function TimePicker(inProps: TimePickerProps) {
           ))}
         </div>
         {clearable && state.value && !disabled && (
-          <button type="button" aria-label="Clear time" className="sp-date-picker__clear" onClick={() => setTime(null)}>
+          <button type="button" aria-label={m.clearTime} className="sp-date-picker__clear" onClick={() => setTime(null)}>
             <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
@@ -205,7 +207,7 @@ export function TimePicker(inProps: TimePickerProps) {
         <Popover state={overlay} triggerRef={groupRef} offset={8} matchTriggerWidth className={slot('sp-dropdown__popover sp-time-picker__popover', classNames, 'popover')}>
           <ListBox
             state={list}
-            aria-label={typeof label === 'string' ? `${label} suggestions` : 'Times'}
+            aria-label={typeof label === 'string' ? `${label}: ${m.times}` : m.times}
             autoFocus={list.selectedKey != null ? true : 'first'}
             shouldFocusWrap
             className={slot('sp-time-picker__list', classNames, 'list')}

@@ -71,3 +71,5 @@ export type { NumberFieldProps } from './NumberField';
 
 export { readEnergy, haptic, powerCut } from './internal/energy';
 export type { Energy, HapticKind } from './internal/energy';
+export { useMessages, builtInMessages } from './internal/messages';
+export type { SparkMessages, SparkMessagesOverride } from './internal/messages';

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMessages } from '../internal/messages';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 /* ----------------------------------------------------------- Breadcrumbs */
@@ -37,18 +38,19 @@ const Chevron = () => (
  * Style hooks: `.sp-breadcrumbs`, `__item`, `__link`, `__current`, `__separator`, `__ellipsis`.
  */
 export function Breadcrumbs(inProps: BreadcrumbsProps) {
+  const m = useMessages();
   const { items, maxItems, separator = <Chevron />, renderLink, className, classNames, ...rest } = useDefaults('Breadcrumbs', inProps) as BreadcrumbsProps;
   const collapse = maxItems !== undefined && items.length > maxItems && maxItems >= 2;
   const shown: Array<BreadcrumbItem | 'ellipsis'> = collapse ? [items[0], 'ellipsis', ...items.slice(items.length - (maxItems! - 1))] : items;
   return (
-    <nav aria-label={rest['aria-label'] ?? 'Breadcrumb'} className={slot('sp-breadcrumbs', classNames, 'root', className)}>
+    <nav aria-label={rest['aria-label'] ?? m.breadcrumb} className={slot('sp-breadcrumbs', classNames, 'root', className)}>
       <ol>
         {shown.map((item, i) => {
           const last = i === shown.length - 1;
           return (
             <li key={i} className={slot('sp-breadcrumbs__item', classNames, 'item')}>
               {item === 'ellipsis' ? (
-                <span className="sp-breadcrumbs__ellipsis" aria-label={`${items.length - maxItems! + 1} more`}>
+                <span className="sp-breadcrumbs__ellipsis" aria-label={m.moreItems(m.num(items.length - maxItems! + 1))}>
                   …
                 </span>
               ) : last || !item.href ? (
@@ -133,6 +135,7 @@ const Arrow = ({ dir }: { dir: 'left' | 'right' }) => (
  */
 export function Pagination(inProps: PaginationProps) {
   const props = useDefaults('Pagination', inProps) as PaginationProps;
+  const m = useMessages();
   const { count, siblings = 1, boundaries = 1, variant = 'pages', size = 'medium', disabled, getHref, labels = {}, className, classNames } = props;
   const [inner, setInner] = React.useState(props.defaultPage ?? 1);
   const page = Math.min(Math.max(1, props.page ?? inner), Math.max(1, count));
@@ -141,7 +144,7 @@ export function Pagination(inProps: PaginationProps) {
     if (props.page === undefined) setInner(p);
     props.onChange?.(p);
   };
-  const pageLabel = labels.page ?? ((n: number) => `Page ${n}`);
+  const pageLabel = labels.page ?? ((n: number) => m.page(m.num(n)));
   const item = (p: number, content: React.ReactNode, label: string, opts: { current?: boolean; off?: boolean } = {}) => {
     const common = {
       className: slot('sp-pagination__item', classNames, 'item'),
@@ -161,12 +164,12 @@ export function Pagination(inProps: PaginationProps) {
     );
   };
   return (
-    <nav aria-label={props['aria-label'] ?? 'Pagination'} className={slot('sp-pagination', classNames, 'root', className)} data-size={size} data-variant={variant}>
+    <nav aria-label={props['aria-label'] ?? m.pagination} className={slot('sp-pagination', classNames, 'root', className)} data-size={size} data-variant={variant}>
       <ul>
-        <li>{item(page - 1, <Arrow dir="left" />, labels.previous ?? 'Previous page', { off: page <= 1 })}</li>
+        <li>{item(page - 1, <Arrow dir="left" />, labels.previous ?? m.previousPage, { off: page <= 1 })}</li>
         {variant === 'compact' ? (
           <li className={slot('sp-pagination__summary', classNames, 'summary')} aria-live="polite">
-            {labels.of ? labels.of(page, count) : `Page ${page} of ${count}`}
+            {labels.of ? labels.of(page, count) : m.pageOf(m.num(page), m.num(count))}
           </li>
         ) : (
           paginationRange(page, count, siblings, boundaries).map((p, i) => (
@@ -176,12 +179,12 @@ export function Pagination(inProps: PaginationProps) {
                   …
                 </span>
               ) : (
-                item(p, p, pageLabel(p), { current: p === page })
+                item(p, m.num(p), pageLabel(p), { current: p === page })
               )}
             </li>
           ))
         )}
-        <li>{item(page + 1, <Arrow dir="right" />, labels.next ?? 'Next page', { off: page >= count })}</li>
+        <li>{item(page + 1, <Arrow dir="right" />, labels.next ?? m.nextPage, { off: page >= count })}</li>
       </ul>
     </nav>
   );

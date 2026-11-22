@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes, Spark, readEnergy, haptic } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes, Spark, readEnergy, haptic, builtInMessages } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -953,5 +953,37 @@ describe('Energy dial', () => {
     rerender(<SparkProvider energy="off" haptics><i data-testid="t" /></SparkProvider>);
     expect(haptic('toggle', screen.getByTestId('t'))).toBe(false);
     expect(vibrate).not.toHaveBeenCalled();
+  });
+});
+
+describe('Built-in text follows the locale', () => {
+  it('Pagination and Stepper speak Hindi, with Devanagari digits on request', () => {
+    render(
+      <SparkProvider locale="hi-IN-u-nu-deva">
+        <Pagination count={5} defaultPage={2} />
+        <Stepper steps={[{ label: 'क' }, { label: 'ख' }]} active={0} />
+      </SparkProvider>,
+    );
+    expect(screen.getByRole('navigation', { name: 'पेज नेविगेशन' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'अगला पेज' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'पेज २' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('navigation', { name: 'प्रगति' })).toHaveTextContent('चरण १ / २');
+  });
+
+  it('FileUpload errors in Gujarati; overrides win', async () => {
+    const user = userEvent.setup({ applyAccept: false });
+    const { container } = render(
+      <SparkProvider locale="gu-IN" messages={{ browse: 'ફાઇલ પસંદ કરો' }}>
+        <FileUpload accept=".pdf" />
+      </SparkProvider>,
+    );
+    expect(screen.getByText('ફાઇલ પસંદ કરો')).toBeInTheDocument();
+    await user.upload(container.querySelector('input[type=file]') as HTMLInputElement, new File(['x'], 'a.png', { type: 'image/png' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('a.png: આ પ્રકારની ફાઇલ સ્વીકાર્ય નથી.');
+  });
+
+  it('every language defines every key', () => {
+    const keys = Object.keys(builtInMessages.en).sort();
+    for (const [lang, table] of Object.entries(builtInMessages)) expect([lang, Object.keys(table).sort()]).toEqual([lang, keys]);
   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMessages } from '../internal/messages';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
@@ -101,7 +102,8 @@ const spinners = { small: 16, medium: 24, large: 36 };
 
 /** Spinner: an arc of current with a spark at its head. Style hooks: `.sp-spinner`, `__track`, `__arc`, `__head`. */
 export function Spinner(inProps: SpinnerProps) {
-  const { size = 'medium', tone = 'brand', label = 'Loading' } = useDefaults('Spinner', inProps);
+  const m = useMessages();
+  const { size = 'medium', tone = 'brand', label = m.loading } = useDefaults('Spinner', inProps);
   const s = spinners[size];
   const stroke = Math.max(2, s / 10);
   const r = (s - stroke) / 2;

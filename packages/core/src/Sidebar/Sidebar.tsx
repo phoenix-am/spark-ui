@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { useLocale } from 'react-aria';
 import { Drawer } from '../Drawer';
 import { Tooltip } from '../Tooltip';
@@ -86,6 +87,7 @@ const contains = (item: SidebarItem, id?: string): boolean => !!id && (item.id =
  */
 export function Sidebar(inProps: SidebarProps) {
   const props = useDefaults('Sidebar', inProps);
+  const m = useMessages();
   const { collapsed, defaultCollapsed = false, onCollapsedChange, mobileBreakpoint = 768, mobileOpen = false, onMobileOpenChange, value, defaultValue, onChange } = props;
   const [innerCollapsed, setInnerCollapsed] = useState(defaultCollapsed);
   const isCollapsed = collapsed ?? innerCollapsed;
@@ -105,7 +107,7 @@ export function Sidebar(inProps: SidebarProps) {
 
   if (narrow) {
     return (
-      <Drawer open={mobileOpen} onClose={() => onMobileOpenChange?.(false)} placement="start" size="small" aria-label={props['aria-label'] ?? 'Main'} closeButton>
+      <Drawer open={mobileOpen} onClose={() => onMobileOpenChange?.(false)} placement="start" size="small" aria-label={props['aria-label'] ?? m.mainNavigation} closeButton>
         <SidebarContent {...props} collapsed={false} collapsible={false} active={active} select={select} mobile />
       </Drawer>
     );
@@ -120,7 +122,7 @@ function SidebarContent({
   collapsible = true,
   header,
   footer,
-  'aria-label': ariaLabel = 'Main',
+  'aria-label': ariaLabelProp,
   className,
   classNames,
   active,
@@ -128,6 +130,8 @@ function SidebarContent({
   mobile,
 }: SidebarProps & { collapsed: boolean; setCollapsed?: (v: boolean) => void; active?: string; select: (item: SidebarItem) => void; mobile?: boolean }) {
   const { direction } = useLocale();
+  const m = useMessages();
+  const ariaLabel = ariaLabelProp ?? m.mainNavigation;
   // Consecutive loose items share one heading-less section; sections are copied, never mutated.
   const sections: Array<SidebarSection & { loose?: boolean }> = [];
   for (const x of items) {
@@ -151,7 +155,7 @@ function SidebarContent({
         <button
           type="button"
           className={slot('sp-sidebar__toggle', classNames, 'toggle')}
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          aria-label={collapsed ? m.expandSidebar : m.collapseSidebar}
           aria-expanded={!collapsed}
           onClick={() => setCollapsed(!collapsed)}
         >

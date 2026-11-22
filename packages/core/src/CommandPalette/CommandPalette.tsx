@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { useDialog } from 'react-aria';
 import { Overlay } from '../base/Overlay';
 import { InputBase } from '../base/InputBase';
@@ -132,16 +133,20 @@ function Panel({
   filter = true,
   onSelect,
   closeOnSelect = true,
-  placeholder = 'Type a command or search…',
-  emptyState = 'No results',
+  placeholder: placeholderProp,
+  emptyState: emptyStateProp,
   loading,
-  'aria-label': ariaLabel = 'Command palette',
+  'aria-label': ariaLabelProp,
   hideFooter,
   classNames,
   panelProps,
   panelRef,
   close,
 }: CommandPaletteProps & { panelProps: React.HTMLAttributes<HTMLElement>; panelRef: React.RefObject<HTMLDivElement>; close: () => void }) {
+  const m = useMessages();
+  const placeholder = placeholderProp ?? m.commandPlaceholder;
+  const emptyState = emptyStateProp ?? m.noResults;
+  const ariaLabel = ariaLabelProp ?? m.commandPalette;
   const { dialogProps } = useDialog({ 'aria-label': ariaLabel }, panelRef);
   const [search, setSearch] = useState('');
   const [active, setActive] = useState(0);
@@ -215,7 +220,7 @@ function Panel({
       <div aria-hidden="true" className="sp-command__current sp-current" data-live={search ? true : undefined} />
       <InputBase
         role="combobox"
-        aria-label="Search commands"
+        aria-label={m.searchCommands}
         aria-expanded={flat.length > 0}
         aria-controls={listId}
         aria-autocomplete="list"
@@ -239,7 +244,7 @@ function Panel({
         }
         endAdornment={<kbd className="sp-command__esc">esc</kbd>}
       />
-      <div ref={listRef} id={listId} role="listbox" aria-label="Commands" className={slot('sp-command__list', classNames, 'list')}>
+      <div ref={listRef} id={listId} role="listbox" aria-label={m.commands} className={slot('sp-command__list', classNames, 'list')}>
         {loading && (
           <div className="sp-command__status" role="status">
             <span className="sp-combobox__spinner" aria-hidden="true" /> Loading…

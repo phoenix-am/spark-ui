@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMessages } from '../internal/messages';
 import { useDialog } from 'react-aria';
 import { Overlay } from '../base/Overlay';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
@@ -63,6 +64,7 @@ function ModalPanel({
   panelProps,
   panelRef,
 }: Omit<ModalProps, 'open'> & { panelProps: React.HTMLAttributes<HTMLElement>; panelRef: React.RefObject<HTMLDivElement> }) {
+  const m = useMessages();
   const { dialogProps, titleProps } = useDialog({}, panelRef);
   const descId = React.useId();
 
@@ -87,7 +89,7 @@ function ModalPanel({
             </p>
           )}
         </div>
-        <button type="button" aria-label="Close" onClick={onClose} className={slot('sp-modal__close', classNames, 'close')}>
+        <button type="button" aria-label={m.close} onClick={onClose} className={slot('sp-modal__close', classNames, 'close')}>
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
             <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>

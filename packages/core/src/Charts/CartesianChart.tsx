@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { ChartBaseProps, ChartFrame, MARGIN, TooltipBody, linear, niceTicks, seriesColor, useFormatters, useHiddenSeries } from './core';
 import { useDefaults } from '../internal/defaults';
 
@@ -71,6 +72,7 @@ export function LineChart<Row>(inProps: LineChartProps<Row>) {
   const [active, setActive] = useState<number | null>(null);
   const [tipX, setTipX] = useState(0);
   const f = useFormatters<Row>(props);
+  const msg = useMessages();
   const visible = series.map((s, i) => ({ s, i })).filter(({ s }) => !hidden.has(s.key));
 
   // Stacked totals per row, bottom-up in series order.
@@ -110,7 +112,7 @@ export function LineChart<Row>(inProps: LineChartProps<Row>) {
         height={height}
         className="sp-chart__svg"
         role="img"
-        aria-label={`${typeof props.title === 'string' ? props.title : props['aria-label'] ?? 'Chart'}: ${visible.map(({ s }) => s.label).join(', ')}`}
+        aria-label={`${typeof props.title === 'string' ? props.title : props['aria-label'] ?? msg.chart}: ${visible.map(({ s }) => s.label).join(', ')}`}
         tabIndex={0}
         onPointerMove={(e) => pick(e.clientX, e.currentTarget.getBoundingClientRect())}
         onPointerLeave={() => setActive(null)}
@@ -206,6 +208,7 @@ export function BarChart<Row>(inProps: BarChartProps<Row>) {
   const [active, setActive] = useState<number | null>(null);
   const [tip, setTip] = useState<{ x: number; y: number } | null>(null);
   const f = useFormatters<Row>(props);
+  const msg = useMessages();
   const visible = series.map((s, i) => ({ s, i })).filter(({ s }) => !hidden.has(s.key));
   const totals = data.map((row) => visible.reduce((a, { s }) => a + num((row as Record<string, unknown>)[s.key]), 0));
   const maxV = stacked ? Math.max(1, ...totals) : Math.max(1, ...data.flatMap((row) => visible.map(({ s }) => num((row as Record<string, unknown>)[s.key]))));
@@ -240,7 +243,7 @@ export function BarChart<Row>(inProps: BarChartProps<Row>) {
         height={height}
         className="sp-chart__svg"
         role="img"
-        aria-label={`${typeof props.title === 'string' ? props.title : props['aria-label'] ?? 'Chart'}: ${visible.map(({ s }) => s.label).join(', ')}`}
+        aria-label={`${typeof props.title === 'string' ? props.title : props['aria-label'] ?? msg.chart}: ${visible.map(({ s }) => s.label).join(', ')}`}
         tabIndex={0}
         onPointerMove={(e) => at(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect())}
         onPointerLeave={() => setActive(null)}

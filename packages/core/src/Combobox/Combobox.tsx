@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useMessages } from '../internal/messages';
 import { useButton, useComboBox, useFilter } from 'react-aria';
 import { useComboBoxState } from 'react-stately';
 import { InputBase } from '../base/InputBase';
@@ -78,6 +79,7 @@ export interface ComboboxProps<V extends string | number = string | number> {
  * list `.sp-popover`, `.sp-listbox` and `.sp-list-item`.
  */
 export function Combobox<V extends string | number = string | number>(inProps: ComboboxProps<V>) {
+  const m = useMessages();
   const {
     label,
     'aria-label': ariaLabel,
@@ -101,8 +103,8 @@ export function Combobox<V extends string | number = string | number>(inProps: C
     name,
     size = 'medium',
     startIcon,
-    emptyState = 'No results',
-    loadingText = 'Loading…',
+    emptyState = m.noResults,
+    loadingText = `${m.loading}…`,
     className,
     classNames,
   } = useDefaults('Combobox', inProps);
@@ -189,7 +191,7 @@ export function Combobox<V extends string | number = string | number>(inProps: C
               <button
                 type="button"
                 tabIndex={-1}
-                aria-label="Clear"
+                aria-label={m.clear}
                 className="sp-field-button"
                 onClick={() => {
                   state.setSelectedKey(null);

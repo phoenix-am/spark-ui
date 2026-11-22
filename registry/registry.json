@@ -8,7 +8,9 @@
       "type": "registry:lib",
       "title": "Spark UI utilities",
       "description": "Shared helpers: class names, defaults and slots, tones, portal theming.",
-      "dependencies": [],
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
       "registryDependencies": [
         "@sparkwire/styles"
       ],
@@ -27,6 +29,11 @@
           "path": "components/spark-ui/internal/energy.ts",
           "type": "registry:lib",
           "target": "components/spark-ui/internal/energy.ts"
+        },
+        {
+          "path": "components/spark-ui/internal/messages.tsx",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/messages.tsx"
         },
         {
           "path": "components/spark-ui/internal/tone.ts",

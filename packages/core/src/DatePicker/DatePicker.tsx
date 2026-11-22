@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useMessages } from '../internal/messages';
 import { I18nProvider, useButton, useDateField, useDatePicker, useDateSegment, useDialog, useLocale } from 'react-aria';
 import { useDateFieldState, useDatePickerState, DateFieldState, DateSegment } from 'react-stately';
 import { DateValue, createCalendar } from '@internationalized/date';
@@ -101,6 +102,7 @@ function DatePickerInner({
   classNames,
 }: DatePickerProps) {
   const { direction } = useLocale();
+  const m = useMessages();
   const firstDay = firstDayOfWeek ?? toFirstDay(weekStartsOn);
   const ariaProps = {
     label,
@@ -155,7 +157,7 @@ function DatePickerInner({
       <div {...groupProps} ref={groupRef} className={slot('sp-date-picker__control', classNames, 'control')}>
         <DateField {...fieldProps} className={slot('sp-date-field', classNames, 'field')} />
         {clearable && state.value && !disabled && (
-          <button type="button" aria-label="Clear date" className="sp-date-picker__clear" onClick={() => state.setValue(null)}>
+          <button type="button" aria-label={m.clearDate} className="sp-date-picker__clear" onClick={() => state.setValue(null)}>
             <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
@@ -180,7 +182,7 @@ function DatePickerInner({
             <CalendarCore
               {...calendarProps}
               firstDayOfWeek={firstDay}
-              presets={presets?.map(toDatePreset) ?? (showToday ? [{ label: todayLabel ?? 'Today', value: () => today(getLocalTimeZone()).toDate(getLocalTimeZone()) }] : [])}
+              presets={presets?.map((p) => toDatePreset(p, m)) ?? (showToday ? [{ label: todayLabel ?? m.today, value: () => today(getLocalTimeZone()).toDate(getLocalTimeZone()) }] : [])}
               renderDay={renderDay}
               visibleMonths={visibleMonths}
               classNames={calendarClassNames}

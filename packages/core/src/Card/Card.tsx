@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMessages } from '../internal/messages';
 import { cx } from '../internal/cx';
 import { useDefaults } from '../internal/defaults';
 
@@ -78,9 +79,10 @@ const len = (v: number | string | undefined, fallback: string) => (typeof v === 
 
 /** Skeleton: a placeholder that shimmers like a line charging up. */
 export function Skeleton({ width, height, shape = 'rect', lines = 1 }: SkeletonProps) {
+  const m = useMessages();
   if (shape === 'text') {
     return (
-      <span role="status" aria-label="Loading" className="sp-skeleton-text" style={{ width: len(width, '100%') }}>
+      <span role="status" aria-label={m.loading} className="sp-skeleton-text" style={{ width: len(width, '100%') }}>
         {Array.from({ length: lines }, (_, i) => (
           <span
             key={i}
@@ -95,7 +97,7 @@ export function Skeleton({ width, height, shape = 'rect', lines = 1 }: SkeletonP
   const size = shape === 'circle' ? width ?? height ?? 40 : undefined;
   const w = len(size ?? width, '100%');
   return (
-    <span role="status" aria-label="Loading" className="sp-skeleton-wrap" style={{ width: w }}>
+    <span role="status" aria-label={m.loading} className="sp-skeleton-wrap" style={{ width: w }}>
       <span aria-hidden="true" className="sp-skeleton" data-shape={shape} style={{ width: w, height: len(size ?? height, '1rem') }} />
     </span>
   );

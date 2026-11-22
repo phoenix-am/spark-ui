@@ -1,4 +1,5 @@
 import React, { useId, useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { ClassNames, slot, useDefaults } from '../internal/defaults';
 import { useFormatters } from './core';
 
@@ -44,7 +45,8 @@ function arc(cx: number, cy: number, r0: number, r1: number, a0: number, a1: num
  */
 export function DonutChart(inProps: DonutChartProps) {
   const props = useDefaults('DonutChart', inProps) as DonutChartProps;
-  const { data, title, size = 200, thickness = 28, centerCaption = 'Total', className, classNames } = props;
+  const m = useMessages();
+  const { data, title, size = 200, thickness = 28, centerCaption = m.total, className, classNames } = props;
   const [active, setActive] = useState<number | null>(null);
   const f = useFormatters({ valueFormat: props.valueFormat });
   const titleId = useId();
@@ -72,7 +74,7 @@ export function DonutChart(inProps: DonutChartProps) {
       )}
       <div className={slot('sp-chart__donut', classNames, 'plot')}>
         <div className="sp-chart__donut-ring" style={{ width: size, height: size }}>
-          <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="group" aria-label={typeof title === 'string' ? title : props['aria-label'] ?? 'Donut chart'}>
+          <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="group" aria-label={typeof title === 'string' ? title : props['aria-label'] ?? m.chart}>
             {data.map((d, i) =>
               slices[i].a1 > slices[i].a0 ? (
                 <path

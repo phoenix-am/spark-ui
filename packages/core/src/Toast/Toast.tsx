@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { createPortal } from 'react-dom';
 import { Tone } from '../internal/tone';
 import { usePortalTheme } from '../internal/usePortalTheme';
@@ -48,6 +49,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const { anchorRef, themeProps } = usePortalTheme(items.length > 0);
+  const m = useMessages();
 
   const dismiss = useCallback((id: number) => setItems((all) => all.filter((t) => t.id !== id)), []);
   const toast = useCallback((o: ToastOptions) => {
@@ -63,7 +65,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       <span ref={anchorRef} hidden />
       {mounted &&
         createPortal(
-          <div role="region" aria-label="Notifications" className="sp-toast-region" {...themeProps}>
+          <div role="region" aria-label={m.notifications} className="sp-toast-region" {...themeProps}>
             {items.map((t) => (
               <ToastCard key={t.id} item={t} onClose={() => dismiss(t.id)} />
             ))}
@@ -75,6 +77,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 }
 
 function ToastCard({ item, onClose }: { item: ToastItem; onClose: () => void }) {
+  const m = useMessages();
   const [paused, setPaused] = useState(false);
   const remaining = useRef(item.duration);
   const started = useRef(Date.now());
@@ -117,7 +120,7 @@ function ToastCard({ item, onClose }: { item: ToastItem; onClose: () => void }) 
           </button>
         )}
       </div>
-      <button type="button" aria-label="Dismiss notification" onClick={onClose} className="sp-toast__close">
+      <button type="button" aria-label={m.dismissNotification} onClick={onClose} className="sp-toast__close">
         <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
           <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>

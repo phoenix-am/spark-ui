@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useMessages } from '../internal/messages';
 import { I18nProvider, useButton, useDateRangePicker, useLocale } from 'react-aria';
 import { useDateRangePickerState } from 'react-stately';
 import type { DateValue } from '@internationalized/date';
@@ -100,6 +101,7 @@ function Inner({
   calendarClassNames,
 }: DateRangePickerProps) {
   const { direction } = useLocale();
+  const m = useMessages();
   const firstDay = firstDayOfWeek ?? toFirstDay(weekStartsOn);
   const toRange = (r?: DateRange | null) => (r === undefined ? undefined : r === null ? null : { start: toDateValue(r.start)!, end: toDateValue(r.end)! });
   const ariaProps = {
@@ -161,7 +163,7 @@ function Inner({
         </span>
         <DateField {...endFieldProps} className={slot('sp-date-field', classNames, 'field')} />
         {clearable && hasValue && !disabled && (
-          <button type="button" aria-label="Clear dates" className="sp-date-picker__clear" onClick={() => state.setValue(null)}>
+          <button type="button" aria-label={m.clearDates} className="sp-date-picker__clear" onClick={() => state.setValue(null)}>
             <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
@@ -190,7 +192,7 @@ function Inner({
               firstDayOfWeek={firstDay}
               visibleMonths={visibleMonths}
               renderDay={renderDay}
-              presets={presets?.map(toRangePreset) ?? []}
+              presets={presets?.map((p) => toRangePreset(p, m)) ?? []}
               classNames={calendarClassNames}
             />
           </Dialog>

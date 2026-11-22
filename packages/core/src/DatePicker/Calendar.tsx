@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useMessages } from '../internal/messages';
 import { I18nProvider, useButton, useCalendar, useCalendarCell, useCalendarGrid, useDateFormatter, useLocale, useRangeCalendar } from 'react-aria';
 import { useCalendarState, useRangeCalendarState, CalendarState, RangeCalendarState } from 'react-stately';
 import { CalendarDate, DateValue, createCalendar, getLocalTimeZone, isSameDay, isToday, today } from '@internationalized/date';
@@ -131,8 +132,9 @@ export function Calendar(inProps: CalendarProps) {
   const props = useDefaults('Calendar', inProps);
   const { value, defaultValue, onChange, min, max, firstDayOfWeek, weekStartsOn, locale, calendar, presets, showToday = true, todayLabel, ...ui } = props;
   const { locale: inherited } = useLocale();
+  const m = useMessages();
   const isDateUnavailable = makeUnavailable(props);
-  const resolved = presets?.map(toDatePreset) ?? (showToday ? [{ label: todayLabel ?? 'Today', value: () => fromDateValue(today(getLocalTimeZone()))! }] : []);
+  const resolved = presets?.map((p) => toDatePreset(p, m)) ?? (showToday ? [{ label: todayLabel ?? m.today, value: () => fromDateValue(today(getLocalTimeZone()))! }] : []);
   return (
     <I18nProvider locale={withCalendar(locale ?? inherited, calendar)}>
       <CalendarCore
@@ -218,9 +220,10 @@ export function RangeCalendar(inProps: RangeCalendarProps) {
   const props = useDefaults('RangeCalendar', inProps);
   const { value, defaultValue, onChange, min, max, firstDayOfWeek, weekStartsOn, locale, calendar, presets, showToday = false, todayLabel, ...ui } = props;
   const { locale: inherited } = useLocale();
+  const m = useMessages();
   const isDateUnavailable = makeUnavailable(props);
   const toRange = (r?: DateRange | null) => (r === undefined ? undefined : r === null ? null : { start: toDateValue(r.start)!, end: toDateValue(r.end)! });
-  const resolved = presets?.map(toRangePreset) ?? (showToday ? [toRangePreset('today')] : []);
+  const resolved = presets?.map((p) => toRangePreset(p, m)) ?? (showToday ? [toRangePreset('today', m)] : []);
   if (resolved[0] && todayLabel && !presets) resolved[0] = { ...resolved[0], label: todayLabel };
   return (
     <I18nProvider locale={withCalendar(locale ?? inherited, calendar)}>

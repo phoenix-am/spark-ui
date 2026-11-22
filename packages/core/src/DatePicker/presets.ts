@@ -1,3 +1,4 @@
+import type { SparkMessages } from '../internal/messages';
 /**
  * Ready-made shortcuts for Calendar, DatePicker, RangeCalendar and
  * DateRangePicker. Each preset's value is a function, so "Tomorrow" is
@@ -108,19 +109,37 @@ const parseOffset = (s: string) => {
   return m ? { n: Number(m[2]) * (m[1] === '-' ? -1 : 1), unit: UNITS[m[3]] } : null;
 };
 
-export function toDatePreset(p: DatePreset | DatePresetName): DatePreset {
-  if (typeof p !== 'string') return p;
-  if (p === 'today' || p === 'tomorrow' || p === 'yesterday') return datePresets[p]();
-  const o = parseOffset(p);
-  if (!o) throw new Error(`Unknown date preset "${p}"`);
-  return datePresets.in(o.n, o.unit);
+/** What preset labels need from the message table (see `useMessages`). */
+export type PresetText = Pick<SparkMessages, 'today' | 'thisWeek' | 'thisMonth' | 'thisYear' | 'nextAmount' | 'lastAmount'> & { locale: string };
+
+const SINGULAR: Record<PresetUnit, Intl.RelativeTimeFormatUnit> = { days: 'day', weeks: 'week', months: 'month', years: 'year' };
+const cap = (s: string, locale: string) => s.charAt(0).toLocaleUpperCase(locale) + s.slice(1);
+/** "Tomorrow", "In 7 days", "2 weeks ago", in the locale's own words. */
+function relativeLabel(n: number, unit: PresetUnit, t: PresetText) {
+  return cap(new Intl.RelativeTimeFormat(t.locale, { numeric: 'auto' }).format(n, SINGULAR[unit]), t.locale);
+}
+/** "7 days", "1 month", in the locale's own words. */
+function amount(n: number, unit: PresetUnit, t: PresetText) {
+  return new Intl.NumberFormat(t.locale, { style: 'unit', unit: SINGULAR[unit], unitDisplay: 'long' }).format(n);
 }
 
-export function toRangePreset(p: RangePreset | RangePresetName): RangePreset {
+/** Turn a short name into a preset. With `text`, labels follow the locale; without it, English. */
+export function toDatePreset(p: DatePreset | DatePresetName, text?: PresetText): DatePreset {
   if (typeof p !== 'string') return p;
-  if (p === 'today') return { label: 'Today', value: () => ({ start: today(), end: today() }) };
-  if (p === 'thisWeek' || p === 'thisMonth' || p === 'thisYear') return rangePresets[p]();
+  if (p === 'today') return datePresets.today(text?.today);
+  if (p === 'tomorrow' || p === 'yesterday') return text ? datePresets.in(p === 'tomorrow' ? 1 : -1, 'days', relativeLabel(p === 'tomorrow' ? 1 : -1, 'days', text)) : datePresets[p]();
+  const o = parseOffset(p);
+  if (!o) throw new Error(`Unknown date preset "${p}"`);
+  return datePresets.in(o.n, o.unit, text ? relativeLabel(o.n, o.unit, text) : undefined);
+}
+
+export function toRangePreset(p: RangePreset | RangePresetName, text?: PresetText): RangePreset {
+  if (typeof p !== 'string') return p;
+  if (p === 'today') return { label: text?.today ?? 'Today', value: () => ({ start: today(), end: today() }) };
+  if (p === 'thisWeek' || p === 'thisMonth' || p === 'thisYear') return rangePresets[p](text?.[p]);
   const o = parseOffset(p);
   if (!o) throw new Error(`Unknown range preset "${p}"`);
-  return o.n >= 0 ? rangePresets.next(o.n, o.unit) : rangePresets.last(-o.n, o.unit);
+  return o.n >= 0
+    ? rangePresets.next(o.n, o.unit, text ? text.nextAmount(amount(o.n, o.unit, text)) : undefined)
+    : rangePresets.last(-o.n, o.unit, text ? text.lastAmount(amount(-o.n, o.unit, text)) : undefined);
 }

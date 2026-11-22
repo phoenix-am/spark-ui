@@ -151,6 +151,17 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### Languages
+
+Every piece of text Spark UI writes itself (button labels, screen-reader names, empty states, upload errors, date presets) follows `SparkProvider locale`. English, Hindi, Gujarati and Tamil are built in; relative presets like "Tomorrow" or "Last 30 days" use the browser's `Intl` data, so they read naturally in any language. Add `-u-nu-deva` / `-u-nu-gujr` to the locale for native digits.
+
+```tsx
+<SparkProvider locale="gu-IN">…</SparkProvider>
+<SparkProvider locale="fr-FR" messages={{ close: 'Fermer', nextPage: 'Page suivante' }}>…</SparkProvider>
+```
+
+`useMessages()` gives your own components the same table.
+
 ### Energy dial, `useSpark()` and haptics
 
 One setting scales all of Spark UI's motion:

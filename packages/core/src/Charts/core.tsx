@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { useLocale } from 'react-aria';
 import { slot, ClassNames } from '../internal/defaults';
 
@@ -136,6 +137,7 @@ export function ChartFrame<Row>({
   const [ref, width] = useWidth<HTMLDivElement>();
   const titleId = useId();
   const f = useFormatters<Row>({ valueFormat, formatX });
+  const m = useMessages();
   const showLegend = legend ?? series.length > 1;
   const cols = tableColumns ?? series.map((s) => ({ key: s.key, label: s.label }));
   return (
@@ -146,7 +148,7 @@ export function ChartFrame<Row>({
         </figcaption>
       )}
       {showLegend && (
-        <ul className={slot('sp-chart__legend', classNames, 'legend')} aria-label="Series">
+        <ul className={slot('sp-chart__legend', classNames, 'legend')} aria-label={m.series}>
           {series.map((s, i) => (
             <li key={s.key}>
               <button type="button" className="sp-chart__key" aria-pressed={!hidden.has(s.key)} onClick={() => onToggle(s.key)}>
@@ -172,7 +174,7 @@ export function ChartFrame<Row>({
       </div>
       {tableView && (
         <details className={slot('sp-chart__table', classNames, 'table')}>
-          <summary>Data table</summary>
+          <summary>{m.dataTable}</summary>
           <div className="sp-chart__table-scroll">
             <table>
               <thead>

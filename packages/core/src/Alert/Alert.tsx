@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useMessages } from '../internal/messages';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
 export type AlertTone = 'info' | 'success' | 'warning' | 'error';
@@ -50,7 +51,8 @@ function ToneIcon({ tone }: { tone: AlertTone }) {
  * Style hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`, `__action`, `__dismiss`.
  */
 export function Alert(inProps: AlertProps) {
-  const { tone = 'info', title, children, icon, action, onDismiss, variant = 'soft', live, dismissLabel = 'Dismiss', className, classNames, ...rest } = useDefaults(
+  const m = useMessages();
+  const { tone = 'info', title, children, icon, action, onDismiss, variant = 'soft', live, dismissLabel = m.dismiss, className, classNames, ...rest } = useDefaults(
     'Alert',
     inProps,
   ) as AlertProps;
