@@ -13,9 +13,14 @@ on:
         type: boolean
         default: true
 
+# Publishing uses npm Trusted Publishing: GitHub proves to npm that this
+# workflow in this repo is running, so no long-lived token is needed. Until
+# every package has phoenix-am/spark-ui + publish.yml added as its trusted
+# publisher on npmjs.com, the NPM_TOKEN secret is used as a fallback; delete
+# the secret once trusted publishing is set up.
 permissions:
   contents: read
-  id-token: write # npm provenance: a verified "built from this repo" badge
+  id-token: write # trusted publishing and provenance
 
 concurrency:
   group: publish
@@ -25,12 +30,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
           registry-url: https://registry.npmjs.org
+      # Trusted publishing needs npm 11.5.1 or later.
+      - run: npm install -g npm@^11.5.1
       - run: npm ci --legacy-peer-deps
       - name: Typecheck
         run: npm run typecheck
