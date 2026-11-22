@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes, Spark, readEnergy, haptic, builtInMessages } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes, Spark, readEnergy, haptic, builtInMessages, Card, Badge } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -985,5 +985,73 @@ describe('Built-in text follows the locale', () => {
   it('every language defines every key', () => {
     const keys = Object.keys(builtInMessages.en).sort();
     for (const [lang, table] of Object.entries(builtInMessages)) expect([lang, Object.keys(table).sort()]).toEqual([lang, keys]);
+  });
+});
+
+describe('render prop and theme variants', () => {
+  it('Button renders a link with its behaviour, classes and both click handlers', async () => {
+    const user = userEvent.setup();
+    const mine = jest.fn();
+    const theirs = jest.fn();
+    render(
+      <Button variant="outlined" onClick={mine} render={<a href="/pricing" className="router-link" onClick={theirs} />}>
+        Pricing
+      </Button>,
+    );
+    const link = screen.getByRole('link', { name: 'Pricing' });
+    expect(link).toHaveAttribute('href', '/pricing');
+    expect(link.className).toMatch(/sp-button-base/);
+    expect(link.className).toMatch(/router-link/);
+    expect(link).not.toHaveAttribute('type');
+    await user.click(link);
+    expect(mine).toHaveBeenCalledTimes(1);
+    expect(theirs).toHaveBeenCalledTimes(1);
+  });
+
+  it('a disabled rendered button is aria-disabled and swallows clicks', async () => {
+    const user = userEvent.setup();
+    const onClick = jest.fn();
+    render(<Button disabled onClick={onClick} render={<a href="/x" />}>Go</Button>);
+    const link = screen.getByRole('link', { name: 'Go' });
+    expect(link).toHaveAttribute('aria-disabled', 'true');
+    await user.click(link);
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('Card and Badge accept an element or a function', () => {
+    const ref = React.createRef<HTMLElement>();
+    render(
+      <>
+        <Card live render={<article ref={ref} data-testid="card" />}>Body</Card>
+        <Badge render={(props) => <a href="/inbox" {...props} />}>3 new</Badge>
+      </>,
+    );
+    const card = screen.getByTestId('card');
+    expect(card.tagName).toBe('ARTICLE');
+    expect(card).toHaveClass('sp-card');
+    expect(card).toHaveAttribute('data-live', 'true');
+    expect(ref.current).toBe(card);
+    expect(screen.getByRole('link', { name: '3 new' })).toHaveClass('sp-badge');
+  });
+
+  it('variants map a custom value to built-in props and add classes; nested providers stack', () => {
+    render(
+      <SparkProvider components={{ Button: { variants: [{ match: { variant: 'danger' }, props: { variant: 'contained', color: 'error' }, className: 'btn-danger' }] } }}>
+        <SparkProvider components={{ Button: { variants: [{ match: { size: 'large' }, classNames: { root: 'btn-big' } }] } }}>
+          <Button variant={'danger' as never}>Delete</Button>
+          <Button size="large">Big</Button>
+          <Button variant={'danger' as never} size="large">Both</Button>
+        </SparkProvider>
+      </SparkProvider>,
+    );
+    const del = screen.getByRole('button', { name: 'Delete' });
+    expect(del).toHaveClass('btn-danger');
+    expect(del.outerHTML).toMatch(/contained/);
+    expect(del.outerHTML).toMatch(/error/);
+    expect(del).toHaveAttribute("data-variant", "contained");
+    expect(screen.getByRole('button', { name: 'Big' })).toHaveClass('btn-big');
+    const both = screen.getByRole('button', { name: 'Both' });
+    expect(both).toHaveClass('btn-danger');
+    expect(both).toHaveClass('btn-big');
   });
 });

@@ -151,6 +151,47 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### `render` prop and theme variants
+
+`render` swaps the element a component renders, keeping its behaviour and styling. Class names are joined, handlers chained, refs merged:
+
+```tsx
+<Button render={<Link href="/pricing" />}>Pricing</Button>
+<Card render={<motion.article layout />}>…</Card>
+<Badge render={(props) => <a href="/inbox" {...props} />}>3</Badge>
+```
+
+Available on Button (and ButtonBase), Card, Badge and Alert. Menu and Sidebar have their own render props, and complex widgets (Select, DatePicker…) keep their own markup on purpose so their accessibility stays intact.
+
+Theme variants define named looks once, for the whole app:
+
+```tsx
+<SparkProvider components={{ Button: { variants: [
+  { match: { variant: 'danger' }, props: { variant: 'contained', color: 'error' }, className: 'btn-danger' },
+] } }}>
+
+// types for the new value
+declare module '@sparkwire/core' { interface ButtonVariantOverrides { danger: true } }
+```
+
+A variant applies when every prop in `match` is equal; it can set props, a root class and per-part `classNames`. Nested providers stack.
+
+### Tailwind
+
+Every design token is available as a Tailwind utility, prefixed `spark-`, live with light/dark mode and your theme: `bg-spark-raised`, `text-spark-brand-ink`, `border-spark-border`, `rounded-spark-md`, `shadow-spark-lg`, `font-spark`, `text-spark-sm`, plus the full palettes (`bg-spark-gray-100`) and chart colours.
+
+```css
+/* Tailwind v4 */
+@import "tailwindcss";
+@import "@sparkwire/core/styles.css";
+@import "@sparkwire/core/tailwind.css";
+```
+
+```js
+// Tailwind v3: tailwind.config.js
+module.exports = { presets: [require('@sparkwire/core/tailwind-preset')] };
+```
+
 ### Blocks
 
 Whole pages built from the components, to copy and adapt: **dashboard** (sidebar, KPI tiles, charts, orders table), **sign-in** (validated form with progress and error states) and **settings** (tabs, save bar). They aren't in the npm package; copy one:

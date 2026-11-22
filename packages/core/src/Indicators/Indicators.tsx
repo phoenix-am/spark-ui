@@ -1,4 +1,5 @@
 import React from 'react';
+import { renderElement, type RenderProp } from '../internal/render';
 import { useMessages } from '../internal/messages';
 import { Tone } from '../internal/tone';
 import { cx } from '../internal/cx';
@@ -17,23 +18,26 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: 'soft' | 'solid';
   /** Extra classes for each part: root, led. */
   classNames?: ClassNames<'root' | 'led'>;
+  /** Render any element instead, e.g. a link: `render={<a href="/inbox" />}`. */
+  render?: RenderProp<{ tone: string }>;
 }
 
 /** Badge: a status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`. */
 export function Badge(inProps: BadgeProps) {
-  const { tone = 'brand', led = true, pulse = false, variant = 'soft', className, classNames, children, ...rest } = useDefaults('Badge', inProps);
-  return (
-    <span
-      className={slot('sp-badge', classNames, 'root', className)}
-      data-tone={tone}
-      data-variant={variant}
-      data-pulse={pulse || undefined}
-      {...rest}
-    >
-      {led && <span aria-hidden="true" className={slot('sp-badge__led', classNames, 'led')} />}
-      {children}
-    </span>
-  );
+  const { tone = 'brand', led = true, pulse = false, variant = 'soft', render, className, classNames, children, ...rest } = useDefaults('Badge', inProps);
+  return renderElement('span', render, {
+    className: slot('sp-badge', classNames, 'root', className),
+    'data-tone': tone,
+    'data-variant': variant,
+    'data-pulse': pulse || undefined,
+    ...rest,
+    children: (
+      <>
+        {led && <span aria-hidden="true" className={slot('sp-badge__led', classNames, 'led')} />}
+        {children}
+      </>
+    ),
+  }, { tone });
 }
 
 /* --------------------------------------------------------------- Progress */

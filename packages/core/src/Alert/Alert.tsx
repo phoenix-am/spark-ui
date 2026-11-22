@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { renderElement, type RenderProp } from '../internal/render';
 import { useMessages } from '../internal/messages';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
@@ -23,6 +24,8 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
    */
   live?: 'polite' | 'assertive' | 'off';
   dismissLabel?: string;
+  /** Render any element as the root, e.g. a `section` with your own landmark. */
+  render?: RenderProp<{ tone: AlertTone }>;
   classNames?: ClassNames<'root' | 'icon' | 'title' | 'body' | 'action' | 'dismiss'>;
 }
 
@@ -52,7 +55,7 @@ function ToneIcon({ tone }: { tone: AlertTone }) {
  */
 export function Alert(inProps: AlertProps) {
   const m = useMessages();
-  const { tone = 'info', title, children, icon, action, onDismiss, variant = 'soft', live, dismissLabel = m.dismiss, className, classNames, ...rest } = useDefaults(
+  const { tone = 'info', title, children, icon, action, onDismiss, variant = 'soft', live, dismissLabel = m.dismiss, render, className, classNames, ...rest } = useDefaults(
     'Alert',
     inProps,
   ) as AlertProps;
@@ -60,8 +63,15 @@ export function Alert(inProps: AlertProps) {
   if (!open) return null;
   const mode = live ?? (tone === 'error' ? 'assertive' : 'off');
   const role = mode === 'assertive' ? 'alert' : mode === 'polite' ? 'status' : undefined;
-  return (
-    <div {...rest} role={role} className={slot('sp-alert', classNames, 'root', className)} data-tone={tone === 'info' ? 'brand' : tone} data-kind={tone} data-variant={variant}>
+  return renderElement('div', render, {
+    ...rest,
+    role,
+    className: slot('sp-alert', classNames, 'root', className),
+    'data-tone': tone === 'info' ? 'brand' : tone,
+    'data-kind': tone,
+    'data-variant': variant,
+    children: (
+      <>
       {icon !== false && <span className={slot('sp-alert__icon', classNames, 'icon')}>{icon ?? <ToneIcon tone={tone} />}</span>}
       <div className="sp-alert__content">
         {title && <div className={slot('sp-alert__title', classNames, 'title')}>{title}</div>}
@@ -83,6 +93,7 @@ export function Alert(inProps: AlertProps) {
           </svg>
         </button>
       )}
-    </div>
-  );
+      </>
+    ),
+  }, { tone });
 }

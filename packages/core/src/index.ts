@@ -73,3 +73,6 @@ export { readEnergy, haptic, powerCut } from './internal/energy';
 export type { Energy, HapticKind } from './internal/energy';
 export { useMessages, builtInMessages } from './internal/messages';
 export type { SparkMessages, SparkMessagesOverride } from './internal/messages';
+export type { ComponentConfig, ComponentVariant } from './internal/defaults';
+export type { RenderProp } from './internal/render';
+export type { ButtonVariantOverrides } from './Button/Button.types';
