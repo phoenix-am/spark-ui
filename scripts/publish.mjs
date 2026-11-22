@@ -20,8 +20,10 @@ for (const dir of ORDER) {
   }
   console.log(`${dry ? 'Would publish' : 'Publishing'} ${name}@${version}`);
   execSync(dry ? 'npm pack --dry-run' : 'npm publish --access public --provenance', { cwd: `packages/${dir}`, stdio: 'inherit' });
-  // changesets/action reads this line to know what was published
-  if (!dry) console.log(`New tag: ${name}@${version}`);
+  // changesets/action learns what was published from this file (one JSON event per line).
+  if (!dry && process.env.CHANGESETS_OUTPUT) {
+    fs.appendFileSync(process.env.CHANGESETS_OUTPUT, JSON.stringify({ type: 'git-tag', tag: `${name}@${version}`, packageName: name }) + '\n');
+  }
   published.push(`${name}@${version}`);
 }
 console.log(published.length ? `Published ${published.length} package(s).` : 'Nothing new to publish.');
