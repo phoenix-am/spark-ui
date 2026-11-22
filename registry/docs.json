@@ -898,6 +898,387 @@
       "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs"
     },
     {
+      "name": "toggle-group",
+      "title": "ToggleGroup",
+      "summary": "Segmented control or a row of independent toggles, with arrow-key navigation.",
+      "components": [
+        {
+          "name": "ToggleGroup",
+          "description": "ToggleGroup: a row of related toggle buttons, as a segmented control\n(`single`) or independent toggles (`multiple`). Arrow keys move between\nitems, one Tab stop for the group; selected items have `aria-checked` /\n`aria-pressed`.\n\n```tsx\n<ToggleGroup aria-label=\"View\" defaultValue=\"grid\">\n  <ToggleGroup.Item value=\"list\">List</ToggleGroup.Item>\n  <ToggleGroup.Item value=\"grid\">Grid</ToggleGroup.Item>\n</ToggleGroup>\n```\n\nStyle hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]`.",
+          "props": [
+            {
+              "name": "allowEmpty",
+              "type": "boolean",
+              "required": false,
+              "description": "In `single` mode, allow clicking the selected item to clear it. Default `false`."
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "aria-labelledby",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"item\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultValue",
+              "type": "string | string[] | null",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "fullWidth",
+              "type": "boolean",
+              "required": false,
+              "description": "Stretch to fill the width."
+            },
+            {
+              "name": "onChange",
+              "type": "((value: M extends \"multiple\" ? string[] : string | null) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "orientation",
+              "type": "\"horizontal\" | \"vertical\"",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "selectionMode",
+              "type": "Mode",
+              "required": false,
+              "description": "`single` (default): one at a time, like a segmented control. `multiple`: each toggles on its own (bold / italic / underline)."
+            },
+            {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "value",
+              "type": "string | string[] | null",
+              "required": false,
+              "description": "Selected value(s): a string for `single`, a string[] for `multiple`."
+            },
+            {
+              "name": "variant",
+              "type": "\"segmented\" | \"outlined\"",
+              "required": false,
+              "description": "`segmented` (default): one track with a sliding fill. `outlined`: separate buttons."
+            }
+          ]
+        },
+        {
+          "name": "ToggleGroup.Item",
+          "description": "",
+          "props": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "icon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Icon before the label. For icon-only items, pass `aria-label`."
+            }
+          ]
+        },
+        {
+          "name": "ToggleGroupItem",
+          "description": "",
+          "props": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "icon",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Icon before the label. For icon-only items, pass `aria-label`."
+            }
+          ]
+        }
+      ],
+      "import": "import { ToggleGroup, ToggleGroup.Item, ToggleGroupItem } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add toggle-group",
+        "shadcn": "npx shadcn add @sparkwire/toggle-group",
+        "copiedImport": "import { ToggleGroup, ToggleGroup.Item, ToggleGroupItem } from '@/components/spark-ui/ToggleGroup';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-togglegroup--docs"
+    },
+    {
+      "name": "stepper",
+      "title": "Stepper",
+      "summary": "Progress through a multi-step flow; clickable steps, errors, vertical, compact on small screens.",
+      "components": [
+        {
+          "name": "Stepper",
+          "description": "Stepper: progress through a multi-step flow (checkout, onboarding,\nforms). Finished steps show a check, the current one is lit with flowing\ncurrent between steps, and failed ones show an error. Optionally\nclickable to go back. An ordered list with `aria-current=\"step\"`; status\nis spelled out for screen readers, never colour alone.\n\nStyle hooks: `.sp-stepper[data-orientation]`, `__step[data-status]`, `__indicator`, `__connector[data-done]`.",
+          "props": [
+            {
+              "name": "active",
+              "type": "number",
+              "required": true,
+              "description": "Index of the current step (0-based). Steps before it are complete."
+            },
+            {
+              "name": "steps",
+              "type": "StepItem[]",
+              "required": true,
+              "description": ""
+            },
+            {
+              "name": "aria-label",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"step\" | \"indicator\" | \"label\" | \"description\" | \"connector\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "clickable",
+              "type": "\"completed\" | \"all\"",
+              "required": false,
+              "description": "Let people jump back to a step by clicking it. `completed` (default when\n`onStepClick` is set): finished steps only. `all`: any step (non-linear)."
+            },
+            {
+              "name": "onStepClick",
+              "type": "((index: number) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "orientation",
+              "type": "\"horizontal\" | \"vertical\"",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "responsive",
+              "type": "boolean",
+              "required": false,
+              "description": "Under ~480px a horizontal stepper shows \"Step 2 of 4 · Label\". Default `true`."
+            }
+          ]
+        }
+      ],
+      "import": "import { Stepper } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add stepper",
+        "shadcn": "npx shadcn add @sparkwire/stepper",
+        "copiedImport": "import { Stepper } from '@/components/spark-ui/Stepper';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-stepper--docs"
+    },
+    {
+      "name": "file-upload",
+      "title": "FileUpload",
+      "summary": "Drop zone and file list with type/size/count checks, thumbnails, progress and errors.",
+      "components": [
+        {
+          "name": "FileUpload",
+          "description": "FileUpload: drop files on the zone or browse. Checks type, size and count\nbefore accepting, lists files with thumbnails, progress and errors, and\nlets people remove them. Uploading is yours: start it in `onAdd`, then\nfeed `progress` / `status` back through `files`.\n\nThe zone is a real button (keyboard and screen readers), and drag-and-drop\nuses React Aria's `useDrop`, which also accepts keyboard and screen-reader drops.\n\nStyle hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__item[data-status]`, `__progress`.",
+          "props": [
+            {
+              "name": "accept",
+              "type": "string",
+              "required": false,
+              "description": "Like the input attribute: \"image/*,.pdf\"."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "classNames",
+              "type": "Partial<Record<\"root\" | \"label\" | \"zone\" | \"list\" | \"item\" | \"errors\", string>>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultFiles",
+              "type": "UploadFile[]",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "files",
+              "type": "UploadFile[]",
+              "required": false,
+              "description": "Files in the list (controlled). Update `progress` / `status` as uploads run."
+            },
+            {
+              "name": "hint",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Line under the main prompt. Default lists accepted types and size."
+            },
+            {
+              "name": "label",
+              "type": "ReactNode",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "maxFiles",
+              "type": "number",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "maxSize",
+              "type": "number",
+              "required": false,
+              "description": "Bytes."
+            },
+            {
+              "name": "multiple",
+              "type": "boolean",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "Submit the files with a regular form."
+            },
+            {
+              "name": "onAdd",
+              "type": "((added: UploadFile[]) => void)",
+              "required": false,
+              "description": "Just the newly accepted files: start uploads here."
+            },
+            {
+              "name": "onChange",
+              "type": "((files: UploadFile[]) => void)",
+              "required": false,
+              "description": "Whole list after adding or removing."
+            },
+            {
+              "name": "onReject",
+              "type": "((rejected: FileRejection[]) => void)",
+              "required": false,
+              "description": "Files that failed `accept`, `maxSize` or `maxFiles`. Default messages are shown under the zone."
+            },
+            {
+              "name": "onRemove",
+              "type": "((file: UploadFile) => void)",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "previews",
+              "type": "boolean",
+              "required": false,
+              "description": "Image thumbnails in the list. Default `true`."
+            },
+            {
+              "name": "prompt",
+              "type": "ReactNode",
+              "required": false,
+              "description": "Main prompt. Default \"Drop files here or browse\"."
+            }
+          ]
+        }
+      ],
+      "import": "import { FileUpload } from '@sparkwire/core';",
+      "install": {
+        "package": "npm install @sparkwire/core   # then: import \"@sparkwire/core/styles.css\" once",
+        "copy": "npx sparkwire add file-upload",
+        "shadcn": "npx shadcn add @sparkwire/file-upload",
+        "copiedImport": "import { FileUpload } from '@/components/spark-ui/FileUpload';"
+      },
+      "storybook": "https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-fileupload--docs"
+    },
+    {
       "name": "time-picker",
       "title": "TimePicker",
       "summary": "Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.",

@@ -564,6 +564,80 @@
       ]
     },
     {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "ToggleGroup",
+      "description": "Segmented control or a row of independent toggles, with arrow-key navigation.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/ToggleGroup/ToggleGroup.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/ToggleGroup/ToggleGroup.tsx"
+        },
+        {
+          "path": "components/spark-ui/ToggleGroup/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/ToggleGroup/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Progress through a multi-step flow; clickable steps, errors, vertical, compact on small screens.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Stepper/Stepper.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Stepper/Stepper.tsx"
+        },
+        {
+          "path": "components/spark-ui/Stepper/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Stepper/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "FileUpload",
+      "description": "Drop zone and file list with type/size/count checks, thumbnails, progress and errors.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/FileUpload/FileUpload.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/FileUpload/FileUpload.tsx"
+        },
+        {
+          "path": "components/spark-ui/FileUpload/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/FileUpload/index.ts"
+        }
+      ]
+    },
+    {
       "name": "time-picker",
       "type": "registry:ui",
       "title": "TimePicker",

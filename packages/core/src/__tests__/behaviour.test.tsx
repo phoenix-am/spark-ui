@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, within, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime } from '..';
+import { Button, Switch, Select, Modal, Tabs, TabList, Tab, TabPanel, Textfield, Field, SparkProvider, Calendar, DatePicker, Tooltip, Slider, Dropdown, Combobox, Menu, LineChart, BarChart, DonutChart, Sparkline, Textarea, Alert, Breadcrumbs, Pagination, paginationRange, TimePicker, parseTime, ToggleGroup, Stepper, FileUpload, formatBytes } from '..';
 
 describe('Switch', () => {
   test('toggles with click and keyboard, and submits its value while on', async () => {
@@ -849,5 +849,65 @@ describe('TimePicker', () => {
     expect(onChange).toHaveBeenLastCalledWith('10:30');
     expect(screen.queryByRole('listbox')).toBeNull();
     expect(document.querySelector('input[name="start"]')).toHaveValue('10:30');
+  });
+});
+
+describe('ToggleGroup, Stepper, FileUpload', () => {
+  it('ToggleGroup single: arrow keys move focus, click selects', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(
+      <ToggleGroup aria-label="Range" defaultValue="a" onChange={onChange}>
+        <ToggleGroup.Item value="a">A</ToggleGroup.Item>
+        <ToggleGroup.Item value="b">B</ToggleGroup.Item>
+      </ToggleGroup>,
+    );
+    const [a, b] = screen.getAllByRole('radio');
+    expect(a).toHaveAttribute('aria-checked', 'true');
+    await user.click(b);
+    expect(onChange).toHaveBeenLastCalledWith('b');
+    expect(b).toHaveAttribute('aria-checked', 'true');
+    await user.keyboard('{ArrowLeft}');
+    expect(a).toHaveFocus();
+  });
+  it('ToggleGroup multiple returns arrays', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(
+      <ToggleGroup aria-label="Style" selectionMode="multiple" onChange={onChange}>
+        <ToggleGroup.Item value="bold">B</ToggleGroup.Item>
+        <ToggleGroup.Item value="italic">I</ToggleGroup.Item>
+      </ToggleGroup>,
+    );
+    await user.click(screen.getByRole('button', { name: 'B' }));
+    await user.click(screen.getByRole('button', { name: 'I' }));
+    expect(onChange).toHaveBeenLastCalledWith(['bold', 'italic']);
+    expect(screen.getByRole('button', { name: 'I' })).toHaveAttribute('aria-pressed', 'true');
+  });
+  it('Stepper marks the current step and lets you go back', async () => {
+    const user = userEvent.setup();
+    const onStepClick = jest.fn();
+    render(<Stepper steps={[{ label: 'One' }, { label: 'Two' }, { label: 'Three' }]} active={1} onStepClick={onStepClick} />);
+    expect(screen.getByText('Two', { selector: '.sp-stepper__label' }).closest('li')).toHaveAttribute('aria-current', 'step');
+    expect(screen.getAllByRole('button')).toHaveLength(1);
+    await user.click(screen.getByRole('button', { name: /One/ }));
+    expect(onStepClick).toHaveBeenCalledWith(0);
+  });
+  it('FileUpload accepts, rejects and removes files', async () => {
+    const user = userEvent.setup({ applyAccept: false });
+    const onAdd = jest.fn();
+    const { container } = render(<FileUpload label="Docs" accept=".pdf" maxSize={1000} onAdd={onAdd} />);
+    const input = container.querySelector('input[type=file]') as HTMLInputElement;
+    const ok = new File(['x'], 'a.pdf', { type: 'application/pdf' });
+    const wrong = new File(['x'], 'b.png', { type: 'image/png' });
+    const big = new File([new Uint8Array(2000)], 'c.pdf', { type: 'application/pdf' });
+    await user.upload(input, [ok, wrong, big]);
+    expect(onAdd).toHaveBeenCalledTimes(1);
+    expect(onAdd.mock.calls[0][0]).toHaveLength(1);
+    expect(screen.getByRole('alert')).toHaveTextContent(/b\.png.*type.*c\.pdf.*larger than 1000 B/);
+    expect(screen.getByText('a.pdf')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Remove a.pdf' }));
+    expect(screen.queryByText('a.pdf')).toBeNull();
+    expect(formatBytes(1536)).toBe('1.5 KB');
   });
 });

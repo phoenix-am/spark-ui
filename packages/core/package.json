@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "node ../../scripts/build-tokens-check.mjs && tsup && node ../../scripts/build-css.mjs",
+    "build": "node ../../scripts/build-tokens-check.mjs && tsup && tsc -p tsconfig.build.json && node ../../scripts/build-dts.mjs && node ../../scripts/build-css.mjs",
     "test": "jest",
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
@@ -199,6 +199,21 @@
       "import": "./dist/time-picker/index.mjs",
       "require": "./dist/time-picker/index.js"
     },
+    "./toggle-group": {
+      "types": "./dist/toggle-group/index.d.ts",
+      "import": "./dist/toggle-group/index.mjs",
+      "require": "./dist/toggle-group/index.js"
+    },
+    "./stepper": {
+      "types": "./dist/stepper/index.d.ts",
+      "import": "./dist/stepper/index.mjs",
+      "require": "./dist/stepper/index.js"
+    },
+    "./file-upload": {
+      "types": "./dist/file-upload/index.d.ts",
+      "import": "./dist/file-upload/index.mjs",
+      "require": "./dist/file-upload/index.js"
+    },
     "./textarea": {
       "types": "./dist/textarea/index.d.ts",
       "import": "./dist/textarea/index.mjs",
@@ -319,6 +334,15 @@
       ],
       "time-picker": [
         "./dist/time-picker/index.d.ts"
+      ],
+      "toggle-group": [
+        "./dist/toggle-group/index.d.ts"
+      ],
+      "stepper": [
+        "./dist/stepper/index.d.ts"
+      ],
+      "file-upload": [
+        "./dist/file-upload/index.d.ts"
       ],
       "textarea": [
         "./dist/textarea/index.d.ts"

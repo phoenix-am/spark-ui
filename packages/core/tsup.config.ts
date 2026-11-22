@@ -10,6 +10,9 @@ export default defineConfig({
     'alert/index': 'src/Alert/index.ts',
     'navigation/index': 'src/Navigation/index.ts',
     'time-picker/index': 'src/TimePicker/index.ts',
+    'toggle-group/index': 'src/ToggleGroup/index.ts',
+    'stepper/index': 'src/Stepper/index.ts',
+    'file-upload/index': 'src/FileUpload/index.ts',
     'charts/index': 'src/Charts/index.ts',
     'number-field/index': 'src/NumberField/index.ts',
     'sidebar/index': 'src/Sidebar/index.ts',
@@ -43,7 +46,7 @@ export default defineConfig({
     "tooltip/index": "src/Tooltip/index.ts"
   },
   format: ['esm', 'cjs'],
-  dts: true,
+  dts: false, // declarations: tsc -p tsconfig.build.json + scripts/build-dts.mjs
   clean: true,
   sourcemap: true,
   splitting: true,

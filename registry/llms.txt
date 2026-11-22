@@ -22,6 +22,9 @@ Key facts for writing code:
 - [Textfield](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textfield--docs): A field that charges as you type. Exports: Textfield.
 - [Field](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-field--docs): Label, help text and error wiring for any control. Exports: Field.
 - [NumberField](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-numberfield--docs): Locale-formatted numbers (₹1,00,000, %, units) with steppers. Exports: NumberField.
+- [ToggleGroup](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-togglegroup--docs): Segmented control or a row of independent toggles, with arrow-key navigation. Exports: ToggleGroup, ToggleGroup.Item, ToggleGroupItem.
+- [Stepper](https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-stepper--docs): Progress through a multi-step flow; clickable steps, errors, vertical, compact on small screens. Exports: Stepper.
+- [FileUpload](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-fileupload--docs): Drop zone and file list with type/size/count checks, thumbnails, progress and errors. Exports: FileUpload.
 - [TimePicker](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-timepicker--docs): Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots. Exports: TimePicker.
 - [Textarea](https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-textarea--docs): Multi-line text that grows with its content, with a character count. Exports: Textarea.
 - [Alert](https://phoenix-am.github.io/spark-ui/?path=/docs/feedback-alert--docs): Info, success, warning and error messages, with actions, dismiss and a banner variant. Exports: Alert.

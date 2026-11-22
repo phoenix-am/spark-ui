@@ -151,6 +151,12 @@ Use the base layer to build components we don't ship, and they will match the re
 
 Numbers formatted for the user's locale: `formatOptions={{ style: 'currency', currency: 'INR' }}` shows ₹1,00,000 in India; also percent and units. Steppers, arrow/Page/Home/End keys, min/max/step with clamping; `name` submits the plain number.
 
+### ToggleGroup, Stepper, FileUpload
+
+- **ToggleGroup**: a segmented control (`selectionMode="single"`) or a row of independent toggles (`"multiple"`, e.g. bold/italic). One Tab stop, arrow keys between items; icon-only items take `aria-label`.
+- **Stepper**: progress through a multi-step flow. Finished steps show a check, current flows along the connector, `error` marks a failed step; `onStepClick` lets people go back. Vertical layout, and "Step 2 of 4" on small screens.
+- **FileUpload**: drop zone (also a real button) plus a file list. Checks `accept`, `maxSize` and `maxFiles` before accepting, shows thumbnails, progress and errors. Uploading is yours: start it in `onAdd`, feed `progress`/`status` back via `files`.
+
 ### TimePicker
 
 Type a time segment by segment, or pick from suggestions every `step` minutes. Values are plain 24-hour strings (`"14:30"`), shown in the locale's format. `min`, `max` and `isTimeDisabled` (e.g. booked slots) limit both typing and the list; `name` submits the value with forms.

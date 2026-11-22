@@ -279,6 +279,127 @@ Style hooks: `.sp-number-field[data-invalid][data-disabled]`, `__label`,
 - `step?`: `number` Step for the buttons and arrow keys. Default 1.
 - `value?`: `number | null` Controlled value; `null` when empty.
 
+## ToggleGroup (`toggle-group`)
+Segmented control or a row of independent toggles, with arrow-key navigation.
+
+```tsx
+import { ToggleGroup, ToggleGroup.Item, ToggleGroupItem } from '@sparkwire/core';
+```
+Install: `npx sparkwire add toggle-group` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-togglegroup--docs
+
+### ToggleGroup
+ToggleGroup: a row of related toggle buttons, as a segmented control
+(`single`) or independent toggles (`multiple`). Arrow keys move between
+items, one Tab stop for the group; selected items have `aria-checked` /
+`aria-pressed`.
+
+```tsx
+<ToggleGroup aria-label="View" defaultValue="grid">
+  <ToggleGroup.Item value="list">List</ToggleGroup.Item>
+  <ToggleGroup.Item value="grid">Grid</ToggleGroup.Item>
+</ToggleGroup>
+```
+
+Style hooks: `.sp-toggle-group[data-variant][data-size]`, `__item[data-selected]`.
+
+- `allowEmpty?`: `boolean` In `single` mode, allow clicking the selected item to clear it. Default `false`.
+- `aria-label?`: `string`
+- `aria-labelledby?`: `string`
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "item", string>>`
+- `defaultValue?`: `string | string[] | null`
+- `disabled?`: `boolean`
+- `fullWidth?`: `boolean` Stretch to fill the width.
+- `onChange?`: `((value: M extends "multiple" ? string[] : string | null) => void)`
+- `orientation?`: `"horizontal" | "vertical"`
+- `selectionMode?`: `Mode` `single` (default): one at a time, like a segmented control. `multiple`: each toggles on its own (bold / italic / underline).
+- `size?`: `"small" | "medium" | "large"`
+- `value?`: `string | string[] | null` Selected value(s): a string for `single`, a string[] for `multiple`.
+- `variant?`: `"segmented" | "outlined"` `segmented` (default): one track with a sliding fill. `outlined`: separate buttons.
+
+### ToggleGroup.Item
+
+
+- `value`: `string`
+- `aria-label?`: `string`
+- `className?`: `string`
+- `disabled?`: `boolean`
+- `icon?`: `ReactNode` Icon before the label. For icon-only items, pass `aria-label`.
+
+### ToggleGroupItem
+
+
+- `value`: `string`
+- `aria-label?`: `string`
+- `className?`: `string`
+- `disabled?`: `boolean`
+- `icon?`: `ReactNode` Icon before the label. For icon-only items, pass `aria-label`.
+
+## Stepper (`stepper`)
+Progress through a multi-step flow; clickable steps, errors, vertical, compact on small screens.
+
+```tsx
+import { Stepper } from '@sparkwire/core';
+```
+Install: `npx sparkwire add stepper` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/navigation-stepper--docs
+
+### Stepper
+Stepper: progress through a multi-step flow (checkout, onboarding,
+forms). Finished steps show a check, the current one is lit with flowing
+current between steps, and failed ones show an error. Optionally
+clickable to go back. An ordered list with `aria-current="step"`; status
+is spelled out for screen readers, never colour alone.
+
+Style hooks: `.sp-stepper[data-orientation]`, `__step[data-status]`, `__indicator`, `__connector[data-done]`.
+
+- `active`: `number` Index of the current step (0-based). Steps before it are complete.
+- `steps`: `StepItem[]`
+- `aria-label?`: `string`
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "step" | "indicator" | "label" | "description" | "connector", string>>`
+- `clickable?`: `"completed" | "all"` Let people jump back to a step by clicking it. `completed` (default when `onStepClick` is set): finished steps only. `all`: any step (non-linear).
+- `onStepClick?`: `((index: number) => void)`
+- `orientation?`: `"horizontal" | "vertical"`
+- `responsive?`: `boolean` Under ~480px a horizontal stepper shows "Step 2 of 4 · Label". Default `true`.
+
+## FileUpload (`file-upload`)
+Drop zone and file list with type/size/count checks, thumbnails, progress and errors.
+
+```tsx
+import { FileUpload } from '@sparkwire/core';
+```
+Install: `npx sparkwire add file-upload` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/inputs-fileupload--docs
+
+### FileUpload
+FileUpload: drop files on the zone or browse. Checks type, size and count
+before accepting, lists files with thumbnails, progress and errors, and
+lets people remove them. Uploading is yours: start it in `onAdd`, then
+feed `progress` / `status` back through `files`.
+
+The zone is a real button (keyboard and screen readers), and drag-and-drop
+uses React Aria's `useDrop`, which also accepts keyboard and screen-reader drops.
+
+Style hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__item[data-status]`, `__progress`.
+
+- `accept?`: `string` Like the input attribute: "image/*,.pdf".
+- `className?`: `string`
+- `classNames?`: `Partial<Record<"root" | "label" | "zone" | "list" | "item" | "errors", string>>`
+- `defaultFiles?`: `UploadFile[]`
+- `disabled?`: `boolean`
+- `files?`: `UploadFile[]` Files in the list (controlled). Update `progress` / `status` as uploads run.
+- `hint?`: `ReactNode` Line under the main prompt. Default lists accepted types and size.
+- `label?`: `ReactNode`
+- `maxFiles?`: `number`
+- `maxSize?`: `number` Bytes.
+- `multiple?`: `boolean`
+- `name?`: `string` Submit the files with a regular form.
+- `onAdd?`: `((added: UploadFile[]) => void)` Just the newly accepted files: start uploads here.
+- `onChange?`: `((files: UploadFile[]) => void)` Whole list after adding or removing.
+- `onReject?`: `((rejected: FileRejection[]) => void)` Files that failed `accept`, `maxSize` or `maxFiles`. Default messages are shown under the zone.
+- `onRemove?`: `((file: UploadFile) => void)`
+- `previews?`: `boolean` Image thumbnails in the list. Default `true`.
+- `prompt?`: `ReactNode` Main prompt. Default "Drop files here or browse".
+
 ## TimePicker (`time-picker`)
 Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.
 
