@@ -1,7 +1,7 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
 
 const config: StorybookConfig = {
-  stories: ['../packages/core/src/**/*.stories.tsx'],
+  stories: ['../packages/core/src/**/*.mdx', '../packages/core/src/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
     '@storybook/addon-links',
@@ -25,11 +25,9 @@ const config: StorybookConfig = {
           options: {
             presets: [
               '@babel/preset-env',
-              '@babel/preset-react',
+              ['@babel/preset-react', { runtime: 'automatic' }],
               '@babel/preset-typescript',
-              '@emotion/babel-preset-css-prop',
             ],
-            plugins: ['@emotion'],
           },
         },
       ],

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sign-in",
+  "type": "registry:block",
+  "title": "Sign in",
+  "description": "Email and password sign-in with validation, remember me, progress and error states.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@sparkwire/alert",
+    "@sparkwire/button",
+    "@sparkwire/card",
+    "@sparkwire/checkbox",
+    "@sparkwire/styles",
+    "@sparkwire/textfield",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/blocks/SignIn/SignIn.tsx",
+      "type": "registry:component",
+      "target": "components/spark-ui/blocks/SignIn/SignIn.tsx",
+      "content": "import React, { useState } from 'react';\nimport { Card } from '../../Card';\nimport { Textfield } from '../../Textfield';\nimport { Checkbox } from '../../Checkbox';\nimport { Button } from '../../Button';\nimport { Alert } from '../../Alert';\n\nexport interface SignInProps {\n  /** Return an error message to show it, or nothing on success. */\n  onSubmit?: (values: { email: string; password: string; remember: boolean }) => Promise<string | void> | string | void;\n  /** Shown above the form. */\n  brand?: React.ReactNode;\n}\n\n/**\n * Sign-in block: email and password with validation, \"remember me\", a\n * submit button that shows progress, an error alert, and links to reset\n * the password or sign up. Works as a plain form too (`name` on every\n * field), so server actions can read it. Copy with `npx sparkwire add sign-in`.\n */\nexport function SignIn({ onSubmit, brand = <strong className=\"sp-block-brand\">Sparkwire</strong> }: SignInProps) {\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n  const [remember, setRemember] = useState(true);\n  const [touched, setTouched] = useState(false);\n  const [busy, setBusy] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  const emailError = touched && !/^\\S+@\\S+\\.\\S+$/.test(email) ? 'Enter a valid email address.' : undefined;\n  const passwordError = touched && password.length < 8 ? 'Use at least 8 characters.' : undefined;\n\n  return (\n    <div className=\"sp-block-auth\">\n      <Card padding=\"large\" className=\"sp-block-auth__card\">\n        <form\n          noValidate\n          onSubmit={async (e) => {\n            e.preventDefault();\n            setTouched(true);\n            if (!/^\\S+@\\S+\\.\\S+$/.test(email) || password.length < 8) return;\n            setBusy(true);\n            setError(null);\n            const result = await onSubmit?.({ email, password, remember });\n            setBusy(false);\n            if (typeof result === 'string') setError(result);\n          }}\n        >\n          <div className=\"sp-block-auth__head\">\n            {brand}\n            <h1>Welcome back</h1>\n            <p>Sign in to continue to your dashboard.</p>\n          </div>\n          {error && (\n            <Alert tone=\"error\" onDismiss={() => setError(null)}>\n              {error}\n            </Alert>\n          )}\n          <Textfield label=\"Email\" name=\"email\" type=\"email\" autoComplete=\"email\" required value={email} onChange={(e) => setEmail(e.target.value)} error={!!emailError} helperText={emailError} />\n          <Textfield label=\"Password\" name=\"password\" type=\"password\" autoComplete=\"current-password\" required value={password} onChange={(e) => setPassword(e.target.value)} error={!!passwordError} helperText={passwordError} />\n          <div className=\"sp-block-auth__row\">\n            <Checkbox label=\"Remember me\" name=\"remember\" checked={remember} onChange={(e) => setRemember(e.target.checked)} />\n            <a href=\"#reset\" className=\"sp-block-link\">Forgot password?</a>\n          </div>\n          <Button type=\"submit\" fullWidth disabled={busy}>\n            {busy ? 'Signing in…' : 'Sign in'}\n          </Button>\n          <p className=\"sp-block-auth__foot\">\n            New here? <a href=\"#signup\" className=\"sp-block-link\">Create an account</a>\n          </p>\n        </form>\n      </Card>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "components/spark-ui/blocks/SignIn/index.ts",
+      "type": "registry:component",
+      "target": "components/spark-ui/blocks/SignIn/index.ts",
+      "content": "export { SignIn } from './SignIn';\nexport type { SignInProps } from './SignIn';\n"
+    }
+  ]
+}

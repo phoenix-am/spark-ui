@@ -16,11 +16,11 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./packages",
-    "jsxImportSource": "@emotion/react",
+    "jsxImportSource": "react",
     "paths": {
-      "@spark-ui/*": ["packages/*/src"]
+      "@sparkwire/*": ["packages/*/src"]
     }
   },
-  "include": ["packages/**/*"],
+  "include": ["packages/**/*", "test/**/*"],
   "exclude": ["node_modules", "dist"]
 }

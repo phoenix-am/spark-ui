@@ -1,4 +1,4 @@
-import { ThemeColors } from "@spark-ui/styles";
+import { ThemeColors } from "@sparkwire/styles";
 
 export interface PaletteOptions {
   brand?: ThemeColors['primary']['brand'];

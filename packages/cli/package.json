@@ -1,0 +1,12 @@
+{
+  "name": "sparkwire",
+  "version": "0.1.0",
+  "description": "Add Spark UI (Live Wire) components to your project as source you own: npx sparkwire add switch",
+  "type": "module",
+  "bin": { "sparkwire": "./bin/sparkwire.mjs" },
+  "files": ["bin"],
+  "engines": { "node": ">=18" },
+  "keywords": ["react", "components", "ui", "spark-ui", "sparkwire", "cli", "registry"],
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/phoenix-am/spark-ui.git", "directory": "packages/cli" }
+}

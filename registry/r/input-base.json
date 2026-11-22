@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-base",
+  "type": "registry:ui",
+  "title": "InputBase",
+  "description": "The field shell (re-exports the base InputBase).",
+  "dependencies": [],
+  "registryDependencies": [
+    "@sparkwire/base",
+    "@sparkwire/styles",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/InputBase/index.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/InputBase/index.ts",
+      "content": "export { InputBase } from '../base/InputBase';\nexport type { InputBaseProps } from '../base/InputBase';\n"
+    }
+  ]
+}

@@ -1,0 +1,1219 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "spark-ui",
+  "homepage": "https://github.com/phoenix-am/spark-ui",
+  "items": [
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Spark UI utilities",
+      "description": "Shared helpers: class names, defaults and slots, tones, portal theming.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/internal/cx.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/cx.ts"
+        },
+        {
+          "path": "components/spark-ui/internal/defaults.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/defaults.ts"
+        },
+        {
+          "path": "components/spark-ui/internal/energy.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/energy.ts"
+        },
+        {
+          "path": "components/spark-ui/internal/messages.tsx",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/messages.tsx"
+        },
+        {
+          "path": "components/spark-ui/internal/tone.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/tone.ts"
+        },
+        {
+          "path": "components/spark-ui/internal/useIsoLayoutEffect.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/useIsoLayoutEffect.ts"
+        },
+        {
+          "path": "components/spark-ui/internal/usePortalTheme.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/usePortalTheme.ts"
+        },
+        {
+          "path": "components/spark-ui/internal/spark-utils.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/spark-utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "styles",
+      "type": "registry:ui",
+      "title": "Spark UI styles",
+      "description": "Tokens and styles for every component (dark, light and system modes). Import once.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/spark-ui/styles.css",
+          "type": "registry:file",
+          "target": "components/spark-ui/styles.css"
+        }
+      ]
+    },
+    {
+      "name": "base",
+      "type": "registry:ui",
+      "title": "Base components",
+      "description": "ButtonBase, InputBase, Popover, ListBox and Overlay: the building blocks under the other components.",
+      "dependencies": [
+        "@react-types/shared@^3.37.0",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/spark",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/base/ButtonBase.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/base/ButtonBase.tsx"
+        },
+        {
+          "path": "components/spark-ui/base/InputBase.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/base/InputBase.tsx"
+        },
+        {
+          "path": "components/spark-ui/base/ListBox.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/base/ListBox.tsx"
+        },
+        {
+          "path": "components/spark-ui/base/Overlay.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/base/Overlay.tsx"
+        },
+        {
+          "path": "components/spark-ui/base/Popover.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/base/Popover.tsx"
+        },
+        {
+          "path": "components/spark-ui/base/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/base/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "spark",
+      "type": "registry:ui",
+      "title": "Spark",
+      "description": "A burst of sparks from a point; used by Button and Calendar.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Spark/Spark.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Spark/Spark.tsx"
+        },
+        {
+          "path": "components/spark-ui/Spark/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Spark/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Throws sparks from the press point; current runs along outlined buttons on hover.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Button/Button.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Button/Button.tsx"
+        },
+        {
+          "path": "components/spark-ui/Button/Button.types.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Button/Button.types.ts"
+        },
+        {
+          "path": "components/spark-ui/Button/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Button/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "A lever switch that lights a bulb.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Switch/Switch.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Switch/Switch.tsx"
+        },
+        {
+          "path": "components/spark-ui/Switch/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Switch/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A checkbox that closes a circuit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/textfield",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Checkbox/Checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Checkbox/Checkbox.tsx"
+        },
+        {
+          "path": "components/spark-ui/Checkbox/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Checkbox/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "RadioGroup",
+      "description": "One live wire at a time.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/RadioGroup/RadioGroup.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/RadioGroup/RadioGroup.tsx"
+        },
+        {
+          "path": "components/spark-ui/RadioGroup/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/RadioGroup/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A dimmer, with two-knob ranges.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Slider/Slider.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Slider/Slider.tsx"
+        },
+        {
+          "path": "components/spark-ui/Slider/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Slider/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "textfield",
+      "type": "registry:ui",
+      "title": "Textfield",
+      "description": "A field that charges as you type.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Textfield/Textfield.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textfield/Textfield.tsx"
+        },
+        {
+          "path": "components/spark-ui/Textfield/Textfield.types.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textfield/Textfield.types.ts"
+        },
+        {
+          "path": "components/spark-ui/Textfield/TextfieldDropdown.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textfield/TextfieldDropdown.tsx"
+        },
+        {
+          "path": "components/spark-ui/Textfield/TextfieldIcon.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textfield/TextfieldIcon.tsx"
+        },
+        {
+          "path": "components/spark-ui/Textfield/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textfield/index.ts"
+        },
+        {
+          "path": "components/spark-ui/Textfield/useForkRef.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textfield/useForkRef.ts"
+        },
+        {
+          "path": "components/spark-ui/Textfield/useTextfield.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textfield/useTextfield.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input-base",
+      "type": "registry:ui",
+      "title": "InputBase",
+      "description": "The field shell (re-exports the base InputBase).",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/InputBase/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/InputBase/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "Label, help text and error wiring for any control.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Field/Field.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Field/Field.tsx"
+        },
+        {
+          "path": "components/spark-ui/Field/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Field/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "dropdown",
+      "type": "registry:ui",
+      "title": "Dropdown",
+      "description": "Pick one value from a list.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Dropdown/Dropdown.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Dropdown/Dropdown.tsx"
+        },
+        {
+          "path": "components/spark-ui/Dropdown/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Dropdown/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Alias of Dropdown.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/dropdown",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Select/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Select/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "Type to search, then pick.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Combobox/Combobox.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Combobox/Combobox.tsx"
+        },
+        {
+          "path": "components/spark-ui/Combobox/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Combobox/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "menu",
+      "type": "registry:ui",
+      "title": "Menu",
+      "description": "Actions behind a button, with submenus.",
+      "dependencies": [
+        "@react-types/shared@^3.37.0",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/button",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Menu/Menu.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Menu/Menu.tsx"
+        },
+        {
+          "path": "components/spark-ui/Menu/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Menu/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "DataTable",
+      "description": "Sort, search, filter, page and select rows; responsive div grid, no table library.",
+      "dependencies": [
+        "@react-types/shared@^3.37.0",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/checkbox",
+        "@sparkwire/dropdown",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/DataTable/DataTable.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DataTable/DataTable.tsx"
+        },
+        {
+          "path": "components/spark-ui/DataTable/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DataTable/index.ts"
+        },
+        {
+          "path": "components/spark-ui/DataTable/useDataTable.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DataTable/useDataTable.ts"
+        }
+      ]
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:ui",
+      "title": "CommandPalette",
+      "description": "A ⌘K launcher: search commands and pages, run with the keyboard.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/CommandPalette/CommandPalette.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/CommandPalette/CommandPalette.tsx"
+        },
+        {
+          "path": "components/spark-ui/CommandPalette/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/CommandPalette/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A panel that slides in from an edge, with focus trapping.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Drawer/Drawer.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Drawer/Drawer.tsx"
+        },
+        {
+          "path": "components/spark-ui/Drawer/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Drawer/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "App navigation: sections, nested groups, collapsed rail, drawer on small screens.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/drawer",
+        "@sparkwire/styles",
+        "@sparkwire/tooltip",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Sidebar/Sidebar.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Sidebar/Sidebar.tsx"
+        },
+        {
+          "path": "components/spark-ui/Sidebar/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Sidebar/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "ToggleGroup",
+      "description": "Segmented control or a row of independent toggles, with arrow-key navigation.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/ToggleGroup/ToggleGroup.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/ToggleGroup/ToggleGroup.tsx"
+        },
+        {
+          "path": "components/spark-ui/ToggleGroup/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/ToggleGroup/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "Progress through a multi-step flow; clickable steps, errors, vertical, compact on small screens.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Stepper/Stepper.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Stepper/Stepper.tsx"
+        },
+        {
+          "path": "components/spark-ui/Stepper/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Stepper/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "FileUpload",
+      "description": "Drop zone and file list with type/size/count checks, thumbnails, progress and errors.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/FileUpload/FileUpload.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/FileUpload/FileUpload.tsx"
+        },
+        {
+          "path": "components/spark-ui/FileUpload/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/FileUpload/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "TimePicker",
+      "description": "Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.",
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/date-picker",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/TimePicker/TimePicker.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/TimePicker/TimePicker.tsx"
+        },
+        {
+          "path": "components/spark-ui/TimePicker/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/TimePicker/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multi-line text that grows with its content, with a character count.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Textarea/Textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textarea/Textarea.tsx"
+        },
+        {
+          "path": "components/spark-ui/Textarea/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Textarea/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Info, success, warning and error messages, with actions, dismiss and a banner variant.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Alert/Alert.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Alert/Alert.tsx"
+        },
+        {
+          "path": "components/spark-ui/Alert/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Alert/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "navigation",
+      "type": "registry:ui",
+      "title": "Navigation",
+      "description": "Breadcrumbs and Pagination.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Navigation/Navigation.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Navigation/Navigation.tsx"
+        },
+        {
+          "path": "components/spark-ui/Navigation/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Navigation/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "Sidebar, KPI tiles with sparklines, revenue and channel charts, and a recent-orders table.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/avatar",
+        "@sparkwire/button",
+        "@sparkwire/card",
+        "@sparkwire/charts",
+        "@sparkwire/data-table",
+        "@sparkwire/indicators",
+        "@sparkwire/sidebar",
+        "@sparkwire/styles",
+        "@sparkwire/toggle-group",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/blocks/Dashboard/Dashboard.tsx",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Dashboard/Dashboard.tsx"
+        },
+        {
+          "path": "components/spark-ui/blocks/Dashboard/index.ts",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Dashboard/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "sign-in",
+      "type": "registry:block",
+      "title": "Sign in",
+      "description": "Email and password sign-in with validation, remember me, progress and error states.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/alert",
+        "@sparkwire/button",
+        "@sparkwire/card",
+        "@sparkwire/checkbox",
+        "@sparkwire/styles",
+        "@sparkwire/textfield",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/blocks/SignIn/SignIn.tsx",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/SignIn/SignIn.tsx"
+        },
+        {
+          "path": "components/spark-ui/blocks/SignIn/index.ts",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/SignIn/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "type": "registry:block",
+      "title": "Settings",
+      "description": "Profile, notifications and appearance tabs with an unsaved-changes save bar.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/avatar",
+        "@sparkwire/button",
+        "@sparkwire/card",
+        "@sparkwire/dropdown",
+        "@sparkwire/file-upload",
+        "@sparkwire/styles",
+        "@sparkwire/switch",
+        "@sparkwire/tabs",
+        "@sparkwire/textarea",
+        "@sparkwire/textfield",
+        "@sparkwire/toast",
+        "@sparkwire/toggle-group",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/blocks/Settings/Settings.tsx",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Settings/Settings.tsx"
+        },
+        {
+          "path": "components/spark-ui/blocks/Settings/index.ts",
+          "type": "registry:component",
+          "target": "components/spark-ui/blocks/Settings/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "charts",
+      "type": "registry:ui",
+      "title": "Charts",
+      "description": "Our own SVG charts: Line/Area, Bar (grouped, stacked, horizontal), Donut, Sparkline. Validated colour-blind-safe palette, tooltips, keyboard, data-table view.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Charts/CartesianChart.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/CartesianChart.tsx"
+        },
+        {
+          "path": "components/spark-ui/Charts/DonutChart.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/DonutChart.tsx"
+        },
+        {
+          "path": "components/spark-ui/Charts/core.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/core.tsx"
+        },
+        {
+          "path": "components/spark-ui/Charts/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Charts/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "number-field",
+      "type": "registry:ui",
+      "title": "NumberField",
+      "description": "Locale-formatted numbers (₹1,00,000, %, units) with steppers.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/NumberField/NumberField.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/NumberField/NumberField.tsx"
+        },
+        {
+          "path": "components/spark-ui/NumberField/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/NumberField/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Tabs on one wire; the active tab is lit.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Tabs/Tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Tabs/Tabs.tsx"
+        },
+        {
+          "path": "components/spark-ui/Tabs/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Tabs/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Sections that power on as they open.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Accordion/Accordion.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Accordion/Accordion.tsx"
+        },
+        {
+          "path": "components/spark-ui/Accordion/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Accordion/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "A dialog that powers on, with focus trapping.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Modal/Modal.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Modal/Modal.tsx"
+        },
+        {
+          "path": "components/spark-ui/Modal/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Modal/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A hint that flickers on.",
+      "dependencies": [
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Tooltip/Tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Tooltip/Tooltip.tsx"
+        },
+        {
+          "path": "components/spark-ui/Tooltip/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Tooltip/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Notifications.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Toast/Toast.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Toast/Toast.tsx"
+        },
+        {
+          "path": "components/spark-ui/Toast/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Toast/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Card, CardHeader, CardFooter and Skeleton.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Card/Card.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Card/Card.tsx"
+        },
+        {
+          "path": "components/spark-ui/Card/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Card/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Avatar and AvatarGroup.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Avatar/Avatar.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Avatar/Avatar.tsx"
+        },
+        {
+          "path": "components/spark-ui/Avatar/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Avatar/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "indicators",
+      "type": "registry:ui",
+      "title": "Indicators",
+      "description": "Badge, Progress and Spinner.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Indicators/Indicators.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Indicators/Indicators.tsx"
+        },
+        {
+          "path": "components/spark-ui/Indicators/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Indicators/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "DatePicker",
+      "description": "DatePicker, DateRangePicker, Calendar and RangeCalendar: typed entry, presets, date rules, locales and calendar systems.",
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/base",
+        "@sparkwire/spark",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/DatePicker/Calendar.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/Calendar.tsx"
+        },
+        {
+          "path": "components/spark-ui/DatePicker/DatePicker.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/DatePicker.tsx"
+        },
+        {
+          "path": "components/spark-ui/DatePicker/DateRangePicker.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/DateRangePicker.tsx"
+        },
+        {
+          "path": "components/spark-ui/DatePicker/dateAdapters.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/dateAdapters.ts"
+        },
+        {
+          "path": "components/spark-ui/DatePicker/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/index.ts"
+        },
+        {
+          "path": "components/spark-ui/DatePicker/presets.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/DatePicker/presets.ts"
+        }
+      ]
+    },
+    {
+      "name": "headless",
+      "type": "registry:ui",
+      "title": "Headless hooks",
+      "description": "useSwitch, useCheckbox, useSlider, useDatePicker and useSpark: behaviour without markup.",
+      "dependencies": [
+        "@internationalized/date@^3.12.4",
+        "react-aria@^3.53.1",
+        "react-stately@^3.51.0"
+      ],
+      "registryDependencies": [
+        "@sparkwire/data-table",
+        "@sparkwire/date-picker",
+        "@sparkwire/spark",
+        "@sparkwire/styles",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/headless/index.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/headless/index.tsx"
+        }
+      ]
+    },
+    {
+      "name": "provider",
+      "type": "registry:ui",
+      "title": "SparkProvider",
+      "description": "App-wide default props, slot classes and locale.",
+      "dependencies": [
+        "react-aria@^3.53.1"
+      ],
+      "registryDependencies": [
+        "@sparkwire/accordion",
+        "@sparkwire/avatar",
+        "@sparkwire/button",
+        "@sparkwire/card",
+        "@sparkwire/checkbox",
+        "@sparkwire/combobox",
+        "@sparkwire/date-picker",
+        "@sparkwire/dropdown",
+        "@sparkwire/field",
+        "@sparkwire/indicators",
+        "@sparkwire/menu",
+        "@sparkwire/modal",
+        "@sparkwire/radio-group",
+        "@sparkwire/select",
+        "@sparkwire/slider",
+        "@sparkwire/styles",
+        "@sparkwire/switch",
+        "@sparkwire/tabs",
+        "@sparkwire/textfield",
+        "@sparkwire/tooltip",
+        "@sparkwire/utils"
+      ],
+      "files": [
+        {
+          "path": "components/spark-ui/Provider/SparkProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Provider/SparkProvider.tsx"
+        },
+        {
+          "path": "components/spark-ui/Provider/index.ts",
+          "type": "registry:ui",
+          "target": "components/spark-ui/Provider/index.ts"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Throws sparks from the press point; current runs along outlined buttons on hover.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@sparkwire/base",
+    "@sparkwire/styles",
+    "@sparkwire/utils"
+  ],
+  "files": [
+    {
+      "path": "components/spark-ui/Button/Button.tsx",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Button/Button.tsx",
+      "content": "import React, { ElementType, forwardRef } from 'react';\nimport { PolymorphicButtonProps } from './Button.types';\nimport { ButtonBase } from '../base/ButtonBase';\nimport { useDefaults, slot, ClassNames } from '../internal/defaults';\n\n/**\n * Button: throws sparks from the press point. Outlined and text buttons show\n * current flowing along a wire on hover; a disabled button is a dead circuit.\n * Built on ButtonBase; forwards `ref` to the rendered element.\n */\nconst ButtonInner = (inProps: PolymorphicButtonProps<ElementType>, ref: React.ForwardedRef<HTMLElement>) => {\n  const {\n    as,\n    variant = 'contained',\n    color = 'brand',\n    size = 'medium',\n    disabled = false,\n    className,\n    startIcon,\n    endIcon,\n    children,\n    fullWidth = false,\n    disableElevation = false,\n    spark,\n    ripple,\n    classNames,\n    ...rest\n  } = useDefaults('Button', inProps);\n  const slots = classNames as ClassNames<'root' | 'icon'> | undefined;\n\n  return (\n    <ButtonBase\n      ref={ref}\n      as={as}\n      disabled={disabled}\n      spark={spark ?? ripple ?? true}\n      sparkColors={color === 'brand' ? undefined : ['var(--sp-fill)', 'var(--spark-energy-hot)', 'var(--sp-hover)']}\n      className={slot('sp-button', slots, 'root', className)}\n      data-variant={variant}\n      data-tone={color}\n      data-size={size}\n      data-full-width={fullWidth || undefined}\n      data-flat={disableElevation || undefined}\n      {...(rest as React.ButtonHTMLAttributes<HTMLElement>)}\n    >\n      {startIcon && <span className={slot('sp-button__icon slot-startIcon', slots, 'icon')}>{startIcon}</span>}\n      {children}\n      {endIcon && <span className={slot('sp-button__icon slot-endIcon', slots, 'icon')}>{endIcon}</span>}\n    </ButtonBase>\n  );\n};\n\nconst Button = forwardRef(ButtonInner) as <C extends ElementType = 'button'>(\n  props: PolymorphicButtonProps<C> & { ref?: React.Ref<HTMLElement> },\n) => React.ReactElement | null;\n\nexport default Button;\n"
+    },
+    {
+      "path": "components/spark-ui/Button/Button.types.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Button/Button.types.ts",
+      "content": "import { ReactNode, ElementType } from 'react';\nimport { OverrideProps } from '../internal/spark-utils';\n\nexport type ButtonVariant = 'text' | 'outlined' | 'contained';\nexport type ButtonSize = 'small' | 'medium' | 'large';\nexport type ButtonColor = 'brand' | 'error' | 'success' | 'warning';\n\n// Base interface for Button props\nexport interface ButtonPropsBase {\n  children?: ReactNode;\n  className?: string;\n  /** Dead circuit: no clicks, no sparks, dashed outline. */\n  disabled?: boolean;\n  /** Icon before the label. Coloured with the text. */\n  startIcon?: ReactNode;\n  /** Icon after the label. Coloured with the text. */\n  endIcon?: ReactNode;\n  /** Stretch to the container's width. */\n  fullWidth?: boolean;\n  /** Throw sparks from the press point on click. Default `true`. */\n  spark?: boolean;\n  /** @deprecated Use `spark`. Kept so existing code keeps working. */\n  ripple?: boolean;\n  /** Extra classes for each part: root, icon. */\n  classNames?: Partial<Record<'root' | 'icon', string>>;\n}\n\n// Type map for Button with default component and props\nexport type ButtonTypeMap<P = {}, D extends ElementType = 'button'> = {\n  props: P &\n    ButtonPropsBase & {\n      /** `contained` (filled, default), `outlined` or `text`. */\n      variant?: ButtonVariant;\n      /** Tone of the current. Default `brand`. */\n      color?: ButtonColor;\n      /** Height 36, 44 or 52px. Default `medium`. */\n      size?: ButtonSize;\n      /** Use with `as=\"a\"` to render a link that looks like a button. */\n      href?: string;\n      /** Remove the glow around contained buttons. */\n      disableElevation?: boolean;\n    };\n  defaultComponent: D;\n};\n\n// Utility type for polymorphic Button props\nexport type PolymorphicButtonProps<\n  D extends ElementType = ButtonTypeMap['defaultComponent'],\n  P = {}\n> = OverrideProps<ButtonTypeMap<P, D>, D> & {\n  /** Render as another element or component, e.g. `as=\"a\"`. */\n  as?: ElementType;\n};\n\n// Slot props for Button (if applicable)\nexport type ButtonSlotProps = {\n  root?: PolymorphicButtonProps;\n  startIcon?: ReactNode;\n  endIcon?: ReactNode;\n};\n\n\nexport type { ElementType, ReactNode };\n"
+    },
+    {
+      "path": "components/spark-ui/Button/index.ts",
+      "type": "registry:ui",
+      "target": "components/spark-ui/Button/index.ts",
+      "content": "export {default as Button} from './Button';"
+    }
+  ]
+}

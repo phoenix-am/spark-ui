@@ -1,19 +1,31 @@
-import React, { createContext, useContext } from 'react';
-import { BaseTheme } from '@spark-ui/styles';
+import { createContext, useContext } from 'react';
+import { BaseTheme, defaultTheme } from '@sparkwire/styles';
+
+export type SparkMode = 'dark' | 'light' | 'system';
 
 interface ThemeContextProps {
+  /** The resolved theme as JS values, for charts, canvas and other non-CSS uses. */
   theme: BaseTheme;
-  toggleTheme?: () => void;
+  mode: SparkMode;
+  resolvedMode: 'dark' | 'light';
+  setMode: (mode: SparkMode) => void;
+  toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
-
-export const useTheme = (): ThemeContextProps => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
+const fallback: ThemeContextProps = {
+  theme: defaultTheme as BaseTheme,
+  mode: 'dark',
+  resolvedMode: 'dark',
+  setMode: () => {},
+  toggleTheme: () => {},
 };
+
+const ThemeContext = createContext<ThemeContextProps>(fallback);
+
+/**
+ * Read the current theme values and mode. Works without a ThemeProvider
+ * (returns the default dark Live Wire theme).
+ */
+export const useTheme = (): ThemeContextProps => useContext(ThemeContext);
 
 export default ThemeContext;

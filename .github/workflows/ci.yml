@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --legacy-peer-deps
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Accessibility (axe on every story) and behaviour tests
+        run: npm test -- --ci
+      - name: Build packages
+        run: npm run build
+      - name: Build Storybook
+        run: npx storybook build --quiet --disable-telemetry
+      - name: Registry is up to date
+        run: git diff --exit-code -- registry || (echo 'Run npm run build and commit registry/' && exit 1)

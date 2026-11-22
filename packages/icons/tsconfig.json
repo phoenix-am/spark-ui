@@ -3,11 +3,11 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@spark-ui/icons/base": ["./src/icons/base/*"],
-      "@spark-ui/icons/featured": ["./src/icons/featured/*"],
-      "@spark-ui/icons/check": ["./src/icons/check/*"],
-      "@spark-ui/icons/social": ["./src/icons/social/*"],
-      "@spark-ui/icons/payment": ["./src/icons/payment/*"],
+      "@sparkwire/icons/base": ["./src/icons/base/*"],
+      "@sparkwire/icons/featured": ["./src/icons/featured/*"],
+      "@sparkwire/icons/check": ["./src/icons/check/*"],
+      "@sparkwire/icons/social": ["./src/icons/social/*"],
+      "@sparkwire/icons/payment": ["./src/icons/payment/*"],
     }
   },
   "include": ["src/**/*"],

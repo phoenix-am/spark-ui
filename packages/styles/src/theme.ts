@@ -1,73 +1,83 @@
-import { Theme as EmotionTheme } from '@emotion/react';
 import { Theme } from './types/theme';
 
+/**
+ * Live Wire: Spark UI's default theme. Components carry current: actions throw
+ * sparks, toggles close a circuit, inputs charge up as they become valid.
+ */
 export const defaultTheme: Theme = {
+  mode: 'dark',
+  tones: {
+    brand: { fill: '#FFD60A', ink: '#FFD60A', hover: '#FFE24D', glow: 'rgba(255, 214, 10, 0.35)' },
+    success: { fill: '#1FE58A', ink: '#1FE58A', hover: '#47F5A0', glow: 'rgba(31, 229, 138, 0.35)' },
+    warning: { fill: '#FF9F1C', ink: '#FF9F1C', hover: '#FFB347', glow: 'rgba(255, 159, 28, 0.35)' },
+    error: { fill: '#FF5C5C', ink: '#FF5C5C', hover: '#FF7A7A', glow: 'rgba(255, 92, 92, 0.35)' },
+  },
   colors: {
     primary: {
       gray: {
-        '25': '#FCFCFD',
-        '50': '#F9FAFB',
-        '100': '#F2F4F7',
-        '200': '#E4E7EC',
-        '300': '#D0D5DD',
-        '400': '#98A2B3',
-        '500': '#667085',
-        '600': '#475467',
-        '700': '#344054',
-        '800': '#1D2939',
-        '900': '#101828',
+        '25': '#F2F4F8',
+        '50': '#E3E7EF',
+        '100': '#C9CFDB',
+        '200': '#A9B0BF',
+        '300': '#7D8596',
+        '400': '#5A6272',
+        '500': '#3A4150',
+        '600': '#262C3A',
+        '700': '#1B2030',
+        '800': '#141822',
+        '900': '#0B0D12',
       },
       brand: {
-        '25': '#FCFAFF',
-        '50': '#F9F5FF',
-        '100': '#F4EBFF',
-        '200': '#E9D7FE',
-        '300': '#D6BBFB',
-        '400': '#B692F6',
-        '500': '#9E77ED',
-        '600': '#7F56D9',
-        '700': '#6941C6',
-        '800': '#53389E',
-        '900': '#42307D',
+        '25': '#FFFDF0',
+        '50': '#FFF9D6',
+        '100': '#FFF3B0',
+        '200': '#FFEB80',
+        '300': '#FFE24D',
+        '400': '#FFDB26',
+        '500': '#FFD60A',
+        '600': '#F5C400',
+        '700': '#D1A300',
+        '800': '#A37E00',
+        '900': '#6E5500',
       },
       error: {
-        '25': '#FFFBFA',
-        '50': '#FEF3F2',
-        '100': '#FEE4E2',
-        '200': '#FECDCA',
-        '300': '#FDA29B',
-        '400': '#F97066',
-        '500': '#F04438',
-        '600': '#D92D20',
-        '700': '#B42318',
-        '800': '#912018',
-        '900': '#7A271A',
+        '25': '#FFF5F5',
+        '50': '#FFE5E5',
+        '100': '#FFC7C7',
+        '200': '#FF9E9E',
+        '300': '#FF7A7A',
+        '400': '#FF5C5C',
+        '500': '#F23D3D',
+        '600': '#D92626',
+        '700': '#B31B1B',
+        '800': '#8C1515',
+        '900': '#5C0E0E',
       },
       warning: {
-        '25': '#FFFCF5',
-        '50': '#FFFAEB',
-        '100': '#FEF0C7',
-        '200': '#FEDF89',
-        '300': '#FEC84B',
-        '400': '#FDB022',
-        '500': '#F79009',
-        '600': '#DC6803',
-        '700': '#B54708',
-        '800': '#93370D',
-        '900': '#7A2E0E',
+        '25': '#FFF8EF',
+        '50': '#FFEFD9',
+        '100': '#FFDCAD',
+        '200': '#FFC67A',
+        '300': '#FFB347',
+        '400': '#FF9F1C',
+        '500': '#F28B00',
+        '600': '#CC7400',
+        '700': '#A35D00',
+        '800': '#7A4600',
+        '900': '#522F00',
       },
       success: {
-        '25': '#F6FEF9',
-        '50': '#ECFDF3',
-        '100': '#D1FADF',
-        '200': '#A6F4C5',
-        '300': '#6CE9A6',
-        '400': '#32D583',
-        '500': '#12B76A',
-        '600': '#039855',
-        '700': '#027A48',
-        '800': '#05603A',
-        '900': '#054F31',
+        '25': '#F0FFF7',
+        '50': '#D9FFEC',
+        '100': '#ADFFD6',
+        '200': '#7AFFBD',
+        '300': '#47F5A0',
+        '400': '#1FE58A',
+        '500': '#00CC74',
+        '600': '#00A65E',
+        '700': '#008049',
+        '800': '#005C35',
+        '900': '#003D23',
       },
     },
     secondary: {
@@ -178,7 +188,7 @@ export const defaultTheme: Theme = {
     },
   },
   typography: {
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontFamily: "'Sora', 'Segoe UI', system-ui, sans-serif",
     fontSize: {
       small: '0.875rem',  // 14px
       medium: '1rem',      // 16px
@@ -212,25 +222,104 @@ export const defaultTheme: Theme = {
     '3xlarge': '2.5rem 3rem',
   },
   borderRadius: {
-    small: '0.5rem',
-    medium: '0.75rem',
-    large: '1rem',
-    xlarge: '1.75rem'
+    small: '0.25rem',
+    medium: '0.375rem',
+    large: '0.5rem',
+    xlarge: '0.75rem',
+    '2xlarge': '1rem',
+    '3xlarge': '1.25rem',
   },
   zIndex: {
     modal: 1300,
     dropdown: 1200,
     tooltip: 1100,
   },
+  surface: {
+    base: '#0B0D12',
+    raised: '#141822',
+    sunken: '#07080C',
+    border: '#262C3A',
+    borderStrong: '#3A4150',
+  },
+  text: {
+    primary: '#F2F4F8',
+    secondary: '#A9B0BF',
+    disabled: '#5A6272',
+    onEnergy: '#0B0D12',
+  },
+  energy: {
+    current: '#FFD60A',
+    ink: '#FFD60A',
+    hot: '#FFF3B0',
+    glow: 'rgba(255, 214, 10, 0.35)',
+    off: '#3A4150',
+    sparks: ['#FFD60A', '#FFF3B0', '#FF9F1C'],
+  },
+  motion: {
+    fast: '120ms',
+    normal: '240ms',
+    spark: 700,
+    easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+  },
   shadows: {
-    extraSmall: '0px 1px 2px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.05000000074505806)',
-    small: '0px 1px 3px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.10000000149011612)',
-    medium: '0px 4px 8px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.10000000149011612)',
-    large: '0px 12px 16px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.07999999821186066)',
-    xlarge: '0px 20px 24px rgba(0.062745101749897,0.0941176488995552,0.1568627506494522,0.07999999821186066)',
-    "2xlarge": '0px 24px 48px rgba(0.06258822977542877,0.09263458847999573,0.15701963007450104,0.18000000715255737)',
-    "3xlarge": '0px 32px 64px rgba(0.06258822977542877,0.09263458847999573,0.15701963007450104,0.14000000059604645)',
+    extraSmall: '0 1px 2px rgba(0, 0, 0, 0.4)',
+    small: '0 1px 3px rgba(0, 0, 0, 0.5)',
+    medium: '0 4px 10px rgba(0, 0, 0, 0.5)',
+    large: '0 12px 24px rgba(0, 0, 0, 0.55)',
+    xlarge: '0 20px 32px rgba(0, 0, 0, 0.6)',
+    '2xlarge': '0 24px 48px rgba(0, 0, 0, 0.65)',
+    '3xlarge': '0 32px 64px rgba(0, 0, 0, 0.7)',
   }
 };
 
-export type BaseTheme = EmotionTheme & Theme;
+/** @deprecated Same as `Theme`; kept for older imports. */
+export type BaseTheme = Theme;
+
+
+export const liveWireTheme = defaultTheme;
+
+/**
+ * Live Wire, light mode. Fills keep their voltage; anything drawn as text or a
+ * thin line uses a darker "ink" so it stays readable on white (4.5:1 or more).
+ */
+export const lightTheme: Theme = {
+  ...defaultTheme,
+  mode: 'light',
+  tones: {
+    brand: { fill: '#FFD60A', ink: '#7A5E00', hover: '#FFE24D', glow: 'rgba(209, 163, 0, 0.35)' },
+    success: { fill: '#1FE58A', ink: '#00704A', hover: '#47F5A0', glow: 'rgba(0, 166, 94, 0.3)' },
+    warning: { fill: '#FF9F1C', ink: '#9A4A00', hover: '#FFB347', glow: 'rgba(204, 116, 0, 0.3)' },
+    error: { fill: '#FF5C5C', ink: '#B3161C', hover: '#FF7A7A', glow: 'rgba(217, 38, 38, 0.28)' },
+  },
+  surface: {
+    base: '#FFFFFF',
+    raised: '#F6F7F9',
+    sunken: '#ECEEF2',
+    border: '#DCE0E7',
+    borderStrong: '#B4BBC8',
+  },
+  text: {
+    primary: '#0B0D12',
+    secondary: '#4A5263',
+    disabled: '#9AA1AE',
+    onEnergy: '#0B0D12',
+  },
+  energy: {
+    ...defaultTheme.energy,
+    ink: '#7A5E00',
+    glow: 'rgba(209, 163, 0, 0.35)',
+    off: '#C9CFDB',
+    sparks: ['#F5C400', '#FF9F1C', '#FFD60A'],
+  },
+  shadows: {
+    extraSmall: '0 1px 2px rgba(16, 24, 40, 0.06)',
+    small: '0 1px 3px rgba(16, 24, 40, 0.1)',
+    medium: '0 4px 10px rgba(16, 24, 40, 0.1)',
+    large: '0 12px 24px rgba(16, 24, 40, 0.12)',
+    xlarge: '0 20px 32px rgba(16, 24, 40, 0.14)',
+    '2xlarge': '0 24px 48px rgba(16, 24, 40, 0.18)',
+    '3xlarge': '0 32px 64px rgba(16, 24, 40, 0.2)',
+  },
+};
+
+export const darkTheme = defaultTheme;

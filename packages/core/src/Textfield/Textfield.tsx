@@ -1,11 +1,24 @@
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useId, useRef } from 'react';
+import { InputBase } from '../base/InputBase';
 import { TextfieldPropsBase } from './Textfield.types';
-import { useTheme } from '@spark-ui/system';
-import { TextfieldStyles } from './Textfield.styles';
 import { useTextField } from './useTextfield';
-import { InputBase } from '../InputBase';
 import { useForkRef } from './useForkRef';
+import { cx } from '../internal/cx';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
+const clamp = (n: number) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
+
+const defaultChargeLabel = (percent: number) =>
+  percent >= 100 ? 'Fully charged' : percent === 0 ? 'No charge' : `${percent}% charged`;
+
+/**
+ * Textfield: in Live Wire, a field can "charge up" as its value becomes valid.
+ * Pass `charge` (0..1, or a function of the value) to show the meter.
+ *
+ * Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
+ * `[data-charged]`, `[data-disabled]`; parts `__label`, `__control`, `__input`,
+ * `__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).
+ */
 const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) => {
   const {
     label,
@@ -15,6 +28,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     prepend,
     append,
     value,
+    defaultValue,
     onChange,
     onFocus,
     onBlur,
@@ -22,11 +36,18 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     helperText,
     containerStyle,
     isCurrency,
+    cardDetection,
+    formatPhoneNumber,
+    variant,
+    charge,
+    chargeLabel = defaultChargeLabel,
     type,
+    id,
+    className,
+    classNames,
     ...rest
-  } = props;
+  } = useDefaults('Textfield', props);
 
-  const { theme } = useTheme();
   const {
     value: fieldValue,
     onChange: handleChange,
@@ -35,64 +56,83 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     focused,
     disabled: isDisabled,
     error: hasError,
-  } = useTextField({
-    value,
-    onChange,
-    onFocus,
-    onBlur,
-    disabled,
-    error,
-    type
-  });
+  } = useTextField({ value: value ?? defaultValue, onChange, onFocus, onBlur, disabled, error, type });
+  const controlled = value !== undefined;
 
-  const styles = TextfieldStyles({
-    theme,
-    focused,
-    disabled: isDisabled,
-    hasError,
-    size: inputSize
-  });
+  const level = charge === undefined ? undefined : clamp(typeof charge === 'function' ? charge(fieldValue) : charge);
+  const percent = level === undefined ? 0 : Math.round(level * 100);
+  const charged = level !== undefined && percent >= 100 && !hasError;
+
+  const autoId = useId();
+  const inputId = id ?? autoId;
+  const helperId = `${inputId}-helper`;
+  const meterId = `${inputId}-meter`;
+  const describedBy = [helperText && helperId, level !== undefined && meterId].filter(Boolean).join(' ') || undefined;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handleRef = useForkRef(ref, inputRef);
 
-  const handleTextfieldFocus = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
+  // Native input types only: the masking types are handled by useTextField.
+  const masked = type === 'card' || type === 'currency' || type === 'phone';
 
   return (
     <div
-      css={styles.baseStyles}
-      onClick={handleTextfieldFocus}
+      className={slot('sp-textfield', classNames, 'root', className)}
+      data-tone={hasError ? 'error' : 'brand'}
+      data-size={inputSize}
+      data-focused={focused || undefined}
+      data-invalid={hasError || undefined}
+      data-charged={charged || undefined}
+      data-disabled={isDisabled || undefined}
     >
       {label && (
-        <label
-          css={styles.labelStyles}
-          onClick={handleTextfieldFocus}
-        >
+        <label htmlFor={inputId} className={slot('sp-textfield__label', classNames, 'label')}>
           {label}
         </label>
       )}
-      <div css={styles.inputContainer} style={{...containerStyle}}>
-        {prepend && <div css={styles.prependStyles}>{prepend}</div>}
-        <InputBase
-          ref={handleRef}
-          css={styles.inputStyles}
-          placeholder={placeholder}
-          disabled={isDisabled}
-          value={fieldValue}
-          variant='outlined'
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          {...rest}
-        />
-        {append && <div css={styles.appendStyles}>{append}</div>}
-      </div>
+      <InputBase
+        ref={handleRef}
+        id={inputId}
+        size={inputSize}
+        error={hasError}
+        disabled={isDisabled}
+        startAdornment={prepend}
+        endAdornment={append}
+        rootProps={{ style: containerStyle }}
+        classNames={{
+          root: slot('sp-textfield__control', classNames, 'control'),
+          input: slot('sp-textfield__input', classNames, 'input'),
+          adornment: slot('sp-textfield__adornment', classNames, 'adornment'),
+        }}
+        type={masked ? 'text' : type}
+        inputMode={masked ? 'numeric' : undefined}
+        placeholder={placeholder}
+        {...(controlled ? { value: fieldValue } : { defaultValue })}
+        aria-describedby={describedBy}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...(rest as Omit<typeof rest, 'size'>)}
+      />
+      {level !== undefined && (
+        <div id={meterId} className={slot('sp-textfield__meter', classNames, 'meter')}>
+          <div
+            role="meter"
+            aria-label={typeof label === 'string' ? `${label} charge` : 'Charge'}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={percent}
+            className="sp-textfield__meter-track"
+          >
+            <div className={cx('sp-textfield__meter-fill', percent >= 100 && 'sp-current')} style={{ width: `${percent}%` }} />
+          </div>
+          <span className="sp-textfield__meter-label" aria-live="polite">
+            {chargeLabel(percent)}
+          </span>
+        </div>
+      )}
       {helperText && (
-        <p css={styles.helperTextStyles}>
+        <p id={helperId} className={slot('sp-textfield__helper', classNames, 'helper')}>
           {helperText}
         </p>
       )}
@@ -100,6 +140,6 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
   );
 });
 
-Textfield.displayName = 'TextField';
+Textfield.displayName = 'Textfield';
 
 export default Textfield;

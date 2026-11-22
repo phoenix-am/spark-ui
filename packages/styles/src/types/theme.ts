@@ -176,7 +176,25 @@ export interface ThemeColors {
 
 export type Sizes = 'small' | 'medium' | 'large' | 'xlarge' | '2xlarge' | '3xlarge';
 
+/** Colours one tone (brand, success…) needs in the current mode. */
+export interface ToneTokens {
+  /** Filled backgrounds: contained buttons, checked boxes, lit nodes. */
+  fill: string;
+  /** Text, borders and icons drawn in this tone. Readable on `surface.base`. */
+  ink: string;
+  /** Fill on hover. */
+  hover: string;
+  /** Glow colour (with alpha) around lit elements. */
+  glow: string;
+}
+
+export type ToneName = 'brand' | 'success' | 'warning' | 'error';
+
 export interface Theme {
+  /** Which colour mode these values are for. */
+  mode: 'dark' | 'light';
+  /** Per-tone colours, already adjusted for `mode`. */
+  tones: Record<ToneName, ToneTokens>;
   colors: {
     primary: {
       gray: ThemeColors['primary']['gray'];
@@ -228,6 +246,41 @@ export interface Theme {
     medium: string;
     large: string;
     xlarge: string;
+    '2xlarge': string;
+    '3xlarge': string;
+  };
+  /** Live Wire: the surfaces components sit on (dark by default). */
+  surface: {
+    base: string;
+    raised: string;
+    sunken: string;
+    border: string;
+    borderStrong: string;
+  };
+  /** Live Wire: text colours for use on `surface`. */
+  text: {
+    primary: string;
+    secondary: string;
+    disabled: string;
+    /** Text drawn on top of an energised (filled) element. */
+    onEnergy: string;
+  };
+  /** Live Wire: the "current" that flows through interactive components. */
+  energy: {
+    current: string;
+    /** `current` when drawn as text or a thin line; readable on `surface.base`. */
+    ink: string;
+    hot: string;
+    glow: string;
+    off: string;
+    sparks: string[];
+  };
+  /** Live Wire: motion timings. Components respect prefers-reduced-motion. */
+  motion: {
+    fast: string;
+    normal: string;
+    spark: number;
+    easing: string;
   };
   padding: {
     small: string;

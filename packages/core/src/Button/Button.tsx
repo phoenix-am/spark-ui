@@ -1,60 +1,57 @@
-import React, { ElementType, useRef } from 'react';
-import { useTheme } from '@spark-ui/system';
-import { ButtonStyles } from './Button.styles';
+import React, { ElementType, forwardRef } from 'react';
 import { PolymorphicButtonProps } from './Button.types';
-import { applySlots } from '@spark-ui/utils';
-import { Ripple } from './TouchRipple';
+import { ButtonBase } from '../base/ButtonBase';
+import { useDefaults, slot, ClassNames } from '../internal/defaults';
 
-const Button = <C extends ElementType = 'button'>({
-  as: Component = 'button',
-  variant = 'contained',
-  color = 'brand',
-  size = 'medium',
-  onClick,
-  disabled = false,
-  className = '',
-  startIcon,
-  endIcon,
-  children,
-  ripple,
-  ...rest
-}: PolymorphicButtonProps<C>) => {
-  const { theme } = useTheme();
-  const styles = ButtonStyles({ variant, color, size, theme });
-
-  const rippleRef = useRef<{ createRipple: (event: React.MouseEvent<HTMLButtonElement>) => void }>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (rippleRef.current && ripple) {
-      rippleRef.current.createRipple(event);
-    }
-
-    if (onClick) {
-      onClick(event);
-    }
-  };
-
-  const slots = {
+/**
+ * Button: throws sparks from the press point. Outlined and text buttons show
+ * current flowing along a wire on hover; a disabled button is a dead circuit.
+ * Built on ButtonBase; forwards `ref` to the rendered element.
+ */
+const ButtonInner = (inProps: PolymorphicButtonProps<ElementType>, ref: React.ForwardedRef<HTMLElement>) => {
+  const {
+    as,
+    variant = 'contained',
+    color = 'brand',
+    size = 'medium',
+    disabled = false,
+    className,
     startIcon,
     endIcon,
-  };
+    children,
+    fullWidth = false,
+    disableElevation = false,
+    spark,
+    ripple,
+    classNames,
+    ...rest
+  } = useDefaults('Button', inProps);
+  const slots = classNames as ClassNames<'root' | 'icon'> | undefined;
 
-  const element = (
-    <Component
-      css={styles}
-      onClick={handleClick}
-      className={className}
+  return (
+    <ButtonBase
+      ref={ref}
+      as={as}
       disabled={disabled}
-      aria-disabled={disabled}
-      aria-label={typeof children === 'string' ? children : undefined}
-      {...rest}
+      spark={spark ?? ripple ?? true}
+      sparkColors={color === 'brand' ? undefined : ['var(--sp-fill)', 'var(--spark-energy-hot)', 'var(--sp-hover)']}
+      className={slot('sp-button', slots, 'root', className)}
+      data-variant={variant}
+      data-tone={color}
+      data-size={size}
+      data-full-width={fullWidth || undefined}
+      data-flat={disableElevation || undefined}
+      {...(rest as React.ButtonHTMLAttributes<HTMLElement>)}
     >
+      {startIcon && <span className={slot('sp-button__icon slot-startIcon', slots, 'icon')}>{startIcon}</span>}
       {children}
-      <Ripple ref={rippleRef as any} />
-    </Component>
+      {endIcon && <span className={slot('sp-button__icon slot-endIcon', slots, 'icon')}>{endIcon}</span>}
+    </ButtonBase>
   );
-
-  return applySlots({ slots, component: element });
 };
+
+const Button = forwardRef(ButtonInner) as <C extends ElementType = 'button'>(
+  props: PolymorphicButtonProps<C> & { ref?: React.Ref<HTMLElement> },
+) => React.ReactElement | null;
 
 export default Button;
