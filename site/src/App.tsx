@@ -83,7 +83,7 @@ export function App() {
           </div>
           <CommandPalette
             aria-label="Search the docs"
-            placeholder="Search components, props and guides…"
+            placeholder="Search docs…"
             items={commands}
             open={searchOpen}
             onOpenChange={setSearchOpen}

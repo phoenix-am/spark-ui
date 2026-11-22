@@ -71,7 +71,8 @@ pre {
 .sw-muted {
   color: var(--spark-text-secondary);
 }
-:focus-visible {
+/* Focus rings for the site's own chrome only; components keep their own focus styles. */
+:is(.sw-header, .sw-sidenav, .sw-toc, .sw-prose, .sw-footer, .sw-example, .sw-playground__controls-head, .sw-home) :is(a, button.sw-icon-btn, button.sw-search, button.sw-chip, button.sw-copy, button.sw-install, .sw-example__tabs button):focus-visible {
   outline: 2px solid var(--spark-energy-ink);
   outline-offset: 2px;
 }
