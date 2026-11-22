@@ -1,5 +1,14 @@
 # @sparkwire/core
 
+## 0.2.2
+
+### Patch Changes
+
+- d5695c1: Sparkwire descriptions and search keywords for every package on npm.
+- Updated dependencies [d5695c1]
+  - @sparkwire/icons@0.2.2
+  - @sparkwire/utils@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

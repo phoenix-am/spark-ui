@@ -1,5 +1,11 @@
 # @sparkwire/utils
 
+## 0.2.2
+
+### Patch Changes
+
+- d5695c1: Sparkwire descriptions and search keywords for every package on npm.
+
 ## 0.2.1
 
 ### Patch Changes
