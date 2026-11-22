@@ -1,6 +1,6 @@
 {
   "name": "@sparkwire/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,8 +9,8 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
-    "@sparkwire/icons": "0.1.0",
-    "@sparkwire/utils": "0.1.0",
+    "@sparkwire/icons": "0.2.0",
+    "@sparkwire/utils": "0.2.0",
     "react-aria": "^3.53.1",
     "react-stately": "^3.51.0",
     "@react-types/shared": "^3.37.0",

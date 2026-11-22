@@ -1,6 +1,6 @@
 {
   "name": "sparkwire",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Add Spark UI (Live Wire) components to your project as source you own: npx sparkwire add switch",
   "type": "module",
   "bin": {
