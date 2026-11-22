@@ -150,6 +150,7 @@ export const ServerSide: Story = {
 const many: Deploy[] = Array.from({ length: 10000 }, (_, i) => ({ ...data[i % data.length], id: `v${i + 1}`, service: `${services[i % services.length]}-${i + 1}` }));
 // Rows are built in render, not passed as args: Storybook serialises args for its controls panel.
 export const Virtualized: Story = {
+  tags: ['slow-visual'],
   args: { virtualize: true, maxHeight: 420, searchable: true, selectionMode: 'multiple', defaultSort: [] },
   render: (args) => <DataTable {...args} data={many} />,
 };

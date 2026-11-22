@@ -271,7 +271,7 @@ Sorting (Shift+click for several columns), search, per-column filters, paging, r
 
 For bigger grids:
 
-- **Virtual scrolling:** `virtualize` with a `maxHeight` renders only the rows in view (10,000 rows stay smooth). Rows have a fixed height (`rowHeight`, default from `density`), paging is off unless you set a page size, and rows don't stack or expand.
+- **Virtual scrolling:** `virtualize` with a `maxHeight` renders only the rows in view, so scrolling stays smooth with 10,000 rows. The first render still indexes every row for keyboard navigation and screen readers (about a second per 10,000 rows on a laptop); for much larger sets, page on the server with `manual`. Rows have a fixed height (`rowHeight`, default from `density`), paging is off unless you set a page size, and rows don't stack or expand.
 - **Resizing:** `resizableColumns` (or `resizable` on a column). Drag a column's edge, or Tab from its header to the handle and use the arrow keys (Shift for bigger steps). Widths are controlled with `columnWidths` or start from `defaultColumnWidths`; `onColumnResize(key, width)` fires when a resize ends. `minWidth` defaults to 64.
 - **Pinning:** `pin: 'start'` or `pin: 'end'` keeps a column in place while the grid scrolls sideways. Pinned columns use a fixed width (default 160px).
 - **Expandable rows:** `renderExpanded={(row) => …}` adds an expand button to each row and shows the content underneath. Control it with `expandedKeys` and `onExpandedChange`.

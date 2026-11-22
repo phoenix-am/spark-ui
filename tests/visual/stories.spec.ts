@@ -11,6 +11,8 @@ const NOW = new Date('2026-06-15T10:30:00+05:30');
 
 for (const story of stories) {
   test(`${story.title} › ${story.name}`, async ({ page }) => {
+    // Stories tagged `slow-visual` mount heavy demos (e.g. 10,000 table rows); give them triple time on busy CI runners.
+    if (story.tags?.includes('slow-visual')) test.slow();
     await page.clock.setFixedTime(NOW);
     await page.goto(`/iframe.html?id=${story.id}&viewMode=story&globals=mode:dark;energy:off`);
     await page.waitForSelector('#storybook-root > *, #storybook-root:empty', { state: 'attached' });

@@ -357,6 +357,7 @@ function Grid<RowT>(p: GridProps<RowT>) {
   const pageKeys = table.rows.map((r) => r.key);
   const first = table.sort[0];
   const [editing, setEditing] = useState<{ row: string; col: string } | null>(null);
+  const colByKey = new Map(columns.map((c) => [c.key, c]));
 
   const ariaProps = {
     'aria-label': ariaLabel,
@@ -391,9 +392,14 @@ function Grid<RowT>(p: GridProps<RowT>) {
         {(item: { row: RowT; key: string }) => (
           <Row key={item.key}>
             {(columnKey) => {
-              const col = columns.find((c) => c.key === columnKey)!;
-              const content = display(item.row, col);
-              return <Cell textValue={typeof content === 'string' ? content : undefined}>{content}</Cell>;
+              const col = colByKey.get(String(columnKey))!;
+              // Cell content renders only when the row is on screen; building the collection stays cheap for 10,000 rows.
+              const raw = col.cell ? undefined : table.valueOf(item.row, col);
+              return (
+                <Cell textValue={typeof raw === 'string' ? raw : undefined}>
+                  <CellContent display={display} row={item.row} col={col} />
+                </Cell>
+              );
             }}
           </Row>
         )}
@@ -430,7 +436,7 @@ function Grid<RowT>(p: GridProps<RowT>) {
     setScroll({ top: ref.current.scrollTop, height: ref.current.clientHeight || scroll.height });
   }, [p.virtualize]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const colOf = (key: Key | undefined) => columns.find((c) => c.key === key);
+  const colOf = (key: Key | undefined) => (key == null ? undefined : colByKey.get(String(key)));
 
   return (
     <div
@@ -575,6 +581,10 @@ function Grid<RowT>(p: GridProps<RowT>) {
       </RowGroup>
     </div>
   );
+}
+
+function CellContent<RowT>({ display, row, col }: { display: (row: RowT, col: DataTableColumn<RowT>) => React.ReactNode; row: RowT; col: DataTableColumn<RowT> }) {
+  return <>{display(row, col)}</>;
 }
 
 function RowGroup({ type, className, children }: { type: 'thead' | 'tbody'; className: string; children: React.ReactNode }) {
