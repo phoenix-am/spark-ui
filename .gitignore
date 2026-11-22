@@ -27,3 +27,6 @@ dist-ssr
 # Visual test output
 /test-results/
 /playwright-report/
+
+# Built Storybook (CI and the docs site build their own)
+storybook-static/
