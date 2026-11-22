@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "registry": "node scripts/build-registry.mjs && node scripts/build-docs.mjs",
     "changeset": "changeset",
-    "version-packages": "changeset version && npm install --package-lock-only --legacy-peer-deps --ignore-scripts",
+    "version-packages": "changeset version && npm install --package-lock-only --legacy-peer-deps --ignore-scripts && npm run registry",
     "release": "node scripts/publish.mjs"
   },
   "devDependencies": {
