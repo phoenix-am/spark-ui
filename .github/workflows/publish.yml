@@ -62,13 +62,14 @@ jobs:
         if: github.event_name == 'push' || !inputs.dry_run
         uses: changesets/action@v2
         with:
-          version: npm run version-packages
-          publish: npm run release
-          title: 'Version packages'
-          commit: 'chore: version packages'
-          createGithubReleases: false
+          version-script: npm run version-packages
+          publish-script: npm run release
+          pr-title: 'Version packages'
+          commit-message: 'chore: version packages'
+          # One vX.Y.Z release is created below instead of a tag and release per package.
+          create-github-releases: false
+          push-git-tags: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # One release for the whole library (all packages share a version),
