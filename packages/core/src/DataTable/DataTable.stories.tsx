@@ -145,3 +145,54 @@ export const ServerSide: Story = {
     );
   },
 };
+
+/** 10,000 rows, rendering only the ones in view. Arrow keys scroll focus into view. */
+const many: Deploy[] = Array.from({ length: 10000 }, (_, i) => ({ ...data[i % data.length], id: `v${i + 1}`, service: `${services[i % services.length]}-${i + 1}` }));
+export const Virtualized: Story = {
+  args: { data: many, virtualize: true, maxHeight: 420, searchable: true, selectionMode: 'multiple', defaultSort: [] },
+};
+
+/** Drag a column edge (or Tab to it and use the arrow keys). Service stays pinned at the start, cost at the end. */
+export const ResizeAndPin: Story = {
+  args: {
+    resizableColumns: true,
+    selectionMode: 'multiple',
+    responsive: 'scroll',
+    columns: columns.map((c) => (c.key === 'service' ? { ...c, pin: 'start' as const, width: 180 } : c.key === 'cost' ? { ...c, pin: 'end' as const } : { ...c, width: c.width ?? 200 })),
+  },
+};
+
+/** Each row opens a detail panel underneath. */
+export const ExpandableRows: Story = {
+  args: {
+    defaultExpandedKeys: ['d1'],
+    renderExpanded: (row: Deploy) => (
+      <dl style={{ display: 'grid', gridTemplateColumns: 'max-content 1fr', gap: '0.25rem 1rem', margin: 0 }}>
+        <dt>Owner</dt><dd style={{ margin: 0 }}>{row.owner}</dd>
+        <dt>Region</dt><dd style={{ margin: 0 }}>{row.region}</dd>
+        <dt>Instances</dt><dd style={{ margin: 0 }}>{row.instances}</dd>
+      </dl>
+    ),
+  },
+};
+
+/** Double-click, Enter or F2 on Owner or Instances to edit; Enter saves, Escape cancels. */
+export const InlineEditing: Story = {
+  render: (args) => {
+    const [rows, setRows] = useState(data);
+    return (
+      <DataTable
+        {...args}
+        data={rows}
+        columns={columns.map((c) =>
+          c.key === 'owner'
+            ? { ...c, editable: true, validate: (v) => (String(v ?? '').trim() ? undefined : 'Owner is required') }
+            : c.key === 'instances'
+              ? { ...c, editable: true, validate: (v) => (typeof v === 'number' && v >= 1 && v <= 64 ? undefined : 'Between 1 and 64') }
+              : c,
+        )}
+        onCellEdit={(row, key, value) => setRows((all) => all.map((r) => (r.id === row.id ? { ...r, [key]: value } : r)))}
+      />
+    );
+  },
+};

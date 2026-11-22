@@ -3195,7 +3195,7 @@
       "components": [
         {
           "name": "DataTable",
-          "description": "DataTable: sort, search, filter, page and select rows. Built from divs on a\nCSS grid (like MUI's Data Grid), so it adapts to its container: in narrow\nspaces rows become labelled cards. The table logic is Spark UI's own\n(`useDataTable`); React Aria supplies grid keyboard navigation and\nscreen-reader semantics. Sorted headers and selected rows light up.\n\nKeyboard: arrows move between cells, Home/End and Page Up/Down jump,\nSpace selects a row, Enter activates it, Shift+click sorts by more than\none column.\n\nStyle hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,\n`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable]`,\n`__row[data-selected][data-focus-visible]`, `__cell[data-align]`, `__footer`.",
+          "description": "DataTable: sort, search, filter, page and select rows; resize and pin\ncolumns, expand rows, edit cells in place, and virtualise thousands of\nrows. Built from divs on a CSS grid (like MUI's Data Grid), so it adapts\nto its container: in narrow spaces rows become labelled cards. The table\nlogic is Sparkwire's own (`useDataTable`); React Aria supplies grid\nkeyboard navigation and screen-reader semantics.\n\nKeyboard: arrows move between cells, Home/End and Page Up/Down jump,\nSpace selects a row, Enter activates it (or edits an editable cell; F2\ntoo), Shift+click sorts by more than one column. Tab from a resizable\ncolumn header reaches its resize handle, which takes the arrow keys.\n\nStyle hooks: `.sp-data-table[data-density][data-striped][data-responsive][data-virtual]`,\n`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable][data-pinned]`,\n`__resizer`, `__row[data-selected][data-expanded]`, `__cell[data-align][data-pinned][data-editing]`,\n`__expander`, `__detail`, `__editor`, `__footer`.",
           "props": [
             {
               "name": "columns",
@@ -3238,6 +3238,24 @@
               "type": "Partial<Record<\"root\" | \"toolbar\" | \"grid\" | \"header\" | \"columnHeader\" | \"row\" | \"cell\" | \"footer\", string>>",
               "required": false,
               "description": "Extra classes for each part."
+            },
+            {
+              "name": "columnWidths",
+              "type": "Record<string, number>",
+              "required": false,
+              "description": "Column widths in px by column key (controlled)."
+            },
+            {
+              "name": "defaultColumnWidths",
+              "type": "Record<string, number>",
+              "required": false,
+              "description": ""
+            },
+            {
+              "name": "defaultExpandedKeys",
+              "type": "Iterable<string>",
+              "required": false,
+              "description": ""
             },
             {
               "name": "defaultFilters",
@@ -3288,6 +3306,12 @@
               "description": "Shown when there are no rows. Default \"No results\"."
             },
             {
+              "name": "expandedKeys",
+              "type": "Set<string>",
+              "required": false,
+              "description": "Expanded row keys (controlled)."
+            },
+            {
               "name": "filters",
               "type": "Record<string, unknown>",
               "required": false,
@@ -3316,6 +3340,24 @@
               "type": "string | number",
               "required": false,
               "description": "Fix the height and scroll the body under a sticky header, e.g. `400`."
+            },
+            {
+              "name": "onCellEdit",
+              "type": "((row: RowT, columnKey: string, value: unknown) => void)",
+              "required": false,
+              "description": "Save an edited cell (columns with `editable`). Update your data here; the table shows what `data` holds."
+            },
+            {
+              "name": "onColumnResize",
+              "type": "((key: string, width: number) => void)",
+              "required": false,
+              "description": "Called when a resize ends, with the column key and its new width."
+            },
+            {
+              "name": "onExpandedChange",
+              "type": "((keys: Set<string>) => void)",
+              "required": false,
+              "description": ""
             },
             {
               "name": "onFiltersChange",
@@ -3378,6 +3420,18 @@
               "description": "Page sizes to offer. Default `[10, 25, 50]`. Pass `[]` to hide the picker."
             },
             {
+              "name": "renderExpanded",
+              "type": "((row: RowT) => ReactNode)",
+              "required": false,
+              "description": "Content shown under a row when it's expanded; adds an expand button to each row."
+            },
+            {
+              "name": "resizableColumns",
+              "type": "boolean",
+              "required": false,
+              "description": "Let people resize every column (drag its edge, or Tab to the edge and use the arrow keys). Columns can also opt in with `resizable`."
+            },
+            {
               "name": "responsive",
               "type": "\"stack\" | \"scroll\"",
               "required": false,
@@ -3388,6 +3442,12 @@
               "type": "number",
               "required": false,
               "description": "Total rows on the server, for paging in `manual` mode."
+            },
+            {
+              "name": "rowHeight",
+              "type": "number",
+              "required": false,
+              "description": "Row height in px for `virtualize`. Default from `density`: 36, 44 or 52."
             },
             {
               "name": "search",
@@ -3442,6 +3502,12 @@
               "type": "ReactNode",
               "required": false,
               "description": "Extra content in the toolbar, e.g. filter dropdowns or an export button."
+            },
+            {
+              "name": "virtualize",
+              "type": "boolean",
+              "required": false,
+              "description": "Render only the rows in view, for thousands of rows. Needs `maxHeight`;\npaging is off unless you set a page size, rows have a fixed height\n(`rowHeight`), and rows don't stack or expand."
             }
           ]
         }

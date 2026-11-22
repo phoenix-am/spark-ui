@@ -30,6 +30,18 @@ export interface DataTableColumn<Row> {
   width?: number | string;
   /** Hide the column (it still counts for search). */
   hidden?: boolean;
+  /** Let people drag (or use arrow keys on) the column's edge to resize it. Also turned on for all columns by DataTable's `resizableColumns`. */
+  resizable?: boolean;
+  /** Smallest width when resizing, in px. Default 64. */
+  minWidth?: number;
+  /** Keep the column visible while the table scrolls sideways. Pinned columns use their numeric `width` (default 160px). */
+  pin?: 'start' | 'end';
+  /** Edit cells in place: double-click, Enter or F2 to edit, Enter to save, Escape to cancel. Saves through DataTable's `onCellEdit`. */
+  editable?: boolean;
+  /** Return a message to reject a value while editing, e.g. `(v) => v ? undefined : 'Required'`. */
+  validate?: (value: unknown, row: Row) => string | undefined;
+  /** Custom editor instead of the default text/number input. Call `commit(value)` to save or `cancel()`. */
+  editor?: (props: { value: unknown; row: Row; commit: (value: unknown) => void; cancel: () => void }) => React.ReactNode;
   /** Screen-reader text for headers without visible text (e.g. an actions column). */
   'aria-label'?: string;
 }

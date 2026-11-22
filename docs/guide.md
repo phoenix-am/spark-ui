@@ -269,6 +269,20 @@ Sorting (Shift+click for several columns), search, per-column filters, paging, r
   columns={[{ key: 'service', header: 'Service', sortable: true }, { key: 'cost', header: 'Cost', sortable: true, cell: (r) => `₹${r.cost}` }]} />
 ```
 
+For bigger grids:
+
+- **Virtual scrolling:** `virtualize` with a `maxHeight` renders only the rows in view (10,000 rows stay smooth). Rows have a fixed height (`rowHeight`, default from `density`), paging is off unless you set a page size, and rows don't stack or expand.
+- **Resizing:** `resizableColumns` (or `resizable` on a column). Drag a column's edge, or Tab from its header to the handle and use the arrow keys (Shift for bigger steps). Widths are controlled with `columnWidths` or start from `defaultColumnWidths`; `onColumnResize(key, width)` fires when a resize ends. `minWidth` defaults to 64.
+- **Pinning:** `pin: 'start'` or `pin: 'end'` keeps a column in place while the grid scrolls sideways. Pinned columns use a fixed width (default 160px).
+- **Expandable rows:** `renderExpanded={(row) => …}` adds an expand button to each row and shows the content underneath. Control it with `expandedKeys` and `onExpandedChange`.
+- **Inline editing:** mark columns `editable` and handle `onCellEdit(row, key, value)` by updating your data. Double-click, Enter or F2 starts editing; Enter saves, Escape cancels, leaving the field saves. `validate(value, row)` returns an error message to block a save; `editor` swaps in your own input.
+
+```tsx
+<DataTable aria-label="Deployments" data={rows} virtualize maxHeight={480} resizableColumns
+  columns={[{ key: 'service', header: 'Service', pin: 'start' }, { key: 'owner', header: 'Owner', editable: true }]}
+  onCellEdit={(row, key, value) => save(row.id, key, value)} />
+```
+
 ### Charts
 
 Our own SVG charts, no chart library (`@sparkwire/core/charts`): `LineChart` (add `area` or `stacked`), `BarChart` (grouped, `stacked`, `horizontal`), `DonutChart` and `Sparkline`. The palette (`--spark-chart-1…8`) is checked with a colour-blindness validator, with separate light and dark steps, and is assigned in a fixed order so a series keeps its colour when others are hidden. Marks are thin (2px lines, bars rounded only at the data end, 2px gaps), there is one y axis, a tooltip on hover or keyboard (focus the chart, then arrow keys), legend toggles, and a "Data table" view for screen readers and print. Width follows the container; values format with `Intl` (`valueFormat={{ style: 'currency', currency: 'INR', notation: 'compact' }}`).

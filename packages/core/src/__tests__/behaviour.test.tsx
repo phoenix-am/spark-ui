@@ -1080,3 +1080,64 @@ describe('refs', () => {
     expect(sw.current).toBe(screen.getByRole('switch', { name: 'Power' }));
   });
 });
+
+describe('DataTable upgrades', () => {
+  const { DataTable } = jest.requireActual('..');
+  const rows = [
+    { id: 'a', name: 'Apple', qty: 10 },
+    { id: 'b', name: 'Banana', qty: 20 },
+  ];
+  const columns = [
+    { key: 'name', header: 'Name' },
+    { key: 'qty', header: 'Qty' },
+  ];
+
+  it('expands a row into a detail panel', async () => {
+    const user = userEvent.setup();
+    render(<DataTable aria-label="Fruit" data={rows} columns={columns} pageSize={0} renderExpanded={(r: { name: string }) => <p>Details for {r.name}</p>} />);
+    const toggles = screen.getAllByRole('button', { name: 'Expand row' });
+    expect(toggles[0]).toHaveAttribute('aria-expanded', 'false');
+    await user.click(toggles[0]);
+    expect(screen.getByText('Details for Apple')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'Collapse row' })[0]).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('edits a cell: Enter saves, Escape cancels, validation blocks', async () => {
+    const user = userEvent.setup();
+    const onCellEdit = jest.fn();
+    const cols = [columns[0], { ...columns[1], editable: true, validate: (v: unknown) => (typeof v === 'number' && v > 0 ? undefined : 'Must be positive') }];
+    render(<DataTable aria-label="Fruit" data={rows} columns={cols} pageSize={0} onCellEdit={onCellEdit} />);
+    await user.dblClick(within(screen.getByRole('grid')).getByText('10'));
+    const input = screen.getByRole('spinbutton', { name: 'Qty' });
+    await user.clear(input);
+    await user.type(input, '-1{Enter}');
+    expect(screen.getByRole('alert')).toHaveTextContent('Must be positive');
+    expect(onCellEdit).not.toHaveBeenCalled();
+    await user.clear(input);
+    await user.type(input, '12{Enter}');
+    expect(onCellEdit).toHaveBeenCalledWith(rows[0], 'qty', 12);
+    await user.dblClick(within(screen.getByRole('grid')).getByText('20'));
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('spinbutton')).toBeNull();
+    expect(onCellEdit).toHaveBeenCalledTimes(1);
+  });
+
+  it('resizes a column with the keyboard and pins columns', async () => {
+    const user = userEvent.setup();
+    const onColumnResize = jest.fn();
+    render(<DataTable aria-label="Fruit" data={rows} columns={[{ ...columns[0], pin: 'start', width: 160 }, columns[1]]} pageSize={0} resizableColumns onColumnResize={onColumnResize} />);
+    const handle = screen.getByRole('separator', { name: 'Resize Name' });
+    act(() => handle.focus());
+    await user.keyboard('{ArrowRight}');
+    expect(onColumnResize).toHaveBeenCalledWith('name', 176);
+    expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('data-pinned', 'start');
+  });
+
+  it('virtualizes: renders only rows in the window', () => {
+    const many = Array.from({ length: 1000 }, (_, i) => ({ id: `r${i}`, name: `Row ${i}`, qty: i }));
+    render(<DataTable aria-label="Many" data={many} columns={columns} virtualize maxHeight={200} />);
+    const rendered = screen.getAllByRole('row').length - 1;
+    expect(rendered).toBeLessThan(40);
+    expect(screen.getByRole('grid')).toHaveAttribute('aria-rowcount', '1001');
+  });
+});

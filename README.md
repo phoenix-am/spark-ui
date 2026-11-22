@@ -101,7 +101,7 @@ npx shadcn add @sparkwire/data-table   # or use the shadcn CLI you already have
 | --- | --- |
 | **Inputs** | Button, Textfield, Textarea, NumberField, Checkbox, Switch, RadioGroup, Slider, Dropdown / Select, Combobox, DatePicker, DateRangePicker, Calendar, TimePicker, ToggleGroup, FileUpload, Field |
 | **Navigation** | Tabs, Menu, CommandPalette (⌘K), Sidebar, Drawer, Breadcrumbs, Pagination, Stepper |
-| **Data** | DataTable (sorting, search, filters, paging, selection, responsive), Line / Area, Bar, Donut and Sparkline charts, Card, Avatar, Badge, Accordion |
+| **Data** | DataTable (sorting, search, filters, paging, selection, virtual scrolling, resizable and pinned columns, expandable rows, inline editing), Line / Area, Bar, Donut and Sparkline charts, Card, Avatar, Badge, Accordion |
 | **Feedback** | Alert, Toast, Modal, Tooltip, Progress, Spinner, Skeleton |
 | **Blocks** | Dashboard, sign-in and settings pages, ready to copy |
 | **Build your own** | ButtonBase, InputBase, Popover, ListBox, Overlay, and headless hooks |

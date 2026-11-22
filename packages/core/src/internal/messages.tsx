@@ -71,6 +71,13 @@ export interface SparkMessages {
   maxFiles: (n: string) => string;
   // data display
   dataTable: string;
+  expandRow: string;
+  collapseRow: string;
+  resizeColumn: (name: string) => string;
+  selectedCount: (n: string) => string;
+  clearSelection: string;
+  rangeOf: (from: string, to: string, total: string) => string;
+  perPage: (n: string) => string;
   series: string;
   chart: string;
   total: string;
@@ -130,6 +137,13 @@ const en: SparkMessages = {
   upTo: (s) => `up to ${s}`,
   maxFiles: (n) => `max ${n} files`,
   dataTable: 'Data table',
+  expandRow: 'Expand row',
+  collapseRow: 'Collapse row',
+  resizeColumn: (name) => `Resize ${name}`,
+  selectedCount: (n) => `${n} selected`,
+  clearSelection: 'Clear',
+  rangeOf: (f, t, total) => `${f}–${t} of ${total}`,
+  perPage: (n) => `${n} / page`,
   series: 'Series',
   chart: 'Chart',
   total: 'Total',
@@ -189,6 +203,13 @@ const hi: SparkMessages = {
   upTo: (s) => `${s} तक`,
   maxFiles: (n) => `अधिकतम ${n} फ़ाइलें`,
   dataTable: 'डेटा तालिका',
+  expandRow: 'पंक्ति खोलें',
+  collapseRow: 'पंक्ति बंद करें',
+  resizeColumn: (name) => `${name} कॉलम का आकार बदलें`,
+  selectedCount: (n) => `${n} चुने गए`,
+  clearSelection: 'चयन हटाएँ',
+  rangeOf: (f, t, total) => `${total} में से ${f}–${t}`,
+  perPage: (n) => `${n} / पेज`,
   series: 'शृंखला',
   chart: 'चार्ट',
   total: 'कुल',
@@ -248,6 +269,13 @@ const gu: SparkMessages = {
   upTo: (s) => `${s} સુધી`,
   maxFiles: (n) => `વધુમાં વધુ ${n} ફાઇલો`,
   dataTable: 'ડેટા કોષ્ટક',
+  expandRow: 'પંક્તિ ખોલો',
+  collapseRow: 'પંક્તિ બંધ કરો',
+  resizeColumn: (name) => `${name} કૉલમનું કદ બદલો`,
+  selectedCount: (n) => `${n} પસંદ કર્યા`,
+  clearSelection: 'પસંદગી હટાવો',
+  rangeOf: (f, t, total) => `${total}માંથી ${f}–${t}`,
+  perPage: (n) => `${n} / પેજ`,
   series: 'શ્રેણી',
   chart: 'ચાર્ટ',
   total: 'કુલ',
@@ -307,6 +335,13 @@ const ta: SparkMessages = {
   upTo: (s) => `${s} வரை`,
   maxFiles: (n) => `அதிகபட்சம் ${n} கோப்புகள்`,
   dataTable: 'தரவு அட்டவணை',
+  expandRow: 'வரிசையை விரி',
+  collapseRow: 'வரிசையைச் சுருக்கு',
+  resizeColumn: (name) => `${name} நெடுவரிசையின் அளவை மாற்று`,
+  selectedCount: (n) => `${n} தேர்ந்தெடுக்கப்பட்டன`,
+  clearSelection: 'தேர்வை அழி',
+  rangeOf: (f, t, total) => `${total} இல் ${f}–${t}`,
+  perPage: (n) => `${n} / பக்கம்`,
   series: 'தொடர்',
   chart: 'விளக்கப்படம்',
   total: 'மொத்தம்',

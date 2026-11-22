@@ -910,19 +910,22 @@ import { DataTable } from '@sparkwire/core';
 Install: `npx sparkwire add data-table` (copy source) or use the npm package. Examples: https://phoenix-am.github.io/spark-ui/?path=/docs/data-display-datatable--docs
 
 ### DataTable
-DataTable: sort, search, filter, page and select rows. Built from divs on a
-CSS grid (like MUI's Data Grid), so it adapts to its container: in narrow
-spaces rows become labelled cards. The table logic is Spark UI's own
-(`useDataTable`); React Aria supplies grid keyboard navigation and
-screen-reader semantics. Sorted headers and selected rows light up.
+DataTable: sort, search, filter, page and select rows; resize and pin
+columns, expand rows, edit cells in place, and virtualise thousands of
+rows. Built from divs on a CSS grid (like MUI's Data Grid), so it adapts
+to its container: in narrow spaces rows become labelled cards. The table
+logic is Sparkwire's own (`useDataTable`); React Aria supplies grid
+keyboard navigation and screen-reader semantics.
 
 Keyboard: arrows move between cells, Home/End and Page Up/Down jump,
-Space selects a row, Enter activates it, Shift+click sorts by more than
-one column.
+Space selects a row, Enter activates it (or edits an editable cell; F2
+too), Shift+click sorts by more than one column. Tab from a resizable
+column header reaches its resize handle, which takes the arrow keys.
 
-Style hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,
-`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable]`,
-`__row[data-selected][data-focus-visible]`, `__cell[data-align]`, `__footer`.
+Style hooks: `.sp-data-table[data-density][data-striped][data-responsive][data-virtual]`,
+`__toolbar`, `__grid[aria-busy]`, `__header`, `__column[data-sorted][data-sortable][data-pinned]`,
+`__resizer`, `__row[data-selected][data-expanded]`, `__cell[data-align][data-pinned][data-editing]`,
+`__expander`, `__detail`, `__editor`, `__footer`.
 
 - `columns`: `DataTableColumn<RowT>[]`
 - `data`: `RowT[]`
@@ -931,6 +934,9 @@ Style hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,
 - `bulkActions?`: `((rows: RowT[]) => ReactNode)` Actions shown when rows are selected, e.g. a delete button. Receives the selected rows.
 - `className?`: `string`
 - `classNames?`: `Partial<Record<"root" | "toolbar" | "grid" | "header" | "columnHeader" | "row" | "cell" | "footer", string>>` Extra classes for each part.
+- `columnWidths?`: `Record<string, number>` Column widths in px by column key (controlled).
+- `defaultColumnWidths?`: `Record<string, number>`
+- `defaultExpandedKeys?`: `Iterable<string>`
 - `defaultFilters?`: `Record<string, unknown>`
 - `defaultPage?`: `number`
 - `defaultPageSize?`: `number`
@@ -939,11 +945,15 @@ Style hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,
 - `defaultSort?`: `SortRule[]`
 - `density?`: `"compact" | "normal" | "comfortable"` Row height. Default `normal`.
 - `emptyState?`: `ReactNode` Shown when there are no rows. Default "No results".
+- `expandedKeys?`: `Set<string>` Expanded row keys (controlled).
 - `filters?`: `Record<string, unknown>` Controlled per-column filter values, keyed by column.
 - `getRowKey?`: `((row: RowT, index: number) => string)` Stable id for each row. Default: `row.id`, then the index.
 - `loading?`: `boolean` Show placeholder rows while data loads.
 - `manual?`: `boolean` Server-side mode: you sort, filter and page the data yourself (e.g. in an API call) and pass the current page as `data` with the total `rowCount`.
 - `maxHeight?`: `string | number` Fix the height and scroll the body under a sticky header, e.g. `400`.
+- `onCellEdit?`: `((row: RowT, columnKey: string, value: unknown) => void)` Save an edited cell (columns with `editable`). Update your data here; the table shows what `data` holds.
+- `onColumnResize?`: `((key: string, width: number) => void)` Called when a resize ends, with the column key and its new width.
+- `onExpandedChange?`: `((keys: Set<string>) => void)`
 - `onFiltersChange?`: `((filters: Record<string, unknown>) => void)`
 - `onPageChange?`: `((page: number) => void)`
 - `onPageSizeChange?`: `((size: number) => void)`
@@ -954,8 +964,11 @@ Style hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,
 - `page?`: `number` Controlled page (0-based).
 - `pageSize?`: `number` Rows per page; `0` turns paging off. Default 10.
 - `pageSizeOptions?`: `number[]` Page sizes to offer. Default `[10, 25, 50]`. Pass `[]` to hide the picker.
+- `renderExpanded?`: `((row: RowT) => ReactNode)` Content shown under a row when it's expanded; adds an expand button to each row.
+- `resizableColumns?`: `boolean` Let people resize every column (drag its edge, or Tab to the edge and use the arrow keys). Columns can also opt in with `resizable`.
 - `responsive?`: `"stack" | "scroll"` In a narrow container: `stack` (default) turns rows into labelled cards; `scroll` keeps the grid and scrolls sideways.
 - `rowCount?`: `number` Total rows on the server, for paging in `manual` mode.
+- `rowHeight?`: `number` Row height in px for `virtualize`. Default from `density`: 36, 44 or 52.
 - `search?`: `string` Controlled search text (matches any searchable column).
 - `searchable?`: `boolean` Show a search box over the table.
 - `searchPlaceholder?`: `string` Placeholder for the search box.
@@ -965,6 +978,7 @@ Style hooks: `.sp-data-table[data-density][data-striped][data-responsive]`,
 - `stackBelow?`: `number` Container width (px) below which rows stack. Default 640.
 - `striped?`: `boolean` Shade every other row.
 - `toolbar?`: `ReactNode` Extra content in the toolbar, e.g. filter dropdowns or an export button.
+- `virtualize?`: `boolean` Render only the rows in view, for thousands of rows. Needs `maxHeight`; paging is off unless you set a page size, rows have a fixed height (`rowHeight`), and rows don't stack or expand.
 
 ## CommandPalette (`command-palette`)
 A ⌘K launcher: search commands and pages, run with the keyboard.
