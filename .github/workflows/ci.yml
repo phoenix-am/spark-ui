@@ -31,3 +31,15 @@ jobs:
         run: npm run build
       - name: Registry is up to date
         run: git diff --exit-code -- registry || (echo 'Run npm run build and commit registry/' && exit 1)
+
+  # The CLI runs npm through cmd.exe on Windows, where ^ < > | mean something.
+  # Its tests need only Node, so this job skips installing the workspace.
+  cli-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: CLI tests on Windows
+        run: node --test packages/cli/test/cli.test.mjs

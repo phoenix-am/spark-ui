@@ -81,3 +81,26 @@ test('refuses an invalid name in registryDependencies', () => {
   assert.notEqual(r.status, 0);
   assert.match(r.stderr, /Invalid component name/);
 });
+
+// The install step hands package specs to npm. On Windows that goes through cmd.exe,
+// where ^ < > | are special. A stand-in npm records exactly what it received.
+test('the package manager receives every spec exactly as written', () => {
+  const deps = ['react-aria@^3.53.1', '@react-types/shared@^3.37.0', 'x@>=1 <2', 'y@~1.2.3 || ^2'];
+  const box = sandbox({ name: 'deps', files: [file('components/spark-ui/D.tsx')], dependencies: deps });
+  const bin = path.join(box.root, 'fakebin');
+  fs.mkdirSync(bin);
+  const log = path.join(box.root, 'args.json');
+  fs.writeFileSync(path.join(bin, 'record.cjs'), `require('fs').writeFileSync(${JSON.stringify(log)}, JSON.stringify(process.argv.slice(2)));`);
+  fs.writeFileSync(path.join(bin, 'npm'), `#!/bin/sh\nexec node "$(dirname "$0")/record.cjs" "$@"\n`, { mode: 0o755 });
+  fs.writeFileSync(path.join(bin, 'npm.cmd'), `@echo off\r\nnode "%~dp0record.cjs" %*\r\n`);
+  const r = spawnSync(process.execPath, [BIN, 'add', 'deps', '--registry', box.registry, '--cwd', box.project, '--dir', 'src/components'], {
+    encoding: 'utf8',
+    // Windows spells it Path; whichever key exists gets the stand-in npm first.
+    env: (() => {
+      const key = Object.keys(process.env).find((k) => k.toUpperCase() === 'PATH') ?? 'PATH';
+      return { ...process.env, [key]: `${bin}${path.delimiter}${process.env[key] ?? ''}` };
+    })(),
+  });
+  assert.equal(r.status, 0, r.stderr + r.stdout);
+  assert.deepEqual(JSON.parse(fs.readFileSync(log, 'utf8')), ['install', ...deps]);
+});
