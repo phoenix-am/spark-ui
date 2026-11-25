@@ -1253,3 +1253,30 @@ pre {
 /* Playground settings bar and the themed stage inside it. */
 .sw-playground__toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--sw-line); background: var(--sw-soft); }
 .sw-playground__surface { background: var(--spark-surface-base); color: var(--spark-text-primary); }
+
+/* ------------------------------------------------------------ home: ways in */
+.sw-ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.sw-way { display: flex; flex-direction: column; gap: 0.75rem; padding: 1.5rem; border: 1px solid var(--sw-line); border-radius: 18px; background: var(--spark-surface-base); }
+.sw-way h3 { margin: 0; font-size: 1.125rem; }
+.sw-way p { margin: 0; color: var(--spark-text-secondary); font-size: 0.9375rem; flex: 1; }
+.sw-way__cmd { margin-top: 0; justify-content: flex-start; max-width: 100%; text-align: start; white-space: nowrap; font-size: 0.8125rem; }
+.sw-way__link { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; font-weight: 600; color: var(--spark-energy-ink); text-decoration: none; }
+.sw-way__link:hover { text-decoration: underline; }
+.sw-way__link:focus-visible { outline: 2px solid var(--spark-energy-ink); outline-offset: 2px; border-radius: 4px; }
+
+/* ------------------------------------------------------------ home: which one */
+.sw-compare .sp-tabs__panel, .sw-compare [role='tabpanel'] { padding-top: 1rem; }
+.sw-compare__scroll { overflow-x: auto; border: 1px solid var(--sw-line); border-radius: 16px; }
+.sw-compare__table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.sw-compare__table :is(th, td) { padding: 0.875rem 1.125rem; text-align: start; border-top: 1px solid var(--sw-line); }
+.sw-compare__table thead th { border-top: 0; background: var(--sw-soft); font-size: 0.8125rem; font-weight: 700; color: var(--spark-text-secondary); }
+.sw-compare__table thead a { color: var(--spark-text-primary); text-decoration: none; }
+.sw-compare__table thead a:hover { text-decoration: underline; }
+.sw-compare__table tbody th { font-weight: 500; min-width: 11rem; }
+.sw-compare__table td { color: var(--spark-text-secondary); white-space: nowrap; }
+.sw-compare__table td[data-fit='best'] { color: var(--spark-success-ink); font-weight: 600; }
+.sw-compare__table td[data-fit='best'] svg { vertical-align: -2px; margin-inline-end: 0.375rem; }
+@media (max-width: 860px) {
+  .sw-ways { grid-template-columns: 1fr; }
+}
+.sw-way__cmd .sw-install__copy { margin-inline-start: auto; }

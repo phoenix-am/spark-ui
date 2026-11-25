@@ -104,15 +104,18 @@ function Header() {
           <kbd>{isMac ? '⌘' : 'Ctrl'} K</kbd>
         </button>
         <div className="sw-header__tools">
+          {/* The home page has its own, bigger dial in the hero; one dial per page. */}
+          {pathname !== '/' && (
           <ToggleGroup aria-label="Energy" size="small" value={energy} onChange={(v) => v && setEnergy(v as Energy)} className="sw-energy sw-hide-mobile">
             <ToggleGroupItem value="off" aria-label="Energy off">Off</ToggleGroupItem>
             <ToggleGroupItem value="calm">Calm</ToggleGroupItem>
-            <ToggleGroupItem value="default" aria-label="Energy default">On</ToggleGroupItem>
+            <ToggleGroupItem value="default">Default</ToggleGroupItem>
             <ToggleGroupItem value="electric">
               <Icon name="bolt" size={14} />
               <span className="sw-visually-hidden">Electric</span>
             </ToggleGroupItem>
           </ToggleGroup>
+          )}
           <Tooltip title={mode === 'dark' ? 'Light mode' : 'Dark mode'}>
             <button type="button" className="sw-icon-btn" aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}>
               <Icon name={mode === 'dark' ? 'sun' : 'moon'} />

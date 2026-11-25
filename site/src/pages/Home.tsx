@@ -19,7 +19,12 @@ import {
   SparkProvider,
   DatePicker,
   Alert,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
 } from '@sparkwire/core';
+import core from '../../../packages/core/package.json';
 import { useSite, Footer, GITHUB } from '../App';
 import { Icon } from '../components/Icon';
 import { CodeBlock } from '../components/CodeBlock';
@@ -72,6 +77,66 @@ const HERO_CODE = `import { DataTable } from '@sparkwire/core';
   searchable
 />`;
 
+const WAYS = [
+  { title: 'Install the package', body: 'Fixes and new features arrive with npm update. Best when you want to keep up without effort.', command: 'npm install @sparkwire/core', href: '/docs/getting-started', link: 'Getting started' },
+  { title: 'Copy the source', body: 'The files land in your repo with everything they need. Best when you plan to change them.', command: 'npx sparkwire add button', href: '/docs/cli', link: 'The CLI' },
+  { title: 'Let your AI agent do it', body: 'The MCP server gives coding assistants the real props, so they stop guessing.', command: 'npx @sparkwire/mcp', href: '/docs/ai', link: 'AI coding agents' },
+];
+
+type Comparison = { id: string; title: string; components: { name: string; slug: string }[]; rows: string[][] };
+const COMPARISONS: Comparison[] = [
+  {
+    id: 'pick',
+    title: 'Picking a value',
+    components: [{ name: 'Dropdown', slug: 'dropdown' }, { name: 'Combobox', slug: 'combobox' }, { name: 'Menu', slug: 'menu' }],
+    rows: [
+      ['pick one value from a short list', 'Best fit', 'Works', 'No, it runs actions'],
+      ['find one of hundreds by typing', 'Type-to-jump only', 'Best fit', 'No'],
+      ['enter a value that isn\'t in the list', 'No', 'Best fit', 'No'],
+      ['run an action like Rename or Delete', 'No', 'No', 'Best fit'],
+    ],
+  },
+  {
+    id: 'panel',
+    title: 'Opening a panel',
+    components: [{ name: 'Modal', slug: 'modal' }, { name: 'Drawer', slug: 'drawer' }, { name: 'Tooltip', slug: 'tooltip' }],
+    rows: [
+      ['confirm something that matters, like a delete', 'Best fit', 'Works', 'No'],
+      ['use filters or details while the page stays visible', 'Covers the page', 'Best fit', 'No'],
+      ['see a short hint on hover or focus', 'No', 'No', 'Best fit'],
+    ],
+  },
+  {
+    id: 'tell',
+    title: 'Telling people something',
+    components: [{ name: 'Toast', slug: 'toast' }, { name: 'Alert', slug: 'alert' }],
+    rows: [
+      ['know an action worked, then move on', 'Best fit', 'Works, but stays on the page'],
+      ['read a problem and fix it', 'Can disappear too soon', 'Best fit'],
+      ['undo what they just did', 'Best fit', 'Works'],
+    ],
+  },
+];
+
+function CopyLine({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      className="sw-install sw-way__cmd"
+      onClick={() => {
+        navigator.clipboard?.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      }}
+      aria-label={`Copy ${text}`}
+    >
+      <span className="sw-install__prompt">$</span> {text}
+      <span className="sw-install__copy">{copied ? <Icon name="check" size={16} /> : 'Copy'}</span>
+    </button>
+  );
+}
+
 export function Home() {
   usePageTitle();
   const { energy, setEnergy } = useSite();
@@ -88,13 +153,13 @@ export function Home() {
       <section className="sw-hero">
         <div className="sw-hero__glow" aria-hidden="true" />
         <div className="sw-hero__copy">
-          <Link to="/components/data-table" className="sw-pill">
+          <a href={`${GITHUB}/blob/master/packages/core/CHANGELOG.md`} className="sw-pill" target="_blank" rel="noreferrer">
             <Badge tone="success" variant="soft" led>
-              New
+              v{core.version}
             </Badge>
-            Data grid with virtual scrolling and inline editing
+            See what's new in this release
             <Icon name="arrow" size={14} />
-          </Link>
+          </a>
           <h1>
             React components
             <br />
@@ -185,12 +250,32 @@ export function Home() {
           <span>languages built in</span>
         </div>
         <div>
-          <strong>0</strong>
-          <span>chart or table dependencies</span>
-        </div>
-        <div>
           <strong>100%</strong>
           <span>axe-checked</span>
+        </div>
+        <div>
+          <strong>18 &amp; 19</strong>
+          <span>React versions supported</span>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------- ways in */}
+      <section className="sw-section">
+        <header className="sw-section__head">
+          <p className="sw-eyebrow">Pick your way in</p>
+          <h2>Install it, own it, or let your agent do it</h2>
+        </header>
+        <div className="sw-ways">
+          {WAYS.map((w) => (
+            <div key={w.title} className="sw-way">
+              <h3>{w.title}</h3>
+              <p>{w.body}</p>
+              <CopyLine text={w.command} />
+              <Link to={w.href} className="sw-way__link">
+                {w.link} <Icon name="arrow" size={14} />
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -283,6 +368,56 @@ export function Home() {
             <Button fullWidth>{L.cta}</Button>
           </Card>
         </SparkProvider>
+      </section>
+
+      {/* ---------------------------------------------------- which one */}
+      <section className="sw-section">
+        <header className="sw-section__head">
+          <p className="sw-eyebrow">Not sure which one?</p>
+          <h2>Pick by what people need to do</h2>
+          <p>Some components look alike but do different jobs. Start from the task.</p>
+        </header>
+        <Tabs defaultValue={COMPARISONS[0].id} className="sw-compare">
+          <TabList aria-label="Comparisons">
+            {COMPARISONS.map((c) => (
+              <Tab key={c.id} value={c.id}>
+                {c.title}
+              </Tab>
+            ))}
+          </TabList>
+          {COMPARISONS.map((c) => (
+            <TabPanel key={c.id} value={c.id}>
+              <div className="sw-compare__scroll">
+                <table className="sw-compare__table">
+                  <caption className="sw-visually-hidden">{c.title}: which component fits each task</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">I want people to…</th>
+                      {c.components.map((x) => (
+                        <th key={x.slug} scope="col">
+                          <Link to={`/components/${x.slug}`}>{x.name}</Link>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {c.rows.map(([task, ...cells]) => (
+                      <tr key={task}>
+                        <th scope="row">{task}</th>
+                        {cells.map((cell, i) => (
+                          <td key={i} data-fit={cell.startsWith('Best') ? 'best' : cell.startsWith('No') ? 'no' : undefined}>
+                            {cell.startsWith('Best') && <Icon name="check" size={14} />}
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </TabPanel>
+          ))}
+        </Tabs>
       </section>
 
       {/* -------------------------------------------------------- features */}
