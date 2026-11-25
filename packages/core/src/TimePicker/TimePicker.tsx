@@ -149,7 +149,8 @@ export function TimePicker(inProps: TimePickerProps) {
     const out: ListOption<string>[] = [];
     const lo = minT ? toMinutes(minT) : 0;
     const hi = maxT ? toMinutes(maxT) : 24 * 60 - 1;
-    for (let m = Math.ceil(lo / step) * step; m <= hi; m += Math.max(5, step)) {
+    const every = Number.isFinite(step) && step > 0 ? Math.max(5, step) : 30;
+    for (let m = Math.ceil(lo / every) * every; m <= hi; m += every) {
       const value = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
       out.push({ value, label: fmt.format(new Date(2000, 0, 1, Math.floor(m / 60), m % 60)), disabled: isTimeDisabled?.(value) });
     }

@@ -88,7 +88,9 @@ export function LineChart<Row>(inProps: LineChartProps<Row>) {
       return [lo, acc] as [number, number];
     });
   });
-  const values = stacks.flat().flat();
+  // Unstacked lines start at 0 only for drawing; the range uses their values alone,
+  // so `zeroBaseline={false}` can zoom in on 1000–1002.
+  const values = stacked ? stacks.flat().flat() : stacks.flat().map(([, v]) => v);
   const lo = zero ? Math.min(0, ...values) : Math.min(...values);
   const hi = Math.max(...values, lo + 1);
   const ticks = niceTicks(lo, hi);

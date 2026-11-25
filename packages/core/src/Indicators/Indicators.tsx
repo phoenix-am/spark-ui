@@ -69,7 +69,8 @@ export interface ProgressProps {
  */
 export function Progress(inProps: ProgressProps) {
   const { value, label, showValue, tone = 'brand', size = 'medium' } = useDefaults('Progress', inProps);
-  const v = value === undefined ? undefined : Math.max(0, Math.min(100, value));
+  // NaN or Infinity shows as indeterminate rather than aria-valuenow="NaN".
+  const v = value === undefined || !Number.isFinite(value) ? undefined : Math.max(0, Math.min(100, value));
   const state = v === undefined ? 'indeterminate' : v === 100 ? 'charged' : 'charging';
   const showNumber = v !== undefined && showValue !== false;
 

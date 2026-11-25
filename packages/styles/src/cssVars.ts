@@ -45,8 +45,16 @@ export function themeToCssVars(theme: Theme): Record<string, string> {
 }
 
 /** The same variables as a CSS rule body, for a <style> tag or a stylesheet. */
+/** Characters that would let a theme value close the rule or start new ones. */
+const UNSAFE = /[;{}<>\\]|\/\*|url\s*\(|expression\s*\(/i;
+
 export function themeToCss(theme: Theme, selector = ':root'): string {
   const body = Object.entries(themeToCssVars(theme))
+    .filter(([k, value]) => {
+      if (!UNSAFE.test(String(value))) return true;
+      console.warn(`[Sparkwire] themeToCss skipped ${k}: its value could break out of the CSS rule.`);
+      return false;
+    })
     .map(([k, value]) => `  ${k}: ${value};`)
     .join('\n');
   return `${selector} {\n  color-scheme: ${theme.mode};\n${body}\n}\n`;

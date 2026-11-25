@@ -19,7 +19,8 @@ const initials = (name: string) =>
     .trim()
     .split(/\s+/)
     .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase() ?? '')
+    // Array.from splits by code point, so an emoji stays whole instead of half a surrogate pair.
+    .map((p) => Array.from(p)[0]?.toUpperCase() ?? '')
     .join('');
 
 /**

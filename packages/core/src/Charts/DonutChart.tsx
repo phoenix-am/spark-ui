@@ -172,8 +172,10 @@ export interface SparklineProps {
  * accessible name states the first, last and range.
  */
 export function Sparkline(inProps: SparklineProps) {
-  const { data, width = 96, height = 28, area = false, color = 'var(--spark-chart-1)', showLast = true, className, ...rest } = useDefaults('Sparkline', inProps) as SparklineProps;
+  const { data: raw, width = 96, height = 28, area = false, color = 'var(--spark-chart-1)', showLast = true, className, ...rest } = useDefaults('Sparkline', inProps) as SparklineProps;
   const id = useId().replace(/:/g, '');
+  // NaN or Infinity would turn the whole path into "NaN"; skip those points.
+  const data = (raw ?? []).filter((v) => Number.isFinite(v));
   if (!data.length) return null;
   const lo = Math.min(...data);
   const hi = Math.max(...data);

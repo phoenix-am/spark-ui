@@ -15,7 +15,8 @@ function deepMerge<T>(base: T, patch: DeepPartial<T> | undefined): T {
   if (!patch) return base;
   const out: Record<string, unknown> = { ...(base as Record<string, unknown>) };
   for (const [key, value] of Object.entries(patch)) {
-    if (value === undefined) continue;
+    // A theme parsed from JSON can carry "__proto__"; never let it reach the object's prototype.
+    if (value === undefined || key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
     const current = out[key];
     out[key] = isObject(current) && isObject(value) ? deepMerge(current, value as never) : value;
   }

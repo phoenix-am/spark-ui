@@ -66,14 +66,21 @@ export interface FileUploadProps {
 
 /** 1536 → "1.5 KB". */
 export function formatBytes(n: number) {
-  if (n < 1024) return `${n} B`;
-  const u = ['KB', 'MB', 'GB'];
+  if (!Number.isFinite(n) || n < 0) return '–';
+  if (n < 1024) return `${Math.round(n)} B`;
+  const u = ['KB', 'MB', 'GB', 'TB'];
   let i = -1;
   do {
     n /= 1024;
     i++;
   } while (n >= 1024 && i < u.length - 1);
-  return `${n < 10 ? n.toFixed(1) : Math.round(n)} ${u[i]}`;
+  const show = (x: number) => (x < 10 ? x.toFixed(1) : String(Math.round(x)));
+  // 1023.97 KB rounds to "1024 KB"; say "1.0 MB" instead.
+  if (Number(show(n)) >= 1024 && i < u.length - 1) {
+    n /= 1024;
+    i++;
+  }
+  return `${show(n)} ${u[i]}`;
 }
 
 function matchesAccept(file: File, accept?: string) {
@@ -83,6 +90,7 @@ function matchesAccept(file: File, accept?: string) {
   return accept.split(',').some((raw) => {
     const a = raw.trim().toLowerCase();
     if (!a) return false;
+    if (a === '*' || a === '*/*') return true;
     if (a.startsWith('.')) return name.endsWith(a);
     if (a.endsWith('/*')) return type.startsWith(a.slice(0, -1));
     return type === a;

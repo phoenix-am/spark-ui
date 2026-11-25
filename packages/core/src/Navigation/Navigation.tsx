@@ -123,6 +123,11 @@ export interface PaginationProps {
 
 /** Page list with ellipses: 1 … 4 5 6 … 20. Exported for custom pagers. */
 export function paginationRange(page: number, count: number, siblings = 1, boundaries = 1): Array<number | 'ellipsis'> {
+  // Whole, non-negative counts only: 0.5 or -1 used to drop the current page.
+  siblings = Math.max(0, Math.floor(siblings) || 0);
+  boundaries = Math.max(1, Math.floor(boundaries) || 1);
+  count = Math.max(0, Math.floor(count) || 0);
+  page = Math.min(Math.max(1, Math.round(page) || 1), Math.max(1, count));
   const range = (a: number, b: number) => Array.from({ length: Math.max(0, b - a + 1) }, (_, i) => a + i);
   const total = siblings * 2 + 3 + boundaries * 2;
   if (count <= total) return range(1, count);

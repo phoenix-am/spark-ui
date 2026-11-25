@@ -51,16 +51,28 @@ export interface ChartBaseProps<Row> {
 
 /** Rounded ticks covering [min, max]: 0, 250, 500… or 0, 0.2, 0.4… */
 export function niceTicks(min: number, max: number, count = 5): number[] {
-  if (min === max) max = min + 1;
+  if (!Number.isFinite(min) || !Number.isFinite(max)) return [0, 1];
+  if (min > max) [min, max] = [max, min];
+  // A flat series still needs a range. `min + 1` is no change at all past 2^53, so scale it.
+  if (min === max) max = min + (Math.abs(min) * Number.EPSILON * 8 || 1);
   const span = max - min;
+  // Spans beyond Number.MAX_VALUE: no "nice" step exists, so mark the ends (and zero).
+  if (!Number.isFinite(span)) return min < 0 && max > 0 ? [min, 0, max] : [min, max];
   const raw = span / count;
   const mag = 10 ** Math.floor(Math.log10(raw));
   const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => span / s <= count) ?? 10 * mag;
   const start = Math.floor(min / step) * step;
   const end = Math.ceil(max / step) * step;
+  // Count by index, never by `v += step`: adding a step smaller than the gap between
+  // floats leaves v unchanged and loops forever. Capped so a rounding slip can't explode.
+  const n = Math.min(50, Math.max(1, Math.round((end - start) / step)));
+  const digits = Math.min(100, Math.max(0, 1 - Math.floor(Math.log10(step))));
   const ticks: number[] = [];
-  for (let v = start; v <= end + step / 2; v += step) ticks.push(Number(v.toFixed(10)));
-  return ticks;
+  for (let i = 0; i <= n; i++) {
+    const v = Number((start + i * step).toFixed(digits));
+    if (!ticks.length || v > ticks[ticks.length - 1]) ticks.push(v);
+  }
+  return ticks.length >= 2 ? ticks : [min, max];
 }
 
 export const linear = (d0: number, d1: number, r0: number, r1: number) => (v: number) => (d1 === d0 ? r0 : r0 + ((v - d0) / (d1 - d0)) * (r1 - r0));

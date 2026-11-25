@@ -97,7 +97,7 @@ export const Slider = forwardRef(function Slider(inProps: SliderProps, ref: Reac
     defaultValue: toArray(defaultValue) ?? (isRange ? [min, max] : [min]),
     minValue: min,
     maxValue: max,
-    step,
+    step: Number.isFinite(step) && step > 0 ? step : 1,
     isDisabled: disabled,
     numberFormatter,
     onChange: (v: number | number[]) => onChange?.(fromArray(Array.isArray(v) ? v : [v])),
