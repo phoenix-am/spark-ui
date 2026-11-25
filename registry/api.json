@@ -7120,6 +7120,13 @@
               "on": [
                 "sp-tooltip__bubble"
               ]
+            },
+            {
+              "name": "--sp-shift",
+              "value": "0px",
+              "on": [
+                "sp-tooltip__bubble"
+              ]
             }
           ],
           "tokens": [

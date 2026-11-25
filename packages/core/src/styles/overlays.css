@@ -200,10 +200,10 @@
   pointer-events: none;
   animation: sp-zap var(--spark-motion-fast) var(--spark-motion-easing) both;
 }
-.sp-tooltip__bubble[data-placement='top'] { bottom: calc(100% + 8px); left: 50%; translate: -50% 0; }
-.sp-tooltip__bubble[data-placement='bottom'] { top: calc(100% + 8px); left: 50%; translate: -50% 0; --sp-from: translateY(-4px); }
-.sp-tooltip__bubble[data-placement='left'] { right: calc(100% + 8px); top: 50%; translate: 0 -50%; --sp-from: translateX(4px); }
-.sp-tooltip__bubble[data-placement='right'] { left: calc(100% + 8px); top: 50%; translate: 0 -50%; --sp-from: translateX(-4px); }
+.sp-tooltip__bubble[data-placement='top'] { bottom: calc(100% + 8px); left: 50%; translate: calc(-50% + var(--sp-shift, 0px)) 0; }
+.sp-tooltip__bubble[data-placement='bottom'] { top: calc(100% + 8px); left: 50%; translate: calc(-50% + var(--sp-shift, 0px)) 0; --sp-from: translateY(-4px); }
+.sp-tooltip__bubble[data-placement='left'] { right: calc(100% + 8px); top: 50%; translate: 0 calc(-50% + var(--sp-shift, 0px)); --sp-from: translateX(4px); }
+.sp-tooltip__bubble[data-placement='right'] { left: calc(100% + 8px); top: 50%; translate: 0 calc(-50% + var(--sp-shift, 0px)); --sp-from: translateX(-4px); }
 
 /* ------------------------------------------------------------------ Toast */
 .sp-toast-region {

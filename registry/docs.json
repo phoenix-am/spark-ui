@@ -4784,7 +4784,7 @@
             },
             {
               "name": "placement",
-              "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+              "type": "Placement",
               "values": [
                 "top",
                 "bottom",
@@ -4792,7 +4792,7 @@
                 "right"
               ],
               "required": false,
-              "description": "Side of the trigger to show on. Default `top`."
+              "description": "Preferred side of the trigger. Default `top`. Flips to the other side when there's no room, and slides along to stay inside the window."
             }
           ]
         }

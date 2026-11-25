@@ -1404,7 +1404,7 @@ Style hooks: `.sp-tooltip` (wrapper), `.sp-tooltip__bubble[data-placement]`.
 - `title`: `ReactNode` Tooltip text. Keep it short; it is read as the trigger's description.
 - `className?`: `string` Class for the tooltip bubble.
 - `delay?`: `number` Delay before showing on hover, in ms. Default 250. Keyboard focus shows it at once.
-- `placement?`: `"top" | "bottom" | "left" | "right"` Side of the trigger to show on. Default `top`.
+- `placement?`: `Placement` Preferred side of the trigger. Default `top`. Flips to the other side when there's no room, and slides along to stay inside the window.
 
 ## Toast (`toast`)
 Notifications.
