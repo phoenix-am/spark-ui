@@ -505,6 +505,20 @@ pre {
 .sw-canvas > * {
   max-width: 100%;
 }
+/* Safety net for content that really is wider than a phone: it scrolls inside the preview.
+   Menus, popovers and tooltips render in a portal above the page, so they aren't clipped. */
+.sw-canvas {
+  min-width: 0;
+  overflow-x: auto;
+}
+.sw-playground__stage > * {
+  min-width: 0;
+}
+.sw-control code,
+.sw-control label,
+.sw-control .sp-switch__label {
+  overflow-wrap: anywhere;
+}
 /* Components that fill their container (tables, sidebars) take the full demo width. */
 .sw-canvas > :is(.sp-data-table, .sp-tabs, .sp-accordion) {
   flex: 1 1 100%;
@@ -1123,4 +1137,70 @@ pre {
   .sw-wire {
     animation: none;
   }
+}
+
+/* ------------------------------------------------------- API reference */
+.sw-api h4 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.sw-api__name {
+  margin-top: 2.5rem !important;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sw-line);
+}
+.sw-api:first-child .sw-api__name {
+  margin-top: 0 !important;
+  padding-top: 0;
+  border-top: 0;
+}
+.sw-api__hint,
+.sw-api__tokens {
+  margin: 0 0 0.875rem;
+  max-width: 72ch;
+  color: var(--spark-text-secondary);
+  font-size: 0.875rem;
+}
+.sw-api__tokens {
+  margin-top: 0.875rem;
+  line-height: 2;
+}
+.sw-api__tokens code,
+.sw-api__hint code,
+.sw-type > p code {
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--sw-line);
+  border-radius: 6px;
+  background: var(--sw-soft);
+  font-size: 0.85em;
+}
+.sw-props + .sw-props {
+  margin-top: 1rem;
+}
+.sw-props__dep {
+  display: inline-block;
+  margin-inline-start: 0.375rem;
+  color: var(--spark-warning-ink);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.sw-type + .sw-type {
+  margin-top: 1.5rem;
+}
+.sw-type > p {
+  margin: 0 0 0.75rem;
+  color: var(--spark-text-secondary);
+  font-size: 0.9rem;
+}
+.sw-type__alias {
+  margin: 0;
+  padding: 0.875rem 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--sw-line);
+  border-radius: 12px;
+  background: var(--sw-soft);
+  font-size: 0.8125rem;
+  white-space: pre-wrap;
 }

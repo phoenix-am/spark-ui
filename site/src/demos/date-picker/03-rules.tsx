@@ -3,7 +3,7 @@ import { DatePicker } from '@sparkwire/core';
 
 export default function Rules() {
   return (
-    <div style={{ width: 300 }}>
+    <div style={{ width: '100%', maxWidth: 300 }}>
       <DatePicker label="Delivery day" min={new Date()} isDateDisabled={(d) => d.getDay() === 0 || d.getDay() === 6} helperText="Weekdays only" />
     </div>
   );

@@ -3,7 +3,7 @@ import { Slider } from '@sparkwire/core';
 
 export default function Range() {
   return (
-    <div style={{ width: 320 }}>
+    <div style={{ width: '100%', maxWidth: 320 }}>
       <Slider
         label="Price"
         min={0}

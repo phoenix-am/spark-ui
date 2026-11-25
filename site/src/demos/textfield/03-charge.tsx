@@ -6,7 +6,7 @@ const strength = (v: string) =>
 
 export default function Charge() {
   return (
-    <div style={{ width: 340 }}>
+    <div style={{ width: '100%', maxWidth: 340 }}>
       <Textfield label="New password" type="password" charge={strength} />
     </div>
   );

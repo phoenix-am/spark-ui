@@ -3,7 +3,7 @@ import { Card, Skeleton } from '@sparkwire/core';
 
 export default function Loading() {
   return (
-    <div style={{ width: 360 }}>
+    <div style={{ width: '100%', maxWidth: 360 }}>
       <Card padding="large">
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 16 }}>
           <Skeleton shape="circle" width={40} height={40} />

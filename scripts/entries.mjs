@@ -1,0 +1,42 @@
+/**
+ * Registry item → files holding its public components, its category id, and
+ * (optionally) which components it documents. Shared by build-docs.mjs and
+ * build-api.mjs.
+ */
+export const ENTRIES = [
+  ['button', ['__docgen__/shims.tsx'], 'actions-button', ['Button']],
+  ['spark', ['Spark/Spark.tsx'], 'effects-spark'],
+  ['switch', ['Switch/Switch.tsx'], 'inputs-switch'],
+  ['checkbox', ['Checkbox/Checkbox.tsx'], 'inputs-checkbox'],
+  ['radio-group', ['RadioGroup/RadioGroup.tsx'], 'inputs-radiogroup'],
+  ['slider', ['Slider/Slider.tsx'], 'inputs-slider'],
+  ['textfield', ['Textfield/Textfield.tsx'], 'inputs-textfield'],
+  ['field', ['Field/Field.tsx'], 'inputs-field'],
+  ['number-field', ['NumberField/NumberField.tsx'], 'inputs-numberfield'],
+  ['toggle-group', ['ToggleGroup/ToggleGroup.tsx'], 'inputs-togglegroup'],
+  ['stepper', ['Stepper/Stepper.tsx'], 'navigation-stepper'],
+  ['file-upload', ['FileUpload/FileUpload.tsx'], 'inputs-fileupload'],
+  ['time-picker', ['TimePicker/TimePicker.tsx'], 'inputs-timepicker'],
+  ['textarea', ['Textarea/Textarea.tsx'], 'inputs-textarea'],
+  ['alert', ['Alert/Alert.tsx'], 'feedback-alert'],
+  ['navigation', ['Navigation/Navigation.tsx'], 'navigation-breadcrumbs'],
+  ['charts', ['Charts/CartesianChart.tsx', 'Charts/DonutChart.tsx'], 'data-charts'],
+  ['dropdown', ['Dropdown/Dropdown.tsx'], 'inputs-dropdown'],
+  ['combobox', ['Combobox/Combobox.tsx'], 'inputs-combobox'],
+  ['date-picker', ['DatePicker/DatePicker.tsx', 'DatePicker/DateRangePicker.tsx', 'DatePicker/Calendar.tsx'], 'inputs-datepicker'],
+  ['data-table', ['DataTable/DataTable.tsx'], 'data-display-datatable'],
+  ['command-palette', ['CommandPalette/CommandPalette.tsx'], 'navigation-commandpalette'],
+  ['menu', ['Menu/Menu.tsx'], 'navigation-menu'],
+  ['sidebar', ['Sidebar/Sidebar.tsx'], 'navigation-sidebar'],
+  ['tabs', ['Tabs/Tabs.tsx'], 'navigation-tabs'],
+  ['accordion', ['Accordion/Accordion.tsx'], 'navigation-accordion'],
+  ['modal', ['Modal/Modal.tsx'], 'overlays-modal'],
+  ['drawer', ['Drawer/Drawer.tsx'], 'overlays-drawer'],
+  ['tooltip', ['Tooltip/Tooltip.tsx'], 'overlays-tooltip'],
+  ['toast', ['Toast/Toast.tsx', '__docgen__/shims.tsx'], 'feedback-toast', ['ToastProvider', 'ToastShowOptions']],
+  ['card', ['Card/Card.tsx'], 'data-display-card'],
+  ['avatar', ['Avatar/Avatar.tsx'], 'data-display-avatar'],
+  ['indicators', ['Indicators/Indicators.tsx'], 'feedback-badge'],
+  ['provider', ['Provider/SparkProvider.tsx'], 'foundations-customization'],
+  ['base', ['base/ButtonBase.tsx', 'base/InputBase.tsx', 'base/Popover.tsx', 'base/ListBox.tsx', 'base/Overlay.tsx'], 'foundations-base-components'],
+];

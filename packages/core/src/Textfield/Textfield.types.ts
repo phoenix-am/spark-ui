@@ -35,12 +35,19 @@ export interface UseTextFieldProps {
 }
 
 export interface UseTextFieldResult {
+  /** The current text. */
   value: string;
+  /** Pass to the input's onChange. */
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  /** Pass to the input's onFocus. */
   onFocus: (event: FocusEvent<HTMLInputElement>) => void;
+  /** Pass to the input's onBlur. */
   onBlur: (event: FocusEvent<HTMLInputElement>) => void;
+  /** Whether the input has focus. */
   focused: boolean;
+  /** Whether the field is disabled. */
   disabled: boolean;
+  /** Whether the field is in its error state. */
   error: boolean;
 }
 

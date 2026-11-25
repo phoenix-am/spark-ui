@@ -10,17 +10,21 @@ import type { SparkMessages } from '../internal/messages';
  */
 
 export interface DatePreset {
+  /** The button text. */
   label: string;
   /** A date, or a function returning one when the preset is used. */
   value: Date | (() => Date);
 }
 
 export interface DateRange {
+  /** The first day of the range. */
   start: Date;
+  /** The last day of the range. */
   end: Date;
 }
 
 export interface RangePreset {
+  /** The button text. */
   label: string;
   /** A range, or a function returning one when the preset is used. */
   value: DateRange | (() => DateRange);

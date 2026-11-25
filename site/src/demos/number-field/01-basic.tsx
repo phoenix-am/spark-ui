@@ -3,7 +3,7 @@ import { NumberField } from '@sparkwire/core';
 
 export default function Basic() {
   return (
-    <div style={{ width: 240 }}>
+    <div style={{ width: '100%', maxWidth: 240 }}>
       <NumberField label="Replicas" defaultValue={3} min={1} max={20} />
     </div>
   );

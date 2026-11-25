@@ -30,6 +30,7 @@ export interface ListOption<V extends string | number = string | number> {
 export interface ListOptionGroup<O extends ListOption = ListOption> {
   /** Heading for the group. */
   label: string;
+  /** The options under this heading. */
   options: O[];
 }
 

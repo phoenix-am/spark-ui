@@ -6,17 +6,22 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 export interface UploadFile {
   /** Stable id for keys and updates. */
   id: string;
+  /** The browser File object. */
   file: File;
   /** 0–100 while uploading. Leave undefined when you don't track progress. */
   progress?: number;
+  /** Where the upload is: queued, uploading, done or error. */
   status?: 'queued' | 'uploading' | 'done' | 'error';
   /** Shown under the name when status is `error`. */
   error?: string;
 }
 
 export interface FileRejection {
+  /** The file that was turned away. */
   file: File;
+  /** Why: wrong type, too big, or one file too many. */
   reason: 'type' | 'size' | 'count';
+  /** A translated explanation, ready to show. */
   message: string;
 }
 

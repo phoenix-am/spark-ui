@@ -3,7 +3,7 @@ import { Dropdown } from '@sparkwire/core';
 
 export default function Basic() {
   return (
-    <div style={{ width: 300 }}>
+    <div style={{ width: '100%', maxWidth: 300 }}>
       <Dropdown
         label="Country"
         placeholder="Select a country"

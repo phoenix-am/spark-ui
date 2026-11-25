@@ -5,9 +5,11 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 /* ----------------------------------------------------------- Breadcrumbs */
 
 export interface BreadcrumbItem {
+  /** The text shown for this level. */
   label: React.ReactNode;
   /** Omit on the current page (the last item). */
   href?: string;
+  /** An icon before the label. */
   icon?: React.ReactNode;
 }
 

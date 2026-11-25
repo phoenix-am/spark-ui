@@ -3,6 +3,7 @@ import { Switch, Textfield, NumberField, Dropdown, ToggleGroup, ToggleGroupItem 
 import type { ComponentDoc, PropDoc } from '../lib/catalog';
 import type { PlaygroundConfig } from '../lib/demos';
 import { toJsx } from '../lib/jsx';
+import { defaultFor } from '../lib/api';
 import { CodeBlock } from './CodeBlock';
 import { ErrorBoundary } from './ExampleCard';
 import { Icon } from './Icon';
@@ -27,10 +28,11 @@ function controlFor(p: PropDoc, initial: unknown): Control | null {
   return null;
 }
 
-/** "Default `medium`." in a prop description → "medium" */
-export const defaultOf = (p: PropDoc) => p.default ?? p.description.match(/Default(?:s to)? `([^`]+)`/)?.[1];
+
 
 export function Playground({ config, doc }: { config: PlaygroundConfig; doc: ComponentDoc }) {
+  /** The prop's real default, unquoted: `'medium'` → medium. */
+  const defaultOf = (p: PropDoc) => defaultFor(doc.name, p)?.replace(/^['"`](.*)['"`]$/, '$1');
   const initial = useMemo(() => ({ ...config.props }), [config]);
   const [values, setValues] = useState<Record<string, unknown>>(initial);
   const controls = useMemo(

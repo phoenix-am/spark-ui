@@ -6,5 +6,5 @@ export default {
   props: { label: 'Stay', clearable: true, visibleMonths: 2 },
   fixed: { presets: ['thisWeek', 'thisMonth', '+7d'] },
   hide: ['locale', 'calendar', 'startName', 'endName'],
-  wrap: (n) => <div style={{ width: 360 }}>{n}</div>,
+  wrap: (n) => <div style={{ width: '100%', maxWidth: 360 }}>{n}</div>,
 } satisfies PlaygroundConfig;

@@ -3,7 +3,7 @@ import { FileUpload } from '@sparkwire/core';
 
 export default function Images() {
   return (
-    <div style={{ width: 420 }}>
+    <div style={{ width: '100%', maxWidth: 420 }}>
       <FileUpload label="Screenshots" accept="image/*" multiple maxFiles={4} maxSize={5 * 1024 * 1024} previews hint="Up to 4 images, 5 MB each" />
     </div>
   );

@@ -6,6 +6,7 @@ export type SortDirection = 'ascending' | 'descending';
 export interface SortRule {
   /** Column key. */
   column: string;
+  /** ascending or descending. */
   direction: SortDirection;
 }
 

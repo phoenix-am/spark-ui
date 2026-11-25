@@ -9,14 +9,17 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 export interface Command {
   /** Unique id. */
   id: string;
+  /** The text shown and searched. */
   label: string;
   /** Extra words that should find this command, e.g. ['preferences'] for "Settings". */
   keywords?: string[];
+  /** An icon before the label. */
   icon?: React.ReactNode;
   /** Secondary line under the label. */
   description?: React.ReactNode;
   /** Shortcut hint shown at the end, e.g. "⌘S". Display only. */
   shortcut?: string;
+  /** Shown but can't be run. */
   disabled?: boolean;
   /** Run when chosen. */
   onSelect?: () => void;
@@ -27,6 +30,7 @@ export interface Command {
 export interface CommandGroup {
   /** Heading for the group. */
   heading: string;
+  /** The commands in this group. */
   items: Command[];
 }
 

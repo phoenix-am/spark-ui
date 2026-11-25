@@ -41,7 +41,10 @@
 .sp-input-base[data-variant='standard'] { background: transparent; border-width: 0 0 2px; border-radius: 0; padding-inline: 0; }
 .sp-input-base[data-variant='standard']:focus-within { box-shadow: none; }
 .sp-input-base__input {
-  flex-grow: 1;
+  /* Fill the box from a zero basis: without it the input keeps the browser's default
+     width (~20 characters) as its minimum, and fields can't shrink on narrow screens. */
+  flex: 1 1 0%;
+  width: 0;
   min-width: 0;
   align-self: stretch;
   border: none;

@@ -3,7 +3,7 @@ import { Field, InputBase } from '@sparkwire/core';
 
 export default function WrapAnyInput() {
   return (
-    <div style={{ width: 340 }}>
+    <div style={{ width: '100%', maxWidth: 340 }}>
       <Field label="Website" description="Shown on your public profile.">
         <InputBase type="url" placeholder="https://" />
       </Field>

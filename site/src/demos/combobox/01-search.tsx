@@ -5,7 +5,7 @@ const cities = ['Ahmedabad', 'Amreli', 'Bengaluru', 'Chennai', 'Delhi', 'Hyderab
 
 export default function Search() {
   return (
-    <div style={{ width: 300 }}>
+    <div style={{ width: '100%', maxWidth: 300 }}>
       <Combobox label="City" placeholder="Start typing…" options={cities.map((c) => ({ value: c, label: c }))} />
     </div>
   );

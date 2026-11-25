@@ -6,5 +6,5 @@ export default {
   props: { label: 'Due date', clearable: true },
   fixed: { presets: ['today', 'tomorrow', '+1w'] },
   hide: ['locale', 'calendar'],
-  wrap: (n) => <div style={{ width: 300 }}>{n}</div>,
+  wrap: (n) => <div style={{ width: '100%', maxWidth: 300 }}>{n}</div>,
 } satisfies PlaygroundConfig;

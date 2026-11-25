@@ -8,7 +8,7 @@ export default function Dial() {
   const [energy, setEnergy] = useState<Energy>('electric');
   return (
     <div style={{ display: 'grid', gap: 16, justifyItems: 'center' }}>
-      <ToggleGroup aria-label="Energy" value={energy} onChange={(v) => v && setEnergy(v as Energy)}>
+      <ToggleGroup aria-label="Energy" size="small" value={energy} onChange={(v) => v && setEnergy(v as Energy)}>
         <ToggleGroupItem value="off">Off</ToggleGroupItem>
         <ToggleGroupItem value="calm">Calm</ToggleGroupItem>
         <ToggleGroupItem value="default">Default</ToggleGroupItem>
@@ -16,7 +16,7 @@ export default function Dial() {
       </ToggleGroup>
       <SparkProvider energy={energy}>
         <Card padding="large" live>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
             <Button>Click for sparks</Button>
             <Button variant="outlined">Hover me</Button>
             <Switch label="Power" defaultChecked showBulb />

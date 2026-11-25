@@ -4,7 +4,9 @@ import { ClassNames, slot, useDefaults } from '../internal/defaults';
 import { useFormatters } from './core';
 
 export interface DonutSlice {
+  /** The slice's name, shown in the legend and tooltip. */
   label: string;
+  /** The slice's size; percentages are worked out from the total. */
   value: number;
   /** Default: the next categorical slot, in order. */
   color?: string;

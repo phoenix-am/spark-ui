@@ -8,7 +8,7 @@ export default function Burst() {
     <button
       type="button"
       onClick={(e) => ref.current?.burst(e)}
-      style={{ position: 'relative', width: 280, height: 140, borderRadius: 16, border: '1px dashed var(--spark-surface-border-strong)', background: 'var(--spark-surface-raised)', color: 'inherit', font: 'inherit', cursor: 'pointer' }}
+      style={{ position: 'relative', width: '100%', maxWidth: 280, height: 140, borderRadius: 16, border: '1px dashed var(--spark-surface-border-strong)', background: 'var(--spark-surface-raised)', color: 'inherit', font: 'inherit', cursor: 'pointer' }}
     >
       Click anywhere in here
       <Spark ref={ref} count={14} spread={90} />

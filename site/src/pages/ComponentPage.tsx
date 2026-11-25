@@ -3,8 +3,9 @@ import { Navigate, useParams } from 'react-router';
 import { Tabs, TabList, Tab, TabPanel, Badge } from '@sparkwire/core';
 import { entryByName, notesFor, REDIRECT } from '../lib/catalog';
 import { loadDemos, loadPlayground, type Demo, type PlaygroundConfig } from '../lib/demos';
+import { contentFor, SECTION_ORDER } from '../lib/content';
 import { Playground } from '../components/Playground';
-import { PropsTable } from '../components/PropsTable';
+import { ApiReference } from '../components/ApiReference';
 import { ExampleCard } from '../components/ExampleCard';
 import { CodeBlock } from '../components/CodeBlock';
 import { Prose } from '../components/Prose';
@@ -13,12 +14,24 @@ import { usePageTitle } from '../lib/usePageTitle';
 import { renderMarkdown } from '../lib/markdown';
 
 const inline = (md: string) => renderMarkdown(md).replace(/^<p>|<\/p>\s*$/g, '');
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
 /** First paragraph of a doc comment is the friendly intro; the rest is reference detail. */
 const split = (text = '') => {
   const [intro, ...rest] = text.split(/\n\s*\n/);
   return { intro: intro.replace(/\n/g, ' '), details: rest.join('\n\n') };
 };
+
+function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+  return (
+    <section aria-labelledby={id}>
+      <h2 id={id} className="sw-section-title">
+        {title}
+      </h2>
+      {children}
+    </section>
+  );
+}
 
 export function ComponentPage() {
   const { name = '' } = useParams();
@@ -38,13 +51,24 @@ export function ComponentPage() {
   const main = entry.components[0];
   const { intro } = split(main?.description);
   const notes = notesFor(entry.name);
+  const content = contentFor(entry.name);
   const playDoc = (playground?.name && entry.components.find((c) => c.name === playground.name)) || main;
+  const [basic, ...examples] = demos;
+  const extras = Object.keys(content).filter((k) => !SECTION_ORDER.includes(k));
+  const reference = entry.components;
+
   const toc = [
+    { id: 'install', label: 'Installation' },
+    basic && { id: 'usage', label: 'Basic usage' },
     playground && { id: 'playground', label: 'Playground' },
-    { id: 'install', label: 'Install' },
-    demos.length > 0 && { id: 'examples', label: 'Examples' },
+    content.Features && { id: 'features', label: 'Features' },
+    examples.length > 0 && { id: 'examples', label: 'Examples' },
     notes && { id: 'notes', label: 'Good to know' },
-    entry.components.length > 0 && { id: 'api', label: 'API' },
+    ...extras.map((k) => ({ id: slug(k), label: k })),
+    reference.length > 0 && { id: 'api', label: 'API reference' },
+    ...SECTION_ORDER.slice(1)
+      .filter((k) => content[k])
+      .map((k) => ({ id: slug(k), label: k })),
   ].filter(Boolean) as { id: string; label: string }[];
 
   return (
@@ -63,19 +87,7 @@ export function ComponentPage() {
           </p>
         )}
 
-        {playground && playDoc && (
-          <section aria-labelledby="playground">
-            <h2 id="playground" className="sw-section-title">
-              Playground
-            </h2>
-            <Playground key={entry.name} config={playground} doc={playDoc} />
-          </section>
-        )}
-
-        <section aria-labelledby="install">
-          <h2 id="install" className="sw-section-title">
-            Install
-          </h2>
+        <Section id="install" title="Installation">
           <Tabs defaultValue={entry.install.package ? 'npm' : 'copy'}>
             <TabList aria-label="How to install">
               {entry.install.package && <Tab value="npm">npm</Tab>}
@@ -83,10 +95,10 @@ export function ComponentPage() {
               <Tab value="shadcn">shadcn</Tab>
             </TabList>
             {entry.install.package && (
-            <TabPanel value="npm">
-              <CodeBlock lang="bash" code={`npm install @sparkwire/core`} />
-              <CodeBlock code={`import '@sparkwire/core/styles.css'; // once, at your app's root\n${entry.import}`} />
-            </TabPanel>
+              <TabPanel value="npm">
+                <CodeBlock lang="bash" code={`npm install @sparkwire/core`} />
+                <CodeBlock code={`import '@sparkwire/core/styles.css'; // once, at your app's root\n${entry.import}`} />
+              </TabPanel>
             )}
             <TabPanel value="copy">
               <CodeBlock lang="bash" code={entry.install.copy} />
@@ -96,48 +108,59 @@ export function ComponentPage() {
               <CodeBlock lang="bash" code={entry.install.shadcn} />
             </TabPanel>
           </Tabs>
-        </section>
+        </Section>
 
-        {demos.length > 0 && (
-          <section aria-labelledby="examples">
-            <h2 id="examples" className="sw-section-title">
-              Examples
-            </h2>
-            {demos.map((d) => (
+        {basic && (
+          <Section id="usage" title="Basic usage">
+            <ExampleCard demo={basic} />
+          </Section>
+        )}
+
+        {playground && playDoc && (
+          <Section id="playground" title="Playground">
+            <Playground key={entry.name} config={playground} doc={playDoc} />
+          </Section>
+        )}
+
+        {content.Features && (
+          <Section id="features" title="Features">
+            <Prose markdown={content.Features} />
+          </Section>
+        )}
+
+        {examples.length > 0 && (
+          <Section id="examples" title="Examples">
+            {examples.map((d) => (
               <ExampleCard key={d.id} demo={d} />
             ))}
-          </section>
+          </Section>
         )}
 
         {notes && (
-          <section aria-labelledby="notes">
-            <h2 id="notes" className="sw-section-title">
-              Good to know
-            </h2>
+          <Section id="notes" title="Good to know">
             <Prose markdown={notes} />
-          </section>
+          </Section>
         )}
 
-        {entry.components.length > 0 && (
-          <section aria-labelledby="api">
-            <h2 id="api" className="sw-section-title">
-              API
-            </h2>
-            {entry.components.map((c) => {
-              const { intro: cIntro, details } = split(c.description);
-              return (
-                <div key={c.name} className="sw-api">
-                  <h3 id={`api-${c.name.toLowerCase().replace(/\./g, '-')}`}>
-                    <code>{c.name}</code>
-                  </h3>
-                  {entry.components.length > 1 && cIntro && <p dangerouslySetInnerHTML={{ __html: inline(cIntro) }} />}
-                  {details && <Prose markdown={details} className="sw-api__details" />}
-                  <PropsTable props={c.props} />
-                </div>
-              );
-            })}
-          </section>
+        {extras.map((k) => (
+          <Section key={k} id={slug(k)} title={k}>
+            <Prose markdown={content[k]} />
+          </Section>
+        ))}
+
+        {reference.length > 0 && (
+          <Section id="api" title="API reference">
+            <ApiReference components={reference} />
+          </Section>
         )}
+
+        {SECTION_ORDER.slice(1)
+          .filter((k) => content[k])
+          .map((k) => (
+            <Section key={k} id={slug(k)} title={k}>
+              <Prose markdown={content[k]} />
+            </Section>
+          ))}
       </article>
       <nav className="sw-toc sw-hide-mobile" aria-label="On this page">
         <p>On this page</p>

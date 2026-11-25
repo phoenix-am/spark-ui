@@ -3,7 +3,7 @@ import { Combobox } from '@sparkwire/core';
 
 export default function CustomValue() {
   return (
-    <div style={{ width: 300 }}>
+    <div style={{ width: '100%', maxWidth: 300 }}>
       <Combobox
         label="Tag"
         allowsCustomValue

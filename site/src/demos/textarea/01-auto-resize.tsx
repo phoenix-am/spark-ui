@@ -3,7 +3,7 @@ import { Textarea } from '@sparkwire/core';
 
 export default function AutoResize() {
   return (
-    <div style={{ width: 380 }}>
+    <div style={{ width: '100%', maxWidth: 380 }}>
       <Textarea label="Release notes" autoResize minRows={3} maxRows={8} placeholder="What changed in this version?" />
     </div>
   );

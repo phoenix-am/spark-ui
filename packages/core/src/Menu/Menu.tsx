@@ -19,7 +19,9 @@ function sectionChildren<T>(collection: object, section: Node<T>): Iterable<Node
 export interface MenuItem {
   /** Passed to `onAction`. Unique within the whole menu, submenus included. */
   key: string;
+  /** The text shown. */
   label: string;
+  /** An icon before the label. */
   icon?: React.ReactNode;
   /** Secondary line under the label. */
   description?: React.ReactNode;
@@ -27,6 +29,7 @@ export interface MenuItem {
   shortcut?: string;
   /** Destructive action (delete, remove): shown in the error colour. */
   danger?: boolean;
+  /** Shown but can't be chosen; arrow keys skip it. */
   disabled?: boolean;
   /** Make the item a link. */
   href?: string;
@@ -37,6 +40,7 @@ export interface MenuItem {
 export interface MenuSection {
   /** Optional heading. */
   title?: string;
+  /** The items in this section. */
   items: MenuItem[];
 }
 

@@ -3,7 +3,7 @@ import { DateRangePicker } from '@sparkwire/core';
 
 export default function Range() {
   return (
-    <div style={{ width: 360 }}>
+    <div style={{ width: '100%', maxWidth: 360 }}>
       <DateRangePicker label="Report period" presets={['thisWeek', 'thisMonth', '-30d']} visibleMonths={2} />
     </div>
   );

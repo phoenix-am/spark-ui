@@ -14,15 +14,15 @@ export default function AccentColour() {
   const [name, setName] = useState<keyof typeof accents>('Ocean');
   const colour = accents[name];
   return (
-    <div style={{ display: 'grid', gap: 16, width: 360 }}>
-      <ToggleGroup aria-label="Accent colour" value={name} onChange={(v) => v && setName(v as keyof typeof accents)}>
+    <div style={{ display: 'grid', gap: 16, width: '100%', maxWidth: 360 }}>
+      <ToggleGroup aria-label="Accent colour" size="small" value={name} onChange={(v) => v && setName(v as keyof typeof accents)}>
         {Object.keys(accents).map((a) => (
           <ToggleGroupItem key={a} value={a}>{a}</ToggleGroupItem>
         ))}
       </ToggleGroup>
       <ThemeProvider theme={{ energy: { current: colour, ink: colour }, tones: { brand: { fill: colour, ink: colour } } }}>
         <div style={{ display: 'grid', gap: 16, padding: 16, borderRadius: 12, border: '1px solid var(--spark-surface-border)' }}>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
             <Button>Primary</Button>
             <Button variant="outlined">Secondary</Button>
             <Badge variant="soft" led>Live</Badge>

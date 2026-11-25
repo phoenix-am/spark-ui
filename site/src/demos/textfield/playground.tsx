@@ -5,5 +5,5 @@ export default {
   component: Textfield,
   props: { label: 'Work email', placeholder: 'you@company.com', helperText: "We'll never share it." },
   hide: ['type', 'isCurrency'],
-  wrap: (n) => <div style={{ width: 340 }}>{n}</div>,
+  wrap: (n) => <div style={{ width: '100%', maxWidth: 340 }}>{n}</div>,
 } satisfies PlaygroundConfig;

@@ -4,7 +4,7 @@ import { Card, Button, Textfield } from '@sparkwire/core';
 
 function Sample({ title }: { title: string }) {
   return (
-    <Card padding="large" style={{ display: 'grid', gap: 12, width: 240 }}>
+    <Card padding="large" style={{ display: 'grid', gap: 12, width: '100%', maxWidth: 240 }}>
       <strong>{title}</strong>
       <Textfield label="Email" inputSize="small" />
       <Button size="small">Subscribe</Button>

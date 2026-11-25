@@ -90,8 +90,8 @@ the bulb; when off, the lever lifts and the circuit goes dark.
 Style hooks: `.sp-switch`, `[data-state="on"|"off"]`, and the parts
 `.sp-switch__node`, `__wire`, `__lever`, `__bulb`, `__label`.
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `checked?`: `boolean` Controlled state.
 - `classNames?`: `Partial<Record<"label" | "root" | "control" | "node" | "wire" | "lever" | "bulb", string>>` Extra classes for each part: root, control, node, wire, lever, bulb, label.
 - `color?`: `Tone` Colour of the current when on. Default `brand`.
@@ -123,8 +123,8 @@ and the tick is drawn in. Built on a native checkbox, so forms and keyboards wor
 Style hooks: `.sp-checkbox`, `__box`, `__label`, `__helper`; the native input
 drives `:checked`, `:indeterminate` and `:disabled`.
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `classNames?`: `Partial<Record<"label" | "root" | "box" | "helper", string>>` Extra classes for each part: root, box, label, helper.
 - `color?`: `Tone` Colour when checked. Default `brand`.
 - `error?`: `boolean` Marks the checkbox invalid and colours it with the error tone.
@@ -188,8 +188,8 @@ Style hooks: `.sp-slider[data-range][data-disabled]`, `__header`, `__value`,
 `__track`, `__fill`, `__thumb[data-dragging][data-focus-visible]`.
 Variables: `--sp-start`, `--sp-end` and `--sp-pct` (0–100).
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `classNames?`: `Partial<Record<"value" | "label" | "root" | "header" | "track" | "fill" | "thumb", string>>` Extra classes for each part: root, header, label, value, track, fill, thumb.
 - `color?`: `Tone` Default `brand`.
 - `defaultValue?`: `SliderValue` Initial value when uncontrolled. A `[start, end]` pair makes it a range. Defaults to `min`.
@@ -227,8 +227,8 @@ Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
 `__adornment`, `__meter`, `__helper`. Built on InputBase (`.sp-input-base`).
 
 - `append?`: `ReactNode` Content at the end of the input, like a unit (“kg”) or an icon button.
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `cardDetection?`: `((value: string) => string)` Function that names the card network from the number typed, e.g. returns “Visa”; shown inside the field.
 - `charge?`: `number | ((value: string) => number)` Live Wire charge meter. A number from 0 to 1, or a function that maps the current value to 0..1 (e.g. password strength). At 1 the field is fully charged and current runs along the meter.
 - `chargeLabel?`: `((percent: number) => ReactNode)` Text announced next to the meter. Receives the charge as 0..100.
@@ -525,8 +525,8 @@ readers.
 
 Style hooks: `.sp-textarea[data-invalid]`, `__label`, `__input`, `__helper`, `__count[data-over]`.
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `autoResize?`: `boolean` Grow with the content between `minRows` and `maxRows`. Default `true`.
 - `classNames?`: `Partial<Record<"label" | "root" | "field" | "input" | "helper" | "count", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `error?`: `string | boolean` `true` marks it invalid; a string also replaces the helper text.
@@ -559,8 +559,8 @@ others are static unless you set `live`.
 Style hooks: `.sp-alert[data-tone][data-variant]`, `__icon`, `__title`, `__body`, `__action`, `__dismiss`.
 
 - `action?`: `ReactNode` Buttons or links on the right (or below on narrow screens).
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `children?`: `ReactNode` The message itself. One or two sentences works best.
 - `classNames?`: `Partial<Record<"title" | "root" | "icon" | "body" | "action" | "dismiss", string>>` Extra class names for the component's inner parts, keyed by part name. Handy with Tailwind.
 - `dismissLabel?`: `string` Accessible name for the close button. Default “Dismiss”, translated with the locale.
@@ -1264,8 +1264,8 @@ One tab. Its `value` matches the panel it shows.
 One tab. Use inside <TabList>.
 
 - `value`: `string` Matches a TabPanel's `value`.
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `children?`: `ReactNode` The tab's label.
 - `disabled?`: `boolean` (default `false`) Makes this tab unavailable. Arrow keys skip over it.
 - `icon?`: `ReactNode` Icon shown before the label.
@@ -1274,8 +1274,8 @@ One tab. Use inside <TabList>.
 The content for one tab, shown when its tab is active.
 
 - `value`: `string` Matches a Tab's `value`.
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 
 ## Accordion (`accordion`)
 Sections that power on as they open.
@@ -1453,8 +1453,8 @@ draw the eye.
 A raised panel. `live` cards carry current; `interactive` cards glow on hover.
 Style hooks: `.sp-card[data-live][data-interactive][data-padding]`, `__current`.
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `as?`: `"div" | "article" | "section" | "li"` Render as another element, e.g. `article` or `section`.
 - `interactive?`: `boolean` Hover lift and glow, for clickable cards. Put the link or button inside.
 - `live?`: `boolean` A live card has current running along its top edge.
@@ -1531,8 +1531,8 @@ to read at a glance, and it can pulse for things that are in progress.
 
 A status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__led`.
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `classNames?`: `Partial<Record<"root" | "led", string>>` Extra classes for each part: root, led.
 - `led?`: `boolean` Show the status LED. Default `true`.
 - `pulse?`: `boolean` Pulse the LED: something is live or in progress.
@@ -1605,8 +1605,8 @@ triggers. Handles disabled state for any element, `type="button"` by
 default, and the spark burst. No visual style of its own beyond
 `.sp-button-base`; build your own buttons on it.
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `as?`: `ElementType` (default `button`) Render as another element or component, e.g. `"a"` or a router Link.
 - `disabled?`: `boolean` (default `false`) Dead circuit: no clicks, no sparks. Uses `disabled` on buttons, `aria-disabled` otherwise.
 - `href?`: `string` Link target when rendered as an anchor.
@@ -1626,8 +1626,8 @@ own fields on it; label and help text are up to you (see Field).
 Style hooks: `.sp-input-base[data-variant][data-size][data-invalid][data-disabled]`,
 `__input`, `__adornment`. Focus uses `:focus-within`.
 
-- `aria-label?`: `string` Defines a string value that labels the current element. @see aria-labelledby.
-- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element. @see aria-describedby.
+- `aria-label?`: `string` Defines a string value that labels the current element.
+- `aria-labelledby?`: `string` Identifies the element (or elements) that labels the current element.
 - `classNames?`: `Partial<Record<"input" | "root" | "adornment", string>>` Extra classes for each part: root, input, adornment.
 - `disabled?`: `boolean` (default `false`) Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `endAdornment?`: `ReactNode` Shown after the input, e.g. a clear button or a chevron.

@@ -15,7 +15,9 @@ export type CalendarSlot = 'root' | 'header' | 'title' | 'nav' | 'months' | 'gri
 export interface DayRenderInfo {
   /** The day number as the locale writes it (e.g. "१५" in Hindi digits). */
   formatted: string;
+  /** The day is selected. */
   selected: boolean;
+  /** The day is today. */
   today: boolean;
   /** Can't be picked: outside min/max, disabled, or not in `enabledDates`. */
   unavailable: boolean;
@@ -23,7 +25,9 @@ export interface DayRenderInfo {
   outside: boolean;
   /** Range calendars: inside the selected (or hovered) range. */
   inRange: boolean;
+  /** Range calendars: the first day of the range. */
   rangeStart: boolean;
+  /** Range calendars: the last day of the range. */
   rangeEnd: boolean;
 }
 

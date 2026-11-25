@@ -5,6 +5,7 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 export type StepStatus = 'complete' | 'current' | 'upcoming' | 'error';
 
 export interface StepItem {
+  /** The step's name. */
   label: React.ReactNode;
   /** Short line under the label, e.g. "Optional" or a summary of what was entered. */
   description?: React.ReactNode;
@@ -12,6 +13,7 @@ export interface StepItem {
   error?: boolean;
   /** Custom icon in the circle instead of the number. */
   icon?: React.ReactNode;
+  /** Stops this step from being clicked. */
   disabled?: boolean;
 }
 

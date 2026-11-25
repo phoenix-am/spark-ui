@@ -28,3 +28,4 @@ dist-ssr
 /playwright-report/
 
 site-dist/
+site-coverage.json

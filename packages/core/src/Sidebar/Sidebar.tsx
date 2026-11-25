@@ -8,7 +8,9 @@ import { useDefaults, slot, ClassNames } from '../internal/defaults';
 export interface SidebarItem {
   /** Unique id; `value` / `onChange` use it. */
   id: string;
+  /** The text shown (and the tooltip when collapsed). */
   label: string;
+  /** The icon; the only thing shown when the sidebar is collapsed. */
   icon?: React.ReactNode;
   /** Make the item a link. */
   href?: string;
@@ -16,6 +18,7 @@ export interface SidebarItem {
   onSelect?: () => void;
   /** Small count or label at the end, e.g. `3` or "New". */
   badge?: React.ReactNode;
+  /** Shown but can't be chosen. */
   disabled?: boolean;
   /** Nested items: the item becomes a group that opens and closes. */
   items?: SidebarItem[];
@@ -24,6 +27,7 @@ export interface SidebarItem {
 export interface SidebarSection {
   /** Heading over the section. */
   heading?: string;
+  /** The items in this section. */
   items: SidebarItem[];
 }
 

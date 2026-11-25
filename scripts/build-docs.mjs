@@ -23,43 +23,7 @@ const SITE = process.env.SPARKWIRE_SITE ?? 'https://phoenix-am.github.io/spark-u
 const VERSION = JSON.parse(fs.readFileSync(path.join(root, 'packages/core/package.json'), 'utf8')).version;
 
 /** Registry item → files holding its public components, and its category id (category-name). */
-const ENTRIES = [
-  ['button', ['__docgen__/shims.tsx'], 'actions-button', ['Button']],
-  ['spark', ['Spark/Spark.tsx'], 'effects-spark'],
-  ['switch', ['Switch/Switch.tsx'], 'inputs-switch'],
-  ['checkbox', ['Checkbox/Checkbox.tsx'], 'inputs-checkbox'],
-  ['radio-group', ['RadioGroup/RadioGroup.tsx'], 'inputs-radiogroup'],
-  ['slider', ['Slider/Slider.tsx'], 'inputs-slider'],
-  ['textfield', ['Textfield/Textfield.tsx'], 'inputs-textfield'],
-  ['field', ['Field/Field.tsx'], 'inputs-field'],
-  ['number-field', ['NumberField/NumberField.tsx'], 'inputs-numberfield'],
-  ['toggle-group', ['ToggleGroup/ToggleGroup.tsx'], 'inputs-togglegroup'],
-  ['stepper', ['Stepper/Stepper.tsx'], 'navigation-stepper'],
-  ['file-upload', ['FileUpload/FileUpload.tsx'], 'inputs-fileupload'],
-  ['time-picker', ['TimePicker/TimePicker.tsx'], 'inputs-timepicker'],
-  ['textarea', ['Textarea/Textarea.tsx'], 'inputs-textarea'],
-  ['alert', ['Alert/Alert.tsx'], 'feedback-alert'],
-  ['navigation', ['Navigation/Navigation.tsx'], 'navigation-breadcrumbs'],
-  ['charts', ['Charts/CartesianChart.tsx', 'Charts/DonutChart.tsx'], 'data-charts'],
-  ['dropdown', ['Dropdown/Dropdown.tsx'], 'inputs-dropdown'],
-  ['combobox', ['Combobox/Combobox.tsx'], 'inputs-combobox'],
-  ['date-picker', ['DatePicker/DatePicker.tsx', 'DatePicker/DateRangePicker.tsx', 'DatePicker/Calendar.tsx'], 'inputs-datepicker'],
-  ['data-table', ['DataTable/DataTable.tsx'], 'data-display-datatable'],
-  ['command-palette', ['CommandPalette/CommandPalette.tsx'], 'navigation-commandpalette'],
-  ['menu', ['Menu/Menu.tsx'], 'navigation-menu'],
-  ['sidebar', ['Sidebar/Sidebar.tsx'], 'navigation-sidebar'],
-  ['tabs', ['Tabs/Tabs.tsx'], 'navigation-tabs'],
-  ['accordion', ['Accordion/Accordion.tsx'], 'navigation-accordion'],
-  ['modal', ['Modal/Modal.tsx'], 'overlays-modal'],
-  ['drawer', ['Drawer/Drawer.tsx'], 'overlays-drawer'],
-  ['tooltip', ['Tooltip/Tooltip.tsx'], 'overlays-tooltip'],
-  ['toast', ['Toast/Toast.tsx', '__docgen__/shims.tsx'], 'feedback-toast', ['ToastProvider', 'ToastShowOptions']],
-  ['card', ['Card/Card.tsx'], 'data-display-card'],
-  ['avatar', ['Avatar/Avatar.tsx'], 'data-display-avatar'],
-  ['indicators', ['Indicators/Indicators.tsx'], 'feedback-badge'],
-  ['provider', ['Provider/SparkProvider.tsx'], 'foundations-customization'],
-  ['base', ['base/ButtonBase.tsx', 'base/InputBase.tsx', 'base/Popover.tsx', 'base/ListBox.tsx', 'base/Overlay.tsx'], 'foundations-base-components'],
-];
+import { ENTRIES } from './entries.mjs';
 
 const parser = docgen.withCustomConfig(path.join(root, 'tsconfig.json'), {
   savePropValueAsString: true,
@@ -146,7 +110,8 @@ for (const [name, files, story, only] of ENTRIES) {
               : undefined,
           required: p.required,
           default: p.defaultValue?.value ?? undefined,
-          description: clean(p.description) || PROP_FALLBACK[`${c.displayName}.${p.name}`] || '',
+          // React's own descriptions carry JSDoc tags like "@see aria-labelledby"; drop them.
+          description: (clean(p.description) || PROP_FALLBACK[`${c.displayName}.${p.name}`] || '').replace(/\s*@see\s+\S+\.?/g, '').trim(),
           deprecated: /@deprecated/.test(p.description) || 'deprecated' in (p.tags ?? {}) || undefined,
         }))
         .sort((a, b) => Number(b.required) - Number(a.required) || Number(!!a.deprecated) - Number(!!b.deprecated) || a.name.localeCompare(b.name)),

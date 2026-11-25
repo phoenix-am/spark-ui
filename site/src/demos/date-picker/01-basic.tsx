@@ -3,7 +3,7 @@ import { DatePicker } from '@sparkwire/core';
 
 export default function Basic() {
   return (
-    <div style={{ width: 300 }}>
+    <div style={{ width: '100%', maxWidth: 300 }}>
       <DatePicker label="Start date" />
     </div>
   );

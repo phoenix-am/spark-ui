@@ -16,7 +16,7 @@ export default function ReactHookForm() {
     defaultValues: { name: '', room: 'deluxe', date: null, breakfast: true },
   });
   return (
-    <form onSubmit={handleSubmit(setResult)} style={{ display: 'grid', gap: 16, width: 360 }}>
+    <form onSubmit={handleSubmit(setResult)} style={{ display: 'grid', gap: 16, width: '100%', maxWidth: 360 }}>
       <Textfield label="Guest name" error={Boolean(errors.name)} helperText={errors.name?.message} {...register('name', { required: 'Please enter a name.' })} />
       <Controller
         name="room"

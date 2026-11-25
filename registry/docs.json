@@ -201,13 +201,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "checked",
@@ -313,13 +313,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "classNames",
@@ -500,13 +500,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "classNames",
@@ -637,13 +637,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "cardDetection",
@@ -1632,13 +1632,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "autoResize",
@@ -1738,13 +1738,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "children",
@@ -4400,13 +4400,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "children",
@@ -4443,13 +4443,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             }
           ]
         }
@@ -4880,13 +4880,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "as",
@@ -5127,13 +5127,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "classNames",
@@ -5356,13 +5356,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "as",
@@ -5413,13 +5413,13 @@
               "name": "aria-label",
               "type": "string",
               "required": false,
-              "description": "Defines a string value that labels the current element.\n@see aria-labelledby."
+              "description": "Defines a string value that labels the current element."
             },
             {
               "name": "aria-labelledby",
               "type": "string",
               "required": false,
-              "description": "Identifies the element (or elements) that labels the current element.\n@see aria-describedby."
+              "description": "Identifies the element (or elements) that labels the current element."
             },
             {
               "name": "classNames",

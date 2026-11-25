@@ -3,7 +3,7 @@ import { Button, Card, Badge } from '@sparkwire/core';
 
 export default function RenderProp() {
   return (
-    <Card render={<article />} padding="large" style={{ display: 'grid', gap: 12, width: 340 }}>
+    <Card render={<article />} padding="large" style={{ display: 'grid', gap: 12, width: '100%', maxWidth: 340 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <strong>Release notes</strong>
         <Badge render={<a href="#changelog" />} variant="soft">v0.3.1</Badge>

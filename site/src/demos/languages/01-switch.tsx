@@ -5,8 +5,8 @@ import { SparkProvider, ToggleGroup, ToggleGroupItem, DatePicker, NumberField, P
 export default function Switcher() {
   const [locale, setLocale] = useState('hi');
   return (
-    <div style={{ display: 'grid', gap: 16, width: 320 }}>
-      <ToggleGroup aria-label="Language" value={locale} onChange={(v) => v && setLocale(v as string)}>
+    <div style={{ display: 'grid', gap: 16, width: '100%', maxWidth: 320 }}>
+      <ToggleGroup aria-label="Language" size="small" value={locale} onChange={(v) => v && setLocale(v as string)}>
         <ToggleGroupItem value="en">English</ToggleGroupItem>
         <ToggleGroupItem value="hi">हिन्दी</ToggleGroupItem>
         <ToggleGroupItem value="gu">ગુજરાતી</ToggleGroupItem>

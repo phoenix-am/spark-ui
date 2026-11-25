@@ -15,7 +15,7 @@ export default function ThemeVariants() {
         Button: { variants: [{ match: { variant: 'danger' }, props: { variant: 'contained', color: 'error' } }] },
       }}
     >
-      <div style={{ display: 'flex', gap: 12 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
         <Button variant="outlined">Keep project</Button>
         <Button variant="danger">Delete project</Button>
       </div>

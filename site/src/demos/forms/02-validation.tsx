@@ -10,7 +10,7 @@ export default function Validation() {
   return (
     <form
       noValidate
-      style={{ display: 'grid', gap: 16, width: 360 }}
+      style={{ display: 'grid', gap: 16, width: '100%', maxWidth: 360 }}
       onSubmit={(e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);

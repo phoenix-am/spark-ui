@@ -3,7 +3,7 @@ import { Dropdown } from '@sparkwire/core';
 
 export default function Groups() {
   return (
-    <div style={{ width: 300 }}>
+    <div style={{ width: '100%', maxWidth: 300 }}>
       <Dropdown
         label="Instance type"
         defaultValue="m6"

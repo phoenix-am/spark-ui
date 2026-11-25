@@ -10,6 +10,7 @@ export interface RadioOption {
   label: React.ReactNode;
   /** Secondary line under the label. */
   description?: React.ReactNode;
+  /** Makes this option unavailable; arrow keys skip it. */
   disabled?: boolean;
 }
 
