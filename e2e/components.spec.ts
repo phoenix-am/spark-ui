@@ -149,12 +149,27 @@ test('Docs search finds a component and opens it', async ({ page }) => {
   await expect(page).toHaveURL(/\/components\/switch/);
 });
 
-test('Header tooltip opens below and stays in the window', async ({ page }) => {
+test('Header tooltip opens below and stays in the window', async ({ page, browserName }) => {
   await page.goto('/components/button');
   const btn = page.getByRole('button', { name: /Switch to (light|dark) mode/ });
-  await keyboardFocus(page, btn);
+  await expect(btn).toBeVisible();
   const bubble = page.locator('.sp-tooltip__bubble');
-  await expect(bubble).toBeVisible();
+  // Tooltips open on keyboard focus. Reach the button by keyboard (WebKit's Tab skips
+  // buttons, so there: a key press, then focus), and try again if the first focus
+  // landed before the page was ready.
+  await expect(async () => {
+    await page.locator('body').click({ position: { x: 5, y: 300 } });
+    if (browserName === 'webkit') {
+      await page.keyboard.press('Shift');
+      await btn.focus();
+    } else {
+      await btn.focus();
+      await page.keyboard.press('Shift+Tab');
+      await page.keyboard.press('Tab');
+    }
+    await expect(btn).toBeFocused({ timeout: 1000 });
+    await expect(bubble).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 15_000 });
   await expect(bubble).toHaveAttribute('data-placement', 'bottom');
   const box = (await bubble.boundingBox())!;
   const vw = page.viewportSize()!.width;
