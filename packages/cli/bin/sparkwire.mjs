@@ -98,6 +98,39 @@ async function load(location) {
 
 const bare = (dep) => dep.replace(/^@sparkwire\//, '');
 
+/* ------------------------------------------------------------ safety
+ * Registry JSON is untrusted input: a custom --registry, a sparkwire.json
+ * value or a compromised host must not be able to escape the project or
+ * steer the package manager.
+ */
+
+/** Component names: lowercase words joined by hyphens, nothing else. */
+const NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/** npm package spec: name with optional @version/range. No leading dash, no shell characters. */
+const DEP = /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*(?:@[a-zA-Z0-9.^~<>=|*+ -]+)?$/;
+
+function checkName(name, from) {
+  if (!NAME.test(name)) fail(`Invalid component name "${name}"${from ? ` (in ${from})` : ''}. Names use lowercase letters, digits and hyphens.`);
+  return name;
+}
+
+function checkDep(dep, from) {
+  // DEP starts with a letter, digit or @, so "--registry=..." and other options never match,
+  // and its version part allows no quotes, %, &, ;, backticks or $.
+  if (typeof dep !== 'string' || !DEP.test(dep)) fail(`Refusing to install "${dep}"${from ? ` (from ${from})` : ''}: not a valid npm package spec.`);
+  return dep;
+}
+
+/** Resolve a registry file target inside the project, or stop. */
+function safeDest(cwd, rel, from) {
+  const root = path.resolve(cwd);
+  const dest = path.resolve(root, rel);
+  const outside = path.isAbsolute(rel) || /^[a-zA-Z]:/.test(rel) || rel.split(/[\\/]/).includes('..') || !dest.startsWith(root + path.sep);
+  if (outside) fail(`Refusing to write "${rel}"${from ? ` from ${from}` : ''}: it points outside your project.`);
+  return dest;
+}
+
 /** Load items and everything they depend on, dependencies first. */
 async function resolve(names, registry) {
   const seen = new Map();
@@ -107,11 +140,13 @@ async function resolve(names, registry) {
     seen.set(name, null);
     let item;
     try {
-      item = await load(itemLocation(registry, name));
+      item = await load(itemLocation(registry, checkName(name, from)));
     } catch (e) {
       fail(`Unknown component "${name}"${from ? ` (needed by ${from})` : ''}: ${e.message}\n  Run ${c.bold('npx sparkwire list')} to see what's available.`);
     }
-    for (const dep of item.registryDependencies ?? []) await visit(bare(dep), name);
+    if (!item || typeof item !== 'object' || !Array.isArray(item.files ?? [])) fail(`Registry item "${name}" is not valid.`);
+    for (const dep of item.dependencies ?? []) checkDep(dep, name);
+    for (const dep of item.registryDependencies ?? []) await visit(bare(String(dep)), name);
     seen.set(name, item);
     order.push(item);
   }
@@ -147,7 +182,10 @@ function install(cwd, deps) {
   const pm = packageManager(cwd);
   const cmd = pm === 'npm' ? ['install', ...deps] : ['add', ...deps];
   console.log(`${c.dim('$')} ${pm} ${cmd.join(' ')}`);
-  const r = spawnSync(pm, cmd, { cwd, stdio: 'inherit', shell: process.platform === 'win32' });
+  // Windows needs a shell to run npm.cmd. Every spec was checked by checkDep and is quoted here,
+  // so cmd.exe treats ^ < > | as literal characters.
+  const win = process.platform === 'win32';
+  const r = spawnSync(pm, win ? cmd.map((a) => `"${a}"`) : cmd, { cwd, stdio: 'inherit', shell: win });
   if (r.status !== 0) fail(`${pm} failed. Install these yourself: ${deps.join(' ')}`);
 }
 
@@ -159,22 +197,28 @@ async function add(args) {
   const { cwd, dir, registry } = settings(args);
   const items = await resolve(names, registry);
 
-  const written = [];
-  const skipped = [];
+  // Check every file first, so a bad entry anywhere means nothing is written.
+  const plan = [];
   for (const item of items) {
     for (const file of item.files ?? []) {
-      const rel = (file.target ?? file.path).replace(new RegExp(`^${TARGET_PREFIX}`), dir);
-      const dest = path.join(cwd, rel);
-      if (fs.existsSync(dest) && !args.overwrite) {
-        if (fs.readFileSync(dest, 'utf8') !== file.content) skipped.push(rel);
-        continue;
-      }
-      if (!args.dryRun) {
-        fs.mkdirSync(path.dirname(dest), { recursive: true });
-        fs.writeFileSync(dest, file.content);
-      }
-      written.push(rel);
+      const rel = String(file.target ?? file.path).replace(new RegExp(`^${TARGET_PREFIX}`), dir);
+      if (typeof file.content !== 'string') fail(`Registry item "${item.name}" has a file without content.`);
+      plan.push({ rel, dest: safeDest(cwd, rel, item.name), content: file.content });
     }
+  }
+
+  const written = [];
+  const skipped = [];
+  for (const { rel, dest, content } of plan) {
+    if (fs.existsSync(dest) && !args.overwrite) {
+      if (fs.readFileSync(dest, 'utf8') !== content) skipped.push(rel);
+      continue;
+    }
+    if (!args.dryRun) {
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, content);
+    }
+    written.push(rel);
   }
 
   const deps = [...new Set(items.flatMap((i) => i.dependencies ?? []))];

@@ -32,7 +32,8 @@
     "version-packages": "changeset version && npm install --package-lock-only --legacy-peer-deps --ignore-scripts && npm run registry",
     "release": "node scripts/publish.mjs",
     "docs": "vite --config site/vite.config.ts",
-    "docs:build": "vite build --config site/vite.config.ts && node scripts/build-site-pages.mjs"
+    "docs:build": "vite build --config site/vite.config.ts && node scripts/build-site-pages.mjs",
+    "test:cli": "node --test packages/cli/test/cli.test.mjs"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.24.7",

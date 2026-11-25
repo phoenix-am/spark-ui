@@ -157,7 +157,9 @@ server.registerTool(
     inputSchema: { name: z.string(), file: z.string().optional().describe('Only this file, e.g. "Menu.tsx"') },
   },
   async ({ name, file }) => {
-    const e = find(name) ?? { name: name.toLowerCase() };
+    // Only known components: never build a file path from raw tool input.
+    const e = find(name);
+    if (!e) return notFound(name);
     let item;
     try {
       item = await read(`r/${e.name}.json`);
