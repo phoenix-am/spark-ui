@@ -1,11 +1,20 @@
 import { CalendarDate, DateValue, GregorianCalendar, fromDate, getLocalTimeZone, toCalendar, toCalendarDate } from '@internationalized/date';
+import { devWarn } from '../internal/devWarn';
 
 /**
  * Spark UI's public date props use plain JS `Date`s; React Aria works with
  * `@internationalized/date` values. These helpers convert at the boundary.
  */
-export const toDateValue = (d: Date | null | undefined): CalendarDate | null | undefined =>
-  d === undefined ? undefined : d === null ? null : toCalendarDate(fromDate(d, getLocalTimeZone()));
+export const toDateValue = (d: Date | null | undefined): CalendarDate | null | undefined => {
+  if (d === undefined) return undefined;
+  if (d === null) return null;
+  // Bad server data (`new Date('')`, a string, a number) shows as empty instead of crashing.
+  if (!(d instanceof Date) || Number.isNaN(d.getTime())) {
+    devWarn('Ignoring an invalid date:', d);
+    return null;
+  }
+  return toCalendarDate(fromDate(d, getLocalTimeZone()));
+};
 
 export const fromDateValue = (v: DateValue | null | undefined): Date | null => (v ? v.toDate(getLocalTimeZone()) : null);
 

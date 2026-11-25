@@ -1572,13 +1572,7 @@ import { SparkProvider } from '@sparkwire/core';
 Install: `npx sparkwire add provider` (copy source) or use the npm package. Examples and props: https://phoenix-am.github.io/spark-ui/components/provider
 
 ### SparkProvider
-Wrap your app once to set things for every component: the energy level, the
-language, and default props or styles, so you're not repeating
-`size="small"` on every button.
 
-Set app-wide defaults and slot class names once, the way
-MUI's `theme.components` works. Nested providers merge with their parent.
-Styling still comes from `styles.css`; this provider only changes props.
 
 - `children`: `ReactNode` Your app, or the part of it these settings apply to.
 - `components?`: `SparkComponentsConfig` Defaults for every instance of a component, e.g. `{ Button: { defaultProps: { variant: 'outlined' } }, Switch: { classNames: { bulb: 'my-bulb' } } }`. Props set on an instance always win.

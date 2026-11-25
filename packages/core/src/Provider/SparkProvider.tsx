@@ -21,6 +21,7 @@ import type { DropdownProps } from '../Dropdown';
 import type { ComboboxProps } from '../Combobox';
 import type { MenuProps } from '../Menu';
 import type { FieldProps } from '../Field';
+import { devWarn } from '../internal/devWarn';
 
 /** App-wide defaults, keyed by component name. */
 export interface SparkComponentsConfig {
@@ -109,7 +110,28 @@ export interface SparkProviderProps {
  * MUI's `theme.components` works. Nested providers merge with their parent.
  * Styling still comes from `styles.css`; this provider only changes props.
  */
-export function SparkProvider({ components, locale, energy, haptics, messages, children }: SparkProviderProps) {
+/**
+ * Turn whatever a backend sends (`en_US`, `EN-us`, `''`, junk) into a locale Intl accepts.
+ * An unusable value falls back to `en-US` instead of crashing every formatter in the tree.
+ */
+export function normalizeLocale(locale: string | undefined): string | undefined {
+  if (locale === undefined || locale === null) return undefined;
+  const raw = String(locale).trim().replace(/_/g, '-').replace(/\..*$/, '').replace(/@.*$/, '');
+  try {
+    const [canonical] = Intl.getCanonicalLocales(raw);
+    if (canonical) {
+      new Intl.DateTimeFormat(canonical);
+      return canonical;
+    }
+  } catch {
+    /* fall through */
+  }
+  devWarn(`"${locale}" is not a valid locale; using en-US.`);
+  return 'en-US';
+}
+
+export function SparkProvider({ components, locale: rawLocale, energy, haptics, messages, children }: SparkProviderProps) {
+  const locale = normalizeLocale(rawLocale);
   const parent = useContext(DefaultsContext);
   const value = useMemo<DefaultsMap>(() => {
     if (!components) return parent;

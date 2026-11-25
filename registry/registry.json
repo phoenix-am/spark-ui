@@ -26,6 +26,11 @@
           "target": "components/spark-ui/internal/defaults.ts"
         },
         {
+          "path": "components/spark-ui/internal/devWarn.ts",
+          "type": "registry:lib",
+          "target": "components/spark-ui/internal/devWarn.ts"
+        },
+        {
           "path": "components/spark-ui/internal/energy.ts",
           "type": "registry:lib",
           "target": "components/spark-ui/internal/energy.ts"

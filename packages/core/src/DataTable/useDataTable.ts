@@ -1,6 +1,26 @@
 import { useMemo, useState } from 'react';
+import { devWarn } from '../internal/devWarn';
 
-const defaultRowKey = (row: unknown, i: number) => String((row as { id?: unknown })?.id ?? i);
+/** Rows with an `id` keep `String(id)`; rows without one get a key that can't clash with an id. */
+const defaultRowKey = (row: unknown, i: number) => {
+  const id = (row as { id?: unknown })?.id;
+  return id === undefined || id === null ? `__row-${i}` : String(id);
+};
+
+/** Make every key unique. A repeated key gets `#2`, `#3`… so selection never covers two rows. */
+function uniqueKeys<T extends { key: string }>(rows: T[]): T[] {
+  const seen = new Map<string, number>();
+  let dupes = 0;
+  const out = rows.map((r) => {
+    const n = seen.get(r.key) ?? 0;
+    seen.set(r.key, n + 1);
+    if (n === 0) return r;
+    dupes++;
+    return { ...r, key: `${r.key}#${n + 1}` };
+  });
+  if (dupes) devWarn(`DataTable: ${dupes} row(s) share a key. Give each row a unique \`id\` or pass \`getRowKey\`.`);
+  return out;
+}
 
 export type SortDirection = 'ascending' | 'descending';
 export interface SortRule {
@@ -164,7 +184,7 @@ export function useDataTable<Row>(options: UseDataTableOptions<Row>) {
   const byKey = useMemo(() => new Map(columns.map((c) => [c.key, c])), [columns]);
   const valueOf = (row: Row, col: DataTableColumn<Row>) => (col.accessor ? col.accessor(row) : (row as Record<string, unknown>)[col.key]);
 
-  const keyed = useMemo(() => data.map((row, i) => ({ row, key: getRowKey(row, i) })), [data, getRowKey]);
+  const keyed = useMemo(() => uniqueKeys(data.map((row, i) => ({ row, key: getRowKey(row, i) }))), [data, getRowKey]);
 
   const filtered = useMemo(() => {
     if (manual) return keyed;

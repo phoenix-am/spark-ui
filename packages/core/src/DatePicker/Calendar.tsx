@@ -169,7 +169,7 @@ export interface CalendarCoreProps extends AriaCalendarProps<DateValue>, SharedU
 }
 
 /** React Aria-level calendar, also used inside DatePicker's popover. */
-export function CalendarCore({ presets, todayLabel, visibleMonths = 1, renderDay, onEscape, className, classNames, firstDayOfWeek, ...props }: CalendarCoreProps) {
+export function CalendarCore({ presets, todayLabel, visibleMonths: rawMonths = 1, renderDay, onEscape, className, classNames, firstDayOfWeek, ...props }: CalendarCoreProps) {
   const { locale } = useLocale();
   const sparkRef = useRef<SparkHandle>(null);
   const pointer = useRef<{ clientX: number; clientY: number } | null>(null);
@@ -178,6 +178,7 @@ export function CalendarCore({ presets, todayLabel, visibleMonths = 1, renderDay
     pointer.current = null;
     props.onChange?.(v as never);
   };
+  const visibleMonths = Math.max(1, Math.floor(Number(rawMonths)) || 1);
   const ariaProps = { ...props, onChange, visibleDuration: { months: visibleMonths } };
   const state = useCalendarState({ ...ariaProps, firstDayOfWeek, locale, createCalendar });
   const ref = useRef<HTMLDivElement>(null);
@@ -257,7 +258,7 @@ export interface RangeCalendarCoreProps extends AriaRangeCalendarProps<DateValue
 }
 
 /** React Aria-level range calendar, also used inside DateRangePicker's popover. */
-export function RangeCalendarCore({ presets = [], visibleMonths = 1, renderDay, onEscape, className, classNames, firstDayOfWeek, ...props }: RangeCalendarCoreProps) {
+export function RangeCalendarCore({ presets = [], visibleMonths: rawMonths = 1, renderDay, onEscape, className, classNames, firstDayOfWeek, ...props }: RangeCalendarCoreProps) {
   const { locale } = useLocale();
   const sparkRef = useRef<SparkHandle>(null);
   const pointer = useRef<{ clientX: number; clientY: number } | null>(null);
@@ -266,6 +267,7 @@ export function RangeCalendarCore({ presets = [], visibleMonths = 1, renderDay, 
     pointer.current = null;
     props.onChange?.(v as never);
   };
+  const visibleMonths = Math.max(1, Math.floor(Number(rawMonths)) || 1);
   const ariaProps = { ...props, onChange, visibleDuration: { months: visibleMonths } };
   const state = useRangeCalendarState({ ...ariaProps, firstDayOfWeek, locale, createCalendar });
   const ref = useRef<HTMLDivElement>(null);

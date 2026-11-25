@@ -5,6 +5,20 @@ import { Overlay } from '../base/Overlay';
 import { InputBase } from '../base/InputBase';
 import { ListItemContent } from '../base/ListBox';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
+import { devWarn } from '../internal/devWarn';
+
+
+/** Only web, mail and phone links may navigate. `javascript:`, `data:` and the like never run. */
+export function isSafeHref(href: string): boolean {
+  try {
+    const { protocol } = new URL(href, window.location.href);
+    if (['http:', 'https:', 'mailto:', 'tel:'].includes(protocol)) return true;
+  } catch {
+    /* unparseable */
+  }
+  devWarn(`CommandPalette refused to open "${href}".`);
+  return false;
+}
 
 export interface Command {
   /** Unique id. */
@@ -204,7 +218,7 @@ function Panel({
     if (!cmd || cmd.disabled) return;
     cmd.onSelect?.();
     onSelect?.(cmd);
-    if (cmd.href) window.location.assign(cmd.href);
+    if (cmd.href && isSafeHref(cmd.href)) window.location.assign(cmd.href);
     if (closeOnSelect) close();
   };
 

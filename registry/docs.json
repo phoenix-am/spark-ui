@@ -5285,7 +5285,7 @@
       "components": [
         {
           "name": "SparkProvider",
-          "description": "Wrap your app once to set things for every component: the energy level, the\nlanguage, and default props or styles, so you're not repeating\n`size=\"small\"` on every button.\n\nSet app-wide defaults and slot class names once, the way\nMUI's `theme.components` works. Nested providers merge with their parent.\nStyling still comes from `styles.css`; this provider only changes props.",
+          "description": "",
           "props": [
             {
               "name": "children",
