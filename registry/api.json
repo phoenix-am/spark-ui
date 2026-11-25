@@ -5499,6 +5499,11 @@
               "description": "The sort."
             },
             {
+              "class": "sp-data-table__sort-by",
+              "states": [],
+              "description": "The sort by."
+            },
+            {
               "class": "sp-data-table__sort-order",
               "states": [],
               "description": "The sort order."
@@ -5630,6 +5635,16 @@
                 "sp-data-table__column"
               ],
               "description": "The sort direction of a sorted column: `ascending` or `descending`."
+            },
+            {
+              "name": "data-stacked",
+              "values": [
+                "true"
+              ],
+              "on": [
+                "sp-data-table"
+              ],
+              "description": "Set by the component."
             },
             {
               "name": "data-striped",

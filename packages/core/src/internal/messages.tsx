@@ -17,6 +17,11 @@ export interface SparkMessages {
   clear: string;
   loading: string;
   noResults: string;
+  /** DataTable's sort picker, shown when rows are stacked as cards. */
+  sortBy: string;
+  notSorted: string;
+  ascending: string;
+  descending: string;
   noOptions: string;
   selectPlaceholder: string;
   search: string;
@@ -91,6 +96,10 @@ const en: SparkMessages = {
   clear: 'Clear',
   loading: 'Loading',
   noResults: 'No results',
+  sortBy: 'Sort by',
+  notSorted: 'Not sorted',
+  ascending: 'ascending',
+  descending: 'descending',
   noOptions: 'No options',
   selectPlaceholder: 'Select an option',
   search: 'Search…',
@@ -158,6 +167,10 @@ const hi: SparkMessages = {
   clear: 'साफ़ करें',
   loading: 'लोड हो रहा है',
   noResults: 'कोई परिणाम नहीं',
+  sortBy: 'क्रम से लगाएँ',
+  notSorted: 'क्रम नहीं लगाया',
+  ascending: 'बढ़ते क्रम में',
+  descending: 'घटते क्रम में',
   noOptions: 'कोई विकल्प नहीं',
   selectPlaceholder: 'एक विकल्प चुनें',
   search: 'खोजें…',
@@ -225,6 +238,10 @@ const gu: SparkMessages = {
   clear: 'સાફ કરો',
   loading: 'લોડ થઈ રહ્યું છે',
   noResults: 'કોઈ પરિણામ નથી',
+  sortBy: 'ક્રમમાં ગોઠવો',
+  notSorted: 'ક્રમમાં નથી',
+  ascending: 'ચડતા ક્રમમાં',
+  descending: 'ઊતરતા ક્રમમાં',
   noOptions: 'કોઈ વિકલ્પ નથી',
   selectPlaceholder: 'એક વિકલ્પ પસંદ કરો',
   search: 'શોધો…',
@@ -292,6 +309,10 @@ const ta: SparkMessages = {
   clear: 'அழி',
   loading: 'ஏற்றுகிறது',
   noResults: 'முடிவுகள் இல்லை',
+  sortBy: 'வரிசைப்படுத்து',
+  notSorted: 'வரிசைப்படுத்தவில்லை',
+  ascending: 'ஏறுவரிசை',
+  descending: 'இறங்குவரிசை',
   noOptions: 'விருப்பங்கள் இல்லை',
   selectPlaceholder: 'ஒரு விருப்பத்தைத் தேர்ந்தெடுக்கவும்',
   search: 'தேடு…',

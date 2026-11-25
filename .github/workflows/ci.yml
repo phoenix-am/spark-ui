@@ -29,6 +29,8 @@ jobs:
         run: npm run test:cli
       - name: Build packages
         run: npm run build
+      - name: Bundle size within budget
+        run: npm run size
       - name: Registry is up to date
         run: git diff --exit-code -- registry || (echo 'Run npm run build and commit registry/' && exit 1)
 
@@ -43,3 +45,28 @@ jobs:
           node-version: 22
       - name: CLI tests on Windows
         run: node --test packages/cli/test/cli.test.mjs
+
+  # Real browsers: the built docs site, whose pages are the real components,
+  # driven in Chromium, Firefox and WebKit (Safari's engine), plus an iPhone viewport.
+  browsers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --legacy-peer-deps
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Build the docs site
+        run: npm run docs:build
+      - name: Browser tests
+        run: npm run test:e2e
+      - name: Keep the traces of failed tests
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7

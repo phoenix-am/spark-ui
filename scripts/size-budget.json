@@ -1,0 +1,10 @@
+{
+  "Button (from the root)": 2500,
+  "Switch + Textfield + Checkbox": 3700,
+  "DatePicker": 11200,
+  "DataTable": 16800,
+  "Charts (LineChart, BarChart)": 9500,
+  "CommandPalette": 8700,
+  "Everything in @sparkwire/core": 54900,
+  "styles.css": 25700
+}

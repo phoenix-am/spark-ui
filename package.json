@@ -33,7 +33,9 @@
     "release": "node scripts/publish.mjs",
     "docs": "vite --config site/vite.config.ts",
     "docs:build": "vite build --config site/vite.config.ts && node scripts/build-site-pages.mjs",
-    "test:cli": "node --test packages/cli/test/cli.test.mjs"
+    "test:cli": "node --test packages/cli/test/cli.test.mjs",
+    "size": "node scripts/size.mjs",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.24.7",

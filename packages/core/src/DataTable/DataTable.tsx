@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useMessages } from '../internal/messages';
+import { useIsoLayoutEffect } from '../internal/useIsoLayoutEffect';
 import {
   useLocale,
   useTable,
@@ -211,16 +212,55 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
   const alignOf = (col: DataTableColumn<RowT>) =>
     col.align ?? (table.rows.length && isNumberish(table.valueOf(table.rows[0].row, col)) ? 'end' : 'start');
 
+  // Cards or grid is decided from the table's own width against `stackBelow`. Until it has
+  // been measured (server render), a CSS container query at the default 640px decides.
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [stacked, setStacked] = useState<boolean | undefined>(undefined);
+  useIsoLayoutEffect(() => {
+    const el = rootRef.current;
+    if (!el || responsive !== 'stack') return setStacked(undefined);
+    const measure = () => setStacked(el.getBoundingClientRect().width < stackBelow);
+    measure();
+    if (typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [responsive, stackBelow]);
+  const sortableCols = ordered.filter((c) => c.sortable);
+  const current = table.sort[0];
+  const sortPicker =
+    stacked && sortableCols.length > 0 ? (
+      <Dropdown
+        size="small"
+        aria-label={m.sortBy}
+        className="sp-data-table__sort-by"
+        value={current ? `${current.column}:${current.direction}` : ''}
+        onChange={(v) => {
+          const [column, direction] = String(v).split(':');
+          table.setSort(column ? [{ column, direction: direction as 'ascending' | 'descending' }] : []);
+        }}
+        options={[
+          { value: '', label: `${m.sortBy}: ${m.notSorted}` },
+          ...sortableCols.flatMap((c) => {
+            const name = textOf(c.header) || c['aria-label'] || c.key;
+            return (['ascending', 'descending'] as const).map((d) => ({ value: `${c.key}:${d}`, label: `${name}, ${m[d]}` }));
+          }),
+        ]}
+      />
+    ) : null;
+
   return (
     <div
+      ref={rootRef}
       className={slot('sp-data-table', classNames, 'root', className)}
+      data-stacked={stacked === undefined ? undefined : String(stacked)}
       data-density={density}
       data-striped={striped || undefined}
       data-responsive={responsive}
       data-virtual={virtualize || undefined}
-      style={{ '--sp-cols': template, '--sp-stack-below': `${stackBelow}px`, '--sp-row-h': `${rowHeight}px` } as React.CSSProperties}
+      style={{ '--sp-cols': template, '--sp-row-h': `${rowHeight}px` } as React.CSSProperties}
     >
-      {(searchable || toolbar || (bulkActions && selectedCount > 0)) && (
+      {(searchable || toolbar || sortPicker || (bulkActions && selectedCount > 0)) && (
         <div className={slot('sp-data-table__toolbar', classNames, 'toolbar')}>
           {bulkActions && selectedCount > 0 ? (
             <div className="sp-data-table__bulk" role="status">
@@ -249,6 +289,7 @@ export function DataTable<RowT>(inProps: DataTableProps<RowT>) {
               />
             )
           )}
+          {sortPicker}
           {toolbar && <div className="sp-data-table__tools">{toolbar}</div>}
         </div>
       )}

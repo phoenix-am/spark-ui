@@ -236,11 +236,14 @@
 .sp-data-table[data-virtual] .sp-data-table__body .sp-data-table__row { height: var(--sp-row-h); box-sizing: border-box; }
 .sp-data-table[data-virtual] .sp-data-table__cell { padding-block: 0; height: 100%; }
 
-/* ---- Narrow containers: rows become labelled cards (responsive="stack"). */
+/* ---- Narrow tables: rows become labelled cards (responsive="stack").
+   Once the table has measured itself it sets data-stacked from `stackBelow`;
+   before that (server render) the container query below uses the default 640px.
+   The two blocks hold the same rules: change both. */
 @container (max-width: 640px) {
-  .sp-data-table[data-responsive='stack'] .sp-data-table__grid { border: none; background: none; overflow: visible; }
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__grid { border: none; background: none; overflow: visible; }
   /* Headers stay for screen readers and sorting by keyboard, out of sight. */
-  .sp-data-table[data-responsive='stack'] .sp-data-table__header {
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__header {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -248,8 +251,8 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__body { display: flex; flex-direction: column; gap: 0.625rem; }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__row {
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__body { display: flex; flex-direction: column; gap: 0.625rem; }
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__row {
     grid-template-columns: 1fr;
     min-width: 0;
     padding: 0.5rem 0;
@@ -257,9 +260,9 @@
     border-radius: var(--spark-radius-medium);
     background: var(--spark-surface-base);
   }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__row[data-selected] { background: color-mix(in srgb, var(--spark-energy-current) 10%, var(--spark-surface-base)); border-color: var(--spark-energy-ink); }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__cell { justify-content: space-between; padding: 0.375rem 1rem; text-align: end; }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__cell[data-label]::before {
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__row[data-selected] { background: color-mix(in srgb, var(--spark-energy-current) 10%, var(--spark-surface-base)); border-color: var(--spark-energy-ink); }
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__cell { justify-content: space-between; padding: 0.375rem 1rem; text-align: end; }
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__cell[data-label]::before {
     content: attr(data-label);
     flex: none;
     margin-inline-end: 1rem;
@@ -269,9 +272,47 @@
     text-transform: uppercase;
     color: var(--spark-text-secondary);
   }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__cell-content { white-space: normal; }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__select { justify-content: flex-start; }
-  .sp-data-table[data-responsive='stack'] .sp-data-table__row--empty,
-  .sp-data-table[data-responsive='stack'] .sp-data-table__row--loading { border-style: dashed; }
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__cell-content { white-space: normal; }
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__select { justify-content: flex-start; }
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__row--empty,
+  .sp-data-table[data-responsive='stack']:not([data-stacked]) .sp-data-table__row--loading { border-style: dashed; }
   .sp-data-table__range { flex-basis: 100%; }
 }
+
+.sp-data-table[data-stacked='true'] .sp-data-table__grid { border: none; background: none; overflow: visible; }
+/* Headers stay for screen readers and sorting by keyboard, out of sight. */
+.sp-data-table[data-stacked='true'] .sp-data-table__header {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.sp-data-table[data-stacked='true'] .sp-data-table__body { display: flex; flex-direction: column; gap: 0.625rem; }
+.sp-data-table[data-stacked='true'] .sp-data-table__row {
+  grid-template-columns: 1fr;
+  min-width: 0;
+  padding: 0.5rem 0;
+  border: 1px solid var(--spark-surface-border);
+  border-radius: var(--spark-radius-medium);
+  background: var(--spark-surface-base);
+}
+.sp-data-table[data-stacked='true'] .sp-data-table__row[data-selected] { background: color-mix(in srgb, var(--spark-energy-current) 10%, var(--spark-surface-base)); border-color: var(--spark-energy-ink); }
+.sp-data-table[data-stacked='true'] .sp-data-table__cell { justify-content: space-between; padding: 0.375rem 1rem; text-align: end; }
+.sp-data-table[data-stacked='true'] .sp-data-table__cell[data-label]::before {
+  content: attr(data-label);
+  flex: none;
+  margin-inline-end: 1rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--spark-text-secondary);
+}
+.sp-data-table[data-stacked='true'] .sp-data-table__cell-content { white-space: normal; }
+.sp-data-table[data-stacked='true'] .sp-data-table__select { justify-content: flex-start; }
+.sp-data-table[data-stacked='true'] .sp-data-table__row--empty,
+.sp-data-table[data-stacked='true'] .sp-data-table__row--loading { border-style: dashed; }
+.sp-data-table__range { flex-basis: 100%; }
+.sp-data-table__sort-by { flex: 1 1 12rem; min-width: 0; max-width: 20rem; }
