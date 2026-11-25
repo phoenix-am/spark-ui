@@ -1,5 +1,14 @@
 # @sparkwire/core
 
+## 0.3.2
+
+### Patch Changes
+
+- a8bd993: With the energy dial off, or when someone has "reduce motion" turned on, the flowing underline on outlined and text buttons and the line through a selected date range now stay still. Before, their hover styles won out and kept them moving.
+- bfce42b: Fields built on InputBase (NumberField, Combobox, and your own) now shrink to fit narrow containers; before, the input kept the browser's default width of about 20 characters, so a NumberField couldn't get narrower than about 340px. Every field of the exported types (column definitions, option shapes, UploadFile, DayRenderInfo and more) now has a description in editor tooltips.
+- @sparkwire/icons@0.3.2
+  - @sparkwire/utils@0.3.2
+
 ## 0.3.1
 
 ### Patch Changes
