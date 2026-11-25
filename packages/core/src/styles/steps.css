@@ -7,7 +7,8 @@
 .sp-toggle-group[data-size='large'] { --sp-h: 2.75rem; }
 .sp-toggle-group[data-orientation='vertical'] { flex-direction: column; }
 .sp-toggle-group[data-full-width] { display: flex; width: 100%; }
-.sp-toggle-group[data-full-width] .sp-toggle-group__item { flex: 1; }
+/* Full width: items share the space and give up padding before they overflow. */
+.sp-toggle-group[data-full-width] .sp-toggle-group__item { flex: 1 1 auto; min-width: 0; padding-inline: 0.5rem; }
 .sp-toggle-group[data-variant='outlined'] { background: none; border: 0; padding: 0; gap: 0.375rem; }
 .sp-toggle-group__item { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; height: var(--sp-h); padding: 0 0.875rem;
   border-radius: calc(var(--spark-radius-medium) - 3px); font-size: var(--spark-font-size-small); font-weight: 600; color: var(--spark-text-secondary); cursor: pointer; white-space: nowrap;
