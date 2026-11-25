@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId, useState } from 'react';
 import type { ComponentDoc, PropDoc } from '../lib/catalog';
 import { apiOf, defaultFor, methodsFor, payloadOf, typesFor, type StyleAttr, type StyleClass, type StyleVar } from '../lib/api';
 import { RefTable } from './RefTable';
@@ -10,22 +10,66 @@ const typeText = (p: PropDoc) => (p.values?.length ? p.values.map((v) => (/^(tru
 /** Props whose type takes content: children, icons, actions, render functions. */
 const isSlotProp = (p: PropDoc) => /ReactNode|ReactElement|JSX\.Element|=>\s*(React\.)?ReactNode/.test(p.type) && !/^on[A-Z]/.test(p.name);
 
+/** Union values as separate chips, so `'small' | 'medium' | 'large'` reads at a glance. */
+function TypeCell({ p }: { p: PropDoc }) {
+  const values = (p.values ?? []).map((v) => (/^(true|false|\d+)$/.test(v) ? v : `'${v}'`));
+  if (values.length > 1)
+    return (
+      <span className="sw-types">
+        {values.map((v) => (
+          <code key={v} className="sw-props__type">
+            {v}
+          </code>
+        ))}
+      </span>
+    );
+  return <code className="sw-props__type">{typeText(p)}</code>;
+}
+
+const FILTER_AT = 8;
+
 function PropsTable({ c }: { c: ComponentDoc }) {
-  const rows = [...c.props].sort((a, b) => Number(b.required) - Number(a.required) || Number(isDeprecated(a)) - Number(isDeprecated(b)) || a.name.localeCompare(b.name));
+  const [q, setQ] = useState('');
+  const inputId = useId();
+  const all = [...c.props].sort((a, b) => Number(b.required) - Number(a.required) || Number(isDeprecated(a)) - Number(isDeprecated(b)) || a.name.localeCompare(b.name));
+  const needle = q.trim().toLowerCase();
+  const rows = needle ? all.filter((p) => p.name.toLowerCase().includes(needle) || p.description.toLowerCase().includes(needle) || typeText(p).toLowerCase().includes(needle)) : all;
   return (
-    <RefTable<PropDoc>
-      caption={`${c.name} props`}
-      rowKey={(p) => p.name}
-      rowId={(p) => propAnchor(c.name, p.name)}
-      rows={rows}
-      columns={[
-        { label: 'Prop', render: (p) => <><code className="sw-props__name">{p.name}</code>{isDeprecated(p) && <span className="sw-props__dep">deprecated</span>}</> },
-        { label: 'Type', render: (p) => ({ code: typeText(p) }) },
-        { label: 'Default', render: (p) => { const d = defaultFor(c.name, p); return d ? { code: d } : undefined; } },
-        { label: 'Required', render: (p) => (p.required ? <span className="sw-props__req">Yes</span> : 'No') },
-        { label: 'Description', render: (p) => ({ md: p.description.replace(/^@deprecated\s*/, '**Deprecated.** ') }) },
-      ]}
-    />
+    <>
+      {all.length > FILTER_AT && (
+        <div className="sw-api__filter">
+          <label htmlFor={inputId} className="sw-visually-hidden">
+            Filter {c.name} props
+          </label>
+          <input id={inputId} type="search" placeholder={`Filter ${all.length} props, e.g. icon`} value={q} onChange={(e) => setQ(e.target.value)} />
+          <span role="status" aria-live="polite" className="sw-muted">
+            {needle ? `${rows.length} of ${all.length}` : ''}
+          </span>
+        </div>
+      )}
+      {rows.length === 0 && <p className="sw-muted">No props match “{q}”.</p>}
+      <RefTable<PropDoc>
+        caption={`${c.name} props`}
+        rowKey={(p) => p.name}
+        rowId={(p) => propAnchor(c.name, p.name)}
+        rows={rows}
+        columns={[
+          {
+            label: 'Prop',
+            render: (p) => (
+              <>
+                <code className="sw-props__name">{p.name}</code>
+                {p.required && <span className="sw-props__req">required</span>}
+                {isDeprecated(p) && <span className="sw-props__dep">deprecated</span>}
+              </>
+            ),
+          },
+          { label: 'Type', render: (p) => <TypeCell p={p} />, className: 'sw-props__typecol' },
+          { label: 'Default', render: (p) => { const d = defaultFor(c.name, p); return d ? { code: d } : undefined; }, className: 'sw-props__defcol' },
+          { label: 'Description', render: (p) => ({ md: p.description.replace(/^@deprecated\s*/, '**Deprecated.** ') }) },
+        ]}
+      />
+    </>
   );
 }
 
@@ -150,6 +194,12 @@ export function ApiReference({ components }: { components: ComponentDoc[] }) {
                 <code>{c.name}</code>
               </h3>
             )}
+            <nav className="sw-api__jump" aria-label={`${c.name} reference sections`}>
+              <a href={`#props-${id}`}>Props {c.props.length > 0 && <span>{c.props.length}</span>}</a>
+              {a?.styles && <a href={`#styles-${id}`}>Styles</a>}
+              {hasEvents && <a href={`#events-${id}`}>Events</a>}
+              {hasSlots && <a href={`#slots-${id}`}>Slots</a>}
+            </nav>
             <h4 id={`props-${id}`}>Props</h4>
             {c.props.length ? <PropsTable c={c} /> : <p className="sw-muted">No props of its own.</p>}
             {a?.styles && (
