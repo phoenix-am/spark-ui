@@ -99,7 +99,7 @@ function Header() {
           </NavLink>
           <NavLink to="/theme-builder">Theme builder</NavLink>
         </nav>
-        <button type="button" className="sw-search" onClick={openSearch}>
+        <button type="button" className="sw-search" onClick={openSearch} aria-label="Search the docs" aria-keyshortcuts={isMac ? "Meta+K" : "Control+K"}>
           <Icon name="search" />
           <span className="sw-search__text">Search</span>
           <kbd>{isMac ? '⌘' : 'Ctrl'} K</kbd>

@@ -166,6 +166,6 @@ test('@mobile phone layout: search opens and the playground fits', async ({ page
   await page.goto('/components/button');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
-  await page.getByRole('button', { name: /search/i }).first().click();
+  await page.getByRole('button', { name: 'Search the docs' }).click();
   await expect(page.getByRole('combobox', { name: /Search/ })).toBeVisible();
 });
