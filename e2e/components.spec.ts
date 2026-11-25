@@ -8,7 +8,6 @@ const open = async (page: Page, name: string) => {
 };
 /** Focus from the keyboard's point of view, the same in every engine (WebKit's Tab skips buttons). */
 const keyboardFocus = async (page: Page, target: ReturnType<Page['locator']>) => {
-  await page.keyboard.press('Shift');
   await target.focus();
 };
 
@@ -155,12 +154,13 @@ test('Header tooltip opens below and stays in the window', async ({ page, browse
   await expect(btn).toBeVisible();
   const bubble = page.locator('.sp-tooltip__bubble');
   // Tooltips open on keyboard focus. Reach the button by keyboard (WebKit's Tab skips
-  // buttons, so there: a key press, then focus), and try again if the first focus
+  // buttons, so there: Tab somewhere, then focus it), and try again if the first focus
   // landed before the page was ready.
   await expect(async () => {
     await page.locator('body').click({ position: { x: 5, y: 300 } });
     if (browserName === 'webkit') {
-      await page.keyboard.press('Shift');
+      // A real key press (not a lone Shift, which React Aria ignores) puts it in keyboard mode.
+      await page.keyboard.press('Tab');
       await btn.focus();
     } else {
       await btn.focus();
