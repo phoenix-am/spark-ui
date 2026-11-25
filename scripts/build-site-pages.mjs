@@ -57,6 +57,7 @@ for (const e of docs.components) {
   // The old combined address still resolves (the app redirects); point search engines at the first page.
   if (!split.some((p) => p.name === e.name)) routes.push({ path: `components/${e.name}`, title: split[0].parts[0], description: firstPara(e.components[0].description), canonical: `components/${split[0].name}`, noindex: true });
 }
+routes.push({ path: 'theme-builder', title: 'Theme builder', description: 'Pick a colour and corner style, watch real Sparkwire components change, check contrast, and copy the theme as a ThemeProvider or CSS variables.' });
 routes.push({ path: 'components/blocks', title: 'Blocks', description: 'Whole screens built from Sparkwire: a dashboard, a sign-in page and a settings page. Copy one into your app and make it yours.' });
 for (const g of pages.guides) {
   const md = g.file ? fs.readFileSync(path.join(root, `docs/${g.file}.md`), 'utf8').replace(/^# .*\n/, '') : (g.sections ?? []).map(section).join('\n\n');

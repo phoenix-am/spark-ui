@@ -5,12 +5,14 @@ import { Home } from './pages/Home';
 import { GuidePage } from './pages/GuidePage';
 import { ComponentPage } from './pages/ComponentPage';
 import { NotFound } from './pages/NotFound';
+import { ThemeBuilder } from './pages/ThemeBuilder';
 
 export function SiteRoutes() {
   return (
     <Routes>
       <Route element={<App />}>
         <Route index element={<Home />} />
+        <Route path="theme-builder" element={<ThemeBuilder />} />
         <Route element={<DocsLayout />}>
           <Route path="docs/:slug" element={<GuidePage />} />
           <Route path="components/:name" element={<ComponentPage />} />

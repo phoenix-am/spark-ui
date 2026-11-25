@@ -97,6 +97,7 @@ function Header() {
           <NavLink to="/components/button" className={() => (pathname.startsWith('/components') ? 'active' : '')}>
             Components
           </NavLink>
+          <NavLink to="/theme-builder">Theme builder</NavLink>
         </nav>
         <button type="button" className="sw-search" onClick={openSearch}>
           <Icon name="search" />
@@ -147,6 +148,7 @@ export function SideNav() {
                 {g.title}
               </NavLink>
             ))}
+          {group === 'Customise' && <NavLink to="/theme-builder">Theme builder</NavLink>}
         </div>
       ))}
       {byCategory.map((group) => (

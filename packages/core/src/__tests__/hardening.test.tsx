@@ -193,3 +193,28 @@ describe('small numeric edges', () => {
     expect(onAdd).toHaveBeenCalled();
   });
 });
+
+/* ------------------------------------------------------ controlled Textfield */
+import { Textfield } from '..';
+describe('Textfield controlled value', () => {
+  test('a value changed by the parent shows in the input', () => {
+    const { rerender } = render(<Textfield label="Hex" value="#FFD60A" onChange={() => {}} />);
+    expect((screen.getByLabelText('Hex') as HTMLInputElement).value).toBe('#FFD60A');
+    rerender(<Textfield label="Hex" value="#3AF2FF" onChange={() => {}} />);
+    expect((screen.getByLabelText('Hex') as HTMLInputElement).value).toBe('#3AF2FF');
+  });
+  test('typing still works when the parent stores the value', () => {
+    function Box() {
+      const [v, setV] = React.useState('');
+      return <Textfield label="Name" value={v} onChange={(e) => setV(e.target.value)} />;
+    }
+    render(<Box />);
+    fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Asha' } });
+    expect((screen.getByLabelText('Name') as HTMLInputElement).value).toBe('Asha');
+  });
+  test('a reset to an empty string clears the input', () => {
+    const { rerender } = render(<Textfield label="Q" value="draft" onChange={() => {}} />);
+    rerender(<Textfield label="Q" value="" onChange={() => {}} />);
+    expect((screen.getByLabelText('Q') as HTMLInputElement).value).toBe('');
+  });
+});

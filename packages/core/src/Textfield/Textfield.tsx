@@ -62,8 +62,11 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     error: hasError,
   } = useTextField({ value: value ?? defaultValue, onChange, onFocus, onBlur, disabled, error, type });
   const controlled = value !== undefined;
+  // Controlled: the parent's value is the truth, so changes made outside the field
+  // (a reset, data from the server) show up. Uncontrolled: the field keeps its own.
+  const current = controlled ? String(value) : fieldValue;
 
-  const level = charge === undefined ? undefined : clamp(typeof charge === 'function' ? charge(fieldValue) : charge);
+  const level = charge === undefined ? undefined : clamp(typeof charge === 'function' ? charge(current) : charge);
   const percent = level === undefined ? 0 : Math.round(level * 100);
   const charged = level !== undefined && percent >= 100 && !hasError;
 
@@ -111,7 +114,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
         type={masked ? 'text' : type}
         inputMode={masked ? 'numeric' : undefined}
         placeholder={placeholder}
-        {...(controlled ? { value: fieldValue } : { defaultValue })}
+        {...(controlled ? { value: current } : { defaultValue })}
         aria-describedby={describedBy}
         onChange={handleChange}
         onFocus={handleFocus}
