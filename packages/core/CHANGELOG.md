@@ -1,5 +1,13 @@
 # @sparkwire/core
 
+## 0.4.1
+
+### Patch Changes
+
+- 5958090: Fix: a controlled `Textfield` now shows changes its parent makes to `value`, such as a reset, a value loaded from the server, or a value picked somewhere else. Before, it kept showing the first value it was given. Typing and masking work as before.
+- @sparkwire/icons@0.4.1
+  - @sparkwire/utils@0.4.1
+
 ## 0.4.0
 
 ### Minor Changes
