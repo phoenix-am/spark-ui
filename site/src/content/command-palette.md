@@ -15,3 +15,5 @@
 
 - Include navigation and frequent actions, and add `keywords` for the words people might type (“invoice” for Billing).
 - Show the shortcut somewhere in your UI so people learn it.
+- Items with an `href` only navigate to `http`, `https`, `mailto`, `tel` and relative links. `javascript:` and `data:` links are ignored, so it's safe to build items from user or CMS data.
+- Use `preview` to show more about the highlighted result (a live example, details, actions) and `toolbar` for tabs that narrow the search. This site's search uses both.

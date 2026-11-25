@@ -18,6 +18,8 @@
 
 - Prefer typing for dates people know (a birthday); the calendar helps for dates near today.
 - Explain blocked dates in `helperText` (“Weekdays only”).
+- An Invalid Date (for example `new Date('')` from bad data) shows as an empty field with a development warning, instead of crashing the page.
+- Range presets check every day they cover against `isDateDisabled`. Pass a function that keeps its identity between renders (defined outside the component, or with `useCallback`) so long presets like “Last 10 years” are checked once, not on every render.
 
 ## Limitations
 

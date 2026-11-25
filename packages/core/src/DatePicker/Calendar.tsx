@@ -108,15 +108,54 @@ export interface RangeCalendarProps extends CalendarBaseProps {
 const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 
 /** One check for min/max-free availability: allow-list, block-list and rule. */
-export function makeUnavailable({ disabledDates, enabledDates, isDateDisabled }: CalendarBaseProps) {
+/** The check, plus what it was built from, so a range can be tested without visiting every day. */
+type Unavailable = ((value: DateValue) => boolean) & { blockedDays?: Date[]; allowed?: Set<string> | null; rule?: (d: Date) => boolean };
+
+export function makeUnavailable({ disabledDates, enabledDates, isDateDisabled }: CalendarBaseProps): Unavailable | undefined {
   if (!disabledDates && !enabledDates && !isDateDisabled) return undefined;
   const blocked = new Set((disabledDates ?? []).map(dayKey));
   const allowed = enabledDates ? new Set(enabledDates.map(dayKey)) : null;
-  return (value: DateValue) => {
+  const check: Unavailable = (value: DateValue) => {
     const d = fromDateValue(value)!;
     const key = dayKey(d);
     return (allowed !== null && !allowed.has(key)) || blocked.has(key) || Boolean(isDateDisabled?.(d));
   };
+  return Object.assign(check, { blockedDays: disabledDates ?? [], allowed, rule: isDateDisabled });
+}
+
+const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+
+/** Results of walking a range with a rule, per rule, so re-renders don't repeat the walk. */
+const walked = new WeakMap<object, Map<string, boolean>>();
+
+/**
+ * Is every day from `start` to `end` available? Day-by-day only when it has to be:
+ * no rules means yes, block and allow lists are checked directly, and a rule's
+ * answer is remembered for as long as the same rule function is passed.
+ */
+function rangeAvailable(start: DateValue, end: DateValue, check: Unavailable | undefined, cell: (d: DateValue) => boolean): boolean {
+  if (!check) return true;
+  const from = startOfDay(fromDateValue(start)!);
+  const to = startOfDay(fromDateValue(end)!);
+  if (check.blockedDays && check.blockedDays.some((d) => startOfDay(d) >= from && startOfDay(d) <= to)) return false;
+  const days = Math.round((to - from) / 86_400_000) + 1;
+  // An allow-list smaller than the range can't cover it.
+  if (check.allowed && days > check.allowed.size) return false;
+  const rule = check.rule ?? (check.blockedDays === undefined ? check : undefined);
+  if (!rule && !check.allowed) return true;
+  const memo = rule ? walked.get(rule) ?? new Map<string, boolean>() : undefined;
+  if (rule && !walked.has(rule)) walked.set(rule, memo!);
+  const key = `${start.toString()}/${end.toString()}`;
+  const known = memo?.get(key);
+  if (known !== undefined && !check.allowed) return known;
+  let ok = true;
+  for (let d = start; d.compare(end) <= 0; d = d.add({ days: 1 }))
+    if (cell(d)) {
+      ok = false;
+      break;
+    }
+  if (memo && !check.allowed) memo.set(key, ok);
+  return ok;
 }
 
 /* ------------------------------------------------------------ Calendar */
@@ -287,8 +326,7 @@ export function RangeCalendarCore({ presets = [], visibleMonths: rawMonths = 1, 
     const r = resolve(p);
     if (state.isDisabled || state.isInvalid(r.start) || state.isInvalid(r.end)) return false;
     if (props.allowsNonContiguousRanges) return !state.isCellUnavailable(r.start) && !state.isCellUnavailable(r.end);
-    for (let d = r.start; d.compare(r.end) <= 0; d = d.add({ days: 1 })) if (state.isCellUnavailable(d)) return false;
-    return true;
+    return rangeAvailable(r.start, r.end, props.isDateUnavailable as Unavailable | undefined, (d) => state.isCellUnavailable(d as CalendarDate));
   };
   const active = (p: RangePreset) => {
     if (!state.value) return false;

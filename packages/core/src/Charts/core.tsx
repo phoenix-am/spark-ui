@@ -61,8 +61,11 @@ export function niceTicks(min: number, max: number, count = 5): number[] {
   const raw = span / count;
   const mag = 10 ** Math.floor(Math.log10(raw));
   const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => span / s <= count) ?? 10 * mag;
-  const start = Math.floor(min / step) * step;
-  const end = Math.ceil(max / step) * step;
+  let start = Math.floor(min / step) * step;
+  let end = Math.ceil(max / step) * step;
+  // Tiny values can underflow to 0 in the division (5e-324 / 2), leaving an end short of the data.
+  if (start > min) start -= step;
+  if (end < max) end += step;
   // Count by index, never by `v += step`: adding a step smaller than the gap between
   // floats leaves v unchanged and loops forever. Capped so a rounding slip can't explode.
   const n = Math.min(50, Math.max(1, Math.round((end - start) / step)));
@@ -72,7 +75,11 @@ export function niceTicks(min: number, max: number, count = 5): number[] {
     const v = Number((start + i * step).toFixed(digits));
     if (!ticks.length || v > ticks[ticks.length - 1]) ticks.push(v);
   }
-  return ticks.length >= 2 ? ticks : [min, max];
+  if (ticks.length < 2) return [min, max];
+  // At extreme magnitudes rounding can leave the outer ticks a hair inside the data; pull them out.
+  if (ticks[0] > min) ticks[0] = min;
+  if (ticks[ticks.length - 1] < max) ticks[ticks.length - 1] = max;
+  return ticks;
 }
 
 export const linear = (d0: number, d1: number, r0: number, r1: number) => (v: number) => (d1 === d0 ? r0 : r0 + ((v - d0) / (d1 - d0)) * (r1 - r0));

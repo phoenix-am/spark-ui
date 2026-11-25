@@ -24,6 +24,7 @@ In containers narrower than 640px (`stackBelow`), rows turn into labelled cards.
 - Give every row a stable `id` (or `getRowKey`) so selection and editing survive sorting and paging.
 - Use `manual` with server paging once data no longer fits comfortably in the browser.
 - Pin the column that identifies the row, so it stays visible while scrolling sideways.
+- Row keys are always unique. A row without an `id` gets a key that can't clash with one that has `id: 0`. Repeated ids get `#2`, `#3`… and a development warning, so selecting one row never selects another. A real `id` or `getRowKey` is still best.
 
 ## Limitations
 
