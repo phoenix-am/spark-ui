@@ -113,7 +113,7 @@ describe('niceTicks', () => {
 });
 
 describe('charts', () => {
-  const axis = (c: HTMLElement) => [...c.querySelectorAll('.sp-chart__axis')].map((e) => e.textContent);
+  const axis = (c: HTMLElement) => Array.from(c.querySelectorAll('.sp-chart__axis')).map((e) => e.textContent);
   test('zeroBaseline={false} zooms to the data', () => {
     const { container } = render(<LineChart title="z" data={[{ d: 'a', v: 1000 }, { d: 'b', v: 1002 }]} x="d" series={[{ key: 'v', label: 'V' }]} zeroBaseline={false} />);
     expect(axis(container)).not.toContain('0');
