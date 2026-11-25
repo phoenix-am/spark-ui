@@ -1,5 +1,14 @@
 # @sparkwire/core
 
+## 0.3.1
+
+### Patch Changes
+
+- b32e65d: Button: `as` now types the props of the element you render as, so `<Button as="a" href="…" target="_blank">` and `<Button as={Link} to="/">` type-check. Component descriptions rewritten in plain language, and the toast docs now show the real API (`const { toast } = useToast()`).
+- db1342c: Every prop now has a description, so editor tooltips and the docs explain all 709 props, including the ones that used to be blank (className, disabled, controlled/uncontrolled pairs, DataTable's callbacks and more).
+- @sparkwire/icons@0.3.1
+  - @sparkwire/utils@0.3.1
+
 ## 0.3.0
 
 ### Minor Changes

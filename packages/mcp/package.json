@@ -1,6 +1,6 @@
 {
   "name": "@sparkwire/mcp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Sparkwire MCP server: lets AI coding tools look up Sparkwire components, props, examples, install commands and source.",
   "keywords": [
     "mcp",
