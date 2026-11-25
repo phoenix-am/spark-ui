@@ -3934,7 +3934,7 @@
       "components": [
         {
           "name": "CommandPalette",
-          "description": "One keyboard shortcut (⌘K or Ctrl+K) to reach anything in your app: pages,\nactions, settings. It searches as you type, groups results, and shows\nshortcuts. This site's search is built with it.\n\nA ⌘K launcher. Type to find a command or page; arrows move\nthe lit node, Enter runs it, Escape closes. Focus stays in the search box\n(ARIA combobox with an active option), the dialog traps focus and returns\nit when closed. Groups, keywords, icons, shortcuts, links and async\nresults. Built on the Overlay and InputBase base components and the\nshared list-item look.\n\nStyle hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,\n`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__footer`.",
+          "description": "One keyboard shortcut (⌘K or Ctrl+K) to reach anything in your app: pages,\nactions, settings. It searches as you type, groups results, and shows\nshortcuts. This site's search is built with it.\n\nA ⌘K launcher. Type to find a command or page; arrows move\nthe lit node, Enter runs it, Escape closes. Focus stays in the search box\n(ARIA combobox with an active option), the dialog traps focus and returns\nit when closed. Groups, keywords, icons, shortcuts, links and async\nresults. Built on the Overlay and InputBase base components and the\nshared list-item look.\n\nStyle hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,\n`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__toolbar`, `__body`,\n`__preview`, `__footer`.",
           "props": [
             {
               "name": "items",
@@ -3956,9 +3956,9 @@
             },
             {
               "name": "classNames",
-              "type": "Partial<Record<\"panel\" | \"input\" | \"list\" | \"group\" | \"item\" | \"footer\", string>>",
+              "type": "Partial<Record<\"panel\" | \"input\" | \"toolbar\" | \"list\" | \"group\" | \"item\" | \"preview\" | \"footer\", string>>",
               "required": false,
-              "description": "Extra classes for each part: panel, input, list, group, item, footer."
+              "description": "Extra classes for each part: panel, input, toolbar, list, group, item, preview, footer."
             },
             {
               "name": "closeOnSelect",
@@ -4031,6 +4031,18 @@
               "type": "string",
               "required": false,
               "description": "Hint in the search box. Default “Type a command or search…”."
+            },
+            {
+              "name": "preview",
+              "type": "((command: Command) => ReactNode)",
+              "required": false,
+              "description": "A pane beside the results that shows more about the highlighted command: a live\nexample, a description, actions. Called with `undefined` when nothing is highlighted.\nThe panel widens to make room, and the pane is hidden on narrow screens."
+            },
+            {
+              "name": "toolbar",
+              "type": "ReactNode",
+              "required": false,
+              "description": "A row under the search box, e.g. tabs that narrow what the search covers."
             }
           ]
         }

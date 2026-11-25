@@ -77,10 +77,18 @@ export interface CommandPaletteProps {
   'aria-label'?: string;
   /** Hide the keyboard hints at the bottom. */
   hideFooter?: boolean;
+  /**
+   * A pane beside the results that shows more about the highlighted command: a live
+   * example, a description, actions. Called with `undefined` when nothing is highlighted.
+   * The panel widens to make room, and the pane is hidden on narrow screens.
+   */
+  preview?: (command: Command | undefined) => React.ReactNode;
+  /** A row under the search box, e.g. tabs that narrow what the search covers. */
+  toolbar?: React.ReactNode;
   /** Extra class names for the outermost element. */
   className?: string;
-  /** Extra classes for each part: panel, input, list, group, item, footer. */
-  classNames?: ClassNames<'panel' | 'input' | 'list' | 'group' | 'item' | 'footer'>;
+  /** Extra classes for each part: panel, input, toolbar, list, group, item, preview, footer. */
+  classNames?: ClassNames<'panel' | 'input' | 'toolbar' | 'list' | 'group' | 'item' | 'preview' | 'footer'>;
 }
 
 const isGroup = (x: Command | CommandGroup): x is CommandGroup => Array.isArray((x as CommandGroup).items);
@@ -118,7 +126,8 @@ function matchesHotkey(e: KeyboardEvent, hotkey: string) {
  * shared list-item look.
  *
  * Style hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,
- * `__heading`, `.sp-list-item[data-focused]`, `__empty`, `__footer`.
+ * `__heading`, `.sp-list-item[data-focused]`, `__empty`, `__toolbar`, `__body`,
+ * `__preview`, `__footer`.
  */
 export function CommandPalette(inProps: CommandPaletteProps) {
   const props = useDefaults('CommandPalette', inProps);
@@ -164,6 +173,8 @@ function Panel({
   loading,
   'aria-label': ariaLabelProp,
   hideFooter,
+  preview,
+  toolbar,
   classNames,
   panelProps,
   panelRef,
@@ -242,7 +253,7 @@ function Panel({
 
   let index = -1;
   return (
-    <div {...panelProps} {...dialogProps} ref={panelRef} className={slot('sp-command__panel', classNames, 'panel')}>
+    <div {...panelProps} {...dialogProps} ref={panelRef} className={slot('sp-command__panel', classNames, 'panel')} data-preview={preview ? true : undefined}>
       <div aria-hidden="true" className="sp-command__current sp-current" data-live={search ? true : undefined} />
       <InputBase
         role="combobox"
@@ -270,6 +281,8 @@ function Panel({
         }
         endAdornment={<kbd className="sp-command__esc">esc</kbd>}
       />
+      {toolbar && <div className={slot('sp-command__toolbar', classNames, 'toolbar')}>{toolbar}</div>}
+      <div className="sp-command__body">
       <div ref={listRef} id={listId} role="listbox" aria-label={m.commands} className={slot('sp-command__list', classNames, 'list')}>
         {loading && (
           <div className="sp-command__status" role="status">
@@ -316,6 +329,12 @@ function Panel({
             })}
           </div>
         ))}
+      </div>
+      {preview && (
+        <div className={slot('sp-command__preview', classNames, 'preview')} aria-label={m.preview} role="region">
+          {preview(current && !current.disabled ? current : undefined)}
+        </div>
+      )}
       </div>
       {!hideFooter && (
         <div className={slot('sp-command__footer', classNames, 'footer')} aria-hidden="true">

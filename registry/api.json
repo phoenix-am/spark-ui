@@ -5813,9 +5813,11 @@
         "slots": [
           "panel",
           "input",
+          "toolbar",
           "list",
           "group",
           "item",
+          "preview",
           "footer"
         ],
         "blocks": [
@@ -5832,6 +5834,11 @@
               "class": "sp-command__backdrop",
               "states": [],
               "description": "The dimmed backdrop."
+            },
+            {
+              "class": "sp-command__body",
+              "states": [],
+              "description": "The body."
             },
             {
               "class": "sp-command__current",
@@ -5876,9 +5883,19 @@
               "description": "The panel."
             },
             {
+              "class": "sp-command__preview",
+              "states": [],
+              "description": "The preview."
+            },
+            {
               "class": "sp-command__status",
               "states": [],
               "description": "The status."
+            },
+            {
+              "class": "sp-command__toolbar",
+              "states": [],
+              "description": "The toolbar."
             }
           ],
           "attributes": [
@@ -5897,6 +5914,14 @@
                 "sp-command__current"
               ],
               "description": "Present when current runs around the edge (`live`)."
+            },
+            {
+              "name": "data-preview",
+              "values": [],
+              "on": [
+                "sp-command__panel"
+              ],
+              "description": "The current `preview`."
             }
           ],
           "variables": [

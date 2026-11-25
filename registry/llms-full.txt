@@ -1120,12 +1120,13 @@ results. Built on the Overlay and InputBase base components and the
 shared list-item look.
 
 Style hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,
-`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__footer`.
+`__heading`, `.sp-list-item[data-focused]`, `__empty`, `__toolbar`, `__body`,
+`__preview`, `__footer`.
 
 - `items`: `(Command | CommandGroup)[]` Commands, or groups of commands with a heading.
 - `aria-label?`: `string` Accessible name for the dialog. Default "Command palette".
 - `className?`: `string` Extra class names for the outermost element.
-- `classNames?`: `Partial<Record<"panel" | "input" | "list" | "group" | "item" | "footer", string>>` Extra classes for each part: panel, input, list, group, item, footer.
+- `classNames?`: `Partial<Record<"panel" | "input" | "toolbar" | "list" | "group" | "item" | "preview" | "footer", string>>` Extra classes for each part: panel, input, toolbar, list, group, item, preview, footer.
 - `closeOnSelect?`: `boolean` Close after a command runs. Default `true`.
 - `defaultOpen?`: `boolean` Start open, when the palette manages its own state.
 - `emptyState?`: `ReactNode` Shown when nothing matches. Default "No results".
@@ -1138,6 +1139,8 @@ Style hooks: `.sp-command`, `__panel`, `__input`, `__list`, `__group`,
 - `onSelect?`: `((command: Command) => void)` Called with the chosen command, after its own `onSelect`.
 - `open?`: `boolean` Controlled open state.
 - `placeholder?`: `string` Hint in the search box. Default “Type a command or search…”.
+- `preview?`: `((command: Command) => ReactNode)` A pane beside the results that shows more about the highlighted command: a live example, a description, actions. Called with `undefined` when nothing is highlighted. The panel widens to make room, and the pane is hidden on narrow screens.
+- `toolbar?`: `ReactNode` A row under the search box, e.g. tabs that narrow what the search covers.
 
 ## Menu (`menu`)
 Actions behind a button, with submenus.

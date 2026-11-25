@@ -2,6 +2,7 @@ import React from 'react';
 import type { ComponentDoc, PropDoc } from '../lib/catalog';
 import { apiOf, defaultFor, methodsFor, payloadOf, typesFor, type StyleAttr, type StyleClass, type StyleVar } from '../lib/api';
 import { RefTable } from './RefTable';
+import { eventAnchor, propAnchor, varAnchor } from '../lib/anchors';
 
 const anchor = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const isDeprecated = (p: PropDoc) => /deprecated/i.test(p.description);
@@ -15,6 +16,7 @@ function PropsTable({ c }: { c: ComponentDoc }) {
     <RefTable<PropDoc>
       caption={`${c.name} props`}
       rowKey={(p) => p.name}
+      rowId={(p) => propAnchor(c.name, p.name)}
       rows={rows}
       columns={[
         { label: 'Prop', render: (p) => <><code className="sw-props__name">{p.name}</code>{isDeprecated(p) && <span className="sw-props__dep">deprecated</span>}</> },
@@ -62,6 +64,7 @@ function StylesTables({ c }: { c: ComponentDoc }) {
       <RefTable<StyleVar>
         caption={`${c.name} CSS variables`}
         rowKey={(r) => r.name}
+        rowId={(r) => varAnchor(c.name, r.name)}
         rows={s.variables}
         columns={[
           { label: 'Variable', render: (r) => ({ code: r.name }) },
@@ -84,6 +87,7 @@ function EventsTable({ c }: { c: ComponentDoc }) {
     <RefTable
       caption={`${c.name} events`}
       rowKey={(e) => e.name}
+      rowId={(e) => eventAnchor(c.name, e.name)}
       rows={events}
       columns={[
         { label: 'Event', render: (e) => ({ code: e.name }) },

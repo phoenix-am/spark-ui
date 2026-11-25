@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router';
 import { ThemeProvider } from '@sparkwire/system';
-import { SparkProvider, CommandPalette, Drawer, ToggleGroup, ToggleGroupItem, Tooltip } from '@sparkwire/core';
+import { SparkProvider, Drawer, ToggleGroup, ToggleGroupItem, Tooltip } from '@sparkwire/core';
 import { byCategory, guides } from './lib/catalog';
 import { Icon } from './components/Icon';
+import { SiteSearch } from './components/SiteSearch';
 
 type Mode = 'dark' | 'light';
 type Energy = 'off' | 'calm' | 'default' | 'electric';
@@ -39,7 +40,6 @@ export function App() {
   const [mode, setModeState] = useState<Mode>(() => read<Mode>('sw-mode', 'dark'));
   const [energy, setEnergyState] = useState<Energy>(() => read<Energy>('sw-energy', 'default'));
   const [searchOpen, setSearchOpen] = useState(false);
-  const navigate = useNavigate();
   const { pathname, hash } = useLocation();
 
   const setMode = (m: Mode) => (setModeState(m), write('sw-mode', m));
@@ -50,26 +50,14 @@ export function App() {
     document.documentElement.style.colorScheme = mode;
   }, [mode]);
   useEffect(() => {
-    if (hash) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
-    else window.scrollTo(0, 0);
+    document.querySelectorAll('[data-linked]').forEach((el) => el.removeAttribute('data-linked'));
+    const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (target) {
+      target.scrollIntoView();
+      // CSS :target misses router navigation, so mark the linked row ourselves.
+      if (target.tagName === 'TR') target.setAttribute('data-linked', '');
+    } else if (!hash) window.scrollTo(0, 0);
   }, [pathname, hash]);
-
-  const commands = useMemo(
-    () => [
-      { heading: 'Guides', items: guides.map((g) => ({ id: `g-${g.slug}`, label: g.title, description: g.group, onSelect: () => navigate(`/docs/${g.slug}`) })) },
-      ...byCategory.map((group) => ({
-        heading: group.category,
-        items: group.entries.map((e) => ({
-          id: `c-${e.name}`,
-          label: e.title,
-          description: e.components.length > 1 ? e.components.map((c) => c.name).join(', ') : undefined,
-          keywords: [...e.components.map((c) => c.name), ...e.components.flatMap((c) => c.props.map((p) => p.name))],
-          onSelect: () => navigate(`/components/${e.name}`),
-        })),
-      })),
-    ],
-    [navigate],
-  );
 
   const site: Site = { mode, setMode, energy, setEnergy, openSearch: () => setSearchOpen(true) };
 
@@ -81,13 +69,7 @@ export function App() {
             <Header />
             <Outlet />
           </div>
-          <CommandPalette
-            aria-label="Search the docs"
-            placeholder="Search docs…"
-            items={commands}
-            open={searchOpen}
-            onOpenChange={setSearchOpen}
-          />
+          <SiteSearch open={searchOpen} onOpenChange={setSearchOpen} />
         </SparkProvider>
       </ThemeProvider>
     </SiteContext.Provider>

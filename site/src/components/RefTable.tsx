@@ -11,7 +11,7 @@ export interface Column<Row> {
 }
 
 /** A reference table that stacks into cards on narrow screens (same styles as the props table). */
-export function RefTable<Row>({ caption, columns, rows, rowKey }: { caption: string; columns: Column<Row>[]; rows: Row[]; rowKey: (r: Row) => string }) {
+export function RefTable<Row>({ caption, columns, rows, rowKey, rowId }: { caption: string; columns: Column<Row>[]; rows: Row[]; rowKey: (r: Row) => string; /** An id per row, so search results and links can point at it. */ rowId?: (r: Row) => string }) {
   if (!rows.length) return null;
   return (
     <div className="sw-props" role="region" aria-label={caption} tabIndex={0}>
@@ -27,7 +27,7 @@ export function RefTable<Row>({ caption, columns, rows, rowKey }: { caption: str
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={rowKey(r)}>
+            <tr key={rowKey(r)} id={rowId?.(r)}>
               {columns.map((c, i) => {
                 const v = c.render(r);
                 const Cell = i === 0 ? 'th' : 'td';

@@ -56,6 +56,8 @@ export interface SparkMessages {
   commandPlaceholder: string;
   commands: string;
   searchCommands: string;
+  /** Name of the CommandPalette preview pane. */
+  preview: string;
   // file upload
   dropFiles: (multiple: boolean) => string;
   browse: string;
@@ -124,6 +126,7 @@ const en: SparkMessages = {
   commandPlaceholder: 'Type a command or search…',
   commands: 'Commands',
   searchCommands: 'Search commands',
+  preview: 'Preview',
   dropFiles: (m) => (m ? 'Drop files here or' : 'Drop a file here or'),
   browse: 'browse',
   files: 'Files',
@@ -190,6 +193,7 @@ const hi: SparkMessages = {
   commandPlaceholder: 'कमांड लिखें या खोजें…',
   commands: 'कमांड',
   searchCommands: 'कमांड खोजें',
+  preview: 'पूर्वावलोकन',
   dropFiles: (m) => (m ? 'फ़ाइलें यहाँ छोड़ें या' : 'फ़ाइल यहाँ छोड़ें या'),
   browse: 'चुनें',
   files: 'फ़ाइलें',
@@ -256,6 +260,7 @@ const gu: SparkMessages = {
   commandPlaceholder: 'કમાન્ડ લખો અથવા શોધો…',
   commands: 'કમાન્ડ',
   searchCommands: 'કમાન્ડ શોધો',
+  preview: 'પૂર્વાવલોકન',
   dropFiles: (m) => (m ? 'ફાઇલો અહીં મૂકો અથવા' : 'ફાઇલ અહીં મૂકો અથવા'),
   browse: 'પસંદ કરો',
   files: 'ફાઇલો',
@@ -322,6 +327,7 @@ const ta: SparkMessages = {
   commandPlaceholder: 'கட்டளையை உள்ளிடவும் அல்லது தேடவும்…',
   commands: 'கட்டளைகள்',
   searchCommands: 'கட்டளைகளைத் தேடு',
+  preview: 'முன்னோட்டம்',
   dropFiles: (m) => (m ? 'கோப்புகளை இங்கே விடவும் அல்லது' : 'கோப்பை இங்கே விடவும் அல்லது'),
   browse: 'தேர்ந்தெடு',
   files: 'கோப்புகள்',

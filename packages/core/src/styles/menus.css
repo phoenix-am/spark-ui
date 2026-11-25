@@ -71,6 +71,16 @@
 .sp-command__status { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 2rem 1rem; font-size: var(--spark-font-size-small); color: var(--spark-text-secondary); }
 .sp-command__footer { display: flex; gap: 1rem; padding: 0.5rem 1rem; border-top: 1px solid var(--spark-surface-border); font-size: 0.75rem; color: var(--spark-text-secondary); }
 .sp-command__footer kbd { margin-inline-end: 0.2rem; }
+/* Optional toolbar and preview pane. */
+.sp-command__toolbar { display: flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--spark-surface-border); }
+.sp-command__body { flex: 1; min-height: 0; display: flex; }
+.sp-command__panel[data-preview] { width: min(58rem, 100%); height: min(34rem, 84vh); max-height: min(38rem, 84vh); }
+.sp-command__panel[data-preview] .sp-command__list { flex: 0 0 min(24rem, 45%); border-inline-end: 1px solid var(--spark-surface-border); }
+.sp-command__preview { flex: 1; min-width: 0; overflow-y: auto; padding: 1rem 1.125rem; }
+@media (max-width: 42rem) {
+  .sp-command__preview { display: none; }
+  .sp-command__panel[data-preview] .sp-command__list { flex: 1; border-inline-end: 0; }
+}
 
 /* ---------------------------------------------------------------- Sidebar */
 .sp-sidebar {
