@@ -1,5 +1,12 @@
 # @sparkwire/system
 
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [36215f2]
+  - @sparkwire/styles@0.3.4
+
 ## 0.3.3
 
 ### Patch Changes
