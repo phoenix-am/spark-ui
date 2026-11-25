@@ -1,5 +1,8 @@
-import React, { useMemo, useState } from 'react';
-import { Switch, Textfield, NumberField, Dropdown, ToggleGroup, ToggleGroupItem } from '@sparkwire/core';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router';
+import { Switch, Textfield, NumberField, Dropdown, ToggleGroup, ToggleGroupItem, SparkProvider } from '@sparkwire/core';
+import { ThemeProvider } from '@sparkwire/system';
+import { useSite } from '../App';
 import type { ComponentDoc, PropDoc } from '../lib/catalog';
 import type { PlaygroundConfig } from '../lib/demos';
 import { toJsx } from '../lib/jsx';
@@ -30,11 +33,45 @@ function controlFor(p: PropDoc, initial: unknown): Control | null {
 
 
 
+type Env = { mode: 'dark' | 'light'; energy: 'off' | 'calm' | 'default' | 'electric'; locale: string; dir: 'ltr' | 'rtl' };
+const LOCALES = [
+  { value: 'en-US', label: 'EN' },
+  { value: 'hi-IN', label: 'हिन्दी' },
+  { value: 'gu-IN', label: 'ગુજરાતી' },
+  { value: 'ta-IN', label: 'தமிழ்' },
+];
+
+/** Settings live in `?play=` so a link reopens the playground exactly as it was. */
+function readShared(raw: string | null): { values?: Record<string, unknown>; env?: Partial<Env> } {
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
 export function Playground({ config, doc }: { config: PlaygroundConfig; doc: ComponentDoc }) {
   /** The prop's real default, unquoted: `'medium'` → medium. */
   const defaultOf = (p: PropDoc) => defaultFor(doc.name, p)?.replace(/^['"`](.*)['"`]$/, '$1');
+  const site = useSite();
+  const [params, setParams] = useSearchParams();
+  const shared = useMemo(() => readShared(params.get('play')), []); // eslint-disable-line react-hooks/exhaustive-deps
   const initial = useMemo(() => ({ ...config.props }), [config]);
-  const [values, setValues] = useState<Record<string, unknown>>(initial);
+  const [values, setValues] = useState<Record<string, unknown>>(() => ({ ...initial, ...shared.values }));
+  const [env, setEnv] = useState<Env>(() => ({ mode: site.mode, energy: site.energy, locale: 'en-US', dir: 'ltr', ...shared.env }));
+  const setEnvKey = <K extends keyof Env>(k: K, v: Env[K] | null) => v && setEnv((e) => ({ ...e, [k]: v }));
+
+  // Keep the URL in step, without adding history entries. Untouched settings leave it clean.
+  useEffect(() => {
+    const changed = Object.fromEntries(Object.entries(values).filter(([k, v]) => JSON.stringify(v) !== JSON.stringify(initial[k])).filter(([, v]) => typeof v !== 'function'));
+    const envChanged = Object.fromEntries(Object.entries(env).filter(([k, v]) => v !== ({ mode: site.mode, energy: site.energy, locale: 'en-US', dir: 'ltr' } as Env)[k as keyof Env]));
+    const next = new URLSearchParams(params);
+    if (Object.keys(changed).length || Object.keys(envChanged).length) next.set('play', JSON.stringify({ values: changed, env: envChanged }));
+    else next.delete('play');
+    if (next.toString() !== params.toString()) setParams(next, { replace: true, preventScrollReset: true });
+  }, [values, env]); // eslint-disable-line react-hooks/exhaustive-deps
   const controls = useMemo(
     () => {
       const rank = { choice: 0, text: 1, number: 2, boolean: 3 } as const;
@@ -53,14 +90,41 @@ export function Playground({ config, doc }: { config: PlaygroundConfig; doc: Com
 
   return (
     <div className="sw-playground">
+      <div className="sw-playground__toolbar" role="toolbar" aria-label="Preview settings">
+        <ToggleGroup aria-label="Theme" size="small" value={env.mode} onChange={(v) => setEnvKey('mode', v as Env['mode'])}>
+          <ToggleGroupItem value="dark">Dark</ToggleGroupItem>
+          <ToggleGroupItem value="light">Light</ToggleGroupItem>
+        </ToggleGroup>
+        <ToggleGroup aria-label="Energy" size="small" value={env.energy} onChange={(v) => setEnvKey('energy', v as Env['energy'])}>
+          <ToggleGroupItem value="off">Off</ToggleGroupItem>
+          <ToggleGroupItem value="calm">Calm</ToggleGroupItem>
+          <ToggleGroupItem value="default">Default</ToggleGroupItem>
+          <ToggleGroupItem value="electric">Electric</ToggleGroupItem>
+        </ToggleGroup>
+        <ToggleGroup aria-label="Language of built-in text" size="small" value={env.locale} onChange={(v) => setEnvKey('locale', v as string)}>
+          {LOCALES.map((l) => (
+            <ToggleGroupItem key={l.value} value={l.value}>
+              <span lang={l.value}>{l.label}</span>
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+        <ToggleGroup aria-label="Direction" size="small" value={env.dir} onChange={(v) => setEnvKey('dir', v as Env['dir'])}>
+          <ToggleGroupItem value="ltr">LTR</ToggleGroupItem>
+          <ToggleGroupItem value="rtl">RTL</ToggleGroupItem>
+        </ToggleGroup>
+      </div>
       <div className="sw-playground__stage">
-        <div className="sw-canvas sw-canvas--stage">
-          <ErrorBoundary key={JSON.stringify(values)}>{config.wrap ? config.wrap(preview) : preview}</ErrorBoundary>
-        </div>
+        <ThemeProvider mode={env.mode}>
+          <SparkProvider energy={env.energy} locale={env.locale}>
+            <div className="sw-canvas sw-canvas--stage sw-playground__surface" dir={env.dir}>
+              <ErrorBoundary key={JSON.stringify(values)}>{config.wrap ? config.wrap(preview) : preview}</ErrorBoundary>
+            </div>
+          </SparkProvider>
+        </ThemeProvider>
         <aside className="sw-playground__controls" aria-label="Props">
           <div className="sw-playground__controls-head">
             <span>Props</span>
-            <button type="button" className="sw-chip" onClick={() => setValues(initial)} aria-label="Reset props">
+            <button type="button" className="sw-chip" onClick={() => (setValues(initial), setEnv({ mode: site.mode, energy: site.energy, locale: 'en-US', dir: 'ltr' }))} aria-label="Reset props">
               <Icon name="reset" size={14} /> Reset
             </button>
           </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 import { Tabs, TabList, Tab, TabPanel, Badge } from '@sparkwire/core';
+import { InstallBar } from '../components/InstallBar';
 import { entryByName, notesFor, REDIRECT } from '../lib/catalog';
 import { loadDemos, loadPlayground, type Demo, type PlaygroundConfig } from '../lib/demos';
 import { contentFor, SECTION_ORDER } from '../lib/content';
@@ -22,10 +23,10 @@ const split = (text = '') => {
   return { intro: intro.replace(/\n/g, ' '), details: rest.join('\n\n') };
 };
 
-function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+function Section({ id, title, first, children }: { id: string; title: string; first?: boolean; children: React.ReactNode }) {
   return (
     <section aria-labelledby={id}>
-      <h2 id={id} className="sw-section-title">
+      <h2 id={id} className={first ? 'sw-section-title sw-section-title--first' : 'sw-section-title'}>
         {title}
       </h2>
       {children}
@@ -58,12 +59,12 @@ export function ComponentPage() {
   const reference = entry.components;
 
   const toc = [
-    { id: 'install', label: 'Installation' },
-    basic && { id: 'usage', label: 'Basic usage' },
     playground && { id: 'playground', label: 'Playground' },
-    content.Features && { id: 'features', label: 'Features' },
+    basic && { id: 'usage', label: 'Basic usage' },
     examples.length > 0 && { id: 'examples', label: 'Examples' },
+    content.Features && { id: 'features', label: 'Features' },
     notes && { id: 'notes', label: 'Good to know' },
+    { id: 'install', label: 'Installation' },
     ...extras.map((k) => ({ id: slug(k), label: k })),
     reference.length > 0 && { id: 'api', label: 'API reference' },
     ...SECTION_ORDER.slice(1)
@@ -85,6 +86,50 @@ export function ComponentPage() {
               </Badge>
             ))}
           </p>
+        )}
+        <InstallBar entry={entry} />
+        <nav className="sw-jumpbar" aria-label="Sections">
+          {toc.map((t) => (
+            <a key={t.id} href={`#${t.id}`}>
+              {t.label}
+            </a>
+          ))}
+        </nav>
+
+        {playground && playDoc && (
+          <Section id="playground" title="Playground" first>
+            <Playground key={entry.name} config={playground} doc={playDoc} />
+          </Section>
+        )}
+
+
+
+        {basic && (
+          <Section id="usage" title="Basic usage" first={!playground}>
+            <ExampleCard demo={basic} />
+          </Section>
+        )}
+
+
+
+        {examples.length > 0 && (
+          <Section id="examples" title="Examples">
+            {examples.map((d) => (
+              <ExampleCard key={d.id} demo={d} />
+            ))}
+          </Section>
+        )}
+
+        {content.Features && (
+          <Section id="features" title="Features">
+            <Prose markdown={content.Features} />
+          </Section>
+        )}
+
+        {notes && (
+          <Section id="notes" title="Good to know">
+            <Prose markdown={notes} />
+          </Section>
         )}
 
         <Section id="install" title="Installation">
@@ -109,38 +154,6 @@ export function ComponentPage() {
             </TabPanel>
           </Tabs>
         </Section>
-
-        {basic && (
-          <Section id="usage" title="Basic usage">
-            <ExampleCard demo={basic} />
-          </Section>
-        )}
-
-        {playground && playDoc && (
-          <Section id="playground" title="Playground">
-            <Playground key={entry.name} config={playground} doc={playDoc} />
-          </Section>
-        )}
-
-        {content.Features && (
-          <Section id="features" title="Features">
-            <Prose markdown={content.Features} />
-          </Section>
-        )}
-
-        {examples.length > 0 && (
-          <Section id="examples" title="Examples">
-            {examples.map((d) => (
-              <ExampleCard key={d.id} demo={d} />
-            ))}
-          </Section>
-        )}
-
-        {notes && (
-          <Section id="notes" title="Good to know">
-            <Prose markdown={notes} />
-          </Section>
-        )}
 
         {extras.map((k) => (
           <Section key={k} id={slug(k)} title={k}>
