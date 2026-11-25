@@ -357,6 +357,7 @@ pre {
   text-underline-offset: 3px;
 }
 .sw-lead code,
+.sw-example__desc code,
 .sw-api > p code,
 .sw-prose :not(pre) > code,
 .sw-api__details code,

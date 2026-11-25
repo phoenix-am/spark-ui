@@ -49,10 +49,15 @@
 [data-spark-energy='off'] .sp-badge__led,
 [data-spark-energy='off'] .sp-skeleton,
 [data-spark-energy='off'] .sp-chart__line { animation: none; }
+/* The flowing underline on buttons and through date ranges sits behind very
+   specific :hover/state selectors; "off" has to win over all of them. */
+[data-spark-energy='off'] .sp-button::after,
+[data-spark-energy='off'] .sp-calendar__day::after { animation: none !important; }
 [data-spark-energy='off'] .sp-modal__backdrop { animation: none; }
 [data-spark-energy='off'] .sp-spark { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .sp-current, .sp-avatar__led, .sp-badge__led, .sp-skeleton, .sp-chart__line, .sp-modal__backdrop { animation: none; }
+  .sp-button::after, .sp-calendar__day::after { animation: none !important; }
   .sp-spark { display: none; }
 }
 

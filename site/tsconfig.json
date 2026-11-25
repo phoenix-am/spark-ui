@@ -13,6 +13,7 @@
     "baseUrl": "..",
     "paths": {
       "@sparkwire/core/base": ["packages/core/src/base"],
+      "@sparkwire/core/headless": ["packages/core/src/headless"],
       "@sparkwire/*": ["packages/*/src"],
       "@/components/spark-ui/*": ["packages/core/src/*"]
     }

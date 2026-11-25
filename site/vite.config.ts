@@ -16,7 +16,7 @@ export default defineConfig({
       // Use the components' source, so the site always shows the current code.
       // Blocks are copied into apps by the CLI; demos import them from the path the CLI uses.
       { find: /^@\/components\/spark-ui\//, replacement: path.join(repo, 'packages/core/src') + '/' },
-      { find: /^@sparkwire\/core\/base$/, replacement: path.join(repo, 'packages/core/src/base') },
+      { find: /^@sparkwire\/core\/(base|headless)$/, replacement: path.join(repo, 'packages/core/src') + '/$1' },
       { find: /^@sparkwire\/([a-z-]+)$/, replacement: path.join(repo, 'packages/$1/src') },
     ],
   },

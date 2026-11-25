@@ -202,7 +202,7 @@ Set the locale once and every date, weekday name, digit and arrow key follows it
 ### Forms
 
 - Every input submits with a plain `<form>`: Select and DatePicker include hidden inputs, Switch submits `value` while on.
-- Works with React Hook Form: `register` for Textfield and Checkbox, `Controller` for Select and DatePicker. The [Forms](https://phoenix-am.github.io/spark-ui/docs/forms) page has a working example.
+- Works with React Hook Form: `register` for Textfield and Checkbox, `Controller` for Dropdown and DatePicker.
 - `Field` gives any control (a textarea, a rich-text editor) a linked label, help text and error: `<Field label="Notes" error={err}><textarea /></Field>`.
 
 ### Accessibility

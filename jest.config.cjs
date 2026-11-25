@@ -19,7 +19,7 @@ module.exports = {
   moduleNameMapper: {
     '\\.css$': '<rootDir>/test/styleStub.js',
     '^@sparkwire/icons$': '<rootDir>/packages/icons/index.ts',
-    '^@sparkwire/core/base$': '<rootDir>/packages/core/src/base',
+    '^@sparkwire/core/(base|headless)$': '<rootDir>/packages/core/src/$1',
     // Blocks are copied into apps by the CLI; demos import them from that path.
     '^@/components/spark-ui/(.*)$': '<rootDir>/packages/core/src/$1',
     '^@sparkwire/(.*)$': '<rootDir>/packages/$1/src',
