@@ -1,9 +1,18 @@
 import React, { forwardRef, useRef } from 'react';
-import { DismissButton, Overlay as AriaOverlay, mergeRefs, usePopover } from 'react-aria';
+import { Overlay as AriaOverlay, mergeRefs, usePopover } from 'react-aria';
+import { useMessages } from '../internal/messages';
 import type { AriaPopoverProps } from 'react-aria';
 import type { OverlayTriggerState } from 'react-stately';
 import { usePortalTheme } from '../internal/usePortalTheme';
 import { cx } from '../internal/cx';
+
+/** Like React Aria's DismissButton (a hidden close button for screen readers), with a translated name. */
+function DismissButton({ onDismiss }: { onDismiss: () => void }) {
+  const m = useMessages();
+  return (
+    <button type="button" tabIndex={-1} aria-label={m.dismiss} onClick={onDismiss} className="sp-visually-hidden" style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 }} />
+  );
+}
 
 export interface PopoverProps extends Omit<AriaPopoverProps, 'popoverRef' | 'triggerRef'> {
   /** Open state, from `useOverlayTriggerState` or a component state (select, combobox, menu). */

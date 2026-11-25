@@ -139,7 +139,7 @@ function Inner({
     state,
     groupRef,
   );
-  const { buttonProps: triggerButtonProps } = useButton(buttonProps, triggerRef);
+  const { buttonProps: triggerButtonProps } = useButton({ ...buttonProps, 'aria-label': m.calendar }, triggerRef);
   const hasValue = Boolean(state.value?.start || state.value?.end);
 
   return (

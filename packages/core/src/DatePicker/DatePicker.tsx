@@ -138,7 +138,7 @@ function DatePickerInner({
     state,
     groupRef,
   );
-  const { buttonProps: triggerButtonProps } = useButton(buttonProps, triggerRef);
+  const { buttonProps: triggerButtonProps } = useButton({ ...buttonProps, 'aria-label': m.calendar }, triggerRef);
 
   return (
     <div

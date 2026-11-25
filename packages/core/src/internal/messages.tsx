@@ -17,6 +17,17 @@ export interface SparkMessages {
   clear: string;
   loading: string;
   noResults: string;
+  /** Labels React Aria would give in English: it has no Hindi, Gujarati or Tamil. */
+  selectAll: string;
+  selectRow: string;
+  showSuggestions: string;
+  numberField: string;
+  increase: (label: string) => string;
+  decrease: (label: string) => string;
+  calendar: string;
+  previous: string;
+  next: string;
+  selected: string;
   /** DataTable's sort picker, shown when rows are stacked as cards. */
   sortBy: string;
   notSorted: string;
@@ -96,6 +107,16 @@ const en: SparkMessages = {
   clear: 'Clear',
   loading: 'Loading',
   noResults: 'No results',
+  selectAll: 'Select all',
+  selectRow: 'Select',
+  showSuggestions: 'Show suggestions',
+  numberField: 'Number field',
+  increase: (label) => (label ? `Increase ${label}` : 'Increase'),
+  decrease: (label) => (label ? `Decrease ${label}` : 'Decrease'),
+  calendar: 'Calendar',
+  previous: 'Previous',
+  next: 'Next',
+  selected: 'selected',
   sortBy: 'Sort by',
   notSorted: 'Not sorted',
   ascending: 'ascending',
@@ -167,6 +188,16 @@ const hi: SparkMessages = {
   clear: 'साफ़ करें',
   loading: 'लोड हो रहा है',
   noResults: 'कोई परिणाम नहीं',
+  selectAll: 'सभी चुनें',
+  selectRow: 'चुनें',
+  showSuggestions: 'सुझाव दिखाएँ',
+  numberField: 'संख्या फ़ील्ड',
+  increase: (label) => (label ? `${label} बढ़ाएँ` : 'बढ़ाएँ'),
+  decrease: (label) => (label ? `${label} घटाएँ` : 'घटाएँ'),
+  calendar: 'कैलेंडर',
+  previous: 'पिछला',
+  next: 'अगला',
+  selected: 'चुना गया',
   sortBy: 'क्रम से लगाएँ',
   notSorted: 'क्रम नहीं लगाया',
   ascending: 'बढ़ते क्रम में',
@@ -238,6 +269,16 @@ const gu: SparkMessages = {
   clear: 'સાફ કરો',
   loading: 'લોડ થઈ રહ્યું છે',
   noResults: 'કોઈ પરિણામ નથી',
+  selectAll: 'બધા પસંદ કરો',
+  selectRow: 'પસંદ કરો',
+  showSuggestions: 'સૂચનો બતાવો',
+  numberField: 'સંખ્યા ફીલ્ડ',
+  increase: (label) => (label ? `${label} વધારો` : 'વધારો'),
+  decrease: (label) => (label ? `${label} ઘટાડો` : 'ઘટાડો'),
+  calendar: 'કૅલેન્ડર',
+  previous: 'પાછલું',
+  next: 'આગળનું',
+  selected: 'પસંદ કરેલું',
   sortBy: 'ક્રમમાં ગોઠવો',
   notSorted: 'ક્રમમાં નથી',
   ascending: 'ચડતા ક્રમમાં',
@@ -309,6 +350,16 @@ const ta: SparkMessages = {
   clear: 'அழி',
   loading: 'ஏற்றுகிறது',
   noResults: 'முடிவுகள் இல்லை',
+  selectAll: 'அனைத்தையும் தேர்ந்தெடு',
+  selectRow: 'தேர்ந்தெடு',
+  showSuggestions: 'பரிந்துரைகளைக் காட்டு',
+  numberField: 'எண் புலம்',
+  increase: (label) => (label ? `${label} அதிகரி` : 'அதிகரி'),
+  decrease: (label) => (label ? `${label} குறை` : 'குறை'),
+  calendar: 'நாட்காட்டி',
+  previous: 'முந்தைய',
+  next: 'அடுத்து',
+  selected: 'தேர்ந்தெடுக்கப்பட்டது',
   sortBy: 'வரிசைப்படுத்து',
   notSorted: 'வரிசைப்படுத்தவில்லை',
   ascending: 'ஏறுவரிசை',

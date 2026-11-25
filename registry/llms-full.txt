@@ -1544,11 +1544,7 @@ A status label with an LED. Pulsing means "live". Style hooks: `.sp-badge`, `__l
 - `variant?`: `"soft" | "solid"` `soft` tinted background (default) or `solid` fill.
 
 ### Progress
-Shows how far along a task is when you know the total, with an optional
-label and percentage.
 
-A charge bar. At 100% the bar is fully charged and current flows.
-Style hooks: `.sp-progress[data-state="charging"|"charged"|"indeterminate"]`, `__track`, `__fill`.
 
 - `label?`: `ReactNode` Text above the bar; also its accessible name when a string.
 - `showValue?`: `boolean` Show the percentage next to the label. Default `true` when determinate.

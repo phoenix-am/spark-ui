@@ -106,6 +106,8 @@ import { ThemeProvider } from '@sparkwire/system';
 </ThemeProvider>
 ```
 
+On the provider at the root of your app, add `global`. It puts the mode (and any overrides) on `<html>` as well, so the page background, scrollbars and anything outside the provider switch with it. Without it, a page that sets its background from `--spark-surface-base` on `<body>` stays dark in light mode.
+
 `createTheme(partial, mode)` and `themeToCss(theme)` from `@sparkwire/styles` turn the same overrides into a stylesheet. `themeToCss` skips any value that could break out of the CSS rule (`;`, `{`, `}`, `url(`…) and warns, so a theme loaded from a tenant or a database can't inject styles. `createTheme` ignores `__proto__`, `constructor` and `prototype` keys in parsed JSON. To try colours interactively, use the [Theme builder](https://phoenix-am.github.io/spark-ui/theme-builder).
 
 **Restyle any part:** components expose stable class names and state attributes, for example `.sp-switch[data-state="on"] .sp-switch__bulb` or `.sp-button[data-variant="outlined"]`. Each component's doc comment lists its style hooks.

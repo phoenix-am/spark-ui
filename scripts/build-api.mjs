@@ -316,6 +316,7 @@ const ATTR = {
   'data-selected': 'Present on the selected item.',
   'data-done': 'Present when the item or upload has finished.',
   'data-responsive': 'How the table adapts in narrow containers (`responsive`).',
+  'data-stacked': 'Whether rows are shown as cards right now (`true`/`false`), from the table\'s measured width and `stackBelow`. Absent until measured.',
   'data-status': 'The item status, e.g. a step that is `current`, `complete`, `error` or `upcoming`, or an avatar that is `online`, `busy` or `away`.',
   'data-drop-target': 'Present while files are dragged over the drop zone.',
   'data-indeterminate': 'Present in the indeterminate (“some selected”) state.',

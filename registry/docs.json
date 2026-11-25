@@ -5198,7 +5198,7 @@
         },
         {
           "name": "Progress",
-          "description": "Shows how far along a task is when you know the total, with an optional\nlabel and percentage.\n\nA charge bar. At 100% the bar is fully charged and current flows.\nStyle hooks: `.sp-progress[data-state=\"charging\"|\"charged\"|\"indeterminate\"]`, `__track`, `__fill`.",
+          "description": "",
           "props": [
             {
               "name": "label",

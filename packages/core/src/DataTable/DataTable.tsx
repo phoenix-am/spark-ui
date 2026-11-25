@@ -802,13 +802,14 @@ function SelectAllCell({ column, state, pin }: { column: GridNode<object>; state
   const ref = useRef<HTMLDivElement>(null);
   const { columnHeaderProps } = useTableColumnHeader({ node: column }, state, ref);
   const { checkboxProps } = useTableSelectAllCheckbox(state);
+  const m = useMessages();
   return (
     <div {...columnHeaderProps} ref={ref} className="sp-data-table__column sp-data-table__select" data-pinned={pin?.side} style={pinStyle(pin)}>
       {state.selectionManager.selectionMode === 'multiple' && (
         <span {...stop}>
           <Checkbox
             size="small"
-            aria-label={checkboxProps['aria-label']}
+            aria-label={m.selectAll}
             checked={Boolean(checkboxProps.isSelected)}
             indeterminate={checkboxProps.isIndeterminate}
             disabled={checkboxProps.isDisabled}
@@ -969,12 +970,15 @@ function SelectionCell({ cell, state, pin }: { cell: GridNode<object>; state: Ta
   const ref = useRef<HTMLDivElement>(null);
   const { gridCellProps } = useTableCell({ node: cell }, state, ref);
   const { checkboxProps } = useTableSelectionCheckbox({ key: cell.parentKey! }, state);
+  const m = useMessages();
+  // Name each box after its row ("Select payments"), not just "Select".
+  const rowName = state.collection.getItem(cell.parentKey!)?.textValue;
   return (
     <div {...gridCellProps} ref={ref} className="sp-data-table__cell sp-data-table__select" data-pinned={pin?.side} style={pinStyle(pin)}>
       <span {...stop}>
         <Checkbox
           size="small"
-          aria-label={checkboxProps['aria-label']}
+          aria-label={rowName ? `${m.selectRow} ${rowName}` : m.selectRow}
           checked={Boolean(checkboxProps.isSelected)}
           disabled={checkboxProps.isDisabled}
           onChange={() => checkboxProps.onChange?.(!checkboxProps.isSelected)}

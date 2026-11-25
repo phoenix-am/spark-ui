@@ -218,3 +218,10 @@ describe('Textfield controlled value', () => {
     expect((screen.getByLabelText('Q') as HTMLInputElement).value).toBe('');
   });
 });
+
+describe('Progress label', () => {
+  test.each([[99.5, '99%'], [99.99, '99%'], [100, '100%'], [0.4, '0%'], [42, '42%']])('%p shows %s', (value, text) => {
+    const { container } = render(<Progress label="p" value={value} />);
+    expect(container.querySelector('.sp-progress__value')).toHaveTextContent(text);
+  });
+});

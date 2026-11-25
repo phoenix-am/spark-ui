@@ -1,3 +1,4 @@
+import { useMessages } from '../internal/messages';
 import React, { useRef } from 'react';
 import { useButton, useLocale, useNumberField } from 'react-aria';
 import { useNumberFieldState } from 'react-stately';
@@ -97,9 +98,12 @@ export function NumberField(inProps: NumberFieldProps) {
   const message = typeof error === 'boolean' ? (error ? helperText : undefined) : error;
   const help = typeof error === 'boolean' || !error ? helperText : undefined;
 
+  const m = useMessages();
   const ariaProps = {
     label,
     'aria-label': ariaLabel,
+    incrementAriaLabel: m.increase(label ?? ariaLabel ?? ''),
+    decrementAriaLabel: m.decrease(label ?? ariaLabel ?? ''),
     value: value === null ? NaN : value,
     defaultValue: defaultValue === null ? NaN : defaultValue,
     onChange,
@@ -144,6 +148,7 @@ export function NumberField(inProps: NumberFieldProps) {
       <div {...groupProps}>
         <InputBase
           {...(inputProps as React.InputHTMLAttributes<HTMLInputElement>)}
+          aria-roledescription={m.numberField}
           ref={inputRef}
           size={size}
           error={invalid}

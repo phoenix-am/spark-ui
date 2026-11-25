@@ -156,7 +156,7 @@ export function Combobox<V extends string | number = string | number>(inProps: C
     { ...ariaProps, inputRef, buttonRef, listBoxRef, popoverRef },
     state,
   );
-  const { buttonProps: chevronProps } = useButton(buttonProps, buttonRef);
+  const { buttonProps: chevronProps } = useButton({ ...buttonProps, 'aria-label': m.showSuggestions }, buttonRef);
 
   const submitted = allowsCustomValue ? state.inputValue : state.selectedKey == null ? '' : String(state.selectedKey);
   const showClear = clearable && !disabled && state.inputValue !== '';

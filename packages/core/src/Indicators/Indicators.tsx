@@ -67,6 +67,9 @@ export interface ProgressProps {
  * A charge bar. At 100% the bar is fully charged and current flows.
  * Style hooks: `.sp-progress[data-state="charging"|"charged"|"indeterminate"]`, `__track`, `__fill`.
  */
+/** Whole percent, rounded down so 100% only shows when it's really done (99.5 → 99). */
+export const percentLabel = (v: number) => (v >= 100 ? 100 : Math.floor(v));
+
 export function Progress(inProps: ProgressProps) {
   const { value, label, showValue, tone = 'brand', size = 'medium' } = useDefaults('Progress', inProps);
   // NaN or Infinity shows as indeterminate rather than aria-valuenow="NaN".
@@ -79,7 +82,7 @@ export function Progress(inProps: ProgressProps) {
       {(label || showNumber) && (
         <div className="sp-progress__header">
           <span>{label}</span>
-          {showNumber && <span className="sp-progress__value">{Math.round(v!)}%</span>}
+          {showNumber && <span className="sp-progress__value">{percentLabel(v!)}%</span>}
         </div>
       )}
       <div

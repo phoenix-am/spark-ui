@@ -5644,7 +5644,7 @@
               "on": [
                 "sp-data-table"
               ],
-              "description": "Set by the component."
+              "description": "Whether rows are shown as cards right now (`true`/`false`), from the table's measured width and `stackBelow`. Absent until measured."
             },
             {
               "name": "data-striped",

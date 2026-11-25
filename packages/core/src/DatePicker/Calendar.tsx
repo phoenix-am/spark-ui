@@ -431,7 +431,8 @@ function CalendarShell({ calendarProps, calRef, state, prevButtonProps, nextButt
 
 function NavButton({ kind, direction, className, ...props }: AriaButtonProps & { kind: 'prev' | 'next'; direction: 'ltr' | 'rtl'; className?: string }) {
   const ref = useRef<HTMLButtonElement>(null);
-  const { buttonProps } = useButton(props, ref);
+  const m = useMessages();
+  const { buttonProps } = useButton({ ...props, 'aria-label': kind === 'prev' ? m.previous : m.next }, ref);
   // Arrows point the way time moves, so they swap in right-to-left languages.
   const pointsLeft = (kind === 'prev') === (direction === 'ltr');
   return (
@@ -500,6 +501,12 @@ function CalendarCell({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { cellProps, buttonProps, isSelected, isDisabled, isUnavailable, isFocused, formattedDate } = useCalendarCell({ date }, state, ref);
+  const m = useMessages();
+  const { locale } = useLocale();
+  // React Aria words the day's name in English for languages it lacks (Hindi, Gujarati, Tamil).
+  const dayLabel = /^en\b/i.test(locale)
+    ? buttonProps['aria-label']
+    : buttonProps['aria-label']?.replace(/^Today, /, `${m.today}, `).replace(/ selected$/, `, ${m.selected}`);
   const outside = date.month !== month.month;
   const range = 'highlightedRange' in state ? state.highlightedRange : null;
   const rangeStart = Boolean(range && isSameDay(date, range.start));
@@ -511,6 +518,7 @@ function CalendarCell({
     <td {...cellProps} className={slot('sp-calendar__cell', classNames, 'cell')} data-in-range={(inRange && !outside) || undefined} data-range-start={(rangeStart && !outside) || undefined} data-range-end={(rangeEnd && !outside) || undefined}>
       <div
         {...buttonProps}
+        aria-label={dayLabel}
         ref={ref}
         className={slot('sp-calendar__day', classNames, 'day')}
         data-selected={(isSelected && !outside) || undefined}

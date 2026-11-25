@@ -18,6 +18,12 @@ export interface ThemeProviderProps {
   initialTheme?: BaseTheme;
   /** Wrapper element's class, e.g. for a font or background. */
   className?: string;
+  /**
+   * Also apply the mode (and any `theme` overrides) to `<html>`, so the page background,
+   * scrollbars and anything rendered outside the provider match. Use it on the provider
+   * at the root of your app. Default `false`.
+   */
+  global?: boolean;
 }
 
 const usePrefersLight = () => {
@@ -46,6 +52,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   theme: overrides,
   initialTheme,
   className,
+  global = false,
 }) => {
   const [innerMode, setInnerMode] = useState<SparkMode>(defaultMode);
   const activeMode = mode ?? innerMode;
@@ -63,6 +70,23 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (!overrides && !initialTheme) return undefined;
     return { ...themeToCssVars(theme), display: 'contents' } as React.CSSProperties;
   }, [overrides, initialTheme, theme]);
+
+  // Mirror onto <html> for the app's root provider; put things back as they were on unmount.
+  useEffect(() => {
+    if (!global || typeof document === 'undefined') return;
+    const html = document.documentElement;
+    const before = { attr: html.getAttribute('data-spark-theme'), scheme: html.style.colorScheme };
+    html.setAttribute('data-spark-theme', activeMode);
+    html.style.colorScheme = resolved;
+    const vars = style ? Object.entries(style).filter(([k]) => k.startsWith('--')) : [];
+    vars.forEach(([k, v]) => html.style.setProperty(k, String(v)));
+    return () => {
+      if (before.attr === null) html.removeAttribute('data-spark-theme');
+      else html.setAttribute('data-spark-theme', before.attr);
+      html.style.colorScheme = before.scheme;
+      vars.forEach(([k]) => html.style.removeProperty(k));
+    };
+  }, [global, activeMode, resolved, style]);
 
   const value = useMemo(
     () => ({
