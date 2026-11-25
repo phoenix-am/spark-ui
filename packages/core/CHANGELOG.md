@@ -1,5 +1,16 @@
 # @sparkwire/core
 
+## 0.4.2
+
+### Patch Changes
+
+- 08f1923: - Range presets in `RangeCalendar` and `DateRangePicker` no longer check every day of a long range on every render. Block and allow lists are checked directly, and an `isDateDisabled` rule's answer is remembered while the same function is passed. A "last 10 years" preset re-renders about 20 times faster.
+  - Chart ticks always cover the data, including tiny values like `5e-324` and huge ones near `1e300`. Found by new property tests.
+- 0d9d5ab: Fix: a `fullWidth` `ToggleGroup` in a narrow container no longer runs out of it. Items share the width and use less side padding, so three options like "text / outlined / contained" fit in a 250px panel.
+- 038c32f: `Tooltip` stays inside the window. If there's no room on the preferred side, as with a button in a top header, it flips to the other side. If it would run off a left or right edge, it slides along to stay visible. `placement` is still the side it tries first.
+- @sparkwire/icons@0.4.2
+  - @sparkwire/utils@0.4.2
+
 ## 0.4.1
 
 ### Patch Changes
