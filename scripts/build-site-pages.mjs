@@ -82,7 +82,7 @@ const head = (r) => {
         `    <meta property="og:url" content="${url}" />`,
         `    <meta property="og:type" content="website" />`,
         `    <meta property="og:site_name" content="Sparkwire" />`,
-        `    <meta name="twitter:card" content="summary" />`,
+        `    <meta name="twitter:card" content="summary_large_image" />`,
         r.noindex ? `    <meta name="robots" content="noindex" />` : '',
         '  </head>',
       ]
@@ -99,7 +99,7 @@ for (const r of routes) {
 // Home page: same tags, its own URL.
 fs.writeFileSync(
   path.join(dist, 'index.html'),
-  template.replace('</head>', `    <link rel="canonical" href="${SITE}/" />\n    <meta property="og:url" content="${SITE}/" />\n    <meta property="og:type" content="website" />\n    <meta property="og:site_name" content="Sparkwire" />\n    <meta name="twitter:card" content="summary" />\n  </head>`),
+  template.replace('</head>', `    <link rel="canonical" href="${SITE}/" />\n    <meta property="og:url" content="${SITE}/" />\n    <meta property="og:type" content="website" />\n    <meta property="og:site_name" content="Sparkwire" />\n    <meta name="twitter:card" content="summary_large_image" />\n  </head>`),
 );
 // Unknown addresses: GitHub Pages serves 404.html, and the app shows its not-found page.
 fs.writeFileSync(path.join(dist, '404.html'), template.replace('</head>', '    <meta name="robots" content="noindex" />\n  </head>'));
