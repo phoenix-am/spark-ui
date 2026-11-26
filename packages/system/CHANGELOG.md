@@ -1,5 +1,15 @@
 # @sparkwire/system
 
+## 0.5.0
+
+### Minor Changes
+
+- 0e6ed89: API freeze for 1.0. Deprecated props now log a one-time warning in development that names the replacement; 1.0 removes them. New names for consistency: Textfield `size` (was `inputSize`) and FileUpload `helperText` (was `hint`). See "Upgrading to 1.0" in the guide.
+
+### Patch Changes
+
+- @sparkwire/styles@0.5.0
+
 ## 0.4.5
 
 ### Patch Changes
