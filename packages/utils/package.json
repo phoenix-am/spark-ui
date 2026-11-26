@@ -1,6 +1,6 @@
 {
   "name": "@sparkwire/utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared helpers for Sparkwire packages.",
   "keywords": [
     "utils",

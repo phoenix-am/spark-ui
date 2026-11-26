@@ -1,5 +1,13 @@
 # @sparkwire/core
 
+## 1.0.1
+
+### Patch Changes
+
+- ecf3549: README: new logo and screenshot, live demo link, and the 1.0 versioning promise. No code changes.
+- @sparkwire/icons@1.0.1
+  - @sparkwire/utils@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
