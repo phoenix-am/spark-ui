@@ -1,5 +1,13 @@
 # @sparkwire/core
 
+## 0.4.5
+
+### Patch Changes
+
+- 84bd6bd: Textfield: new `onValueChange(value, event)` gives the text first, like the other fields. `onChange` still gives the event. Docs: setup notes for `skipLibCheck: false` and sticky headers.
+- @sparkwire/icons@0.4.5
+  - @sparkwire/utils@0.4.5
+
 ## 0.4.4
 
 ### Patch Changes
