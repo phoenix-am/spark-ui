@@ -1,6 +1,6 @@
 {
   "name": "sparkwire",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sparkwire CLI: copy Sparkwire React components into your app as source you own, with everything they depend on.",
   "keywords": [
     "react",
