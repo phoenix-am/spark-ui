@@ -77,6 +77,10 @@ export default function CheckoutForm() {
 }
 ```
 
+Want to try it first? Open the starter app in your browser, no install needed:
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/phoenix-am/spark-ui/tree/master/examples/starter?file=src/App.tsx)
+
 No provider is required. Each component is a separate entry point, so you only ship what you import, and every file is marked `"use client"` for the Next.js App Router.
 
 ## Components

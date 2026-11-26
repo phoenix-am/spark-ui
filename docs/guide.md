@@ -53,6 +53,8 @@ import '@sparkwire/core/styles.css';
 import { Button } from '@sparkwire/core/button';
 ```
 
+To try it without installing anything, open the [starter app on StackBlitz](https://stackblitz.com/github/phoenix-am/spark-ui/tree/master/examples/starter?file=src/App.tsx).
+
 Two setup notes:
 
 - With `"skipLibCheck": false`, set `"lib"` to `ES2023` or later in `tsconfig.json`. A date and number dependency uses `Intl` types added in ES2023.
