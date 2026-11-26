@@ -1,5 +1,11 @@
 # @sparkwire/system
 
+## 0.4.5
+
+### Patch Changes
+
+- @sparkwire/styles@0.4.5
+
 ## 0.4.4
 
 ### Patch Changes
