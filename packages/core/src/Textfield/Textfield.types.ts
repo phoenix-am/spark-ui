@@ -70,6 +70,11 @@ export interface TextfieldPropsBase extends InputHTMLAttributes<HTMLInputElement
   helperText?: string;
   /** Called on every keystroke with the change event; read `event.target.value`. */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * Called on every keystroke with the new text, then the event. Same shape as
+   * `Textarea`, `Dropdown` and the other fields, so one handler style works everywhere.
+   */
+  onValueChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   /** Called when the field gains focus. */
   onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
   /** Called when the field loses focus. Handy for validating on blur. */

@@ -747,6 +747,12 @@
               "description": "Called when the field gains focus."
             },
             {
+              "name": "onValueChange",
+              "type": "((value: string, event: ChangeEvent<HTMLInputElement>) => void)",
+              "required": false,
+              "description": "Called on every keystroke with the new text, then the event. Same shape as\n`Textarea`, `Dropdown` and the other fields, so one handler style works everywhere."
+            },
+            {
               "name": "placeholder",
               "type": "string",
               "required": false,

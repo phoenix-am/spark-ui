@@ -245,6 +245,7 @@ Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
 - `onBlur?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)` Called when the field loses focus. Handy for validating on blur.
 - `onChange?`: `((event: ChangeEvent<HTMLInputElement>) => void)` Called on every keystroke with the change event; read `event.target.value`.
 - `onFocus?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)` Called when the field gains focus.
+- `onValueChange?`: `((value: string, event: ChangeEvent<HTMLInputElement>) => void)` Called on every keystroke with the new text, then the event. Same shape as `Textarea`, `Dropdown` and the other fields, so one handler style works everywhere.
 - `placeholder?`: `string` Hint shown while the field is empty. Don't use it instead of a label; it disappears as soon as someone types.
 - `prepend?`: `ReactNode` Content at the start of the input, like a currency symbol or a search icon.
 - `type?`: `"hidden" | "color" | "button" | "checkbox" | "date" | "datetime-local" | "email" | "file" | "image" | "month" | "password" | "radio" | "range" | "reset" | "search" | "submit" | ... 8 more ...` The kind of input, like `email`, `password` or `tel`. It sets the mobile keyboard and browser autofill. Default `text`.

@@ -34,6 +34,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     value,
     defaultValue,
     onChange,
+    onValueChange,
     onFocus,
     onBlur,
     inputSize = 'medium',
@@ -60,7 +61,21 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     focused,
     disabled: isDisabled,
     error: hasError,
-  } = useTextField({ value: value ?? defaultValue, onChange, onFocus, onBlur, disabled, error, type });
+  } = useTextField({
+    value: value ?? defaultValue,
+    onChange:
+      onChange || onValueChange
+        ? (event) => {
+            onChange?.(event);
+            onValueChange?.(event.target.value, event);
+          }
+        : undefined,
+    onFocus,
+    onBlur,
+    disabled,
+    error,
+    type,
+  });
   const controlled = value !== undefined;
   // Controlled: the parent's value is the truth, so changes made outside the field
   // (a reset, data from the server) show up. Uncontrolled: the field keeps its own.

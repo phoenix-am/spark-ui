@@ -51,6 +51,11 @@ import '@sparkwire/core/styles.css';
 import { Button } from '@sparkwire/core/button';
 ```
 
+Two setup notes:
+
+- With `"skipLibCheck": false`, set `"lib"` to `ES2023` or later in `tsconfig.json`. A date and number dependency uses `Intl` types added in ES2023.
+- With a sticky top bar, add `html { scroll-padding-top: <bar height>; }` so focused fields and open lists don't slide under it.
+
 ### Live Wire theme
 
 Spark UI's default theme is **Live Wire**: components carry current.
@@ -204,6 +209,7 @@ Set the locale once and every date, weekday name, digit and arrow key follows it
 ### Forms
 
 - Every input submits with a plain `<form>`: Select and DatePicker include hidden inputs, Switch submits `value` while on.
+- Change handlers pass the new value first: `onChange(value)` on Textarea, Dropdown, Switch and the rest. Textfield's `onChange` gives the input event, like a plain `<input>`, so it works with `register`; use `onValueChange(value)` for the same value-first shape.
 - Works with React Hook Form: `register` for Textfield and Checkbox, `Controller` for Dropdown and DatePicker.
 - `Field` gives any control (a textarea, a rich-text editor) a linked label, help text and error: `<Field label="Notes" error={err}><textarea /></Field>`.
 

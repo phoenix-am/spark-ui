@@ -1045,6 +1045,11 @@
             "name": "onFocus",
             "signature": "((event: FocusEvent<HTMLInputElement, Element>) => void)",
             "description": "Called when the field gains focus."
+          },
+          {
+            "name": "onValueChange",
+            "signature": "((value: string, event: ChangeEvent<HTMLInputElement>) => void)",
+            "description": "Called on every keystroke with the new text, then the event. Same shape as\n`Textarea`, `Dropdown` and the other fields, so one handler style works everywhere."
           }
         ],
         "slots": [],
