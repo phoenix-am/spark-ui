@@ -6,9 +6,8 @@ import { CalendarDate, DateValue, createCalendar, getLocalTimeZone, isSameDay, i
 import type { AriaCalendarProps, AriaRangeCalendarProps, AriaButtonProps } from 'react-aria';
 import { Spark, SparkHandle } from '../Spark';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
-import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, withCalendar } from './dateAdapters';
+import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, withCalendar } from './dateAdapters';
 import { DatePreset, DatePresetName, DateRange, RangePreset, RangePresetName, resolvePreset, toDatePreset, toRangePreset } from './presets';
-import { warnDeprecated } from '../internal/devWarn';
 
 export type CalendarSlot = 'root' | 'header' | 'title' | 'nav' | 'months' | 'grid' | 'weekday' | 'cell' | 'day' | 'footer' | 'preset';
 
@@ -46,8 +45,6 @@ export interface CalendarBaseProps {
   isDateDisabled?: (date: Date) => boolean;
   /** First day of the week. Defaults to the locale's convention. */
   firstDayOfWeek?: FirstDayOfWeek;
-  /** @deprecated Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday. */
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   /** BCP 47 locale for names, digits and direction. Defaults to SparkProvider's or the browser's. */
   locale?: string;
   /** Calendar system to display, e.g. `indian` (Saka), `islamic-umalqura`, `buddhist`. Values stay JS Dates. */
@@ -178,8 +175,7 @@ function rangeAvailable(start: DateValue, end: DateValue, check: Unavailable | u
  */
 export function Calendar(inProps: CalendarProps) {
   const props = useDefaults('Calendar', inProps);
-  warnDeprecated('Calendar', props, { weekStartsOn: 'Use `firstDayOfWeek`.', todayLabel: 'Use `presets`.' });
-  const { value, defaultValue, onChange, min, max, firstDayOfWeek, weekStartsOn, locale, calendar, presets, showToday = true, todayLabel, ...ui } = props;
+  const { value, defaultValue, onChange, min, max, firstDayOfWeek, locale, calendar, presets, showToday = true, todayLabel, ...ui } = props;
   const { locale: inherited } = useLocale();
   const m = useMessages();
   const isDateUnavailable = makeUnavailable(props);
@@ -194,7 +190,7 @@ export function Calendar(inProps: CalendarProps) {
         minValue={toDateValue(min) ?? undefined}
         maxValue={toDateValue(max) ?? undefined}
         isDateUnavailable={isDateUnavailable}
-        firstDayOfWeek={firstDayOfWeek ?? toFirstDay(weekStartsOn)}
+        firstDayOfWeek={firstDayOfWeek}
         presets={resolved}
       />
     </I18nProvider>
@@ -205,12 +201,11 @@ type SharedUI = Pick<CalendarBaseProps, 'visibleMonths' | 'renderDay' | 'onEscap
 
 export interface CalendarCoreProps extends AriaCalendarProps<DateValue>, SharedUI {
   presets?: DatePreset[];
-  /** @deprecated Use presets. Kept for DatePicker's popover. */
-  todayLabel?: string;
 }
 
 /** React Aria-level calendar, also used inside DatePicker's popover. */
-export function CalendarCore({ presets, todayLabel, visibleMonths: rawMonths = 1, renderDay, onEscape, className, classNames, firstDayOfWeek, ...props }: CalendarCoreProps) {
+export function CalendarCore({ presets, visibleMonths: rawMonths = 1, renderDay, onEscape, className, classNames, firstDayOfWeek, ...props }: CalendarCoreProps) {
+  const m = useMessages();
   const { locale } = useLocale();
   const sparkRef = useRef<SparkHandle>(null);
   const pointer = useRef<{ clientX: number; clientY: number } | null>(null);
@@ -224,7 +219,7 @@ export function CalendarCore({ presets, todayLabel, visibleMonths: rawMonths = 1
   const state = useCalendarState({ ...ariaProps, firstDayOfWeek, locale, createCalendar });
   const ref = useRef<HTMLDivElement>(null);
   const { calendarProps, prevButtonProps, nextButtonProps } = useCalendar(ariaProps, state);
-  const list = presets ?? [{ label: todayLabel ?? 'Today', value: () => fromDateValue(today(getLocalTimeZone()))! }];
+  const list = presets ?? [{ label: m.today, value: () => fromDateValue(today(getLocalTimeZone()))! }];
 
   const choose = (preset: DatePreset) => {
     const d = toDateValue(resolvePreset(preset.value))!;
@@ -270,8 +265,7 @@ export function CalendarCore({ presets, todayLabel, visibleMonths: rawMonths = 1
  */
 export function RangeCalendar(inProps: RangeCalendarProps) {
   const props = useDefaults('RangeCalendar', inProps);
-  warnDeprecated('RangeCalendar', props, { weekStartsOn: 'Use `firstDayOfWeek`.', todayLabel: 'Use `presets`.' });
-  const { value, defaultValue, onChange, min, max, firstDayOfWeek, weekStartsOn, locale, calendar, presets, showToday = false, todayLabel, ...ui } = props;
+  const { value, defaultValue, onChange, min, max, firstDayOfWeek, locale, calendar, presets, showToday = false, todayLabel, ...ui } = props;
   const { locale: inherited } = useLocale();
   const m = useMessages();
   const isDateUnavailable = makeUnavailable(props);
@@ -288,7 +282,7 @@ export function RangeCalendar(inProps: RangeCalendarProps) {
         minValue={toDateValue(min) ?? undefined}
         maxValue={toDateValue(max) ?? undefined}
         isDateUnavailable={isDateUnavailable}
-        firstDayOfWeek={firstDayOfWeek ?? toFirstDay(weekStartsOn)}
+        firstDayOfWeek={firstDayOfWeek}
         presets={resolved}
       />
     </I18nProvider>

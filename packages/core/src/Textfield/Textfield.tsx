@@ -5,7 +5,6 @@ import { useTextField } from './useTextfield';
 import { useForkRef } from './useForkRef';
 import { cx } from '../internal/cx';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
-import { warnDeprecated } from '../internal/devWarn';
 
 const clamp = (n: number) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
 
@@ -38,8 +37,7 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     onValueChange,
     onFocus,
     onBlur,
-    size,
-    inputSize: legacySize,
+    size: inputSize = 'medium',
     helperText,
     containerStyle,
     isCurrency,
@@ -54,8 +52,6 @@ const Textfield = forwardRef<HTMLInputElement, TextfieldPropsBase>((props, ref) 
     classNames,
     ...rest
   } = useDefaults('Textfield', props);
-  const inputSize = size ?? legacySize ?? 'medium';
-  warnDeprecated('Textfield', props, { inputSize: 'Use `size`, like the other components.' });
 
   const {
     value: fieldValue,

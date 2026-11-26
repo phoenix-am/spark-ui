@@ -272,8 +272,6 @@ export const defaultTheme: Theme = {
   }
 };
 
-/** @deprecated Same as `Theme`; kept for older imports. */
-export type BaseTheme = Theme;
 
 
 export const liveWireTheme = defaultTheme;

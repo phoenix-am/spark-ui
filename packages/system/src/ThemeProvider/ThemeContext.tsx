@@ -1,11 +1,11 @@
 import { createContext, useContext } from 'react';
-import { BaseTheme, defaultTheme } from '@sparkwire/styles';
+import { Theme, defaultTheme } from '@sparkwire/styles';
 
 export type SparkMode = 'dark' | 'light' | 'system';
 
 interface ThemeContextProps {
   /** The resolved theme as JS values, for charts, canvas and other non-CSS uses. */
-  theme: BaseTheme;
+  theme: Theme;
   mode: SparkMode;
   resolvedMode: 'dark' | 'light';
   setMode: (mode: SparkMode) => void;
@@ -13,7 +13,7 @@ interface ThemeContextProps {
 }
 
 const fallback: ThemeContextProps = {
-  theme: defaultTheme as BaseTheme,
+  theme: defaultTheme as Theme,
   mode: 'dark',
   resolvedMode: 'dark',
   setMode: () => {},

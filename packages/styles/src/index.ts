@@ -1,4 +1,3 @@
-export type { BaseTheme } from './theme';
 export { defaultTheme, liveWireTheme, darkTheme, lightTheme } from './theme';
 export { createTheme } from './createTheme';
 export type { DeepPartial } from './createTheme';

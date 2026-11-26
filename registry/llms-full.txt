@@ -46,7 +46,6 @@ Built on ButtonBase; forwards `ref` to the rendered element.
 - `spark?`: `boolean` Throw sparks from the press point on click. Default `true`.
 - `startIcon?`: `ReactNode` Icon before the label. Coloured with the text.
 - `variant?`: `ButtonVariant` `contained` (filled, default), `outlined` or `text`.
-- `ripple?`: `boolean` **Deprecated.** Use `spark`. Kept so existing code keeps working.
 
 ## Spark (`spark`)
 A burst of sparks from a point; used by Button and Calendar.
@@ -251,7 +250,6 @@ Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
 - `type?`: `"hidden" | "color" | "button" | "checkbox" | "date" | "datetime-local" | "email" | "file" | "image" | "month" | "password" | "radio" | "range" | "reset" | "search" | "submit" | ... 8 more ...` The kind of input, like `email`, `password` or `tel`. It sets the mobile keyboard and browser autofill. Default `text`.
 - `value?`: `string` The current text, when you control the field yourself. Use `defaultValue` to let it manage its own state.
 - `variant?`: `"outlined" | "filled" | "standard"` `outlined` (default) draws a full border, `filled` a tinted background, `standard` just an underline.
-- `inputSize?`: `"small" | "medium" | "large"` **Deprecated.** Use `size`, like the other components.
 
 ## Field (`field`)
 Label, help text and error wiring for any control.
@@ -461,7 +459,6 @@ Style hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__ite
 - `onRemove?`: `((file: UploadFile) => void)` Called with a file when someone removes it from the list.
 - `previews?`: `boolean` Image thumbnails in the list. Default `true`.
 - `prompt?`: `ReactNode` Main prompt. Default "Drop files here or browse".
-- `hint?`: `ReactNode` **Deprecated.** Use `helperText`, like the other fields.
 
 ## TimePicker (`time-picker`)
 Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.
@@ -780,14 +777,6 @@ Style hooks: `.sp-dropdown[data-open][data-invalid][data-disabled]`,
 - `size?`: `"small" | "medium" | "large"` Height 36, 46 or 54px. Default `medium`.
 - `startIcon?`: `ReactNode` Icon at the start of the field.
 - `value?`: `string | number | null` Controlled value (`null` for none).
-- `appendIcon?`: `ReactNode` **Deprecated.** Put an `icon` on each option instead.
-- `containerStyle?`: `CSSProperties` **Deprecated.** Use `classNames.root` or `className`.
-- `forTeams?`: `boolean` **Deprecated.** Put `icon: <User />` on each option.
-- `inputStyle?`: `CSSProperties` **Deprecated.** Use `classNames.trigger`.
-- `itemStyle?`: `CSSProperties` **Deprecated.** Use `classNames.option`.
-- `listContainerStyle?`: `CSSProperties` **Deprecated.** Use `classNames.popover`.
-- `prependIcon?`: `ReactNode` **Deprecated.** Use `startIcon`.
-- `showBorder?`: `boolean` **Deprecated.** Use `classNames` or CSS on `.sp-dropdown__trigger`.
 
 ## Combobox (`combobox`)
 Type to search, then pick.
@@ -892,9 +881,6 @@ Style hooks: `.sp-date-picker[data-open][data-invalid][data-disabled]`,
 - `todayLabel?`: `string` Label for the Today button, for other languages.
 - `value?`: `Date | null` Controlled value; `null` for no date.
 - `visibleMonths?`: `number` Months shown side by side. Default 1.
-- `format?`: `DateTimeFormatOptions` **Deprecated.** The field now shows editable segments in the locale's order.
-- `placeholder?`: `string` **Deprecated.** The field now shows editable segments in the locale's order.
-- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ### Segment
 One editable part of a date or time field, such as the day or the hour. You
@@ -945,7 +931,6 @@ Style hooks: `.sp-date-picker.sp-date-range-picker[data-open][data-invalid]`,
 - `startName?`: `string` Hidden input with the start date (ISO), e.g. `checkIn`.
 - `value?`: `DateRange | null` Controlled range; `null` for none.
 - `visibleMonths?`: `number` Months shown in the popover. Default 2.
-- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ### Calendar
 The month grid on its own, for when you want a calendar on the page rather
@@ -983,7 +968,6 @@ Style hooks: `.sp-calendar`, `__header`, `__title`, `__nav`, `__months`,
 - `todayLabel?`: `string` Label for the Today button, for other languages.
 - `value?`: `Date | null` The selected day.
 - `visibleMonths?`: `number` Months shown side by side. Default 1.
-- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ### RangeCalendar
 A calendar for picking a range of dates, without the input field around it.
@@ -1016,7 +1000,6 @@ Style hooks: as Calendar, plus `__day[data-range-start][data-range-end][data-in-
 - `todayLabel?`: `string` Label for the Today button, for other languages.
 - `value?`: `DateRange | null` The selected range.
 - `visibleMonths?`: `number` Months shown side by side. Default 1.
-- `weekStartsOn?`: `0 | 1 | 2 | 3 | 4 | 5 | 6` **Deprecated.** Use `firstDayOfWeek`. 0 = Sunday, 1 = Monday.
 
 ## DataTable (`data-table`)
 Sort, search, filter, page and select rows; responsive div grid, no table library.

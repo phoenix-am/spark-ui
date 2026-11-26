@@ -42,5 +42,3 @@ export const withCalendar = (locale: string, calendar?: CalendarSystem) =>
 
 const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
 export type FirstDayOfWeek = (typeof days)[number];
-/** Old numeric `weekStartsOn` (0 = Sunday) to React Aria's `firstDayOfWeek`. */
-export const toFirstDay = (n?: number): FirstDayOfWeek | undefined => (n === undefined ? undefined : days[((n % 7) + 7) % 7]);

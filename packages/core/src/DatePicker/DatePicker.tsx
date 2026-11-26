@@ -9,13 +9,12 @@ import { toDatePreset } from './presets';
 import { getLocalTimeZone, today } from '@internationalized/date';
 import { Popover } from '../base/Popover';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
-import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO, withCalendar } from './dateAdapters';
-import { warnDeprecated } from '../internal/devWarn';
+import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toISO, withCalendar } from './dateAdapters';
 
 export interface DatePickerProps
   extends Pick<
     CalendarProps,
-    | 'min' | 'max' | 'isDateDisabled' | 'disabledDates' | 'enabledDates' | 'firstDayOfWeek' | 'weekStartsOn' | 'locale' | 'calendar'
+    | 'min' | 'max' | 'isDateDisabled' | 'disabledDates' | 'enabledDates' | 'firstDayOfWeek' | 'locale' | 'calendar'
     | 'todayLabel' | 'showToday' | 'presets' | 'renderDay' | 'visibleMonths'
   > {
   /** Extra classes for the calendar's parts (header, day, preset…). */
@@ -44,10 +43,6 @@ export interface DatePickerProps
   name?: string;
   /** Default `medium`. */
   size?: 'small' | 'medium' | 'large';
-  /** @deprecated The field now shows editable segments in the locale's order. */
-  placeholder?: string;
-  /** @deprecated The field now shows editable segments in the locale's order. */
-  format?: Intl.DateTimeFormatOptions;
   /** Extra class names for the outermost element. */
   className?: string;
   /** Extra classes for each part: root, label, control, field, trigger, popover, helper. */
@@ -72,10 +67,6 @@ export interface DatePickerProps
  */
 export function DatePicker(inProps: DatePickerProps) {
   const props = useDefaults('DatePicker', inProps);
-  warnDeprecated('DatePicker', props, {
-    placeholder: 'The field shows editable segments; remove it.',
-    format: 'The field follows the locale; remove it.',
-  });
   const { locale: inherited } = useLocale();
   return (
     <I18nProvider locale={withCalendar(props.locale ?? inherited, props.calendar)}>
@@ -101,7 +92,6 @@ function DatePickerInner({
   visibleMonths,
   calendarClassNames,
   firstDayOfWeek,
-  weekStartsOn,
   todayLabel,
   helperText,
   error,
@@ -115,7 +105,7 @@ function DatePickerInner({
 }: DatePickerProps) {
   const { direction } = useLocale();
   const m = useMessages();
-  const firstDay = firstDayOfWeek ?? toFirstDay(weekStartsOn);
+  const firstDay = firstDayOfWeek;
   const ariaProps = {
     label,
     'aria-label': ariaLabel,

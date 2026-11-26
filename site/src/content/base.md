@@ -13,4 +13,4 @@
 
 ## Limitations
 
-- The base layer may still change in minor versions until 1.0.
+- The base layer is experimental: unlike the components, it may still change in minor versions.

@@ -1024,6 +1024,7 @@
     "components": {
       "Textfield": {
         "defaults": {
+          "size": "'medium'",
           "value": "''",
           "disabled": "false",
           "error": "false",
@@ -3608,7 +3609,6 @@
       "Dropdown": {
         "defaults": {
           "size": "'medium'",
-          "showBorder": "true",
           "placeholder": "translated label",
           "emptyState": "translated label"
         },
@@ -3710,14 +3710,6 @@
             }
           ],
           "attributes": [
-            {
-              "name": "data-borderless",
-              "values": [],
-              "on": [
-                "sp-dropdown"
-              ],
-              "description": "Present when the section has no border."
-            },
             {
               "name": "data-disabled",
               "values": [],

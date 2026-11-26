@@ -2,7 +2,6 @@ import React, { useId, useRef, useState } from 'react';
 import { useMessages } from '../internal/messages';
 import { useDrop } from 'react-aria';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
-import { warnDeprecated } from '../internal/devWarn';
 
 export interface UploadFile {
   /** Stable id for keys and updates. */
@@ -51,8 +50,6 @@ export interface FileUploadProps {
   maxFiles?: number;
   /** Line under the main prompt. Default lists accepted types and size. */
   helperText?: React.ReactNode;
-  /** @deprecated Use `helperText`, like the other fields. */
-  hint?: React.ReactNode;
   /** Main prompt. Default "Drop files here or browse". */
   prompt?: React.ReactNode;
   /** Image thumbnails in the list. Default `true`. */
@@ -135,7 +132,6 @@ function Thumb({ file }: { file: File }) {
  */
 export function FileUpload(inProps: FileUploadProps) {
   const props = useDefaults('FileUpload', inProps) as FileUploadProps;
-  warnDeprecated('FileUpload', props, { hint: 'Use `helperText`, like the other fields.' });
   const m = useMessages();
   const { label, accept, multiple = true, maxSize, maxFiles, previews = true, disabled, name, className, classNames } = props;
   const [inner, setInner] = useState<UploadFile[]>(props.defaultFiles ?? []);
@@ -180,7 +176,6 @@ export function FileUpload(inProps: FileUploadProps) {
 
   const hint =
     props.helperText ??
-    props.hint ??
     [accept && accept.split(',').map((a) => a.trim().replace(/^\./, '').replace('/*', '').toUpperCase()).join(', '), maxSize !== undefined && m.upTo(formatBytes(maxSize)), maxFiles !== undefined && m.maxFiles(m.num(maxFiles))]
       .filter(Boolean)
       .join(' · ');

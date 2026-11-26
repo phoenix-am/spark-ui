@@ -35,7 +35,7 @@ Everything the README skims over, in one place. For live examples and every prop
   - [Base components](#base-components)
   - [For AI coding agents](#for-ai-coding-agents)
   - [Packages](#packages)
-  - [Upgrading to 1.0](#upgrading-to-10)
+  - [Upgrading from 0.x to 1.0](#upgrading-from-0x-to-10)
 
 ## Foundations
 
@@ -205,7 +205,7 @@ Set the locale once and every date, weekday name, digit and arrow key follows it
 - **Slider** takes a `[start, end]` value for a range with two knobs. `onChangeEnd` fires once on release (for saving or fetching), and `formatOptions` formats numbers in the locale, e.g. `{ style: 'currency', currency: 'INR' }`.
 - Tabs, DatePicker, Slider and the rest work when rendered from a React Server Component.
 
-`DatePicker`'s `format` and `placeholder` props are deprecated (the segments replace them), as is `weekStartsOn` (use `firstDayOfWeek: 'sun' | 'mon' | ...`). They are still accepted and will be removed in 1.0. The old Dropdown props (`prependIcon`, `forTeams`, `containerStyle`...) also still work but are deprecated; Dropdown's `value` is now controlled (use `defaultValue` for a starting value), and its CSS classes are `sp-dropdown__*` (Select's were `sp-select__*`). Slider's `onChange` now receives only the value (no event), which is what React Hook Form's `register` expects too.
+Dropdown's `value` is controlled (use `defaultValue` for a starting value), and its CSS classes are `sp-dropdown__*`. Slider's `onChange` now receives only the value (no event), which is what React Hook Form's `register` expects too.
 
 ### Forms
 
@@ -375,7 +375,7 @@ Spark UI is built in two layers, like MUI:
 - **Base components** (`@sparkwire/core/base`): `ButtonBase`, `InputBase`, `Popover`, `ListBox` (with `ListItemContent`) and `Overlay`. Generic building blocks that already carry the Live Wire look.
 - **Components** built from them: Button on ButtonBase; Textfield and Combobox on InputBase; Dropdown, Combobox, Menu and DatePicker on Popover (+ ListBox); Modal on Overlay.
 
-Use the base layer to build components we don't ship, and they will match the rest. The base layer is unstable until 1.0: names and props may still change in minor versions.
+Use the base layer to build components we don't ship, and they will match the rest. The base layer is experimental and sits outside the 1.0 promise: its names and props may still change in minor versions.
 
 ### For AI coding agents
 
@@ -396,17 +396,16 @@ All of these are generated from the component source by `npm run build`, so they
 | `@sparkwire/icons` | About 860 SVG icons as React components |
 | `@sparkwire/utils` | Small helpers |
 
-### Upgrading to 1.0
+### Upgrading from 0.x to 1.0
 
-The API is frozen for 1.0: no more renames. 1.0 removes the props below. Until then they still work, and in development each one logs a warning once, saying what to use instead. Production builds stay silent.
+1.0 freezes the API: from here, breaking changes only come in a new major version. 1.0 removed the props below. On 0.5, each one logs a development warning saying what to use instead, so upgrade to 0.5 first, fix the warnings, then move to 1.0.
 
 | Component | Old | Use |
 |---|---|---|
 | Button | `ripple` | `spark` |
 | Textfield | `inputSize` | `size` |
 | FileUpload | `hint` | `helperText` |
-| Calendar, RangeCalendar, `useDatePicker` | `weekStartsOn` | `firstDayOfWeek` |
-| Calendar, RangeCalendar | `todayLabel` | `presets` |
+| Calendar, RangeCalendar, DatePicker, DateRangePicker, `useDatePicker` | `weekStartsOn` | `firstDayOfWeek` (`'sun'`, `'mon'`, …) |
 | DatePicker | `placeholder`, `format` | Remove; the field follows the locale |
 | Dropdown | `prependIcon` | `startIcon` |
 | Dropdown | `appendIcon`, `forTeams` | An `icon` on each option |
@@ -414,5 +413,5 @@ The API is frozen for 1.0: no more renames. 1.0 removes the props below. Until t
 | ThemeProvider | `initialTheme` | `theme` |
 | `@sparkwire/styles` | `BaseTheme` type | `Theme` |
 
-Run your app in development, fix each warning in the console, and the 1.0 upgrade needs no other changes.
+Calendar's `todayLabel` stays: 0.5.0 warned about it by mistake.
 

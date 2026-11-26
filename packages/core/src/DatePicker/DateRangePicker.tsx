@@ -7,13 +7,13 @@ import { Popover } from '../base/Popover';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 import { CalendarSlot, RangeCalendarCore, RangeCalendarProps, makeUnavailable } from './Calendar';
 import { DateField, Dialog } from './DatePicker';
-import { fromDateValue, toDateValue, toFirstDay, toISO, withCalendar } from './dateAdapters';
+import { fromDateValue, toDateValue, toISO, withCalendar } from './dateAdapters';
 import { DateRange, toRangePreset } from './presets';
 
 export interface DateRangePickerProps
   extends Pick<
     RangeCalendarProps,
-    | 'min' | 'max' | 'isDateDisabled' | 'disabledDates' | 'enabledDates' | 'firstDayOfWeek' | 'weekStartsOn' | 'locale' | 'calendar'
+    | 'min' | 'max' | 'isDateDisabled' | 'disabledDates' | 'enabledDates' | 'firstDayOfWeek' | 'locale' | 'calendar'
     | 'presets' | 'renderDay' | 'allowsNonContiguousRanges'
   > {
   /** Visible label above the field. */
@@ -89,7 +89,6 @@ function Inner({
   disabledDates,
   enabledDates,
   firstDayOfWeek,
-  weekStartsOn,
   presets,
   renderDay,
   allowsNonContiguousRanges,
@@ -109,7 +108,7 @@ function Inner({
 }: DateRangePickerProps) {
   const { direction } = useLocale();
   const m = useMessages();
-  const firstDay = firstDayOfWeek ?? toFirstDay(weekStartsOn);
+  const firstDay = firstDayOfWeek;
   const toRange = (r?: DateRange | null) => (r === undefined ? undefined : r === null ? null : { start: toDateValue(r.start)!, end: toDateValue(r.end)! });
   const ariaProps = {
     label,

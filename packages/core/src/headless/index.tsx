@@ -13,8 +13,7 @@ import { useCheckbox as useAriaCheckbox, useDatePicker as useAriaDatePicker, use
 import { useDatePickerState, useSliderState, useToggleState } from 'react-stately';
 import type { DateValue } from '@internationalized/date';
 import { Spark, SparkHandle } from '../Spark';
-import { FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO } from '../DatePicker/dateAdapters';
-import { warnDeprecated } from '../internal/devWarn';
+import { FirstDayOfWeek, fromDateValue, toDateValue, toISO } from '../DatePicker/dateAdapters';
 
 export { useSliderThumb } from 'react-aria';
 export { useDataTable } from '../DataTable/useDataTable';
@@ -173,8 +172,6 @@ export interface UseDatePickerProps {
   max?: Date;
   isDateDisabled?: (date: Date) => boolean;
   firstDayOfWeek?: FirstDayOfWeek;
-  /** @deprecated Use `firstDayOfWeek`. */
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   disabled?: boolean;
   required?: boolean;
   invalid?: boolean;
@@ -188,7 +185,6 @@ export interface UseDatePickerProps {
  * React Aria's `I18nProvider`.
  */
 export function useDatePicker(props: UseDatePickerProps, groupRef: React.RefObject<HTMLElement>) {
-  warnDeprecated('useDatePicker', props, { weekStartsOn: 'Use `firstDayOfWeek`.' });
   const ariaProps = {
     label: props.label,
     'aria-label': props['aria-label'],
@@ -198,7 +194,7 @@ export function useDatePicker(props: UseDatePickerProps, groupRef: React.RefObje
     minValue: toDateValue(props.min) ?? undefined,
     maxValue: toDateValue(props.max) ?? undefined,
     isDateUnavailable: props.isDateDisabled ? (d: DateValue) => props.isDateDisabled!(fromDateValue(d)!) : undefined,
-    firstDayOfWeek: props.firstDayOfWeek ?? toFirstDay(props.weekStartsOn),
+    firstDayOfWeek: props.firstDayOfWeek,
     isDisabled: props.disabled,
     isRequired: props.required,
     isInvalid: props.invalid,

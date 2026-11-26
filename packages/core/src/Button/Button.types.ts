@@ -34,8 +34,6 @@ export interface ButtonPropsBase {
   fullWidth?: boolean;
   /** Throw sparks from the press point on click. Default `true`. */
   spark?: boolean;
-  /** @deprecated Use `spark`. Kept so existing code keeps working. */
-  ripple?: boolean;
   /** Extra classes for each part: root, icon. */
   classNames?: Partial<Record<'root' | 'icon', string>>;
   /** Render a different element with the button's behaviour and look, e.g. `render={<Link href="/pricing" />}`. */

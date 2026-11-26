@@ -84,7 +84,6 @@
   border-color: var(--sp-ink);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--sp-fill) 20%, transparent);
 }
-.sp-dropdown[data-borderless] .sp-dropdown__control { border-color: transparent; box-shadow: none; }
 .sp-dropdown[data-disabled] .sp-dropdown__control {
   background-color: var(--spark-surface-raised);
   border-style: dashed;
@@ -216,5 +215,4 @@
 .sp-dropdown[data-invalid] .sp-dropdown__helper { color: var(--sp-ink); }
 .sp-dropdown__icon { display: inline-flex; flex: none; color: var(--spark-text-secondary); }
 .sp-dropdown[data-open] .sp-dropdown__icon { color: var(--sp-ink); }
-.sp-dropdown[data-borderless] .sp-dropdown__trigger { border-color: transparent; }
 /* The list itself comes from the base: .sp-popover, .sp-listbox, .sp-list-item. */

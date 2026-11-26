@@ -60,8 +60,6 @@ export interface TextfieldPropsBase extends Omit<InputHTMLAttributes<HTMLInputEl
   placeholder?: string;
   /** Height and text size of the input. Default `medium`. */
   size?: 'small' | 'medium' | 'large';
-  /** @deprecated Use `size`, like the other components. */
-  inputSize?: 'small' | 'medium' | 'large';
   /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;
   /** Shows the field in its error state. Pair it with `helperText` explaining what to fix. */

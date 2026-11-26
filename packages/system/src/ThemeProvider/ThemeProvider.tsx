@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import ThemeContext, { SparkMode } from './ThemeContext';
-import { BaseTheme, DeepPartial, Theme, createTheme, defaultTheme, lightTheme, themeToCssVars } from '@sparkwire/styles';
+import { DeepPartial, Theme, createTheme, defaultTheme, lightTheme, themeToCssVars } from '@sparkwire/styles';
 
 export interface ThemeProviderProps {
   children: ReactNode;
@@ -14,8 +14,6 @@ export interface ThemeProviderProps {
   defaultMode?: SparkMode;
   /** Change only the tokens you need; the rest keep their Live Wire values. */
   theme?: DeepPartial<Theme>;
-  /** @deprecated Pass `theme` instead. A full theme object is still accepted. */
-  initialTheme?: BaseTheme;
   /** Wrapper element's class, e.g. for a font or background. */
   className?: string;
   /**
@@ -45,48 +43,29 @@ const usePrefersLight = () => {
  * (including in React Server Components). Use the provider to switch modes
  * at runtime, or to apply token overrides to a part of the page.
  */
-declare const process: { env: { NODE_ENV?: string } };
-let warnedInitialTheme = false;
-function warnInitialTheme() {
-  if (warnedInitialTheme) return;
-  warnedInitialTheme = true;
-  let env: string | undefined;
-  try {
-    env = process.env.NODE_ENV;
-  } catch {
-    env = undefined;
-  }
-  if (env !== 'production') {
-    console.warn('[Sparkwire]', 'ThemeProvider: `initialTheme` is deprecated and will be removed in 1.0. Use `theme`.');
-  }
-}
-
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   mode,
   defaultMode = 'dark',
   theme: overrides,
-  initialTheme,
   className,
   global = false,
 }) => {
-  if (initialTheme) warnInitialTheme();
   const [innerMode, setInnerMode] = useState<SparkMode>(defaultMode);
   const activeMode = mode ?? innerMode;
   const prefersLight = usePrefersLight();
   const resolved: Theme['mode'] =
     activeMode === 'system' ? (prefersLight ? 'light' : 'dark') : activeMode;
 
-  const theme = useMemo<BaseTheme>(() => {
-    if (initialTheme && !overrides) return initialTheme;
-    return createTheme(overrides, resolved) as BaseTheme;
-  }, [initialTheme, overrides, resolved]);
+  const theme = useMemo<Theme>(() => {
+    return createTheme(overrides, resolved) as Theme;
+  }, [overrides, resolved]);
 
   // Only emit inline variables when the app overrides tokens.
   const style = useMemo(() => {
-    if (!overrides && !initialTheme) return undefined;
+    if (!overrides) return undefined;
     return { ...themeToCssVars(theme), display: 'contents' } as React.CSSProperties;
-  }, [overrides, initialTheme, theme]);
+  }, [overrides, theme]);
 
   // Mirror onto <html> for the app's root provider; put things back as they were on unmount.
   useEffect(() => {

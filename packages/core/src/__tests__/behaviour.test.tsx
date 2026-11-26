@@ -376,8 +376,8 @@ describe('Dropdown (base: Popover + ListBox)', () => {
     expect(new FormData(container.querySelector('form')!).get('replicas')).toBe('8');
   });
 
-  it('keeps the old Dropdown props working (error + helperText, prependIcon)', () => {
-    render(<Dropdown label="Region" error helperText="Choose a region" prependIcon={<svg data-testid="icon" />} options={[{ value: 'a', label: 'A' }]} />);
+  it('shows the error with helperText and a start icon', () => {
+    render(<Dropdown label="Region" error helperText="Choose a region" startIcon={<svg data-testid="icon" />} options={[{ value: 'a', label: 'A' }]} />);
     expect(screen.getByText('Choose a region')).toBeInTheDocument();
     expect(screen.getByTestId('icon')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Region/ })).toHaveAttribute('aria-describedby');
