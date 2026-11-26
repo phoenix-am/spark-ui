@@ -706,17 +706,6 @@
               "description": "Short guidance under the field. Shown in red with an error."
             },
             {
-              "name": "inputSize",
-              "type": "\"small\" | \"medium\" | \"large\"",
-              "values": [
-                "small",
-                "medium",
-                "large"
-              ],
-              "required": false,
-              "description": "Height and text size of the input. Default `medium`."
-            },
-            {
               "name": "isCurrency",
               "type": "boolean",
               "required": false,
@@ -765,6 +754,17 @@
               "description": "Content at the start of the input, like a currency symbol or a search icon."
             },
             {
+              "name": "size",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
+              "required": false,
+              "description": "Height and text size of the input. Default `medium`."
+            },
+            {
               "name": "type",
               "type": "\"hidden\" | \"color\" | \"button\" | \"checkbox\" | \"date\" | \"datetime-local\" | \"email\" | \"file\" | \"image\" | \"month\" | \"password\" | \"radio\" | \"range\" | \"reset\" | \"search\" | \"submit\" | ... 8 more ...",
               "required": false,
@@ -786,6 +786,18 @@
               ],
               "required": false,
               "description": "`outlined` (default) draws a full border, `filled` a tinted background, `standard` just an underline."
+            },
+            {
+              "name": "inputSize",
+              "type": "\"small\" | \"medium\" | \"large\"",
+              "values": [
+                "small",
+                "medium",
+                "large"
+              ],
+              "required": false,
+              "description": "@deprecated Use `size`, like the other components.",
+              "deprecated": true
             }
           ]
         }
@@ -1377,7 +1389,7 @@
               "description": "Files in the list (controlled). Update `progress` / `status` as uploads run."
             },
             {
-              "name": "hint",
+              "name": "helperText",
               "type": "ReactNode",
               "required": false,
               "description": "Line under the main prompt. Default lists accepted types and size."
@@ -1447,6 +1459,13 @@
               "type": "ReactNode",
               "required": false,
               "description": "Main prompt. Default \"Drop files here or browse\"."
+            },
+            {
+              "name": "hint",
+              "type": "ReactNode",
+              "required": false,
+              "description": "@deprecated Use `helperText`, like the other fields.",
+              "deprecated": true
             }
           ]
         }

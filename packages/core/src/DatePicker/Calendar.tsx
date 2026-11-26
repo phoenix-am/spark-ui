@@ -8,6 +8,7 @@ import { Spark, SparkHandle } from '../Spark';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, withCalendar } from './dateAdapters';
 import { DatePreset, DatePresetName, DateRange, RangePreset, RangePresetName, resolvePreset, toDatePreset, toRangePreset } from './presets';
+import { warnDeprecated } from '../internal/devWarn';
 
 export type CalendarSlot = 'root' | 'header' | 'title' | 'nav' | 'months' | 'grid' | 'weekday' | 'cell' | 'day' | 'footer' | 'preset';
 
@@ -177,6 +178,7 @@ function rangeAvailable(start: DateValue, end: DateValue, check: Unavailable | u
  */
 export function Calendar(inProps: CalendarProps) {
   const props = useDefaults('Calendar', inProps);
+  warnDeprecated('Calendar', props, { weekStartsOn: 'Use `firstDayOfWeek`.', todayLabel: 'Use `presets`.' });
   const { value, defaultValue, onChange, min, max, firstDayOfWeek, weekStartsOn, locale, calendar, presets, showToday = true, todayLabel, ...ui } = props;
   const { locale: inherited } = useLocale();
   const m = useMessages();
@@ -268,6 +270,7 @@ export function CalendarCore({ presets, todayLabel, visibleMonths: rawMonths = 1
  */
 export function RangeCalendar(inProps: RangeCalendarProps) {
   const props = useDefaults('RangeCalendar', inProps);
+  warnDeprecated('RangeCalendar', props, { weekStartsOn: 'Use `firstDayOfWeek`.', todayLabel: 'Use `presets`.' });
   const { value, defaultValue, onChange, min, max, firstDayOfWeek, weekStartsOn, locale, calendar, presets, showToday = false, todayLabel, ...ui } = props;
   const { locale: inherited } = useLocale();
   const m = useMessages();

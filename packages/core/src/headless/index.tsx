@@ -14,6 +14,7 @@ import { useDatePickerState, useSliderState, useToggleState } from 'react-statel
 import type { DateValue } from '@internationalized/date';
 import { Spark, SparkHandle } from '../Spark';
 import { FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO } from '../DatePicker/dateAdapters';
+import { warnDeprecated } from '../internal/devWarn';
 
 export { useSliderThumb } from 'react-aria';
 export { useDataTable } from '../DataTable/useDataTable';
@@ -187,6 +188,7 @@ export interface UseDatePickerProps {
  * React Aria's `I18nProvider`.
  */
 export function useDatePicker(props: UseDatePickerProps, groupRef: React.RefObject<HTMLElement>) {
+  warnDeprecated('useDatePicker', props, { weekStartsOn: 'Use `firstDayOfWeek`.' });
   const ariaProps = {
     label: props.label,
     'aria-label': props['aria-label'],

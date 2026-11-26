@@ -45,6 +45,22 @@ const usePrefersLight = () => {
  * (including in React Server Components). Use the provider to switch modes
  * at runtime, or to apply token overrides to a part of the page.
  */
+declare const process: { env: { NODE_ENV?: string } };
+let warnedInitialTheme = false;
+function warnInitialTheme() {
+  if (warnedInitialTheme) return;
+  warnedInitialTheme = true;
+  let env: string | undefined;
+  try {
+    env = process.env.NODE_ENV;
+  } catch {
+    env = undefined;
+  }
+  if (env !== 'production') {
+    console.warn('[Sparkwire]', 'ThemeProvider: `initialTheme` is deprecated and will be removed in 1.0. Use `theme`.');
+  }
+}
+
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   mode,
@@ -54,6 +70,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   className,
   global = false,
 }) => {
+  if (initialTheme) warnInitialTheme();
   const [innerMode, setInnerMode] = useState<SparkMode>(defaultMode);
   const activeMode = mode ?? innerMode;
   const prefersLight = usePrefersLight();

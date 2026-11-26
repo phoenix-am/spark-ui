@@ -35,6 +35,7 @@ Everything the README skims over, in one place. For live examples and every prop
   - [Base components](#base-components)
   - [For AI coding agents](#for-ai-coding-agents)
   - [Packages](#packages)
+  - [Upgrading to 1.0](#upgrading-to-10)
 
 ## Foundations
 
@@ -394,3 +395,24 @@ All of these are generated from the component source by `npm run build`, so they
 | `@sparkwire/system` | Optional `ThemeProvider` and `useTheme` |
 | `@sparkwire/icons` | About 860 SVG icons as React components |
 | `@sparkwire/utils` | Small helpers |
+
+### Upgrading to 1.0
+
+The API is frozen for 1.0: no more renames. 1.0 removes the props below. Until then they still work, and in development each one logs a warning once, saying what to use instead. Production builds stay silent.
+
+| Component | Old | Use |
+|---|---|---|
+| Button | `ripple` | `spark` |
+| Textfield | `inputSize` | `size` |
+| FileUpload | `hint` | `helperText` |
+| Calendar, RangeCalendar, `useDatePicker` | `weekStartsOn` | `firstDayOfWeek` |
+| Calendar, RangeCalendar | `todayLabel` | `presets` |
+| DatePicker | `placeholder`, `format` | Remove; the field follows the locale |
+| Dropdown | `prependIcon` | `startIcon` |
+| Dropdown | `appendIcon`, `forTeams` | An `icon` on each option |
+| Dropdown | `showBorder`, `containerStyle`, `inputStyle`, `itemStyle`, `listContainerStyle` | `className`, `classNames` or CSS |
+| ThemeProvider | `initialTheme` | `theme` |
+| `@sparkwire/styles` | `BaseTheme` type | `Theme` |
+
+Run your app in development, fix each warning in the console, and the 1.0 upgrade needs no other changes.
+

@@ -1,7 +1,7 @@
 ## Features
 
 - Label, placeholder, helper text and error state in one component.
-- Three looks: `outlined`, `filled` and `standard`; three sizes via `inputSize`.
+- Three looks: `outlined`, `filled` and `standard`; three sizes via `size`.
 - Content inside the field with `prepend` and `append`, such as a currency symbol or a button.
 - A charge meter (`charge`) that fills as the value gets more complete, for example password strength.
 - Input helpers: `isCurrency` formatting, `formatPhoneNumber`, and `cardDetection`.

@@ -17,7 +17,7 @@ The zone and the file list fill their container's width; long file names are tru
 
 ## Best practices
 
-- Say what's allowed in `hint` (“PNG or JPG, up to 5 MB”), so people don't find out by failing.
+- Say what's allowed in `helperText` (“PNG or JPG, up to 5 MB”), so people don't find out by failing.
 - Upload as files are added and show progress, rather than waiting for a form submit.
 
 ## Limitations

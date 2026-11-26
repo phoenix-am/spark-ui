@@ -2,6 +2,7 @@ import React, { ElementType, forwardRef } from 'react';
 import { PolymorphicButtonProps } from './Button.types';
 import { ButtonBase } from '../base/ButtonBase';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
+import { warnDeprecated } from '../internal/devWarn';
 
 /**
  * The button you'll reach for most. It handles clicks, keyboard presses and
@@ -32,6 +33,7 @@ const ButtonInner = (inProps: PolymorphicButtonProps<ElementType>, ref: React.Fo
     classNames,
     ...rest
   } = useDefaults('Button', inProps);
+  warnDeprecated('Button', inProps, { ripple: 'Use `spark`.' });
   const slots = classNames as ClassNames<'root' | 'icon'> | undefined;
 
   return (

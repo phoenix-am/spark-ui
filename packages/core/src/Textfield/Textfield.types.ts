@@ -51,7 +51,7 @@ export interface UseTextFieldResult {
   error: boolean;
 }
 
-export interface TextfieldPropsBase extends InputHTMLAttributes<HTMLInputElement> {
+export interface TextfieldPropsBase extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /** Visible label, linked to the input. */
   label?: string;
   /** Initial value when uncontrolled (no `value`). Works with React Hook Form's `register`. */
@@ -59,6 +59,8 @@ export interface TextfieldPropsBase extends InputHTMLAttributes<HTMLInputElement
   /** Hint shown while the field is empty. Don't use it instead of a label; it disappears as soon as someone types. */
   placeholder?: string;
   /** Height and text size of the input. Default `medium`. */
+  size?: 'small' | 'medium' | 'large';
+  /** @deprecated Use `size`, like the other components. */
   inputSize?: 'small' | 'medium' | 'large';
   /** Turns the control off: it can't be focused or changed, and it's announced as disabled. */
   disabled?: boolean;

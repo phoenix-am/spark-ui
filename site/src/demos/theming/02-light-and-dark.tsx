@@ -6,7 +6,7 @@ function Sample({ title }: { title: string }) {
   return (
     <Card padding="large" style={{ display: 'grid', gap: 12, width: '100%', maxWidth: 240 }}>
       <strong>{title}</strong>
-      <Textfield label="Email" inputSize="small" />
+      <Textfield label="Email" size="small" />
       <Button size="small">Subscribe</Button>
     </Card>
   );

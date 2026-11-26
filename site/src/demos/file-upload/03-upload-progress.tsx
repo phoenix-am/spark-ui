@@ -25,7 +25,7 @@ export default function UploadProgress() {
         onReject={(rejected) => console.log('Rejected', rejected)}
         onRemove={(f) => console.log('Removed', f.file.name)}
         maxSize={2 * 1024 * 1024}
-        hint="Up to 2 MB each"
+        helperText="Up to 2 MB each"
       />
     </div>
   );

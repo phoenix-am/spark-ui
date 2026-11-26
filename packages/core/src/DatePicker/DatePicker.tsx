@@ -10,6 +10,7 @@ import { getLocalTimeZone, today } from '@internationalized/date';
 import { Popover } from '../base/Popover';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
 import { CalendarSystem, FirstDayOfWeek, fromDateValue, toDateValue, toFirstDay, toISO, withCalendar } from './dateAdapters';
+import { warnDeprecated } from '../internal/devWarn';
 
 export interface DatePickerProps
   extends Pick<
@@ -71,6 +72,10 @@ export interface DatePickerProps
  */
 export function DatePicker(inProps: DatePickerProps) {
   const props = useDefaults('DatePicker', inProps);
+  warnDeprecated('DatePicker', props, {
+    placeholder: 'The field shows editable segments; remove it.',
+    format: 'The field follows the locale; remove it.',
+  });
   const { locale: inherited } = useLocale();
   return (
     <I18nProvider locale={withCalendar(props.locale ?? inherited, props.calendar)}>

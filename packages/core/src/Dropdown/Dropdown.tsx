@@ -5,6 +5,7 @@ import { useSelectState } from 'react-stately';
 import { Popover } from '../base/Popover';
 import { ListBox, ListItems, ListOption, findOption, renderListItems, isGroup } from '../base/ListBox';
 import { useDefaults, slot, ClassNames } from '../internal/defaults';
+import { warnDeprecated } from '../internal/devWarn';
 
 /** Person icon for the deprecated `forTeams` prop (inlined so the component needs no icon package). */
 const User = () => (
@@ -94,6 +95,16 @@ export interface DropdownProps<V extends string | number = string | number> {
  */
 export function Dropdown<V extends string | number = string | number>(inProps: DropdownProps<V>) {
   const props = useDefaults('Dropdown', useDefaults('Select', inProps));
+  warnDeprecated('Dropdown', props, {
+    prependIcon: 'Use `startIcon`.',
+    appendIcon: 'Put an `icon` on each option.',
+    showBorder: 'Use `classNames` or CSS on `.sp-dropdown__trigger`.',
+    forTeams: 'Put `icon: <User />` on each option.',
+    containerStyle: 'Use `classNames.root` or `className`.',
+    inputStyle: 'Use `classNames.trigger`.',
+    itemStyle: 'Use `classNames.option`.',
+    listContainerStyle: 'Use `classNames.popover`.',
+  });
   const m = useMessages();
   const {
     label,

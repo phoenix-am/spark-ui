@@ -168,7 +168,7 @@ export function Playground({ config, doc }: { config: PlaygroundConfig; doc: Com
               );
             return (
               <div key={key} className="sw-control" title={hint}>
-                <Textfield inputSize="small" label={key} value={typeof v === 'string' ? v : ''} onChange={(e) => set(key, e.target.value || undefined)} />
+                <Textfield size="small" label={key} value={typeof v === 'string' ? v : ''} onChange={(e) => set(key, e.target.value || undefined)} />
               </div>
             );
           })}

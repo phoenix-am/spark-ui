@@ -17,3 +17,19 @@ export function devWarn(...args: unknown[]) {
   }
   if (env !== 'production') console.warn('[Sparkwire]', ...args);
 }
+
+const warned = new Set<string>();
+
+/**
+ * Warns once per component and prop, in development only, when a deprecated prop
+ * is used. These props are removed in 1.0.
+ */
+export function warnDeprecated(component: string, props: object, replacements: Record<string, string>) {
+  for (const [prop, use] of Object.entries(replacements)) {
+    if ((props as Record<string, unknown>)[prop] === undefined) continue;
+    const key = `${component}.${prop}`;
+    if (warned.has(key)) continue;
+    warned.add(key);
+    devWarn(`${component}: \`${prop}\` is deprecated and will be removed in 1.0. ${use}`);
+  }
+}

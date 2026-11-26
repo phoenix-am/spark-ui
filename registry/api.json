@@ -1024,7 +1024,6 @@
     "components": {
       "Textfield": {
         "defaults": {
-          "inputSize": "'medium'",
           "value": "''",
           "disabled": "false",
           "error": "false",
@@ -1118,6 +1117,7 @@
               "name": "data-size",
               "values": [
                 "small",
+                "medium",
                 "large"
               ],
               "on": [

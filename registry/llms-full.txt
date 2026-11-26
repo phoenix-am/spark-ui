@@ -239,7 +239,6 @@ Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
 - `error?`: `boolean` Shows the field in its error state. Pair it with `helperText` explaining what to fix.
 - `formatPhoneNumber?`: `((value: string) => string)` Function that formats the value as it's typed, e.g. `98765 43210`.
 - `helperText?`: `string` Short guidance under the field. Shown in red with an error.
-- `inputSize?`: `"small" | "medium" | "large"` Height and text size of the input. Default `medium`.
 - `isCurrency?`: `boolean` Formats the value as money while typing (thousand separators, two decimals).
 - `label?`: `string` Visible label, linked to the input.
 - `onBlur?`: `((event: FocusEvent<HTMLInputElement, Element>) => void)` Called when the field loses focus. Handy for validating on blur.
@@ -248,9 +247,11 @@ Style hooks: `.sp-textfield` with `[data-focused]`, `[data-invalid]`,
 - `onValueChange?`: `((value: string, event: ChangeEvent<HTMLInputElement>) => void)` Called on every keystroke with the new text, then the event. Same shape as `Textarea`, `Dropdown` and the other fields, so one handler style works everywhere.
 - `placeholder?`: `string` Hint shown while the field is empty. Don't use it instead of a label; it disappears as soon as someone types.
 - `prepend?`: `ReactNode` Content at the start of the input, like a currency symbol or a search icon.
+- `size?`: `"small" | "medium" | "large"` Height and text size of the input. Default `medium`.
 - `type?`: `"hidden" | "color" | "button" | "checkbox" | "date" | "datetime-local" | "email" | "file" | "image" | "month" | "password" | "radio" | "range" | "reset" | "search" | "submit" | ... 8 more ...` The kind of input, like `email`, `password` or `tel`. It sets the mobile keyboard and browser autofill. Default `text`.
 - `value?`: `string` The current text, when you control the field yourself. Use `defaultValue` to let it manage its own state.
 - `variant?`: `"outlined" | "filled" | "standard"` `outlined` (default) draws a full border, `filled` a tinted background, `standard` just an underline.
+- `inputSize?`: `"small" | "medium" | "large"` **Deprecated.** Use `size`, like the other components.
 
 ## Field (`field`)
 Label, help text and error wiring for any control.
@@ -448,7 +449,7 @@ Style hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__ite
 - `defaultFiles?`: `UploadFile[]` Files to show at the start, like ones already uploaded.
 - `disabled?`: `boolean` Turns the control off: it can't be focused or changed, and it's announced as disabled.
 - `files?`: `UploadFile[]` Files in the list (controlled). Update `progress` / `status` as uploads run.
-- `hint?`: `ReactNode` Line under the main prompt. Default lists accepted types and size.
+- `helperText?`: `ReactNode` Line under the main prompt. Default lists accepted types and size.
 - `label?`: `ReactNode` Label above the drop zone.
 - `maxFiles?`: `number` Most files allowed. Extra files are turned away with a message.
 - `maxSize?`: `number` Bytes.
@@ -460,6 +461,7 @@ Style hooks: `.sp-file-upload`, `__zone[data-drop-target][data-invalid]`, `__ite
 - `onRemove?`: `((file: UploadFile) => void)` Called with a file when someone removes it from the list.
 - `previews?`: `boolean` Image thumbnails in the list. Default `true`.
 - `prompt?`: `ReactNode` Main prompt. Default "Drop files here or browse".
+- `hint?`: `ReactNode` **Deprecated.** Use `helperText`, like the other fields.
 
 ## TimePicker (`time-picker`)
 Type a time segment by segment or pick from suggestions every N minutes; min/max and blocked slots.

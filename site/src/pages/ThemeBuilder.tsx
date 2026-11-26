@@ -122,7 +122,7 @@ export function Providers({ children }) {
             <div className="sw-builder__hex">
               <input type="color" aria-label="Pick any colour" value={color.length === 7 ? color : '#FFD60A'} onChange={(e) => setColor(e.target.value)} />
               <Textfield
-                inputSize="small"
+                size="small"
                 label="Hex"
                 value={draft}
                 onChange={(e) => {
