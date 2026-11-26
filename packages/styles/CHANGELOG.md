@@ -1,5 +1,13 @@
 # @sparkwire/styles
 
+## 1.0.0
+
+### Major Changes
+
+- c39dc00: Sparkwire 1.0. The API is now stable: breaking changes only come in a new major version.
+
+  Removed the props deprecated in 0.x: Button `ripple`; Textfield `inputSize`; FileUpload `hint`; `weekStartsOn` on Calendar, RangeCalendar, DatePicker, DateRangePicker and `useDatePicker`; DatePicker `placeholder` and `format`; Dropdown `prependIcon`, `appendIcon`, `forTeams`, `showBorder`, `containerStyle`, `inputStyle`, `itemStyle` and `listContainerStyle`; ThemeProvider `initialTheme`; the `BaseTheme` type. See "Upgrading from 0.x to 1.0" in the guide. Calendar's `todayLabel` stays; 0.5.0 warned about it by mistake.
+
 ## 0.5.0
 
 No changes in this release.
