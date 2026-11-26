@@ -120,6 +120,8 @@ See them all, with every prop, on the [docs site](https://phoenix-am.github.io/s
 
 All packages share one version and are published with npm provenance.
 
+**Stable since 1.0.** Sparkwire follows semantic versioning: breaking changes only come in a new major version, and deprecated props warn in development first. Coming from 0.x? See [Versioning and upgrading](https://phoenix-am.github.io/spark-ui/docs/versioning).
+
 ## Learn more
 
 - **[Docs site](https://phoenix-am.github.io/spark-ui/):** live examples and every prop, in dark and light mode.

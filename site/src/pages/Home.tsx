@@ -157,7 +157,7 @@ export function Home() {
             <Badge tone="success" variant="soft" led>
               v{core.version}
             </Badge>
-            See what's new in this release
+            Stable API · see what's new
             <Icon name="arrow" size={14} />
           </a>
           <h1>

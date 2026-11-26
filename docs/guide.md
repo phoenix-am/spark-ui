@@ -35,6 +35,7 @@ Everything the README skims over, in one place. For live examples and every prop
   - [Base components](#base-components)
   - [For AI coding agents](#for-ai-coding-agents)
   - [Packages](#packages)
+  - [Versioning](#versioning)
   - [Upgrading from 0.x to 1.0](#upgrading-from-0x-to-10)
 
 ## Foundations
@@ -395,6 +396,18 @@ All of these are generated from the component source by `npm run build`, so they
 | `@sparkwire/system` | Optional `ThemeProvider` and `useTheme` |
 | `@sparkwire/icons` | About 860 SVG icons as React components |
 | `@sparkwire/utils` | Small helpers |
+
+### Versioning
+
+Sparkwire follows [semantic versioning](https://semver.org) from 1.0:
+
+- **Patch** (1.0.x): bug fixes, accessibility and translation fixes.
+- **Minor** (1.x.0): new components, props and features. Existing code keeps working.
+- **Major** (2.0.0): the only place a prop is removed or renamed, or a behaviour changes on purpose. Before that, the old name keeps working and logs a development warning that says what to use instead.
+
+Every package shares one version, so `@sparkwire/core@1.2.0` always goes with `@sparkwire/styles@1.2.0`. Changes are listed in the [changelog](https://github.com/phoenix-am/spark-ui/blob/master/packages/core/CHANGELOG.md).
+
+What the promise covers: component names and props, CSS class names and `data-*` attributes, `--spark-*` variables, headless hooks and the CLI. It does not cover the experimental base layer, or exact pixel values and animation timing, which may be tuned in minor versions.
 
 ### Upgrading from 0.x to 1.0
 

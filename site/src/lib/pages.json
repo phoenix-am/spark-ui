@@ -217,6 +217,16 @@
       "description": "What each Sparkwire package does: core components, styles, design tokens, icons, utilities, the CLI and the MCP server."
     },
     {
+      "slug": "versioning",
+      "title": "Versioning and upgrading",
+      "group": "Quality",
+      "sections": [
+        "Versioning",
+        "Upgrading from 0.x to 1.0"
+      ],
+      "description": "What Sparkwire's 1.0 stability promise covers, how patch, minor and major releases differ, and how to upgrade from 0.x."
+    },
+    {
       "slug": "accessibility",
       "title": "Accessibility",
       "group": "Quality",

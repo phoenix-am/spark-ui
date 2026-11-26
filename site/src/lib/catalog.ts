@@ -106,7 +106,7 @@ export const guides: Guide[] = (pages.guides as { slug: string; title: string; g
   title: g.title,
   group: g.group,
   examples: g.examples,
-  markdown: g.file ? FILES[g.file].replace(/^# .*\n/, '') : (g.sections ?? []).map(section).join('\n\n'),
+  markdown: g.file ? FILES[g.file].replace(/^# .*\n/, '') : (g.sections ?? []).map((h, i) => (i === 0 ? section(h) : `## ${h}\n\n${section(h)}`)).join('\n\n'),
 }));
 export const guideBySlug = new Map(guides.map((g) => [g.slug, g]));
 
