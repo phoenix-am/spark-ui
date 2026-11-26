@@ -2,7 +2,7 @@
 
 React components that carry current: accessible behaviour you can trust, a look nobody else has, and code you can own.
 
-<img src="https://raw.githubusercontent.com/phoenix-am/spark-ui/master/.github/assets/dashboard.png" alt="A Sparkwire dashboard in the dark Live Wire theme" width="800" />
+<img src="https://raw.githubusercontent.com/phoenix-am/spark-ui/master/.github/assets/hero.png" alt="Sparkwire components in the dark theme: a sign-in form, revenue chart, orders table, calendar and deployment card" width="800" />
 
 ```bash
 npm install @sparkwire/core
