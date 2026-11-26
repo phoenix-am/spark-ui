@@ -4,6 +4,7 @@ import { ThemeProvider } from '@sparkwire/system';
 import { SparkProvider, Drawer, ToggleGroup, ToggleGroupItem, Tooltip } from '@sparkwire/core';
 import { byCategory, guides } from './lib/catalog';
 import { Icon } from './components/Icon';
+import { LogoMark } from './components/Logo';
 import { SiteSearch } from './components/SiteSearch';
 
 type Mode = 'dark' | 'light';
@@ -89,7 +90,7 @@ function Header() {
           <Icon name="menu" />
         </button>
         <Link to="/" className="sw-logo" aria-label="Sparkwire home">
-          <Icon name="bolt" />
+          <LogoMark />
           <span>Sparkwire</span>
         </Link>
         <nav className="sw-header__nav" aria-label="Main">

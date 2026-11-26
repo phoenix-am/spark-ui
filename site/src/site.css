@@ -106,14 +106,15 @@ pre {
   letter-spacing: -0.02em;
   text-decoration: none;
 }
-.sw-logo svg {
-  width: 26px;
-  height: 26px;
-  padding: 4px;
-  border-radius: 8px;
-  color: #0b0d12;
-  background: var(--spark-energy-current);
-  box-shadow: 0 0 18px var(--sw-glow);
+.sw-logo {
+  --sw-logo-lever: var(--spark-energy-current);
+}
+[data-spark-theme='light'] .sw-logo {
+  --sw-logo-lever: #c99a00;
+}
+.sw-logo__mark {
+  flex: none;
+  filter: drop-shadow(0 0 6px var(--sw-glow));
 }
 .sw-header__nav {
   display: flex;
