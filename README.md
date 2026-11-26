@@ -18,6 +18,7 @@ built on React Aria, styled with plain CSS variables, and translated into four l
 [Getting started](https://phoenix-am.github.io/spark-ui/docs/getting-started) ·
 [Components](https://phoenix-am.github.io/spark-ui/components/button) ·
 [Theme builder](https://phoenix-am.github.io/spark-ui/theme-builder) ·
+[Live demo](https://spark-ui-starter-exa-dh2q.bolt.host) ·
 [Changelog](packages/core/CHANGELOG.md)
 
 <br />
@@ -77,9 +78,7 @@ export default function CheckoutForm() {
 }
 ```
 
-Want to try it first? Open the starter app in your browser, no install needed:
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/phoenix-am/spark-ui/tree/master/examples/starter?file=src/App.tsx)
+Want to see it first? Open the [live starter app](https://spark-ui-starter-exa-dh2q.bolt.host): a form, a chart and a data table, with the energy dial and light mode in the header. Its source is in [`examples/starter`](examples/starter).
 
 No provider is required. Each component is a separate entry point, so you only ship what you import, and every file is marked `"use client"` for the Next.js App Router.
 

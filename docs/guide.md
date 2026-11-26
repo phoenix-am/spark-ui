@@ -53,7 +53,7 @@ import '@sparkwire/core/styles.css';
 import { Button } from '@sparkwire/core/button';
 ```
 
-To try it without installing anything, open the [starter app on StackBlitz](https://stackblitz.com/github/phoenix-am/spark-ui/tree/master/examples/starter?file=src/App.tsx).
+To see it running first, open the [live starter app](https://spark-ui-starter-exa-dh2q.bolt.host). Its source is in `examples/starter` in the repository.
 
 Two setup notes:
 
